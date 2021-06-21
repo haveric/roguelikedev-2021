@@ -1,14 +1,21 @@
 import './styles/style.css';
-import CanvasState from './js/CanvasState.js';
+import canvasState from './js/CanvasState.js';
+import textures from "./js/sprite/Textures";
+import sprites from "./js/sprite/Sprites";
+import placeholder from './img/placeholder.gif';
+import player from './img/player.gif';
 
 ;(function () {
-    let canvasState = new CanvasState();
-
     let secondsPassed,
         oldTimeStamp,
         fps;
 
     const init = function() {
+        textures.add('placeholder', placeholder);
+        textures.add('player', player);
+        sprites.add('path', 'placeholder');
+        sprites.add('player', 'player');
+
         gameLoop();
     }
 
@@ -25,8 +32,10 @@ import CanvasState from './js/CanvasState.js';
         // Calculate fps
         fps = Math.round(1 / secondsPassed);
 
-        update(secondsPassed);
-        render(secondsPassed);
+        if (sprites.preload()) {
+            update(secondsPassed);
+            render(secondsPassed);
+        }
     }
 
     const update = function(secondsPassed) {
@@ -44,6 +53,9 @@ import CanvasState from './js/CanvasState.js';
 
     const render = function(secondsPassed) {
         canvasState.prepareToDraw();
+
+        let sprite = sprites.get('player');
+        sprite.drawImage(500, 500, 0);
 
         // Draw number to the screen
         canvasState.setFont('25px Arial');

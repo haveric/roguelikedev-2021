@@ -1,4 +1,4 @@
-export default class CanvasState {
+class CanvasState {
     constructor() {
         this.canvas = document.createElement('canvas');
         document.body.appendChild(this.canvas);
@@ -47,3 +47,5 @@ export default class CanvasState {
     }
 }
 
+const canvasState = new CanvasState();
+export default canvasState;
