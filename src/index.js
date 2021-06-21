@@ -1,66 +1,69 @@
 import './styles/style.css';
-import canvasState from './js/CanvasState.js';
-import textures from "./js/sprite/Textures";
-import sprites from "./js/sprite/Sprites";
-import placeholder from './img/placeholder.gif';
-import player from './img/player.gif';
+import sceneState from './js/SceneState.js';
+import Tile from "./js/entity/Tile";
+import Character from "./js/entity/Character";
 
 ;(function () {
+    const tiles = [];
+    const characters = [];
+    let player;
     let secondsPassed,
         oldTimeStamp,
         fps;
 
-    const init = function() {
-        textures.add('placeholder', placeholder);
-        textures.add('player', player);
-        sprites.add('path', 'placeholder');
-        sprites.add('player', 'player');
 
-        gameLoop();
+    const init = function() {
+        const scene = sceneState.scene;
+        for (let i = -25; i < 26; i++) {
+            for (let j = -25; j < 26; j++) {
+                let tile
+                if (j === 7 || i === 7) {
+                    tile = new Tile(i, j, 0, 0x3333cc);
+                    tile.maxScaleZ = 0.75;
+                } else {
+                    tile = new Tile(i, j, 0);
+                }
+                scene.add(tile.tile);
+                tiles.push(tile);
+            }
+        }
+
+
+        player = new Character(0, 0, 1, 0xffffff, '@');
+        characters.push(player);
+        scene.add(player.tile);
+
+        for (let i = -2; i < 3; i++) {
+            let goblin = new Character(i, -2, 1, 0x33cc33, 'g');
+            characters.push(goblin);
+            scene.add(goblin.tile);
+        }
+
+        sceneState.renderer.setAnimationLoop(animation);
     }
 
-    const gameLoop = function(timeStamp) {
-        window.requestAnimationFrame(gameLoop);
-
+    const animation = function(time) {
         // Calculate the number of seconds passed since the last frame
-        secondsPassed = (timeStamp - oldTimeStamp) / 1000;
-        oldTimeStamp = timeStamp;
+        secondsPassed = (time - oldTimeStamp) / 1000;
+        oldTimeStamp = time;
 
         // Move forward in time with a maximum amount
         secondsPassed = Math.min(secondsPassed, 0.1);
 
+
         // Calculate fps
         fps = Math.round(1 / secondsPassed);
 
-        if (sprites.preload()) {
-            update(secondsPassed);
-            render(secondsPassed);
+        for (let tile of tiles) {
+            tile.updateZ(secondsPassed * 5);
         }
-    }
 
-    const update = function(secondsPassed) {
-        handleInput(secondsPassed);
-        handleMovement(secondsPassed);
-    }
 
-    const handleInput = function(secondsPassed) {
+        for (let character of characters) {
+            //character.updateZ(secondsPassed * 5);
+        }
 
-    }
-
-    const handleMovement = function(secondsPassed) {
-
-    }
-
-    const render = function(secondsPassed) {
-        canvasState.prepareToDraw();
-
-        let sprite = sprites.get('player');
-        sprite.drawImage(500, 500, 0);
-
-        // Draw number to the screen
-        canvasState.setFont('25px Arial');
-        canvasState.setFillStyle('white');
-        canvasState.context.fillText("FPS: " + fps, 10, 30);
+        sceneState.renderer.render( sceneState.scene, sceneState.camera );
     }
 
     init();

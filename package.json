@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/haveric/roguelikedev-2021/issues"
   },
-  "homepage": "https://github.com/haveric/roguelikedev-2021#readme"
+  "homepage": "https://github.com/haveric/roguelikedev-2021#readme",
+  "dependencies": {
+    "three": "^0.129.0"
+  }
 }
