@@ -43,11 +43,13 @@ class SceneState {
         this.camera.up.set(0, 0, 1);
         this.camera.lookAt(0, 0, 0);
 
-        const controls = new OrbitControls(this.camera, this.renderer.domElement);
-        controls.target.set(0, 5, 0);
-        controls.update();
-
         this.renderer.setSize( window.innerWidth, window.innerHeight );
+    }
+
+    updateCameraPosition(player) {
+        this.camera.up.set(0, 0, 1);
+        this.camera.position.set(200 + player.tile.position.x, -200 + player.tile.position.y, 300);
+        this.camera.lookAt(player.tile.position.x, player.tile.position.y, 0);
     }
 }
 

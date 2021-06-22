@@ -44,10 +44,22 @@ export default class Character extends Entity {
         this.tile.add(this.mesh);
     }
 
+    setVisible(visible) {
+        if (visible && !this.tile.visible) {
+            this.tile.visible = true;
+        } else if (!visible && this.tile.visible) {
+            this.tile.visible = false;
+        }
+    }
+
     updateZ() {
         if (this.mesh) {
             this.mesh.scale.z = this.scaleZ;
             this.tile.position.z = (this.z * this.depth) - (1 - this.scaleZ) * (this.depth / 2);
         }
+    }
+
+    updatePosition() {
+        this.tile.position.set(this.x * this.width, this.y * this.height, this.z + this.scaleZ)
     }
 }

@@ -6,7 +6,21 @@ export default class Entity {
         this.x = x;
         this.y = y;
         this.z = z;
-        this.scaleZ = 0.1;
-        this.maxScaleZ = 1;
+    }
+
+    moveLeft() {
+        this.x -= 1;
+    }
+
+    moveRight() {
+        this.x += 1;
+    }
+
+    moveUp() {
+        this.y += 1;
+    }
+
+    moveDown() {
+        this.y -= 1;
     }
 }
