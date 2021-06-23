@@ -6,6 +6,26 @@ export default class Entity {
         this.x = x;
         this.y = y;
         this.z = z;
+
+        this.object = null;
+    }
+
+    hasObject() {
+        return this.object != null;
+    }
+
+    setVisible(visible) {
+        if (this.hasObject()) {
+            if (visible && !this.object.visible) {
+                this.object.visible = true;
+            } else if (!visible && this.object.visible) {
+                this.object.visible = false;
+            }
+        }
+    }
+
+    isVisible() {
+        return this.hasObject() && this.object.visible;
     }
 
     moveLeft() {

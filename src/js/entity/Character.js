@@ -10,8 +10,6 @@ export default class Character extends Entity {
         this.maxScaleZ = .5;
         this.color = color || 0xffffff;
         this.letter = letter || '@';
-        this.tile = new THREE.Group();
-
 
         const font = new THREE.Font(helvetiker);
         this.geometry = new THREE.TextGeometry(this.letter, {
@@ -26,40 +24,40 @@ export default class Character extends Entity {
             bevelSegments: 5
         });
 
-        this.mesh = new THREE.Mesh(
+
+    }
+
+    createObject() {
+        this.object = new THREE.Mesh(
             this.geometry,
             new THREE.MeshLambertMaterial({color: this.color})
         );
 
-        this.mesh.castShadow = true;
-        this.mesh.receiveShadow = true;
-
         this.scaleZ = .5;
-        this.tile.position.set(this.x * this.width, this.y * this.height, this.z + this.scaleZ)
+        this.object.position.set(this.x * this.width, this.y * this.height, this.z + this.scaleZ)
 
-        this.tile.rotateX(Math.PI * .5);
-        this.tile.rotateY(Math.PI * .25);
+        this.object.rotateX(Math.PI * .5);
+        this.object.rotateY(Math.PI * .25);
 
         this.updateZ();
-        this.tile.add(this.mesh);
     }
 
     setVisible(visible) {
-        if (visible && !this.tile.visible) {
-            this.tile.visible = true;
-        } else if (!visible && this.tile.visible) {
-            this.tile.visible = false;
+        if (!this.object) {
+            this.createObject();
         }
+
+        super.setVisible(visible);
     }
 
     updateZ() {
-        if (this.mesh) {
-            this.mesh.scale.z = this.scaleZ;
-            this.tile.position.z = (this.z * this.depth) - (1 - this.scaleZ) * (this.depth / 2);
+        if (this.hasObject()) {
+            this.object.scale.z = this.scaleZ;
+            this.object.position.z = (this.z * this.depth) - (1 - this.scaleZ) * (this.depth / 2);
         }
     }
 
     updatePosition() {
-        this.tile.position.set(this.x * this.width, this.y * this.height, this.z + this.scaleZ)
+        this.object.position.set(this.x * this.width, this.y * this.height, this.z + this.scaleZ)
     }
 }

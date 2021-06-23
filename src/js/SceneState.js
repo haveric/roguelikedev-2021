@@ -6,7 +6,6 @@ class SceneState {
         this.scene = new THREE.Scene();
 
         this.renderer = new THREE.WebGLRenderer( { antialias: true } );
-        this.renderer.shadowMap.enabled = true;
         document.body.appendChild( this.renderer.domElement );
 
         this.setupLights();
@@ -48,8 +47,8 @@ class SceneState {
 
     updateCameraPosition(player) {
         this.camera.up.set(0, 0, 1);
-        this.camera.position.set(200 + player.tile.position.x, -200 + player.tile.position.y, 300);
-        this.camera.lookAt(player.tile.position.x, player.tile.position.y, 0);
+        this.camera.position.set(200 + player.object.position.x, -200 + player.object.position.y, 300);
+        this.camera.lookAt(player.object.position.x, player.object.position.y, 0);
     }
 }
 

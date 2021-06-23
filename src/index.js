@@ -3,48 +3,75 @@ import sceneState from './js/SceneState.js';
 import Tile from "./js/entity/Tile";
 import Character from "./js/entity/Character";
 import controls from "./js/controls/Controls";
+import Stats from "stats.js";
+import ArrayUtil from "./js/util/ArrayUtil";
 
 ;(function () {
-    const tiles = [];
     const characters = [];
     let player;
     let secondsPassed,
         oldTimeStamp,
-        fps;
+        stats;
+
+
+    const rows = 20;
+    const cols = 20;
+    const floorTiles = ArrayUtil.create2dArray(rows);
+    const tilesNeedUpdating = [];
 
 
     const init = function() {
-        const scene = sceneState.scene;
-        for (let i = -25; i < 26; i++) {
-            for (let j = -25; j < 26; j++) {
-                let tile
+
+        stats = new Stats();
+        stats.showPanel(0);
+        document.body.appendChild(stats.dom);
+
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < cols; j++) {
+                let tile;
                 if (j === 3 || i === 3) {
                     tile = new Tile(i, j, 0, 0x3333cc, .75);
                 } else {
                     tile = new Tile(i, j, 0);
                 }
-                tile.tile.visible = false;
-                scene.add(tile.tile);
-                tiles.push(tile);
+
+                floorTiles[i][j] = tile;
             }
         }
 
-        player = new Character(0, 0, 1, 0xffffff, '@');
-        player.tile.visible = false;
+        player = new Character(10, 10, 1, 0xffffff, '@');
         characters.push(player);
-        scene.add(player.tile);
+        player.setVisible(true);
+        sceneState.scene.add(player.object);
+        sceneState.updateCameraPosition(player);
 
-        for (let i = -2; i < 3; i++) {
-            let goblin = new Character(i, -2, 1, 0x33cc33, 'g');
-            goblin.tile.visible = false;
+        for (let i = 2; i < 8; i++) {
+            let goblin = new Character(i, 7, 1, 0x33cc33, 'g');
             characters.push(goblin);
-            scene.add(goblin.tile);
+            goblin.setVisible(true);
+            sceneState.scene.add(goblin.object);
+        }
+
+        const left = Math.max(0, player.x - 5);
+        const right = Math.min(rows, player.x + 5);
+        const top = Math.max(0, player.y - 5);
+        const bottom = Math.min(cols, player.y + 5);
+
+        for (let i = left; i < right; i++) {
+            for (let j = top; j < bottom; j++) {
+                const tile = floorTiles[i][j];
+                if (tile) {
+                    tile.setVisible(true);
+                    sceneState.scene.add(tile.object);
+                }
+            }
         }
 
         sceneState.renderer.setAnimationLoop(animation);
     }
 
     const animation = function(time) {
+        stats.begin();
         // Calculate the number of seconds passed since the last frame
         secondsPassed = (time - oldTimeStamp) / 1000;
         oldTimeStamp = time;
@@ -52,34 +79,49 @@ import controls from "./js/controls/Controls";
         // Move forward in time with a maximum amount
         secondsPassed = Math.min(secondsPassed, 0.1);
 
-
-        // Calculate fps
-        fps = Math.round(1 / secondsPassed);
-
         handleInput(time);
 
 
-        const x = player.x;
-        const y = player.y;
-        for (let tile of tiles) {
-            if (Math.abs(tile.x - x) < 6 && Math.abs(tile.y - y) < 6) {
-                tile.setVisible(true);
-            } else {
-                tile.setVisible(false);
+
+        const left = Math.max(0, player.x - 5);
+        const right = Math.min(rows, player.x + 5);
+        const top = Math.max(0, player.y - 5);
+        const bottom = Math.min(cols, player.y + 5);
+
+        for (const tile of tilesNeedUpdating) {
+            if (tile.updateZ(secondsPassed * 4)) {
+                const index = tilesNeedUpdating.indexOf(tile);
+                if (index !== -1) {
+                    tilesNeedUpdating.splice(index, 1);
+                }
             }
-            tile.updateZ(secondsPassed * 4);
+        }
+
+        for (let i = left; i < right; i++) {
+            for (let j = top; j < bottom; j++) {
+                const tile = floorTiles[i][j];
+                if (tile) {
+                    if (!tile.isVisible()) {
+                        tile.setVisible(true);
+                        sceneState.scene.add(tile.object);
+                        tilesNeedUpdating.push(tile);
+                    }
+                }
+            }
         }
 
         for (let character of characters) {
-            if (Math.abs(character.x - x) < 6 && Math.abs(character.y - y) < 6) {
+            if (Math.abs(character.x - player.x) < 6 && Math.abs(character.y - player.y) < 6) {
                 character.setVisible(true);
             } else {
                 character.setVisible(false);
+
             }
             character.updateZ(secondsPassed * 4);
         }
 
         sceneState.renderer.render( sceneState.scene, sceneState.camera );
+        stats.end();
     }
 
     const handleInput = function(time) {
