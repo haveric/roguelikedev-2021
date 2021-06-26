@@ -18,6 +18,10 @@ class SceneState {
         switch(e.type) {
             case "resize":
                 this.updateCamera();
+
+                if (this.player) {
+                    this.updateCameraPosition(this.player);
+                }
                 break;
 
         }
@@ -46,6 +50,7 @@ class SceneState {
     }
 
     updateCameraPosition(player) {
+        this.player = player;
         this.camera.up.set(0, 0, 1);
         this.camera.position.set(200 + player.object.position.x, -200 + player.object.position.y, 300);
         this.camera.lookAt(player.object.position.x, player.object.position.y, 0);
