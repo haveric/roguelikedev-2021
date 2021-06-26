@@ -23,7 +23,6 @@ class SceneState {
                     this.updateCameraPosition(this.player);
                 }
                 break;
-
         }
     }
 

@@ -7,6 +7,7 @@ export default class Tile extends Entity {
         this.maxScaleZ = maxScaleZ || 1;
         this.scaleZ = this.maxScaleZ;
         this.color = color || 0x333333;
+        this.highlighted = false;
     }
 
     createObject() {
@@ -17,6 +18,21 @@ export default class Tile extends Entity {
 
         this.object.position.set(this.x * this.width, this.y * this.height, this.z + this.scaleZ)
         this.updateZ(0, true);
+        this.object.parentEntity = this;
+    }
+
+    highlight() {
+        if (!this.highlighted) {
+            this.object.material.color.set(0xffffff);
+            this.highlighted = true;
+        }
+    }
+
+    unhighlight() {
+        if (this.highlighted) {
+            this.object.material.color.set(this.color);
+            this.highlighted = false;
+        }
     }
 
     setVisible(visible) {

@@ -5,6 +5,7 @@ import Character from "./js/entity/Character";
 import controls from "./js/controls/Controls";
 import Stats from "stats.js";
 import ArrayUtil from "./js/util/ArrayUtil";
+import * as THREE from "three";
 
 ;(function () {
     const characters = [];
@@ -19,9 +20,11 @@ import ArrayUtil from "./js/util/ArrayUtil";
     const floorTiles = ArrayUtil.create2dArray(rows);
     const tilesNeedUpdating = [];
 
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    let highlightedTile = null;
 
     const init = function() {
-
         stats = new Stats();
         stats.showPanel(0);
         document.body.appendChild(stats.dom);
@@ -68,6 +71,40 @@ import ArrayUtil from "./js/util/ArrayUtil";
         }
 
         sceneState.renderer.setAnimationLoop(animation);
+        sceneState.renderer.domElement.addEventListener('mousemove', onMouseMove, false);
+    }
+
+    const onMouseMove = function(e) {
+        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, sceneState.camera);
+
+        const intersects = raycaster.intersectObject(sceneState.scene, true);
+
+        let anyFound = false;
+        for (let i = 0; i < intersects.length; i++) {
+            const object = intersects[i].object;
+            const parent = object.parentEntity;
+            if (parent && parent instanceof Tile) {
+                if (!parent.highlighted) {
+                    if (highlightedTile !== null) {
+                        highlightedTile.unhighlight();
+                    }
+                    highlightedTile = parent;
+                    parent.highlight();
+                }
+
+                anyFound = true;
+                break;
+            }
+        }
+
+        if (!anyFound) {
+            if (highlightedTile !== null) {
+                highlightedTile.unhighlight();
+            }
+        }
     }
 
     const animation = function(time) {

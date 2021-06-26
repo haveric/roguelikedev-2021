@@ -23,8 +23,6 @@ export default class Character extends Entity {
             bevelOffset: 0,
             bevelSegments: 5
         });
-
-
     }
 
     createObject() {
@@ -40,6 +38,9 @@ export default class Character extends Entity {
         this.object.rotateY(Math.PI * .25);
 
         this.updateZ();
+
+        console.log(this.object);
+        this.object.parentEntity = this;
     }
 
     setVisible(visible) {
