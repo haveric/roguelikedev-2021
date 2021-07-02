@@ -2,6 +2,7 @@ import ArrayUtil from "../util/ArrayUtil";
 import MapLayer from "./MapLayer";
 import CharacterTile from "../entity/CharacterTile";
 import SolidTile from "../entity/SolidTile";
+import sceneState from "../SceneState";
 
 export default class GameMap {
     constructor(width, height) {
@@ -33,6 +34,35 @@ export default class GameMap {
                 }
 
                 this.tiles.get(MapLayer.Floor)[i][j] = tile;
+            }
+        }
+    }
+
+    draw(x, y, range) {
+        const left = Math.max(0, x - range);
+        const right = Math.min(this.width, x + range);
+        const top = Math.max(0, y - range);
+        const bottom = Math.min(this.height, y + range);
+
+        for (let i = left; i < right; i++) {
+            for (let j = top; j < bottom; j++) {
+                const tile = this.tiles.get(MapLayer.Floor)[i][j];
+                if (tile) {
+                    const tileObject = tile.getComponent("positionalobject");
+                    if (tileObject && !tileObject.isVisible()) {
+                        tileObject.setVisible(true);
+                        sceneState.scene.add(tileObject.object);
+                    }
+                }
+
+                const wallTile = this.tiles.get(MapLayer.Wall)[i][j];
+                if (wallTile) {
+                    const wallTileObject = wallTile.getComponent("positionalobject");
+                    if (wallTileObject && !wallTileObject.isVisible()) {
+                        wallTileObject.setVisible(true);
+                        sceneState.scene.add(wallTileObject.object);
+                    }
+                }
             }
         }
     }

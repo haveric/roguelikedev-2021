@@ -44,41 +44,14 @@ import MapLayer from "./js/map/MapLayer";
 
         handleInput(time);
 
-        const playerPositionalObject = player.getComponent("positionalobject");
-        if (playerPositionalObject) {
-            const playerX = playerPositionalObject.x;
-            const playerY = playerPositionalObject.y;
-            const left = Math.max(0, playerX - 5);
-            const right = Math.min(gameMap.width, playerX + 5);
-            const top = Math.max(0, playerY - 5);
-            const bottom = Math.min(gameMap.height, playerY + 5);
-
-            for (let i = left; i < right; i++) {
-                for (let j = top; j < bottom; j++) {
-                    const tile = gameMap.tiles.get(MapLayer.Floor)[i][j];
-                    if (tile) {
-                        const tileObject = tile.getComponent("positionalobject");
-                        if (tileObject && !tileObject.isVisible()) {
-                            tileObject.setVisible(true);
-                            sceneState.scene.add(tileObject.object);
-                        }
-                    }
-
-                    const wallTile = gameMap.tiles.get(MapLayer.Wall)[i][j];
-                    if (wallTile) {
-                        const wallTileObject = wallTile.getComponent("positionalobject");
-                        if (wallTileObject && !wallTileObject.isVisible()) {
-                            wallTileObject.setVisible(true);
-                            sceneState.scene.add(wallTileObject.object);
-                        }
-                    }
-                }
-            }
+        const playerPosition = player.getComponent("positionalobject");
+        if (playerPosition) {
+            gameMap.draw(playerPosition.x, playerPosition.y, 5);
 
             for (let character of characters) {
                 const positionalObject = character.getComponent("positionalobject");
                 if (positionalObject) {
-                    if (Math.abs(positionalObject.x - playerX) < 6 && Math.abs(positionalObject.y - playerY) < 6) {
+                    if (Math.abs(positionalObject.x - playerPosition.x) < 6 && Math.abs(positionalObject.y - playerPosition.y) < 6) {
                         positionalObject.setVisible(true);
                     } else {
                         positionalObject.setVisible(false);
