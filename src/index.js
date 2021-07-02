@@ -2,50 +2,20 @@ import './styles/style.css';
 import sceneState from './js/SceneState.js';
 import Character from "./js/entity/Character";
 import controls from "./js/controls/Controls";
-import Stats from "stats.js";
-import ArrayUtil from "./js/util/ArrayUtil";
-import * as THREE from "three";
-import CharacterTile from "./js/entity/CharacterTile";
-import SolidTile from "./js/entity/SolidTile";
-import _Tile from "./js/entity/_Tile";
+import GameMap from "./js/map/GameMap";
+import MapLayer from "./js/map/MapLayer";
 
 ;(function () {
     const characters = [];
-    let player;
+    let player,
+    gameMap;
+
     let secondsPassed,
         oldTimeStamp;
 
-
-    const rows = 20;
-    const cols = 20;
-    const floorTiles = ArrayUtil.create2dArray(rows);
-    const wallTiles = ArrayUtil.create2dArray(rows);
-
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-    let highlightedTile = null;
-
     const init = function() {
-        for (let i = 0; i < rows; i++) {
-            for (let j = 0; j < cols; j++) {
-                let tile;
-                if (j === 5 || i === 5) {
-                    wallTiles[i][j] = new CharacterTile("Wall", i, j, 1, 1, "#", 0x666666);
-                }
-
-                if (i === 12 && j === 12) {
-                    wallTiles[i][j] = new CharacterTile("Door", i, j, 1, 1, "+", 0x964b00);
-                }
-
-                if (j === 3 || i === 3) {
-                    tile = new CharacterTile("Water", i, j, 0, .7, "≈", 0x3333cc);
-                } else {
-                    tile = new SolidTile("Floor", i, j, 0, 1, 0x333333);
-                }
-
-                floorTiles[i][j] = tile;
-            }
-        }
+        gameMap = new GameMap(20, 20);
+        gameMap.createTestMap();
 
         player = new Character("Player", 10, 10, 1, '@', 0xffffff);
         characters.push(player);
@@ -60,47 +30,7 @@ import _Tile from "./js/entity/_Tile";
         }
 
         sceneState.renderer.setAnimationLoop(animation);
-        sceneState.renderer.domElement.addEventListener('mousemove', onMouseMove, false);
-    }
 
-    const onMouseMove = function(e) {
-        mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-
-        raycaster.setFromCamera(mouse, sceneState.camera);
-
-        const intersects = raycaster.intersectObject(sceneState.scene, true);
-
-        let anyFound = false;
-        for (let i = 0; i < intersects.length; i++) {
-            const object = intersects[i].object;
-            const parentEntity = object.parentEntity;
-            if (parentEntity && parentEntity instanceof _Tile) {
-                const parentObject = parentEntity.getComponent("positionalobject");
-                if (parentObject && !parentObject.highlighted) {
-                    if (highlightedTile !== null) {
-                        const object = highlightedTile.getComponent("positionalobject");
-                        if (object) {
-                            object.removeHighlight();
-                        }
-                    }
-                    highlightedTile = parentEntity;
-                    parentObject.highlight();
-                }
-
-                anyFound = true;
-                break;
-            }
-        }
-
-        if (!anyFound) {
-            if (highlightedTile !== null) {
-                const object = highlightedTile.getComponent("positionalobject");
-                if (object) {
-                    object.removeHighlight();
-                }
-            }
-        }
     }
 
     const animation = function(time) {
@@ -119,13 +49,13 @@ import _Tile from "./js/entity/_Tile";
             const playerX = playerPositionalObject.x;
             const playerY = playerPositionalObject.y;
             const left = Math.max(0, playerX - 5);
-            const right = Math.min(rows, playerX + 5);
+            const right = Math.min(gameMap.width, playerX + 5);
             const top = Math.max(0, playerY - 5);
-            const bottom = Math.min(cols, playerY + 5);
+            const bottom = Math.min(gameMap.height, playerY + 5);
 
             for (let i = left; i < right; i++) {
                 for (let j = top; j < bottom; j++) {
-                    const tile = floorTiles[i][j];
+                    const tile = gameMap.tiles.get(MapLayer.Floor)[i][j];
                     if (tile) {
                         const tileObject = tile.getComponent("positionalobject");
                         if (tileObject && !tileObject.isVisible()) {
@@ -134,7 +64,7 @@ import _Tile from "./js/entity/_Tile";
                         }
                     }
 
-                    const wallTile = wallTiles[i][j];
+                    const wallTile = gameMap.tiles.get(MapLayer.Wall)[i][j];
                     if (wallTile) {
                         const wallTileObject = wallTile.getComponent("positionalobject");
                         if (wallTileObject && !wallTileObject.isVisible()) {
@@ -163,38 +93,30 @@ import _Tile from "./js/entity/_Tile";
 
     const handleInput = function(time) {
         const position = player.getComponent("positionalobject");
+        const px = position.x;
+        const py = position.y;
         if (position) {
-            let anyMoved = false;
             if (controls.testPressed("up")) {
                 position.move(0, 1);
-                anyMoved = true;
             } else if (controls.testPressed("down")) {
                 position.move(0, -1);
-                anyMoved = true;
             } else if (controls.testPressed("left")) {
                 position.move(-1);
-                anyMoved = true;
             } else if (controls.testPressed("right")) {
                 position.move(1);
-                anyMoved = true;
             } else if (controls.testPressed("nw")) {
                 position.move(-1, 1);
-                anyMoved = true;
             } else if (controls.testPressed("ne")) {
                 position.move(1, 1);
-                anyMoved = true;
             } else if (controls.testPressed("sw")) {
                 position.move(-1, -1);
-                anyMoved = true;
             } else if (controls.testPressed("se")) {
                 position.move(1, -1);
-                anyMoved = true;
             } else if (controls.testPressed("wait")) {
                 position.move(0, 0);
-                anyMoved = true;
             }
 
-            if (anyMoved) {
+            if (px !== position.x || py !== position.y) {
                 sceneState.updateCameraPosition(player);
             }
         }
