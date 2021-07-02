@@ -39,7 +39,8 @@ class SceneState {
         const cameraWidth = 150;
         const cameraHeight = cameraWidth / aspectRatio;
 
-        this.camera = new THREE.OrthographicCamera(cameraWidth / -2, cameraWidth / 2, cameraHeight / 2, cameraHeight / -2, 0, 1000);
+        this.camera = new THREE.OrthographicCamera(cameraWidth / -2, cameraWidth / 2, cameraHeight / 2, cameraHeight / -2, 0, 10000);
+
         this.camera.position.set(200, -200, 300);
         this.camera.up.set(0, 0, 1);
         this.camera.lookAt(0, 0, 0);
@@ -53,6 +54,8 @@ class SceneState {
         const playerObject = player.getComponent("positionalobject");
         if (playerObject) {
             this.camera.position.set(200 + playerObject.object.position.x, -200 + playerObject.object.position.y, 300);
+            //this.camera.position.set(playerObject.object.position.x, playerObject.object.position.y, 300); // Top down
+
             this.camera.lookAt(playerObject.object.position.x, playerObject.object.position.y, 0);
         }
     }

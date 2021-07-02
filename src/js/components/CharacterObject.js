@@ -3,20 +3,41 @@ import * as THREE from "three";
 import helvetikerFont from "../../fonts/helvetiker_regular.typeface.json";
 
 export default class CharacterObject extends _PositionalObject {
-    constructor(x, y, z, scale, font, letter, color, xRot, yRot) {
+    constructor(x, y, z, scale, font, letter, color, options) {
         super("characterobject", x, y, z, scale, color);
 
         this.font = font || helvetikerFont;
         this.letter = letter || '@';
-        this.xRot = xRot || 0;
-        this.yRot = yRot || 0;
+
+        this.xRot = 0;
+        this.yRot = 0;
+        this.xOffset = 0;
+        this.yOffset = 0;
+        this.zOffset = 0;
+        if (options) {
+            if (options.xRot) {
+                this.xRot = options.xRot;
+            }
+            if (options.yRot) {
+                this.yRot = options.yRot;
+            }
+            if (options.xOffset) {
+                this.xOffset = options.xOffset;
+            }
+            if (options.yOffset) {
+                this.yOffset = options.yOffset;
+            }
+            if (options.zOffset) {
+                this.zOffset = options.zOffset;
+            }
+        }
     }
 
     createObject() {
         const font = new THREE.Font(this.font);
         this.geometry = new THREE.TextGeometry(this.letter, {
             font: font,
-            size: 3.5/5 * this.depth,
+            size: 4.1/5 * this.depth,
             height: this.scale * this.depth,
             curveSegments: 24,
             bevelEnabled: true,
@@ -39,6 +60,6 @@ export default class CharacterObject extends _PositionalObject {
     }
 
     updateObjectPosition() {
-        this.object.position.set((this.x-.4) * this.width, (this.y-.3) * this.height, (this.z * this.depth) - ((this.depth - this.scale) / 2));
+        this.object.position.set((this.x + this.xOffset) * this.width, (this.y + this.yOffset) * this.height, (this.z + this.zOffset) * this.depth);
     }
 }

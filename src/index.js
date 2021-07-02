@@ -38,6 +38,10 @@ import _Tile from "./js/entity/_Tile";
                     wallTiles[i][j] = new CharacterTile("Wall", i, j, 1, 1, "#", 0x666666);
                 }
 
+                if (i === 12 && j === 12) {
+                    wallTiles[i][j] = new CharacterTile("Door", i, j, 1, 1, "+", 0x964b00);
+                }
+
                 if (j === 3 || i === 3) {
                     tile = new CharacterTile("Water", i, j, 0, .7, "≈", 0x3333cc);
                 } else {
