@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import Stats from "stats.js";
 
 class SceneState {
     constructor() {
@@ -9,6 +10,10 @@ class SceneState {
 
         this.setupLights();
         this.updateCamera();
+
+        this.stats = new Stats();
+        this.stats.showPanel(0);
+        document.body.appendChild(this.stats.dom);
 
         window.addEventListener( 'resize', this);
     }

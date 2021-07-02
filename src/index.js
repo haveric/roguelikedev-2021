@@ -13,8 +13,7 @@ import _Tile from "./js/entity/_Tile";
     const characters = [];
     let player;
     let secondsPassed,
-        oldTimeStamp,
-        stats;
+        oldTimeStamp;
 
 
     const rows = 20;
@@ -27,10 +26,6 @@ import _Tile from "./js/entity/_Tile";
     let highlightedTile = null;
 
     const init = function() {
-        stats = new Stats();
-        stats.showPanel(0);
-        document.body.appendChild(stats.dom);
-
         for (let i = 0; i < rows; i++) {
             for (let j = 0; j < cols; j++) {
                 let tile;
@@ -109,7 +104,7 @@ import _Tile from "./js/entity/_Tile";
     }
 
     const animation = function(time) {
-        stats.begin();
+        sceneState.stats.begin();
         // Calculate the number of seconds passed since the last frame
         secondsPassed = (time - oldTimeStamp) / 1000;
         oldTimeStamp = time;
@@ -163,7 +158,7 @@ import _Tile from "./js/entity/_Tile";
         }
 
         sceneState.renderer.render( sceneState.scene, sceneState.camera );
-        stats.end();
+        sceneState.stats.end();
     }
 
     const handleInput = function(time) {
