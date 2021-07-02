@@ -85,10 +85,17 @@ class Controls {
         self.defaults = new Map();
 
         self.controls = new Map();
-        self.defaults.set("left", [Key.LEFT, "a", Btn.LEFT, Btn.LEFT_STICK_LEFT]);
-        self.defaults.set("right", [Key.RIGHT, "d", Btn.RIGHT, Btn.LEFT_STICK_RIGHT]);
-        self.defaults.set("up", [Key.UP, "w", Btn.UP, Btn.LEFT_STICK_UP]);
-        self.defaults.set("down", [Key.DOWN, "s", Btn.DOWN, Btn.LEFT_STICK_DOWN]);
+        self.defaults.set("left", [Key.LEFT, "a", Key.NUMPAD_4, Btn.LEFT, Btn.LEFT_STICK_LEFT]);
+        self.defaults.set("right", [Key.RIGHT, "d", Key.NUMPAD_6, Btn.RIGHT, Btn.LEFT_STICK_RIGHT]);
+        self.defaults.set("up", [Key.UP, "w", Key.NUMPAD_8, Btn.UP, Btn.LEFT_STICK_UP]);
+        self.defaults.set("down", [Key.DOWN, "s", Key.NUMPAD_2, Btn.DOWN, Btn.LEFT_STICK_DOWN]);
+
+        self.defaults.set("nw", [Key.NUMPAD_7]);
+        self.defaults.set("ne", [Key.NUMPAD_9]);
+        self.defaults.set("sw", [Key.NUMPAD_1]);
+        self.defaults.set("se", [Key.NUMPAD_3]);
+
+        self.defaults.set("wait", [Key.NUMPAD_5]);
         self.defaults.set("action", [Key.SPACE, Key.ENTER, Btn.A]);
 
         self.defaults.set("reset", ["r", Btn.START]);

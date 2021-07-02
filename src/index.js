@@ -176,13 +176,26 @@ import _Tile from "./js/entity/_Tile";
             } else if (controls.testPressed("down")) {
                 position.move(0, -1);
                 anyMoved = true;
-            }
-
-            if (controls.testPressed("left")) {
+            } else if (controls.testPressed("left")) {
                 position.move(-1);
                 anyMoved = true;
             } else if (controls.testPressed("right")) {
                 position.move(1);
+                anyMoved = true;
+            } else if (controls.testPressed("nw")) {
+                position.move(-1, 1);
+                anyMoved = true;
+            } else if (controls.testPressed("ne")) {
+                position.move(1, 1);
+                anyMoved = true;
+            } else if (controls.testPressed("sw")) {
+                position.move(-1, -1);
+                anyMoved = true;
+            } else if (controls.testPressed("se")) {
+                position.move(1, -1);
+                anyMoved = true;
+            } else if (controls.testPressed("wait")) {
+                position.move(0, 0);
                 anyMoved = true;
             }
 
