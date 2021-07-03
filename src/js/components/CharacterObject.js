@@ -3,32 +3,27 @@ import * as THREE from "three";
 import helvetikerFont from "../../fonts/helvetiker_regular.typeface.json";
 
 export default class CharacterObject extends _PositionalObject {
-    constructor(x, y, z, scale, font, letter, color, options) {
-        super("characterobject", x, y, z, scale, color);
+    constructor(args = {}) {
+        if (args.components && args.components.characterobject) {
+            args = {...args, ...args.components.characterobject};
+        }
+        super({...args, ...{type: "characterobject"}});
 
-        this.font = font || helvetikerFont;
-        this.letter = letter || '@';
+        this.font = args.font || helvetikerFont;
+        this.letter = args.letter || '@';
 
-        this.xRot = 0;
-        this.yRot = 0;
-        this.xOffset = 0;
-        this.yOffset = 0;
-        this.zOffset = 0;
-        if (options) {
-            if (options.xRot) {
-                this.xRot = options.xRot;
-            }
-            if (options.yRot) {
-                this.yRot = options.yRot;
-            }
-            if (options.xOffset) {
-                this.xOffset = options.xOffset;
-            }
-            if (options.yOffset) {
-                this.yOffset = options.yOffset;
-            }
-            if (options.zOffset) {
-                this.zOffset = options.zOffset;
+        this.xRot = args.xRot || 0;
+        this.yRot = args.yRot || 0;
+        this.xOffset = args.xOffset || 0;
+        this.yOffset = args.yOffset || 0;
+        this.zOffset = args.zOffset || 0;
+    }
+
+    save() {
+        return {
+            ...super.save(),
+            ...{
+                letter: this.letter
             }
         }
     }
@@ -60,6 +55,9 @@ export default class CharacterObject extends _PositionalObject {
     }
 
     updateObjectPosition() {
+        if (!this.hasObject()) {
+            this.createObject();
+        }
         this.object.position.set((this.x + this.xOffset) * this.width, (this.y + this.yOffset) * this.height, (this.z + this.zOffset) * this.depth);
     }
 }

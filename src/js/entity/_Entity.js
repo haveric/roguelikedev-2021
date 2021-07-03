@@ -1,9 +1,10 @@
 import _Component from "../components/_Component";
 
 export default class _Entity {
-    constructor(type, name) {
-        this.type = type || "entity";
-        this.name = name;
+    constructor(args) {
+        this.type = args.type || "entity";
+        this.name = args.name;
+        this.componentArray = [];
         this.components = {};
     }
 
@@ -14,6 +15,7 @@ export default class _Entity {
 
         component.parentEntity = this;
         this.components[component.baseType] = component;
+        this.componentArray.push(component);
     }
 
     getComponent(baseType) {
@@ -26,5 +28,29 @@ export default class _Entity {
         }
 
         this.components[baseType] = undefined;
+        for (const component of this.componentArray) {
+            if (component.type === baseType) {
+                const index = this.componentArray.indexOf(component);
+                this.componentArray.splice(index, 1);
+                break;
+            }
+        }
+    }
+
+    save() {
+        let json = {
+            type: this.type,
+            name: this.name,
+        };
+
+        json.components = {};
+        for (const component of this.componentArray) {
+            const save = component.save();
+            if (save !== null) {
+                json.components[component.type] = save;
+            }
+        }
+
+        return json;
     }
 }

@@ -1,10 +1,12 @@
 import _PositionalObject from "./_PositionalObject";
 import * as THREE from "three";
-import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 
 export default class SolidObject extends _PositionalObject {
-    constructor(x, y, z, scale, color) {
-        super("solidobject", x, y, z, scale, color);
+    constructor(args = {}) {
+        if (args.components && args.components.solidobject) {
+            args = {...args, ...args.components.solidobject};
+        }
+        super({...args, ...{type: "solidobject"}});
     }
 
     createObject() {
@@ -17,6 +19,4 @@ export default class SolidObject extends _PositionalObject {
         this.updateObjectPosition();
         this.object.parentEntity = this.parentEntity;
     }
-
-
 }

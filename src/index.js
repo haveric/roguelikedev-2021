@@ -3,30 +3,25 @@ import sceneState from './js/SceneState.js';
 import Character from "./js/entity/Character";
 import controls from "./js/controls/Controls";
 import GameMap from "./js/map/GameMap";
-import MapLayer from "./js/map/MapLayer";
+import gameState from "./js/GameState";
 
 ;(function () {
-    const characters = [];
-    let player,
-    gameMap;
-
     let secondsPassed,
         oldTimeStamp;
 
     const init = function() {
-        gameMap = new GameMap(20, 20);
-        gameMap.createTestMap();
+        gameState.gameMap = new GameMap(20, 20);
+        gameState.gameMap.createTestMap();
 
-        player = new Character("Player", 10, 10, 1, '@', 0xffffff);
-        characters.push(player);
-        const positionalObject = player.getComponent("positionalobject");
+        gameState.player = new Character({name: "Player", x: 10, y: 10, z: 1, letter: '@', color: 0xffffff});
+        gameState.gameMap.actors.push(gameState.player);
+        const positionalObject = gameState.player.getComponent("positionalobject");
         positionalObject.setVisible(true);
-        sceneState.scene.add(positionalObject.object);
-        sceneState.updateCameraPosition(player);
+        sceneState.updateCameraPosition(gameState.player);
 
-        for (let i = 2; i < 8; i++) {
-            let goblin = new Character("Goblin", i, 7, 1, 'g', 0x33cc33);
-            characters.push(goblin);
+        for (let i = 7; i < 13; i++) {
+            let goblin = new Character({name: "Goblin", x: i, y: 7, z: 1, letter: 'g', color: 0x33cc33});
+            gameState.gameMap.actors.push(goblin);
         }
 
         sceneState.renderer.setAnimationLoop(animation);
@@ -44,28 +39,17 @@ import MapLayer from "./js/map/MapLayer";
 
         handleInput(time);
 
-        const playerPosition = player.getComponent("positionalobject");
+        const playerPosition = gameState.player.getComponent("positionalobject");
         if (playerPosition) {
-            gameMap.draw(playerPosition.x, playerPosition.y, 5);
-
-            for (let character of characters) {
-                const positionalObject = character.getComponent("positionalobject");
-                if (positionalObject) {
-                    if (Math.abs(positionalObject.x - playerPosition.x) < 6 && Math.abs(positionalObject.y - playerPosition.y) < 6) {
-                        positionalObject.setVisible(true);
-                    } else {
-                        positionalObject.setVisible(false);
-                    }
-                }
-            }
+            gameState.gameMap.draw(playerPosition.x, playerPosition.y, 5);
         }
 
-        sceneState.renderer.render( sceneState.scene, sceneState.camera );
+        sceneState.renderer.render(sceneState.scene, sceneState.camera);
         sceneState.stats.end();
     }
 
     const handleInput = function(time) {
-        const position = player.getComponent("positionalobject");
+        const position = gameState.player.getComponent("positionalobject");
         const px = position.x;
         const py = position.y;
         if (position) {
@@ -87,10 +71,14 @@ import MapLayer from "./js/map/MapLayer";
                 position.move(1, -1);
             } else if (controls.testPressed("wait")) {
                 position.move(0, 0);
+            } else if (controls.testPressed("save", 1000)) {
+                gameState.gameMap.save("save1");
+            } else if (controls.testPressed("load", 1000)) {
+                gameState.gameMap.load("save1");
             }
 
             if (px !== position.x || py !== position.y) {
-                sceneState.updateCameraPosition(player);
+                sceneState.updateCameraPosition(gameState.player);
             }
         }
     }

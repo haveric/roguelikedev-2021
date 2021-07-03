@@ -98,6 +98,9 @@ class Controls {
         self.defaults.set("wait", [Key.NUMPAD_5]);
         self.defaults.set("action", [Key.SPACE, Key.ENTER, Btn.A]);
 
+        self.defaults.set("save", ["F8"]);
+        self.defaults.set("load", ["F9"]);
+
         self.defaults.set("reset", ["r", Btn.START]);
 
         self.resetToDefault();

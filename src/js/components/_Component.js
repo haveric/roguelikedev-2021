@@ -1,6 +1,11 @@
 export default class _Component {
-    constructor(baseType, type) {
-        this.baseType = baseType || "component";
-        this.type = type || this.baseType;
+    constructor(args = {}) {
+        this.baseType = args.baseType || "component";
+        this.type = args.type || this.baseType;
+        this.parent = args.parent;
+    }
+
+    save() {
+        return null;
     }
 }

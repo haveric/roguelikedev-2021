@@ -1,26 +1,56 @@
 import _Component from "./_Component";
+import sceneState from "../SceneState";
+import _Tile from "../entity/_Tile";
 
 export default class _PositionalObject extends _Component {
-    constructor(type, x, y, z, scale, color) {
-        super("positionalobject", type);
+    constructor(args = {}) {
+        super({...args, ...{baseType: "positionalobject"}});
 
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.x = args.x || 0;
+        this.y = args.y || 0;
+        this.z = args.z || 0;
 
-        this.color = color || 0xffffff;
+        this.color = args.color || 0xffffff;
         this.object = null;
         this.highlighted = false;
 
         this.width = 5;
         this.height = 5;
         this.depth = 5;
-        this.scale = scale || 1;
+        this.scale = args.scale || 1;
+    }
+
+    save() {
+        if (this.parent && this.parent instanceof _Tile) {
+            return {
+                color: this.color,
+                scale: this.scale
+            }
+        } else {
+            return {
+                x: this.x,
+                y: this.y,
+                z: this.z,
+                color: this.color,
+                scale: this.scale
+            }
+        }
     }
 
     createObject() { }
 
+    teardown() {
+        if (this.hasObject()) {
+            sceneState.scene.remove(this.object);
+            this.object = undefined;
+        }
+    }
+
     updateObjectPosition() {
+        if (!this.hasObject()) {
+            this.createObject();
+        }
+
         this.object.position.set(this.x * this.width, this.y * this.height, (this.z * this.depth) - ((this.depth - (this.scale * this.depth)) / 2));
     }
 
@@ -31,6 +61,7 @@ export default class _PositionalObject extends _Component {
     setVisible(visible) {
         if (!this.hasObject()) {
             this.createObject();
+            sceneState.scene.add(this.object);
         }
 
         if (visible && !this.object.visible) {
@@ -69,5 +100,4 @@ export default class _PositionalObject extends _Component {
 
         this.updateObjectPosition();
     }
-
 }
