@@ -58,7 +58,7 @@ export default class _PositionalObject extends _Component {
         return this.object != null;
     }
 
-    setVisible(visible) {
+    setVisible(visible = true) {
         if (!this.hasObject()) {
             this.createObject();
             sceneState.scene.add(this.object);

@@ -6,7 +6,8 @@ class SceneState {
     constructor() {
         this.scene = new THREE.Scene();
 
-        this.renderer = new THREE.WebGLRenderer( { antialias: true } );
+        this.renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+        this.renderer.setClearColor( 0xaaaaaa, 1 );
         document.body.appendChild( this.renderer.domElement );
 
         this.setupLights();
@@ -50,15 +51,13 @@ class SceneState {
 
     updateCamera() {
         const aspectRatio = window.innerWidth / window.innerHeight;
-        const cameraWidth = 150;
-        const cameraHeight = cameraWidth / aspectRatio;
 
-        this.camera = new THREE.OrthographicCamera(cameraWidth / -2, cameraWidth / 2, cameraHeight / 2, cameraHeight / -2, 0, 10000);
-
-        this.camera.position.set(200, -200, 300);
-        this.camera.up.set(0, 0, 1);
-        this.camera.lookAt(0, 0, 0);
-
+        const viewSize = 100;
+        const left = -aspectRatio * viewSize / 2
+        const right = aspectRatio * viewSize / 2;
+        const top = viewSize / 2;
+        const bottom = -viewSize / 2;
+        this.camera = new THREE.OrthographicCamera(left, right, top, bottom, -10000, 10000);
         this.renderer.setSize( window.innerWidth, window.innerHeight );
     }
 
@@ -66,12 +65,9 @@ class SceneState {
         this.player = player;
         this.camera.up.set(0, 0, 1);
         const playerObject = player.getComponent("positionalobject");
-        if (playerObject) {
-            this.camera.position.set(200 + playerObject.object.position.x, -200 + playerObject.object.position.y, 300);
-            //this.camera.position.set(playerObject.object.position.x, playerObject.object.position.y, 300); // Top down
 
-            this.camera.lookAt(playerObject.object.position.x, playerObject.object.position.y, 0);
-        }
+        this.camera.position.set(200 + playerObject.object.position.x, -200 + playerObject.object.position.y, 300);
+        this.camera.lookAt(playerObject.object.position.x, playerObject.object.position.y, 0);
     }
 
     onMouseMove(e) {

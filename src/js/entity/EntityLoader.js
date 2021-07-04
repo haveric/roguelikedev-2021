@@ -1,6 +1,7 @@
 import SolidTile from "./SolidTile";
 import CharacterTile from "./CharacterTile";
 import Character from "./Character";
+import Item from "./Item";
 
 class EntityLoader {
     constructor() {
@@ -9,6 +10,7 @@ class EntityLoader {
         this.load(new SolidTile());
         this.load(new CharacterTile());
         this.load(new Character());
+        this.load(new Item());
     }
 
     load(entity) {

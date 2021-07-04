@@ -1,28 +1,19 @@
 import './styles/style.css';
 import sceneState from './js/SceneState.js';
-import Character from "./js/entity/Character";
 import controls from "./js/controls/Controls";
-import GameMap from "./js/map/GameMap";
 import gameState from "./js/GameState";
+import TutorialMap from "./js/map/TutorialMap";
 
 ;(function () {
     let secondsPassed,
         oldTimeStamp;
 
     const init = function() {
-        gameState.gameMap = new GameMap(20, 20);
-        gameState.gameMap.createTestMap();
+        //gameState.gameMap = new TestMap(20, 20);
+        gameState.gameMap = new TutorialMap();
+        gameState.gameMap.create();
 
-        gameState.player = new Character({name: "Player", x: 10, y: 10, z: 1, letter: '@', color: 0xffffff});
-        gameState.gameMap.actors.push(gameState.player);
-        const positionalObject = gameState.player.getComponent("positionalobject");
-        positionalObject.setVisible(true);
         sceneState.updateCameraPosition(gameState.player);
-
-        for (let i = 7; i < 13; i++) {
-            let goblin = new Character({name: "Goblin", x: i, y: 7, z: 1, letter: 'g', color: 0x33cc33});
-            gameState.gameMap.actors.push(goblin);
-        }
 
         sceneState.renderer.setAnimationLoop(animation);
 
