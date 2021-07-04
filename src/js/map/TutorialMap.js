@@ -82,7 +82,7 @@ export default class TutorialMap extends GameMap {
                         floorTile = this.tiles.get(MapLayer.Floor)[i][j] = new SolidTile({name: "Floor", x: i, y: j, z: 0, scale: 1, color: 0x666666});
                         break;
                     case "≈":
-                        floorTile = this.tiles.get(MapLayer.Floor)[i][j] = new CharacterTile({name: "Water", x: i, y: j, z: 0, scale: .7, letter: "≈", color: 0x3333cc});
+                        floorTile = this.tiles.get(MapLayer.Floor)[i][j] = new CharacterTile({name: "Water", x: i, y: j, z: 0, scale: .7, letter: "≈", color: 0x3333cc, blocksMovement:false});
                         break;
                 }
                 if (floorTile) {
@@ -103,7 +103,7 @@ export default class TutorialMap extends GameMap {
                         wallTile = this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Door", x: i, y: j, z: 1, scale: 1, letter: "+", color: 0x964b00});
                         break;
                     case ">":
-                        wallTile = this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Stairs Up", x: i, y: j, z: 1, scale: .75, letter: ">", color: 0xffffff});
+                        wallTile = this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Stairs Up", x: i, y: j, z: 1, scale: .75, letter: ">", color: 0xffffff, blocksMovement: false});
                         break;
                 }
                 if (wallTile) {

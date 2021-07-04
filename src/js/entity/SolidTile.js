@@ -1,9 +1,14 @@
 import _Tile from "./_Tile";
 import SolidObject from "../components/SolidObject";
+import Walkable from "../components/Walkable";
+import BlocksMovement from "../components/BlocksMovement";
 
 export default class SolidTile extends _Tile {
     constructor(args = {}) {
         super({...args, ...{type: "solidtile"}});
-        this.setComponent(new SolidObject({...args, ...{parent: this}}));
+        const argsWithParent = {...args, ...{parent: this}};
+        this.setComponent(new SolidObject(argsWithParent));
+        this.setComponent(new Walkable({...{walkable: true}, ...argsWithParent}));
+        this.setComponent(new BlocksMovement({...{blocksMovement: true}, ...argsWithParent}));
     }
 }

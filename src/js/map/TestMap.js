@@ -26,7 +26,7 @@ export default class TestMap extends GameMap {
                 }
 
                 if (j === 3 || i === 3) {
-                    tile = new CharacterTile({name: "Water", x: i, y: j, z: 0, scale: .7, letter: "≈", color: 0x3333cc});
+                    tile = new CharacterTile({name: "Water", x: i, y: j, z: 0, scale: .7, letter: "≈", color: 0x3333cc, blocksMovement:false});
                 } else {
                     tile = new SolidTile({name: "Floor", x: i, y: j, z: 0, scale: 1, color: 0x333333});
                 }
