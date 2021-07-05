@@ -3,11 +3,18 @@ import controls from "../controls/Controls";
 import MovementAction from "../actions/MovementAction";
 import TutorialMap from "../map/TutorialMap";
 import BasicDungeon from "../map/BasicDungeon";
+import _Tile from "../entity/_Tile";
+import sceneState from "../SceneState";
+import EventHandler from "./_EventHandler";
 
-export default class EventHandler {
+export default class DefaultPlayerEventHandler extends EventHandler {
     constructor() {
+        super();
 
+        this.highlightedTile = null;
     }
+
+    teardown() {}
 
     handleInput() {
         let action = null;
@@ -49,5 +56,54 @@ export default class EventHandler {
         }
 
         return action;
+    }
+
+    onMouseMove(e) {
+        this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+        this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+        this.raycaster.setFromCamera(this.mouse, sceneState.camera);
+
+        const intersects = this.raycaster.intersectObject(sceneState.scene, true);
+
+        let anyFound = false;
+        for (let i = 0; i < intersects.length; i++) {
+            const object = intersects[i].object;
+            const parentEntity = object.parentEntity;
+            if (parentEntity && parentEntity instanceof _Tile) {
+                const parentObject = parentEntity.getComponent("positionalobject");
+                if (parentObject && !parentObject.highlighted) {
+                    if (this.highlightedTile !== null) {
+                        const object = this.highlightedTile.getComponent("positionalobject");
+                        if (object) {
+                            object.removeHighlight();
+                        }
+                    }
+                    this.highlightedTile = parentEntity;
+                    parentObject.highlight();
+                }
+
+                anyFound = true;
+                break;
+            }
+        }
+
+        if (!anyFound) {
+            if (this.highlightedTile !== null) {
+                const object = this.highlightedTile.getComponent("positionalobject");
+                if (object) {
+                    object.removeHighlight();
+                }
+            }
+        }
+
+        engine.needsMapUpdate = true;
+    }
+
+    onLeftClick(e) {
+    }
+
+    onRightClick(e) {
+        e.preventDefault();
     }
 }

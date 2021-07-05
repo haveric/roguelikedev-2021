@@ -1,13 +1,21 @@
-import EventHandler from "./event/EventHandler";
 import UnableToPerformAction from "./actions/UnableToPerformAction";
 import sceneState from "./SceneState";
+import DefaultPlayerEventHandler from "./event/DefaultPlayerEventHandler";
 
 class Engine {
     constructor() {
-        this.eventHandler = new EventHandler();
+        this.eventHandler = new DefaultPlayerEventHandler();
         this.player = null;
         this.gameMap = null;
         this.needsMapUpdate = false;
+    }
+
+    setEventHandler(eventHandler) {
+        if (this.eventHandler) {
+            this.eventHandler.teardown();
+        }
+
+        this.eventHandler = eventHandler;
     }
 
     handleEvents() {

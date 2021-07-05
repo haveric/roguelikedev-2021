@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import Stats from "stats.js";
-import _Tile from "./entity/_Tile";
 import engine from "./Engine";
 
 class SceneState {
@@ -14,16 +13,11 @@ class SceneState {
         this.setupLights();
         this.updateCamera();
 
-        this.raycaster = new THREE.Raycaster();
-        this.mouse = new THREE.Vector2();
-        this.highlightedTile = null;
-
         this.stats = new Stats();
         this.stats.showPanel(0);
         document.body.appendChild(this.stats.dom);
 
         window.addEventListener( 'resize', this);
-        window.addEventListener("mousemove", this);
     }
 
     handleEvent(e) {
@@ -34,9 +28,6 @@ class SceneState {
                 if (this.player) {
                     this.updateCameraPosition(this.player);
                 }
-                break;
-            case "mousemove":
-                this.onMouseMove(e);
                 break;
         }
     }
@@ -69,48 +60,6 @@ class SceneState {
 
         this.camera.position.set(200 + playerObject.object.position.x, -200 + playerObject.object.position.y, 300);
         this.camera.lookAt(playerObject.object.position.x, playerObject.object.position.y, 0);
-        engine.needsMapUpdate = true;
-    }
-
-    onMouseMove(e) {
-        this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-        this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-
-        this.raycaster.setFromCamera(this.mouse, this.camera);
-
-        const intersects = this.raycaster.intersectObject(this.scene, true);
-
-        let anyFound = false;
-        for (let i = 0; i < intersects.length; i++) {
-            const object = intersects[i].object;
-            const parentEntity = object.parentEntity;
-            if (parentEntity && parentEntity instanceof _Tile) {
-                const parentObject = parentEntity.getComponent("positionalobject");
-                if (parentObject && !parentObject.highlighted) {
-                    if (this.highlightedTile !== null) {
-                        const object = this.highlightedTile.getComponent("positionalobject");
-                        if (object) {
-                            object.removeHighlight();
-                        }
-                    }
-                    this.highlightedTile = parentEntity;
-                    parentObject.highlight();
-                }
-
-                anyFound = true;
-                break;
-            }
-        }
-
-        if (!anyFound) {
-            if (this.highlightedTile !== null) {
-                const object = this.highlightedTile.getComponent("positionalobject");
-                if (object) {
-                    object.removeHighlight();
-                }
-            }
-        }
-
         engine.needsMapUpdate = true;
     }
 }
