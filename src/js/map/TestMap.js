@@ -3,7 +3,7 @@ import CharacterTile from "../entity/CharacterTile";
 import SolidTile from "../entity/SolidTile";
 import GameMap from "./GameMap";
 import Character from "../entity/Character";
-import gameState from "../GameState";
+import engine from "../Engine";
 
 export default class TestMap extends GameMap {
     constructor(width, height) {
@@ -37,12 +37,12 @@ export default class TestMap extends GameMap {
 
         for (let i = 7; i < 13; i++) {
             let goblin = new Character({name: "Goblin", x: i, y: 7, z: 1, letter: 'g', color: 0x33cc33});
-            gameState.gameMap.actors.push(goblin);
+            engine.gameMap.actors.push(goblin);
         }
 
-        gameState.player = new Character({name: "Player", x: 10, y: 10, z: 1, letter: '@', color: 0xffffff});
-        gameState.gameMap.actors.push(gameState.player);
-        const positionalObject = gameState.player.getComponent("positionalobject");
+        engine.player = new Character({name: "Player", x: 10, y: 10, z: 1, letter: '@', color: 0xffffff});
+        engine.gameMap.actors.push(engine.player);
+        const positionalObject = engine.player.getComponent("positionalobject");
         positionalObject.setVisible();
     }
 }

@@ -2,9 +2,9 @@ import GameMap from "./GameMap";
 import MapLayer from "./MapLayer";
 import CharacterTile from "../entity/CharacterTile";
 import SolidTile from "../entity/SolidTile";
-import gameState from "../GameState";
 import Character from "../entity/Character";
 import Item from "../entity/Item";
+import engine from "../Engine";
 
 export default class TutorialMap extends GameMap {
     constructor() {
@@ -136,18 +136,18 @@ export default class TutorialMap extends GameMap {
             }
         }
 
-        gameState.player = new Character({name: "Player", x: 21, y: 3, z: 1, letter: '@', color: 0xffffff});
-        gameState.gameMap.actors.push(gameState.player);
-        const positionalObject = gameState.player.getComponent("positionalobject");
+        engine.player = new Character({name: "Player", x: 21, y: 3, z: 1, letter: '@', color: 0xffffff});
+        engine.gameMap.actors.push(engine.player);
+        const positionalObject = engine.player.getComponent("positionalobject");
         positionalObject.setVisible();
 
-        gameState.gameMap.actors.push(new Character({name: "a", x: 27, y: 4, z: 1, letter: 'a', color: 0xffffff}));
-        gameState.gameMap.actors.push(new Character({name: "D", x: 18, y: 3, z: 1, letter: 'D', color: 0xffffff}));
-        gameState.gameMap.actors.push(new Character({name: "g", x: 5, y: 2, z: 1, letter: 'g', color: 0xffffff}));
+        engine.gameMap.actors.push(new Character({name: "a", x: 27, y: 4, z: 1, letter: 'a', color: 0xffffff}));
+        engine.gameMap.actors.push(new Character({name: "D", x: 18, y: 3, z: 1, letter: 'D', color: 0xffffff}));
+        engine.gameMap.actors.push(new Character({name: "g", x: 5, y: 2, z: 1, letter: 'g', color: 0xffffff}));
 
-        gameState.gameMap.items.push(new Item({name: "!", x: 3, y: 5, z: 1, letter: '!', color: 0xffffff}));
-        gameState.gameMap.items.push(new Item({name: "^", x: 6, y: 5, z: 1, letter: '^', color: 0xffffff}));
-        gameState.gameMap.items.push(new Item({name: "]", x: 28, y: 1, z: 1, letter: ']', color: 0xffffff}));
+        engine.gameMap.items.push(new Item({name: "!", x: 3, y: 5, z: 1, letter: '!', color: 0xffffff}));
+        engine.gameMap.items.push(new Item({name: "^", x: 6, y: 5, z: 1, letter: '^', color: 0xffffff}));
+        engine.gameMap.items.push(new Item({name: "]", x: 28, y: 1, z: 1, letter: ']', color: 0xffffff}));
 
 
     }

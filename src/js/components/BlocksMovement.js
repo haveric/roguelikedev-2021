@@ -5,7 +5,7 @@ export default class BlocksMovement extends _Component {
         if (args.components && args.components.blocksMovement) {
             args = {...args, ...args.components.blocksMovement};
         }
-        super({...args, ...{type: "blocksMovement"}});
+        super({...args, ...{baseType: "blocksMovement"}});
 
 
         // Whether the tile can moved into

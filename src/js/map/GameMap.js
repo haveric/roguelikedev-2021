@@ -2,7 +2,7 @@ import ArrayUtil from "../util/ArrayUtil";
 import MapLayer from "./MapLayer";
 import sceneState from "../SceneState";
 import entityLoader from "../entity/EntityLoader";
-import gameState from "../GameState";
+import engine from "../Engine";
 
 export default class GameMap {
     constructor(width, height) {
@@ -152,7 +152,7 @@ export default class GameMap {
             for (const actor of actors) {
                 const createdActor = entityLoader.create(actor);
                 if (createdActor.name === 'Player') {
-                    gameState.player = createdActor;
+                    engine.player = createdActor;
                 }
                 this.actors.push(createdActor);
             }
@@ -162,10 +162,14 @@ export default class GameMap {
                 this.items.push(createdItem);
             }
 
-            const positionalObject = gameState.player.getComponent("positionalobject");
+            const positionalObject = engine.player.getComponent("positionalobject");
             positionalObject.setVisible();
-            sceneState.updateCameraPosition(gameState.player);
+            sceneState.updateCameraPosition(engine.player);
         }
+    }
+
+    isInBounds(x, y) {
+        return 0 <= x && x < this.width && 0 <= y && y < this.height;
     }
 
     draw(x, y, range) {

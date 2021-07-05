@@ -5,7 +5,7 @@ export default class Walkable extends _Component {
         if (args.components && args.components.walkable) {
             args = {...args, ...args.components.walkable};
         }
-        super({...args, ...{type: "walkable"}});
+        super({...args, ...{baseType: "walkable"}});
 
         // Can walk on top of
         this.walkable = args.walkable || false;
