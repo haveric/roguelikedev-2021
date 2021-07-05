@@ -100,6 +100,7 @@ class Controls {
 
         self.defaults.set("save", ["F8"]);
         self.defaults.set("load", ["F9"]);
+        self.defaults.set("debug", ["F2"]);
 
         self.defaults.set("reset", ["r", Btn.START]);
 

@@ -28,19 +28,33 @@ export default class MapGeneration {
                 return;
             }
 
+            let startY = y1;
+            let endY = y2;
+            if (y1 > y2) {
+                startY = y2;
+                endY = y1;
+            }
             for (let i = x1 - 1; i <= x1 + 1; i++) {
-                for (let j = y1; j <= y2; j++) {
+                for (let j = startY; j <= endY; j++) {
                     this.bresenhamCreateTiles(gameMap, i === x1, i, j);
                 }
             }
         } else {
+            let startX = x1;
+            let endX = x2;
+            if (x1 > x2) {
+                startX = x2;
+                endX = x1;
+            }
+
             for (let j = y1 - 1; j <= y1 + 1; j++) {
-                for (let i = x1; i <= x2; i++) {
+                for (let i = startX; i <= endX; i++) {
                     this.bresenhamCreateTiles(gameMap, j === y1, i, j);
                 }
             }
         }
     }
+
 
     static bresenhamCreateTiles(gameMap, createWall, i, j) {
         if (createWall) {

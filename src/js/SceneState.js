@@ -94,6 +94,7 @@ class SceneState {
                         }
                     }
                     this.highlightedTile = parentEntity;
+                    console.log(parentObject.x, parentObject.y, parentObject.z);
                     parentObject.highlight();
                 }
 

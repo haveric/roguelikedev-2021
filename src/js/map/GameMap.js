@@ -172,6 +172,23 @@ export default class GameMap {
         return 0 <= x && x < this.width && 0 <= y && y < this.height;
     }
 
+    reveal() {
+        const tileIter = this.tiles.entries();
+        for (const entry of tileIter) {
+            for (let i = 0; i < this.width; i++) {
+                for (let j = 0; j < this.height; j++) {
+                    const tile = entry[1][i][j];
+                    if (tile) {
+                        const tileObject = tile.getComponent("positionalobject");
+                        if (tileObject) {
+                            tileObject.setVisible();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     draw(x, y, range) {
         const left = Math.max(0, x - range);
         const right = Math.min(this.width, x + range);

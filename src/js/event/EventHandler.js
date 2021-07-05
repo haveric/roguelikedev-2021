@@ -31,6 +31,9 @@ export default class EventHandler {
             engine.gameMap.save("save1");
         } else if (controls.testPressed("load", 1000)) {
             engine.gameMap.load("save1");
+        } else if (controls.testPressed("debug")) {
+            engine.gameMap.reveal();
+            engine.needsMapUpdate = true;
         }
 
         return action;
