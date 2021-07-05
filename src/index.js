@@ -5,9 +5,6 @@ import gameState from "./js/GameState";
 import TutorialMap from "./js/map/TutorialMap";
 
 ;(function () {
-    let secondsPassed,
-        oldTimeStamp;
-
     const init = function() {
         //gameState.gameMap = new TestMap(20, 20);
         gameState.gameMap = new TutorialMap();
@@ -16,26 +13,14 @@ import TutorialMap from "./js/map/TutorialMap";
         sceneState.updateCameraPosition(gameState.player);
 
         sceneState.renderer.setAnimationLoop(animation);
-
+        updateRender();
     }
 
     const animation = function(time) {
         sceneState.stats.begin();
-        // Calculate the number of seconds passed since the last frame
-        secondsPassed = (time - oldTimeStamp) / 1000;
-        oldTimeStamp = time;
-
-        // Move forward in time with a maximum amount
-        secondsPassed = Math.min(secondsPassed, 0.1);
 
         handleInput(time);
 
-        const playerPosition = gameState.player.getComponent("positionalobject");
-        if (playerPosition) {
-            gameState.gameMap.draw(playerPosition.x, playerPosition.y, 5);
-        }
-
-        sceneState.renderer.render(sceneState.scene, sceneState.camera);
         sceneState.stats.end();
     }
 
@@ -70,8 +55,18 @@ import TutorialMap from "./js/map/TutorialMap";
 
             if (px !== position.x || py !== position.y) {
                 sceneState.updateCameraPosition(gameState.player);
+                updateRender();
             }
         }
+    }
+
+    const updateRender = function() {
+        const playerPosition = gameState.player.getComponent("positionalobject");
+        if (playerPosition) {
+            gameState.gameMap.draw(playerPosition.x, playerPosition.y, 5);
+        }
+
+        sceneState.renderer.render(sceneState.scene, sceneState.camera);
     }
 
     init();
