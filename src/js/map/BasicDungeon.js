@@ -7,6 +7,7 @@ import RandomUtil from "../util/RandomUtil";
 import MapLayer from "./MapLayer";
 import SolidTile from "../entity/SolidTile";
 import CharacterTile from "../entity/CharacterTile";
+import sceneState from "../SceneState";
 
 export default class BasicDungeon extends GameMap {
     constructor(width, height, args = {}) {
@@ -57,6 +58,7 @@ export default class BasicDungeon extends GameMap {
                 engine.gameMap.actors.push(engine.player);
                 const positionalObject = engine.player.getComponent("positionalobject");
                 positionalObject.setVisible();
+                sceneState.updateCameraPosition(engine.player);
             } else {
                 const lastRoom = rooms[rooms.length - 1];
                 MapGeneration.tunnelBetween(this, lastRoom.getCenterX(), lastRoom.getCenterY(), newRoom.getCenterX(), newRoom.getCenterY());

@@ -1,6 +1,8 @@
 import engine from "../Engine";
 import controls from "../controls/Controls";
 import MovementAction from "../actions/MovementAction";
+import TutorialMap from "../map/TutorialMap";
+import BasicDungeon from "../map/BasicDungeon";
 
 export default class EventHandler {
     constructor() {
@@ -33,6 +35,16 @@ export default class EventHandler {
             engine.gameMap.load("save1");
         } else if (controls.testPressed("debug")) {
             engine.gameMap.reveal();
+            engine.needsMapUpdate = true;
+        } else if (controls.testPressed("debug2")) {
+            engine.gameMap.teardown();
+            engine.gameMap = new TutorialMap();
+            engine.gameMap.create();
+            engine.needsMapUpdate = true;
+        } else if (controls.testPressed("reset")) {
+            engine.gameMap.teardown();
+            engine.gameMap = new BasicDungeon(50, 50);
+            engine.gameMap.create();
             engine.needsMapUpdate = true;
         }
 

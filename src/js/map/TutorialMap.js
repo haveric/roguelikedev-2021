@@ -5,6 +5,7 @@ import SolidTile from "../entity/SolidTile";
 import Character from "../entity/Character";
 import Item from "../entity/Item";
 import engine from "../Engine";
+import sceneState from "../SceneState";
 
 export default class TutorialMap extends GameMap {
     constructor() {
@@ -76,62 +77,44 @@ export default class TutorialMap extends GameMap {
         for (let j = 0; j < this.height; j++) {
             for (let i = 0; i < this.width; i++) {
                 const floorChar = this.floor[this.height - j - 1].charAt(i);
-                let floorTile;
                 switch(floorChar) {
                     case "#":
-                        floorTile = this.tiles.get(MapLayer.Floor)[i][j] = new SolidTile({name: "Floor", x: i, y: j, z: 0, scale: 1, color: 0x666666});
+                        this.tiles.get(MapLayer.Floor)[i][j] = new SolidTile({name: "Floor", x: i, y: j, z: 0, scale: 1, color: 0x666666});
                         break;
                     case "≈":
-                        floorTile = this.tiles.get(MapLayer.Floor)[i][j] = new CharacterTile({name: "Water", x: i, y: j, z: 0, scale: .7, letter: "≈", color: 0x3333cc, blocksMovement:false});
+                        this.tiles.get(MapLayer.Floor)[i][j] = new CharacterTile({name: "Water", x: i, y: j, z: 0, scale: .7, letter: "≈", color: 0x3333cc, blocksMovement:false});
                         break;
                 }
-                if (floorTile) {
-                    floorTile.getComponent("positionalobject").setVisible();
-                }
 
-
-                let wallTile;
                 const wallChar = this.wall[this.height - j - 1].charAt(i);
                 switch(wallChar) {
                     case "#":
-                        wallTile = this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Wall", x: i, y: j, z: 1, scale: 1, letter: "#", color: 0x333333});
+                        this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Wall", x: i, y: j, z: 1, scale: 1, letter: "#", color: 0x333333});
                         break;
                     case "=":
-                        wallTile = this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Wall", x: i, y: j, z: 1, scale: 1, letter: "#", color: 0x4d4d4d});
+                        this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Wall", x: i, y: j, z: 1, scale: 1, letter: "#", color: 0x4d4d4d});
                         break;
                     case "+":
-                        wallTile = this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Door", x: i, y: j, z: 1, scale: 1, letter: "+", color: 0x964b00});
+                        this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Door", x: i, y: j, z: 1, scale: 1, letter: "+", color: 0x964b00});
                         break;
                     case ">":
-                        wallTile = this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Stairs Up", x: i, y: j, z: 1, scale: .75, letter: ">", color: 0xffffff, blocksMovement: false});
+                        this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Stairs Up", x: i, y: j, z: 1, scale: .75, letter: ">", color: 0xffffff, blocksMovement: false});
                         break;
                 }
-                if (wallTile) {
-                    wallTile.getComponent("positionalobject").setVisible();
-                }
 
-                let overlayTile,
-                    overlayBGTile;
                 let overlayChar = this.overlay[this.height - j - 1].charAt(i);
                 if (overlayChar !== "#") {
                     if (overlayChar !== ".") {
-                        overlayBGTile = this.tiles.get(MapLayer.DecorativeBG)[i][j] = new SolidTile({name: "Backing", x: i, y: j, z: 2, scale: .05, color: 0x000001});
+                        this.tiles.get(MapLayer.DecorativeBG)[i][j] = new SolidTile({name: "Backing", x: i, y: j, z: 2, scale: .05, color: 0x000001});
                     }
 
                     if (overlayChar !== " " && overlayChar !== ".") {
                         if (overlayChar === "_") {
                             overlayChar = ".";
                         }
-                        overlayTile = this.tiles.get(MapLayer.Decorative)[i][j] = new CharacterTile({name: "Art", x: i, y: j, z: 2.05, scale: .1, letter: overlayChar, color: overlayColors[overlayColorIndex]});
+                        this.tiles.get(MapLayer.Decorative)[i][j] = new CharacterTile({name: "Art", x: i, y: j, z: 2.05, scale: .1, letter: overlayChar, color: overlayColors[overlayColorIndex]});
                         overlayColorIndex ++;
                     }
-                }
-
-                if (overlayBGTile) {
-                    overlayBGTile.getComponent("positionalobject").setVisible();
-                }
-                if (overlayTile) {
-                    overlayTile.getComponent("positionalobject").setVisible();
                 }
             }
         }
@@ -140,6 +123,7 @@ export default class TutorialMap extends GameMap {
         engine.gameMap.actors.push(engine.player);
         const positionalObject = engine.player.getComponent("positionalobject");
         positionalObject.setVisible();
+        sceneState.updateCameraPosition(engine.player);
 
         engine.gameMap.actors.push(new Character({name: "a", x: 27, y: 4, z: 1, letter: 'a', color: 0xffffff}));
         engine.gameMap.actors.push(new Character({name: "D", x: 18, y: 3, z: 1, letter: 'D', color: 0xffffff}));
