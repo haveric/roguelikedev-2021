@@ -13,13 +13,17 @@ import TutorialMap from "./js/map/TutorialMap";
         sceneState.updateCameraPosition(gameState.player);
 
         sceneState.renderer.setAnimationLoop(animation);
-        updateRender();
+        gameState.needsMapUpdate = true;
     }
 
     const animation = function(time) {
         sceneState.stats.begin();
 
         handleInput(time);
+        if (gameState.needsMapUpdate) {
+            updateRender();
+            gameState.needsMapUpdate = false;
+        }
 
         sceneState.stats.end();
     }
@@ -55,7 +59,7 @@ import TutorialMap from "./js/map/TutorialMap";
 
             if (px !== position.x || py !== position.y) {
                 sceneState.updateCameraPosition(gameState.player);
-                updateRender();
+                gameState.needsMapUpdate = true;
             }
         }
     }

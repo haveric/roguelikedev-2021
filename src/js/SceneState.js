@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import Stats from "stats.js";
 import _Tile from "./entity/_Tile";
+import gameState from "./GameState";
 
 class SceneState {
     constructor() {
@@ -108,6 +109,8 @@ class SceneState {
                 }
             }
         }
+
+        gameState.needsMapUpdate = true;
     }
 }
 

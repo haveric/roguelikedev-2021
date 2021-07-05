@@ -181,22 +181,24 @@ export default class GameMap {
                     const tile = entry[1][i][j];
                     if (tile) {
                         const tileObject = tile.getComponent("positionalobject");
-                        if (tileObject && !tileObject.isVisible()) {
-                            tileObject.setVisible();
-                            sceneState.scene.add(tileObject.object);
-                        }
-
-                        const xDiff = Math.abs(x - i);
-                        const yDiff = Math.abs(y - j);
-                        if (tileObject.z >= 1 && xDiff <= 1 && yDiff <= 1) {
-                            if (tileObject.z > 1) {
-                                tileObject.object.material.transparent = true;
-                                tileObject.object.material.opacity = .1;
-                            } else {
-                                tileObject.object.material.opacity = .5;
+                        if (tileObject) {
+                            if (!tileObject.isVisible()) {
+                                tileObject.setVisible();
+                                sceneState.scene.add(tileObject.object);
                             }
-                        } else {
-                            tileObject.object.material.opacity = 1;
+
+                            const xDiff = Math.abs(x - i);
+                            const yDiff = Math.abs(y - j);
+                            if (tileObject.z >= 1 && xDiff <= 1 && yDiff <= 1) {
+                                tileObject.object.material.transparent = true;
+                                if (tileObject.z > 1) {
+                                    tileObject.object.material.opacity = .1;
+                                } else {
+                                    tileObject.object.material.opacity = .5;
+                                }
+                            } else {
+                                tileObject.object.material.opacity = 1;
+                            }
                         }
                     }
 
