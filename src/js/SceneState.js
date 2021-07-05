@@ -69,6 +69,7 @@ class SceneState {
 
         this.camera.position.set(200 + playerObject.object.position.x, -200 + playerObject.object.position.y, 300);
         this.camera.lookAt(playerObject.object.position.x, playerObject.object.position.y, 0);
+        engine.needsMapUpdate = true;
     }
 
     onMouseMove(e) {
