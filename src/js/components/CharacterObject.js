@@ -39,7 +39,7 @@ export default class CharacterObject extends _PositionalObject {
             bevelThickness: .05,
             bevelSize: .05,
             bevelOffset: 0,
-            bevelSegments: 5
+            bevelSegments: 1
         });
 
         this.object = new THREE.Mesh(
