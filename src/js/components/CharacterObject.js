@@ -11,12 +11,6 @@ export default class CharacterObject extends _PositionalObject {
 
         this.font = args.font || helvetikerFont;
         this.letter = args.letter || '@';
-
-        this.xRot = args.xRot || 0;
-        this.yRot = args.yRot || 0;
-        this.xOffset = args.xOffset || 0;
-        this.yOffset = args.yOffset || 0;
-        this.zOffset = args.zOffset || 0;
     }
 
     save() {
@@ -50,7 +44,7 @@ export default class CharacterObject extends _PositionalObject {
         this.updateObjectPosition();
         this.object.rotateX(Math.PI * this.xRot);
         this.object.rotateY(Math.PI * this.yRot);
-
+        this.object.rotateZ(Math.PI * this.zRot);
         this.object.parentEntity = this.parentEntity;
     }
 

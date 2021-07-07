@@ -18,6 +18,13 @@ export default class _PositionalObject extends _Component {
         this.height = 5;
         this.depth = 5;
         this.scale = args.scale || 1;
+
+        this.xRot = args.xRot || 0;
+        this.yRot = args.yRot || 0;
+        this.zRot = args.zRot || 0;
+        this.xOffset = args.xOffset || 0;
+        this.yOffset = args.yOffset || 0;
+        this.zOffset = args.zOffset || 0;
     }
 
     save() {
@@ -31,6 +38,12 @@ export default class _PositionalObject extends _Component {
                 x: this.x,
                 y: this.y,
                 z: this.z,
+                xRot: this.xRot,
+                yRot: this.yRot,
+                zRot: this.zRot,
+                xOffset: this.xOffset,
+                yOffset: this.yOffset,
+                zOffset: this.zOffset,
                 color: this.color,
                 scale: this.scale
             }

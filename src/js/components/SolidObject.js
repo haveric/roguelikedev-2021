@@ -17,6 +17,9 @@ export default class SolidObject extends _PositionalObject {
         );
 
         this.updateObjectPosition();
+        this.object.rotateX(Math.PI * this.xRot);
+        this.object.rotateY(Math.PI * this.yRot);
+        this.object.rotateZ(Math.PI * this.zRot);
         this.object.parentEntity = this.parentEntity;
     }
 }

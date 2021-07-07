@@ -90,6 +90,11 @@ class Controls {
         self.defaults.set("up", [Key.UP, "w", Key.NUMPAD_8, Btn.UP, Btn.LEFT_STICK_UP]);
         self.defaults.set("down", [Key.DOWN, "s", Key.NUMPAD_2, Btn.DOWN, Btn.LEFT_STICK_DOWN]);
 
+        self.defaults.set("editor-left", [Key.LEFT, Btn.LEFT, Btn.LEFT_STICK_LEFT]);
+        self.defaults.set("editor-right", [Key.RIGHT, Btn.RIGHT, Btn.LEFT_STICK_RIGHT]);
+        self.defaults.set("editor-up", [Key.UP, Btn.UP, Btn.LEFT_STICK_UP]);
+        self.defaults.set("editor-down", [Key.DOWN, Btn.DOWN, Btn.LEFT_STICK_DOWN]);
+
         self.defaults.set("nw", [Key.NUMPAD_7]);
         self.defaults.set("ne", [Key.NUMPAD_9]);
         self.defaults.set("sw", [Key.NUMPAD_1]);

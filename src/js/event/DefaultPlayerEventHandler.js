@@ -6,6 +6,9 @@ import BasicDungeon from "../map/BasicDungeon";
 import _Tile from "../entity/_Tile";
 import sceneState from "../SceneState";
 import EventHandler from "./_EventHandler";
+import editorControls from "../ui/EditorControls";
+import EditorEventHandler from "./EditorEventHandler";
+import editorInfo from "../ui/EditorInfo";
 
 export default class DefaultPlayerEventHandler extends EventHandler {
     constructor() {
@@ -14,7 +17,20 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         this.highlightedTile = null;
     }
 
-    teardown() {}
+    teardown() {
+        super.teardown();
+
+        this.clearHighlight();
+    }
+
+    clearHighlight() {
+        if (this.highlightedTile !== null) {
+            const object = this.highlightedTile.getComponent("positionalobject");
+            if (object) {
+                object.removeHighlight();
+            }
+        }
+    }
 
     handleInput() {
         let action = null;
@@ -43,6 +59,9 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         } else if (controls.testPressed("debug")) {
             engine.gameMap.reveal();
             engine.needsMapUpdate = true;
+            engine.setEventHandler(new EditorEventHandler());
+            editorControls.show();
+            editorInfo.show();
         } else if (controls.testPressed("debug2")) {
             engine.gameMap.teardown();
             engine.gameMap = new TutorialMap();
@@ -72,13 +91,8 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             const parentEntity = object.parentEntity;
             if (parentEntity && parentEntity instanceof _Tile) {
                 const parentObject = parentEntity.getComponent("positionalobject");
-                if (parentObject && !parentObject.highlighted) {
-                    if (this.highlightedTile !== null) {
-                        const object = this.highlightedTile.getComponent("positionalobject");
-                        if (object) {
-                            object.removeHighlight();
-                        }
-                    }
+                if (parentObject) {
+                    this.clearHighlight();
                     this.highlightedTile = parentEntity;
                     parentObject.highlight();
                 }
@@ -89,21 +103,10 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         }
 
         if (!anyFound) {
-            if (this.highlightedTile !== null) {
-                const object = this.highlightedTile.getComponent("positionalobject");
-                if (object) {
-                    object.removeHighlight();
-                }
-            }
+            this.clearHighlight();
         }
 
         engine.needsMapUpdate = true;
     }
 
-    onLeftClick(e) {
-    }
-
-    onRightClick(e) {
-        e.preventDefault();
-    }
 }
