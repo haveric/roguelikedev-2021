@@ -69,7 +69,7 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             engine.needsMapUpdate = true;
         } else if (controls.testPressed("reset")) {
             engine.gameMap.teardown();
-            engine.gameMap = new BasicDungeon(50, 50);
+            engine.gameMap = new BasicDungeon(100, 100);
             engine.gameMap.create();
             engine.needsMapUpdate = true;
         }
