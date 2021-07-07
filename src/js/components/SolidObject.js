@@ -1,6 +1,7 @@
 import _PositionalObject from "./_PositionalObject";
 import * as THREE from "three";
 
+const cachedSolidGeometries = [];
 export default class SolidObject extends _PositionalObject {
     constructor(args = {}) {
         if (args.components && args.components.solidobject) {
@@ -10,7 +11,21 @@ export default class SolidObject extends _PositionalObject {
     }
 
     createObject() {
-        this.geometry = new THREE.BoxBufferGeometry(this.width, this.height, this.scale * this.depth);
+        const newDepth = this.scale * this.depth;
+
+        let anyFound = false;
+        for (const geometry of cachedSolidGeometries) {
+            if (geometry.parameters.depth === newDepth) {
+                this.geometry = geometry;
+                anyFound = true;
+                break;
+            }
+        }
+
+        if (!anyFound) {
+            this.geometry = new THREE.BoxBufferGeometry(this.width, this.height, newDepth);
+            cachedSolidGeometries.push(this.geometry);
+        }
         this.object = new THREE.Mesh(
             this.geometry,
             new THREE.MeshLambertMaterial({color: this.color})

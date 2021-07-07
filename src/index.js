@@ -5,7 +5,7 @@ import BasicDungeon from "./js/map/BasicDungeon";
 
 ;(function () {
     const init = function() {
-        engine.gameMap = new BasicDungeon(50, 50);
+        engine.gameMap = new BasicDungeon(100, 100);
         engine.gameMap.create();
 
         sceneState.updateCameraPosition(engine.player);

@@ -24,10 +24,12 @@ export default class CharacterObject extends _PositionalObject {
     }
 
     createObject() {
+        const newHeight = this.scale * this.depth;
+
         const font = new THREE.Font(this.font);
         let anyFound = false;
         for (const geometry of cachedTextGeometries) {
-            if (geometry.parameters.options.font.data.familyName === font.data.familyName && geometry.parameters.options.height === this.scale * this.depth && geometry.letter === this.letter) {
+            if (geometry.parameters.options.font.data.familyName === font.data.familyName && geometry.parameters.options.height === newHeight && geometry.letter === this.letter) {
                 this.geometry = geometry;
                 anyFound = true;
                 break;
@@ -38,7 +40,7 @@ export default class CharacterObject extends _PositionalObject {
             this.geometry = new THREE.TextGeometry(this.letter, {
                 font: font,
                 size: 4.1 / 5 * this.depth,
-                height: this.scale * this.depth,
+                height: newHeight,
                 curveSegments: 24,
                 bevelEnabled: true,
                 bevelThickness: .05,
