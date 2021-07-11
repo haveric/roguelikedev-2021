@@ -1,6 +1,7 @@
 import UnableToPerformAction from "./actions/UnableToPerformAction";
 import sceneState from "./SceneState";
 import DefaultPlayerEventHandler from "./event/DefaultPlayerEventHandler";
+import SimpleFov from "./map/fov/SimpleFov";
 
 class Engine {
     constructor() {
@@ -8,6 +9,7 @@ class Engine {
         this.player = null;
         this.gameMap = null;
         this.needsMapUpdate = false;
+        this.fov = new SimpleFov();
     }
 
     setEventHandler(eventHandler) {

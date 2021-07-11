@@ -29,7 +29,8 @@ import BasicDungeon from "./js/map/BasicDungeon";
     const updateRender = function() {
         const playerPosition = engine.player.getComponent("positionalobject");
         if (playerPosition) {
-            engine.gameMap.draw(playerPosition.x, playerPosition.y, 5);
+            engine.gameMap.updateFOV(playerPosition.x, playerPosition.y, 5);
+            engine.gameMap.draw(playerPosition.x, playerPosition.y);
         }
 
         sceneState.renderer.render(sceneState.scene, sceneState.camera);

@@ -3,6 +3,7 @@ import MapLayer from "./MapLayer";
 import sceneState from "../SceneState";
 import entityLoader from "../entity/EntityLoader";
 import engine from "../Engine";
+import _Tile from "../entity/_Tile";
 
 export default class GameMap {
     constructor(width, height) {
@@ -189,63 +190,50 @@ export default class GameMap {
         }
     }
 
-    draw(x, y, range) {
-        const left = Math.max(0, x - range);
-        const right = Math.min(this.width, x + range);
-        const top = Math.max(0, y - range);
-        const bottom = Math.min(this.height, y + range);
+    updateFOV(x, y, range) {
+        engine.fov.compute(engine.gameMap, x, y, range);
+    }
 
-        const tileIter = this.tiles.entries();
-        for (const entry of tileIter) {
-            for (let i = left; i < right; i++) {
-                for (let j = top; j < bottom; j++) {
-                    const tile = entry[1][i][j];
-                    if (tile) {
-                        const tileObject = tile.getComponent("positionalobject");
-                        if (tileObject) {
-                            if (!tileObject.isVisible()) {
-                                tileObject.setVisible();
-                                sceneState.scene.add(tileObject.object);
-                            }
+    draw(x, y) {
+        const newObjects = engine.fov.newObjects;
+        for (const newObject of newObjects) {
+            const object = newObject.getComponent("positionalobject");
+            if (object) {
+                if (!object.isVisible()) {
+                    object.setVisible();
+                    sceneState.scene.add(object.object);
+                } else {
+                    object.object.material.color.set(object.color);
+                }
+            }
+        }
 
-                            const xDiff = Math.abs(x - i);
-                            const yDiff = Math.abs(y - j);
-                            if (tileObject.z >= 1 && xDiff <= 1 && yDiff <= 1) {
-                                tileObject.object.material.transparent = true;
-                                if (tileObject.z > 1) {
-                                    tileObject.object.material.opacity = .1;
-                                } else {
-                                    tileObject.object.material.opacity = .5;
-                                }
-                            } else {
-                                tileObject.object.material.opacity = 1;
-                            }
+        const visibleObjects = engine.fov.visibleObjects;
+        for (const visibleObject of visibleObjects) {
+            if (visibleObject instanceof _Tile) {
+                const object = visibleObject.getComponent("positionalobject");
+                if (object) {
+                    const xDiff = Math.abs(x - object.x);
+                    const yDiff = Math.abs(y - object.y);
+                    if (object.z >= 1 && xDiff <= 1 && yDiff <= 1) {
+                        object.object.material.transparent = true;
+                        if (object.z > 1) {
+                            object.object.material.opacity = .1;
+                        } else {
+                            object.object.material.opacity = .5;
                         }
+                    } else {
+                        object.object.material.opacity = 1;
                     }
-
                 }
             }
         }
 
-        for (let actor of this.actors) {
-            const positionalObject = actor.getComponent("positionalobject");
-            if (positionalObject) {
-                if (Math.abs(positionalObject.x - x) <= range && Math.abs(positionalObject.y - y) <= range) {
-                    positionalObject.setVisible();
-                } else {
-                    positionalObject.setVisible(false);
-                }
-            }
-        }
-
-        for (let item of this.items) {
-            const positionalObject = item.getComponent("positionalobject");
-            if (positionalObject) {
-                if (Math.abs(positionalObject.x - x) <= range && Math.abs(positionalObject.y - y) <= range) {
-                    positionalObject.setVisible();
-                } else {
-                    positionalObject.setVisible(false);
-                }
+        const oldObjects = engine.fov.oldObjects;
+        for (const oldObject of oldObjects) {
+            const object = oldObject.getComponent("positionalobject");
+            if (object) {
+                object.object.material.color.multiplyScalar(.5);
             }
         }
     }

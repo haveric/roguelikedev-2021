@@ -101,6 +101,14 @@ export default class _PositionalObject extends _Component {
         if (this.highlighted) {
             if (this.hasObject()) {
                 this.object.material.color.set(this.color);
+
+                const parent = this.parent;
+                if (parent) {
+                    const fov = parent.getComponent("fov");
+                    if (fov && fov.explored && !fov.visible) {
+                        this.object.material.color.multiplyScalar(.5);
+                    }
+                }
             }
             this.highlighted = false;
         }
