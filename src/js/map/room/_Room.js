@@ -1,5 +1,5 @@
 export default class Room {
-    constructor() {
+    constructor() {}
 
-    }
+    placeEntities() { }
 }

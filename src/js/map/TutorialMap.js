@@ -132,7 +132,5 @@ export default class TutorialMap extends GameMap {
         engine.gameMap.items.push(new Item({name: "!", x: 3, y: 5, z: 1, letter: '!', color: 0xffffff}));
         engine.gameMap.items.push(new Item({name: "^", x: 6, y: 5, z: 1, letter: '^', color: 0xffffff}));
         engine.gameMap.items.push(new Item({name: "]", x: 28, y: 1, z: 1, letter: ']', color: 0xffffff}));
-
-
     }
 }

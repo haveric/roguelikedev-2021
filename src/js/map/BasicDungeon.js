@@ -1,13 +1,11 @@
 import GameMap from "./GameMap";
 import RectangularRoom from "./room/RectangularRoom";
 import engine from "../Engine";
-import Character from "../entity/Character";
 import MapGeneration from "./mapGeneration/MapGeneration";
 import RandomUtil from "../util/RandomUtil";
 import MapLayer from "./MapLayer";
-import SolidTile from "../entity/SolidTile";
-import CharacterTile from "../entity/CharacterTile";
 import sceneState from "../SceneState";
+import entityLoader from "../entity/EntityLoader";
 
 export default class BasicDungeon extends GameMap {
     constructor(width, height, args = {}) {
@@ -16,7 +14,7 @@ export default class BasicDungeon extends GameMap {
         this.maxRooms = args.maxRooms || 30;
         this.roomMinSize = args.roomMinSize || 6;
         this.roomMaxSize = args.roomMaxSize || 10;
-
+        this.maxMonstersPerRoom = args.maxMonstersPerRoom || 2;
     }
 
     create() {
@@ -25,8 +23,8 @@ export default class BasicDungeon extends GameMap {
         // Pre-fill with floor and walls
         for (let j = 0; j < this.height; j++) {
             for (let i = 0; i < this.width; i++) {
-                this.tiles.get(MapLayer.Floor)[i][j] = new SolidTile({name: "Floor", x: i, y: j, z: 0, scale: 1, color: 0x333333});
-                this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Wall", x: i, y: j, z: 1, scale: 1, letter: "#", color: 0x666666});
+                this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {x: i, y: j, z: 0});
+                this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {x: i, y: j, z: 1});
             }
         }
 
@@ -54,7 +52,13 @@ export default class BasicDungeon extends GameMap {
             newRoom.createRoom(this);
 
             if (rooms.length === 0) {
-                engine.player = new Character({name: "Player", x: newRoom.getCenterX(), y: newRoom.getCenterY(), z: 1, letter: '@', color: 0xffffff});
+                const position = {
+                    x: newRoom.getCenterX(),
+                    y: newRoom.getCenterY(),
+                    z: 1
+                };
+
+                engine.player = entityLoader.createFromTemplate('Player', position);
                 engine.gameMap.actors.push(engine.player);
                 const positionalObject = engine.player.getComponent("positionalobject");
                 positionalObject.setVisible();
@@ -63,6 +67,8 @@ export default class BasicDungeon extends GameMap {
                 const lastRoom = rooms[rooms.length - 1];
                 MapGeneration.tunnelBetween(this, lastRoom.getCenterX(), lastRoom.getCenterY(), newRoom.getCenterX(), newRoom.getCenterY());
             }
+
+            newRoom.placeEntities(this.maxMonstersPerRoom);
 
             rooms.push(newRoom);
         }

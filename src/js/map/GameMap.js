@@ -237,4 +237,20 @@ export default class GameMap {
             }
         }
     }
+
+    getBlockingActorAtLocation(x, y) {
+        let blockingActor = null;
+        for (const actor of this.actors) {
+            const position = actor.getComponent("positionalobject");
+            if (position && x === position.x && y === position.y) {
+                const component = actor.getComponent("blocksMovement");
+                if (component && component.blocksMovement) {
+                    blockingActor = actor;
+                    break;
+                }
+            }
+        }
+
+        return blockingActor;
+    }
 }

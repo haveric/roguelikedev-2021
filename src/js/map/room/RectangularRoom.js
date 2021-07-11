@@ -1,6 +1,9 @@
 import MapLayer from "../MapLayer";
 import SolidTile from "../../entity/SolidTile";
 import CharacterTile from "../../entity/CharacterTile";
+import {MathUtils} from "three";
+import engine from "../../Engine";
+import entityLoader from "../../entity/EntityLoader";
 
 export default class RectangularRoom {
     constructor(x, y, width, height) {
@@ -49,6 +52,27 @@ export default class RectangularRoom {
                         gameMap.tiles.get(MapLayer.Wall)[i][j] = null;
                     }
                 }
+            }
+        }
+    }
+
+    placeEntities(maxMonsters) {
+        const numMonsters = MathUtils.randInt(0, maxMonsters);
+        for (let i = 0; i < numMonsters; i++) {
+            const x = MathUtils.randInt(this.x1 + 1, this.x2 -1);
+            const y = MathUtils.randInt(this.y1 + 1, this.y2 -1);
+
+            const blockingActor = engine.gameMap.getBlockingActorAtLocation(x, y);
+            if (!blockingActor) {
+                const position = {x: x, y: y, z: 1};
+                let actor;
+                if (Math.random() < 0.8) {
+                    actor = entityLoader.createFromTemplate('Orc', position);
+                } else {
+                    actor = entityLoader.createFromTemplate('Troll', position);
+                }
+
+                engine.gameMap.actors.push(actor);
             }
         }
     }

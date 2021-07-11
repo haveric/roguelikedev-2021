@@ -1,0 +1,21 @@
+[
+    {
+        "type": "solidtile",
+        "name": "Floor",
+        "components": {
+            "solidobject": {
+                "color": "#333333"
+            }
+        }
+    },
+    {
+        "type": "charactertile",
+        "name": "Wall",
+        "components": {
+            "characterobject": {
+                "letter": "#",
+                "color": "#666666"
+            }
+        }
+    }
+]

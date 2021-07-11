@@ -1,0 +1,12 @@
+[
+    {
+        "type": "character",
+        "name": "Player",
+        "components": {
+            "characterobject": {
+                "letter": "@",
+                "color": "#ffffff"
+            }
+        }
+    }
+]

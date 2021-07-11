@@ -1,0 +1,22 @@
+[
+    {
+        "type": "character",
+        "name": "Orc",
+        "components": {
+            "characterobject": {
+                "letter": "o",
+                "color": "#3f7f3f"
+            }
+        }
+    },
+    {
+        "type": "character",
+        "name": "Troll",
+        "components": {
+            "characterobject": {
+                "letter": "T",
+                "color": "#007f00"
+            }
+        }
+    }
+]
