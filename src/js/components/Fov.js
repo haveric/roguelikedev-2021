@@ -9,8 +9,6 @@ export default class Fov extends _Component{
 
         this.explored = args.explored || false;
         this.visible = args.visible || false;
-
-
     }
 
     save() {

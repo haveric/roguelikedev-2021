@@ -1,4 +1,5 @@
 import Fov from "../../components/Fov";
+import engine from "../../Engine";
 
 export default class BaseFov {
     constructor() {
@@ -8,7 +9,7 @@ export default class BaseFov {
         this.newObjects = [];
     }
 
-    compute(gameMap, x, y, radius) {
+    compute(x, y, radius) {
         this.previousVisibleObjects = this.visibleObjects;
         this.visibleObjects = [];
         this.oldObjects = [];
@@ -38,8 +39,8 @@ export default class BaseFov {
         }
     }
 
-    exploreTile(gameMap, x, y) {
-        const tilesIter = gameMap.tiles.entries();
+    exploreTile(x, y) {
+        const tilesIter = engine.gameMap.tiles.entries();
         for (const entry of tilesIter) {
             const tilesArray = entry[1];
             const tile = tilesArray[x][y];
@@ -57,7 +58,7 @@ export default class BaseFov {
             }
         }
 
-        for (let actor of gameMap.actors) {
+        for (let actor of engine.gameMap.actors) {
             const positionalObject = actor.getComponent("positionalobject");
             if (positionalObject) {
                 if (positionalObject.x === x && positionalObject.y === y) {
@@ -66,7 +67,7 @@ export default class BaseFov {
             }
         }
 
-        for (let item of gameMap.items) {
+        for (let item of engine.gameMap.items) {
             const positionalObject = item.getComponent("positionalobject");
             if (positionalObject) {
                 if (positionalObject.x === x && positionalObject.y === y) {

@@ -191,7 +191,7 @@ export default class GameMap {
     }
 
     updateFOV(x, y, range) {
-        engine.fov.compute(engine.gameMap, x, y, range);
+        engine.fov.compute(x, y, range);
     }
 
     draw(x, y) {

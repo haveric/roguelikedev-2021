@@ -3,6 +3,7 @@ import CharacterObject from "./CharacterObject";
 import BlocksMovement from "./BlocksMovement";
 import Walkable from "./Walkable";
 import Fov from "./Fov";
+import BlocksFov from "./BlocksFov";
 
 class ComponentLoader {
     constructor() {
@@ -11,6 +12,7 @@ class ComponentLoader {
         this.load(new SolidObject());
         this.load(new CharacterObject());
         this.load(new BlocksMovement());
+        this.load(new BlocksFov());
         this.load(new Walkable());
         this.load(new Fov());
     }
