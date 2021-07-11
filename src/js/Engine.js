@@ -27,6 +27,16 @@ class Engine {
             if (!(performedAction instanceof UnableToPerformAction)) {
                 sceneState.updateCameraPosition(engine.player);
                 engine.needsMapUpdate = true;
+
+                this.handleEnemyTurns();
+            }
+        }
+    }
+
+    handleEnemyTurns() {
+        for (const actor of this.gameMap.actors) {
+            if (actor !== this.player) {
+                console.log("The " + actor.name + " wonders when it will get to take a real turn.");
             }
         }
     }

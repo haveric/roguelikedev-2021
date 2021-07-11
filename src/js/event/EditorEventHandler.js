@@ -1,6 +1,5 @@
 import engine from "../Engine";
 import controls from "../controls/Controls";
-import MovementAction from "../actions/MovementAction";
 import TutorialMap from "../map/TutorialMap";
 import EventHandler from "./_EventHandler";
 import editorControls from "../ui/EditorControls";
@@ -9,6 +8,7 @@ import _Tile from "../entity/_Tile";
 import Character from "../entity/Character";
 import Item from "../entity/Item";
 import editorInfo from "../ui/EditorInfo";
+import BumpAction from "../actions/BumpAction";
 
 export default class EditorEventHandler extends EventHandler {
     constructor() {
@@ -50,13 +50,13 @@ export default class EditorEventHandler extends EventHandler {
     handleInput() {
         let action = null;
         if (controls.testPressed("editor-up")) {
-            action = new MovementAction(0, 1);
+            action = new BumpAction(0, 1);
         } else if (controls.testPressed("editor-down")) {
-            action = new MovementAction(0, -1);
+            action = new BumpAction(0, -1);
         } else if (controls.testPressed("editor-left")) {
-            action = new MovementAction(-1);
+            action = new BumpAction(-1);
         } else if (controls.testPressed("editor-right")) {
-            action = new MovementAction(1);
+            action = new BumpAction(1);
         } else if (controls.testPressed("save", 1000)) {
             engine.gameMap.save("debug1");
         } else if (controls.testPressed("load", 1000)) {

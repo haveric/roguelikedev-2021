@@ -1,15 +1,11 @@
-import Action from "./_Action";
 import UnableToPerformAction from "./UnableToPerformAction";
 import MapLayer from "../map/MapLayer";
 import engine from "../Engine";
+import ActionWithDirection from "./_ActionWithDirection";
 
-export default class MovementAction extends Action {
-    constructor(dx, dy = 0, dz = 0) {
-        super();
-
-        this.dx = dx;
-        this.dy = dy;
-        this.dz = dz;
+export default class MovementAction extends ActionWithDirection {
+    constructor(dx, dy, dz) {
+        super(dx, dy, dz);
     }
 
     perform(entity) {
@@ -34,6 +30,11 @@ export default class MovementAction extends Action {
         const wallTile = gameMap.tiles.get(MapLayer.Wall)[destX][destY];
         if (wallTile && wallTile.getComponent("blocksMovement").blocksMovement) {
             return new UnableToPerformAction("There's a wall in the way!");
+        }
+
+        const blockingActor = gameMap.getBlockingActorAtLocation(destX, destY);
+        if (blockingActor) {
+            return new UnableToPerformAction("There's something in the way!");
         }
 
         position.move(this.dx, this.dy, this.dz);
