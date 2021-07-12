@@ -3,7 +3,7 @@ import Extend from "../util/Extend";
 
 export default class BlocksMovement extends _Component {
     constructor(args = {}) {
-        super(Extend.deep(args,{baseType: "blocksMovement"}));
+        super(Extend.extend(args, {baseType: "blocksMovement"}));
         const hasComponent = args.components && args.components.blocksMovement;
 
         if (hasComponent) {

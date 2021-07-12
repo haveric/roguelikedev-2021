@@ -3,7 +3,7 @@ import Extend from "../util/Extend";
 
 export default class BlocksFov extends _Component {
     constructor(args = {}) {
-        super(Extend.deep(args, {baseType: "blocksFov"}));
+        super(Extend.extend(args, {baseType: "blocksFov"}));
         const hasComponent = args.components && args.components.blocksFov;
 
         if (hasComponent) {

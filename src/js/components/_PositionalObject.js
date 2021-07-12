@@ -5,7 +5,7 @@ import Extend from "../util/Extend";
 
 export default class _PositionalObject extends _Component {
     constructor(args = {}) {
-        super(Extend.deep(args, {baseType: "positionalobject"}));
+        super(Extend.extend(args, {baseType: "positionalobject"}));
         const hasComponent = args.components && args.components.positionalobject;
         if (hasComponent) {
             this.x = args.components.positionalobject.x || 0;

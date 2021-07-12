@@ -6,7 +6,7 @@ import Extend from "../util/Extend";
 
 export default class Openable extends _Component {
     constructor(args = {}) {
-        super(Extend.deep(args,{baseType: "openable"}));
+        super(Extend.extend(args, {baseType: "openable"}));
         const hasComponent = args.components && args.components.openable;
 
         if (hasComponent) {

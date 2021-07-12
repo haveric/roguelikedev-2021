@@ -12,7 +12,7 @@ export default class CharacterObject extends _PositionalObject {
              args.components.positionalobject = Extend.extend(args.components.positionalobject, args.components.characterobject);
         }
 
-        super(Extend.deep(args,{type: "characterobject"}));
+        super(Extend.extend(args, {type: "characterobject"}));
 
         if (hasComponent) {
             this.font = args.components.characterobject.font || helvetikerFont;
