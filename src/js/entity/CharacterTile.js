@@ -17,15 +17,9 @@ export default class CharacterTile extends _Tile {
                     yOffset: -.65,
                     zOffset: -.5
                 },
-                "walkable": {
-                    "walkable": false
-                },
-                "blocksMovement": {
-                    "blocksMovement": true
-                },
-                "blocksFov": {
-                    "blocksFov": true
-                }
+                "walkable": false,
+                "blocksMovement": true,
+                "blocksFov": true
             }
         }
     }

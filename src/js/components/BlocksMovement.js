@@ -4,21 +4,26 @@ import Extend from "../util/Extend";
 export default class BlocksMovement extends _Component {
     constructor(args = {}) {
         super(Extend.extend(args, {baseType: "blocksMovement"}));
-        const hasComponent = args.components && args.components.blocksMovement;
+        const hasComponent = args.components && args.components.blocksMovement !== undefined;
 
+        // Whether the tile can moved into
         this.blocksMovement = false;
 
         if (hasComponent) {
-            // Whether the tile can moved into
-            this.blocksMovement = args.components.blocksMovement.blocksMovement || false;
+            const type = typeof args.components.blocksMovement;
+            if (type === "boolean") {
+                this.blocksMovement = args.components.blocksMovement;
+            } else if (type === "object") {
+                if (args.components.blocksMovement) {
+                    this.blocksMovement = args.components.blocksMovement.blocksMovement;
+                }
+            }
         }
     }
 
     save() {
         return {
-            blocksMovement: {
-                blocksMovement: this.blocksMovement
-            }
+            blocksMovement: this.blocksMovement
         }
     }
 }

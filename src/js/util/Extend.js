@@ -41,7 +41,11 @@ export default class Extend {
                             out[key] = Extend.deep(out[key], obj[key]);
                         }
                     } else {
-                        out[key] = obj[key];
+                        if (typeof out === 'boolean' && out[key] === undefined) {
+                            out = obj[key];
+                        } else {
+                            out[key] = obj[key];
+                        }
                     }
                 }
             }

@@ -4,21 +4,26 @@ import Extend from "../util/Extend";
 export default class BlocksFov extends _Component {
     constructor(args = {}) {
         super(Extend.extend(args, {baseType: "blocksFov"}));
-        const hasComponent = args.components && args.components.blocksFov;
+        const hasComponent = args.components && args.components.blocksFov !== undefined;
 
+        // Whether the tile can be seen through
         this.blocksFov = false;
 
         if (hasComponent) {
-            // Whether the tile can be seen through
-            this.blocksFov = args.components.blocksFov.blocksFov || false;
+            const type = typeof args.components.blocksFov;
+            if (type === "boolean") {
+                this.blocksFov = args.components.blocksFov;
+            } else if (type === "object") {
+                if (args.components.blocksFov) {
+                    this.blocksFov = args.components.blocksFov.blocksFov;
+                }
+            }
         }
     }
 
     save() {
         return {
-            blocksFov: {
-                blocksFov: this.blocksFov
-            }
+            blocksFov: this.blocksFov
         }
     }
 }

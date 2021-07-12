@@ -4,21 +4,26 @@ import Extend from "../util/Extend";
 export default class Walkable extends _Component {
     constructor(args = {}) {
         super(Extend.extend(args, {baseType: "walkable"}));
-        const hasComponent = args.components && args.components.walkable;
+        const hasComponent = args.components && args.components.walkable !== undefined;
 
+        // Can walk on top of
         this.walkable = false;
 
         if (hasComponent) {
-            // Can walk on top of
-            this.walkable = args.components.walkable.walkable || false;
+            const type = typeof args.components.walkable;
+            if (type === "boolean") {
+                this.walkable = args.components.walkable;
+            } else if (type === "object") {
+                if (args.components.walkable) {
+                    this.walkable = args.components.walkable.walkable;
+                }
+            }
         }
     }
 
     save() {
         return {
-            walkable: {
-                walkable: this.walkable
-            }
+            walkable: this.walkable
         }
     }
 }

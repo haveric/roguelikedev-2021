@@ -11,15 +11,9 @@ export default class SolidTile extends _Tile {
             type: "solidtile",
             components: {
                 "solidobject": {},
-                "walkable": {
-                    "walkable": true
-                },
-                "blocksMovement": {
-                    "blocksMovement": true
-                },
-                "blocksFov": {
-                    "blocksFov": true
-                }
+                "walkable": true,
+                "blocksMovement": true,
+                "blocksFov": true
             }
         }
     }

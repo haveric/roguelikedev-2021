@@ -35,12 +35,8 @@
                 "letter": "+",
                 "color": "#964b00"
             },
-            "blocksMovement": {
-                "blocksMovement": true
-            },
-            "blocksFov": {
-                "blocksFov": true
-            },
+            "blocksMovement": true,
+            "blocksFov": true,
             "openable": {
                 "isOpen": false,
                 "openEntity": "Open Door",
@@ -56,12 +52,8 @@
                 "letter": "/",
                 "color": "#964b00"
             },
-            "blocksMovement": {
-                "blocksMovement": false
-            },
-            "blocksFov": {
-                "blocksFov": false
-            },
+            "blocksMovement": false,
+            "blocksFov": false,
             "openable": {
                 "isOpen": true,
                 "openEntity": "Open Door",
@@ -78,9 +70,7 @@
                 "color": "#ffffff",
                 "scale": ".75"
             },
-            "blocksMovement": {
-                "blocksMovement": false
-            }
+            "blocksMovement": false
         }
     },
     {
@@ -92,9 +82,7 @@
                 "color": "#3333cc",
                 "scale": ".7"
             },
-            "blocksMovement": {
-                "blocksMovement": false
-            }
+            "blocksMovement": false
         }
     }
 ]

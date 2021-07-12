@@ -20,9 +20,7 @@ export default class Character extends _Entity {
                     yOffset: -.3,
                     zOffset: -.25
                 },
-                "blocksMovement": {
-                    "blocksMovement": true
-                }
+                "blocksMovement": true
             }
         }
     }
