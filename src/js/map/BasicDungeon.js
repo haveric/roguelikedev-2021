@@ -2,10 +2,10 @@ import GameMap from "./GameMap";
 import RectangularRoom from "./room/RectangularRoom";
 import engine from "../Engine";
 import MapGeneration from "./mapGeneration/MapGeneration";
-import RandomUtil from "../util/RandomUtil";
 import MapLayer from "./MapLayer";
 import sceneState from "../SceneState";
 import entityLoader from "../entity/EntityLoader";
+import {MathUtils} from "three";
 
 export default class BasicDungeon extends GameMap {
     constructor(width, height, args = {}) {
@@ -30,11 +30,11 @@ export default class BasicDungeon extends GameMap {
 
         const rooms = [];
         for (let i = 0; i < this.maxRooms; i++) {
-            const roomWidth = RandomUtil.getRandomBetween(this.roomMinSize, this.roomMaxSize);
-            const roomHeight = RandomUtil.getRandomBetween(this.roomMinSize, this.roomMaxSize);
+            const roomWidth = MathUtils.randInt(this.roomMinSize, this.roomMaxSize);
+            const roomHeight = MathUtils.randInt(this.roomMinSize, this.roomMaxSize);
 
-            const x = RandomUtil.getRandomBetween(0, this.width - roomWidth - 1);
-            const y = RandomUtil.getRandomBetween(0, this.height - roomHeight - 1);
+            const x = MathUtils.randInt(0, this.width - roomWidth - 1);
+            const y = MathUtils.randInt(0, this.height - roomHeight - 1);
 
             const newRoom = new RectangularRoom(x, y, roomWidth, roomHeight);
             let intersectsOtherRoom = false;
