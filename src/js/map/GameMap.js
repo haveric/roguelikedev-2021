@@ -27,6 +27,8 @@ export default class GameMap {
     create() {};
 
     teardown() {
+        engine.fov.teardown();
+
         const tilesIter = this.tiles.entries();
         for (const entry of tilesIter) {
             const tilesArray = entry[1];

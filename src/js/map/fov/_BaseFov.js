@@ -9,6 +9,13 @@ export default class BaseFov {
         this.newObjects = [];
     }
 
+    teardown() {
+        this.previousVisibleObjects = [];
+        this.visibleObjects = [];
+        this.oldObjects = [];
+        this.newObjects = [];
+    }
+
     compute(x, y, radius) {
         this.previousVisibleObjects = this.visibleObjects;
         this.visibleObjects = [];
