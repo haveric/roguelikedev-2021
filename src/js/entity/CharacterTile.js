@@ -1,10 +1,10 @@
 import pressStartFont from "../../fonts/Press Start 2P_Regular.json";
 import _Tile from "./_Tile";
-import jquery from "jquery";
+import Extend from "../util/Extend";
 
 export default class CharacterTile extends _Tile {
     constructor(args = {}) {
-        super(jquery.extend(true, CharacterTile.getDefaultTemplate(), args));
+        super(Extend.deep(CharacterTile.getDefaultTemplate(), args));
     }
 
     static getDefaultTemplate() {

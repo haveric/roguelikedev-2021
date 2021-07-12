@@ -1,8 +1,9 @@
 import _Component from "./_Component";
+import Extend from "../util/Extend";
 
 export default class BlocksFov extends _Component {
     constructor(args = {}) {
-        super({...args, ...{baseType: "blocksFov"}});
+        super(Extend.deep(args, {baseType: "blocksFov"}));
         const hasComponent = args.components && args.components.blocksFov;
 
         if (hasComponent) {

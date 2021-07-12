@@ -6,7 +6,7 @@ import playerList from "../../json/actors/player.json";
 import enemyList from "../../json/actors/enemies.json";
 import npcsList from "../../json/actors/npcs.json";
 import tileList from "../../json/tiles/tiles.json";
-import jquery from "jquery";
+import Extend from "../util/Extend";
 
 class EntityLoader {
     constructor() {
@@ -28,7 +28,7 @@ class EntityLoader {
     create(json, args = {}) {
         const parsedJson = JSON.parse(json);
         const entity = this.types.get(parsedJson.type);
-        return new entity.constructor(jquery.extend(true, parsedJson, args));
+        return new entity.constructor(Extend.deep(parsedJson, args));
     }
 
     loadTemplates() {

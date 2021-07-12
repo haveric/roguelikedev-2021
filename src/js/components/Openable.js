@@ -2,10 +2,11 @@ import _Component from "./_Component";
 import entityLoader from "../entity/EntityLoader";
 import engine from "../Engine";
 import MapLayer from "../map/MapLayer";
+import Extend from "../util/Extend";
 
 export default class Openable extends _Component {
     constructor(args = {}) {
-        super({...args, ...{baseType: "openable"}});
+        super(Extend.deep(args,{baseType: "openable"}));
         const hasComponent = args.components && args.components.openable;
 
         if (hasComponent) {

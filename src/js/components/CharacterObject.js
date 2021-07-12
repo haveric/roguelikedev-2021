@@ -1,6 +1,7 @@
 import _PositionalObject from "./_PositionalObject";
 import * as THREE from "three";
 import helvetikerFont from "../../fonts/helvetiker_regular.typeface.json";
+import Extend from "../util/Extend";
 
 const cachedTextGeometries = [];
 export default class CharacterObject extends _PositionalObject {
@@ -8,10 +9,10 @@ export default class CharacterObject extends _PositionalObject {
         const hasComponent = args.components && args.components.characterobject;
         if (hasComponent) {
              args.components.positionalobject = args.components.positionalobject || {};
-             args.components.positionalobject = {...args.components.positionalobject, ...args.components.characterobject};
+             args.components.positionalobject = Extend.extend(args.components.positionalobject, args.components.characterobject);
         }
 
-        super({...args, ...{type: "characterobject"}});
+        super(Extend.deep(args,{type: "characterobject"}));
 
         if (hasComponent) {
             this.font = args.components.characterobject.font || helvetikerFont;
@@ -23,12 +24,10 @@ export default class CharacterObject extends _PositionalObject {
     }
 
     save() {
-        return {
-            ...super.save(),
-            ...{
-                letter: this.letter
-            }
-        }
+        return Extend.deep(
+            super.save(),
+            {letter: this.letter}
+        );
     }
 
     createObject() {

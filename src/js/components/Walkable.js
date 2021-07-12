@@ -1,8 +1,9 @@
 import _Component from "./_Component";
+import Extend from "../util/Extend";
 
 export default class Walkable extends _Component {
     constructor(args = {}) {
-        super({...args, ...{baseType: "walkable"}});
+        super(Extend.deep(args, {baseType: "walkable"}));
         const hasComponent = args.components && args.components.walkable;
 
         if (hasComponent) {

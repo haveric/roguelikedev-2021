@@ -1,10 +1,10 @@
 import _Entity from "./_Entity";
 import helvetikerFont from "../../fonts/helvetiker_regular.typeface.json";
-import jquery from "jquery";
+import Extend from "../util/Extend";
 
 export default class Character extends _Entity {
     constructor(args = {}) {
-        super(jquery.extend(true, Character.getDefaultTemplate(), args));
+        super(Extend.deep(Character.getDefaultTemplate(), args));
     }
 
     static getDefaultTemplate() {

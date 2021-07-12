@@ -1,8 +1,9 @@
 import _Component from "./_Component";
+import Extend from "../util/Extend";
 
 export default class BlocksMovement extends _Component {
     constructor(args = {}) {
-        super({...args, ...{baseType: "blocksMovement"}});
+        super(Extend.deep(args,{baseType: "blocksMovement"}));
         const hasComponent = args.components && args.components.blocksMovement;
 
         if (hasComponent) {

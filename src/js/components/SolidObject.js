@@ -1,5 +1,6 @@
 import _PositionalObject from "./_PositionalObject";
 import * as THREE from "three";
+import Extend from "../util/Extend";
 
 const cachedSolidGeometries = [];
 export default class SolidObject extends _PositionalObject {
@@ -7,9 +8,9 @@ export default class SolidObject extends _PositionalObject {
         const hasComponent = args.components && args.components.solidobject;
         if (hasComponent) {
             args.components.positionalobject = args.components.positionalobject || {};
-            args.components.positionalobject = {...args.components.positionalobject, ...args.components.solidobject};
+            args.components.positionalobject = Extend.extend(args.components.positionalobject, args.components.solidobject);
         }
-        super({...args, ...{type: "solidobject"}});
+        super(Extend.deep(args, {type: "solidobject"}));
     }
 
     createObject() {

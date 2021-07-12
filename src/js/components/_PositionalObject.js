@@ -1,10 +1,11 @@
 import _Component from "./_Component";
 import sceneState from "../SceneState";
 import _Tile from "../entity/_Tile";
+import Extend from "../util/Extend";
 
 export default class _PositionalObject extends _Component {
     constructor(args = {}) {
-        super({...args, ...{baseType: "positionalobject"}});
+        super(Extend.deep(args, {baseType: "positionalobject"}));
         const hasComponent = args.components && args.components.positionalobject;
         if (hasComponent) {
             this.x = args.components.positionalobject.x || 0;

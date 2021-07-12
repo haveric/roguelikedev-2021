@@ -27,6 +27,7 @@ export default class BasicDungeon extends GameMap {
                 this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
             }
         }
+
         const rooms = [];
         for (let i = 0; i < this.maxRooms; i++) {
             const roomWidth = MathUtils.randInt(this.roomMinSize, this.roomMaxSize);
