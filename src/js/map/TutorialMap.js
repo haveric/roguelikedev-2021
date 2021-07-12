@@ -6,6 +6,7 @@ import Character from "../entity/Character";
 import Item from "../entity/Item";
 import engine from "../Engine";
 import sceneState from "../SceneState";
+import entityLoader from "../entity/EntityLoader";
 
 export default class TutorialMap extends GameMap {
     constructor() {
@@ -79,26 +80,25 @@ export default class TutorialMap extends GameMap {
                 const floorChar = this.floor[this.height - j - 1].charAt(i);
                 switch(floorChar) {
                     case "#":
-                        this.tiles.get(MapLayer.Floor)[i][j] = new SolidTile({name: "Floor", x: i, y: j, z: 0, scale: 1, color: 0x666666});
+                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {x: i, y: j, z: 0});
                         break;
                     case "≈":
-                        this.tiles.get(MapLayer.Floor)[i][j] = new CharacterTile({name: "Water", x: i, y: j, z: 0, scale: .7, letter: "≈", color: 0x3333cc, blocksMovement:false});
+                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Water', {x: i, y: j, z: 0});
                         break;
                 }
 
                 const wallChar = this.wall[this.height - j - 1].charAt(i);
                 switch(wallChar) {
                     case "#":
-                        this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Wall", x: i, y: j, z: 1, scale: 1, letter: "#", color: 0x333333});
-                        break;
                     case "=":
-                        this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Wall", x: i, y: j, z: 1, scale: 1, letter: "#", color: 0x4d4d4d});
+
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {x: i, y: j, z: 1});
                         break;
                     case "+":
-                        this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Door", x: i, y: j, z: 1, scale: 1, letter: "+", color: 0x964b00});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Door', {x: i, y: j, z: 1});
                         break;
                     case ">":
-                        this.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Stairs Up", x: i, y: j, z: 1, scale: .75, letter: ">", color: 0xffffff, blocksMovement: false});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Stairs Up', {x: i, y: j, z: 1});
                         break;
                 }
 
@@ -119,14 +119,15 @@ export default class TutorialMap extends GameMap {
             }
         }
 
-        engine.player = new Character({name: "Player", x: 21, y: 3, z: 1, letter: '@', color: 0xffffff});
+
+        engine.player = entityLoader.createFromTemplate('Player', {x: 21, y: 3, z: 1});
         engine.gameMap.actors.push(engine.player);
         const positionalObject = engine.player.getComponent("positionalobject");
         positionalObject.setVisible();
         sceneState.updateCameraPosition(engine.player);
 
         engine.gameMap.actors.push(new Character({name: "a", x: 27, y: 4, z: 1, letter: 'a', color: 0xffffff}));
-        engine.gameMap.actors.push(new Character({name: "D", x: 18, y: 3, z: 1, letter: 'D', color: 0xffffff}));
+        engine.gameMap.actors.push(new Character({name: "D", x: 18, y: 4, z: 1, letter: 'D', color: 0xffffff}));
         engine.gameMap.actors.push(new Character({name: "g", x: 5, y: 2, z: 1, letter: 'g', color: 0xffffff}));
 
         engine.gameMap.items.push(new Item({name: "!", x: 3, y: 5, z: 1, letter: '!', color: 0xffffff}));

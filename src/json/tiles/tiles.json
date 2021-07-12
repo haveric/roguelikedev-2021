@@ -17,5 +17,46 @@
                 "color": "#666666"
             }
         }
+    },
+    {
+        "type": "charactertile",
+        "name": "Door",
+        "components": {
+            "characterobject": {
+                "letter": "+",
+                "color": "#964b00"
+            },
+            "blocksMovement": {
+                "blocksMovement": "true"
+            }
+        }
+    },
+    {
+        "type": "charactertile",
+        "name": "Stairs Up",
+        "components": {
+            "characterobject": {
+                "letter": ">",
+                "color": "#ffffff",
+                "scale": ".75"
+            },
+            "blocksMovement": {
+                "blocksMovement": "false"
+            }
+        }
+    },
+    {
+        "type": "charactertile",
+        "name": "Water",
+        "components": {
+            "characterobject": {
+                "letter": "≈",
+                "color": "#3333cc",
+                "scale": ".7"
+            },
+            "blocksMovement": {
+                "blocksMovement": "false"
+            }
+        }
     }
 ]
