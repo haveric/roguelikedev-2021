@@ -6,17 +6,19 @@ export default class BlocksMovement extends _Component {
         super(Extend.extend(args, {baseType: "blocksMovement"}));
         const hasComponent = args.components && args.components.blocksMovement;
 
+        this.blocksMovement = false;
+
         if (hasComponent) {
             // Whether the tile can moved into
             this.blocksMovement = args.components.blocksMovement.blocksMovement || false;
-        } else {
-            this.blocksMovement = false;
         }
     }
 
     save() {
         return {
-            blocksMovement: this.blocksMovement
+            blocksMovement: {
+                blocksMovement: this.blocksMovement
+            }
         }
     }
 }

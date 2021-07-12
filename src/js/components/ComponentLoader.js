@@ -10,13 +10,13 @@ class ComponentLoader {
     constructor() {
         this.types = new Map();
 
-        this.load(new SolidObject());
-        this.load(new CharacterObject());
-        this.load(new BlocksMovement());
         this.load(new BlocksFov());
-        this.load(new Walkable());
+        this.load(new BlocksMovement());
+        this.load(new CharacterObject());
         this.load(new Fov());
         this.load(new Openable());
+        this.load(new SolidObject());
+        this.load(new Walkable());
     }
 
     load(component) {

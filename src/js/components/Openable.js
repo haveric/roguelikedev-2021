@@ -9,22 +9,24 @@ export default class Openable extends _Component {
         super(Extend.extend(args, {baseType: "openable"}));
         const hasComponent = args.components && args.components.openable;
 
+        this.isOpen = false;
+        this.openEntity = null;
+        this.closedEntity = null;
+
         if (hasComponent) {
             this.isOpen = args.components.openable.isOpen || false;
             this.openEntity = args.components.openable.openEntity;
             this.closedEntity = args.components.openable.closedEntity;
-        } else {
-            this.isOpen = false;
-            this.openEntity = null;
-            this.closedEntity = null;
         }
     }
 
     save() {
         return {
-            isOpen: this.isOpen,
-            openEntity: this.openEntity,
-            closedEntity: this.closedEntity
+            openable: {
+                isOpen: this.isOpen,
+                openEntity: this.openEntity,
+                closedEntity: this.closedEntity
+            }
         }
     }
 

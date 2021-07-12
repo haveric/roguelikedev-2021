@@ -7,67 +7,63 @@ export default class _PositionalObject extends _Component {
     constructor(args = {}) {
         super(Extend.extend(args, {baseType: "positionalobject"}));
         const hasComponent = args.components && args.components.positionalobject;
+
+        this.object = null;
+        this.highlighted = false;
+        this.width = 5;
+        this.height = 5;
+        this.depth = 5;
+
+        this.scale = 1;
+        this.x = 0;
+        this.y = 0;
+        this.z = 0;
+        this.color = 0xffffff;
+        this.xRot = 0;
+        this.yRot = 0;
+        this.zRot = 0;
+        this.xOffset = 0;
+        this.yOffset = 0;
+        this.zOffset = 0;
+
         if (hasComponent) {
             this.x = args.components.positionalobject.x || 0;
             this.y = args.components.positionalobject.y || 0;
             this.z = args.components.positionalobject.z || 0;
-
             this.color = args.components.positionalobject.color || 0xffffff;
-            this.object = null;
-            this.highlighted = false;
-
-            this.width = 5;
-            this.height = 5;
-            this.depth = 5;
             this.scale = args.components.positionalobject.scale || 1;
-
             this.xRot = args.components.positionalobject.xRot || 0;
             this.yRot = args.components.positionalobject.yRot || 0;
             this.zRot = args.components.positionalobject.zRot || 0;
             this.xOffset = args.components.positionalobject.xOffset || 0;
             this.yOffset = args.components.positionalobject.yOffset || 0;
             this.zOffset = args.components.positionalobject.zOffset || 0;
-        } else {
-            this.x = 0;
-            this.y = 0;
-            this.z = 0;
-            this.color = 0xffffff;
-            this.object = null;
-            this.highlighted = false;
-
-            this.width = 5;
-            this.height = 5;
-            this.depth = 5;
-            this.scale = 1;
-
-            this.xRot = 0;
-            this.yRot = 0;
-            this.zRot = 0;
-            this.xOffset = 0;
-            this.yOffset = 0;
-            this.zOffset = 0;
         }
     }
 
     save() {
-        if (this.parent && this.parent instanceof _Tile) {
+        if (this.parentEntity && this.parentEntity instanceof _Tile) {
             return {
-                color: this.color,
-                scale: this.scale
+                positionalobject: {
+                    color: this.color,
+                    scale: this.scale
+                }
             }
         } else {
             return {
-                x: this.x,
-                y: this.y,
-                z: this.z,
-                xRot: this.xRot,
-                yRot: this.yRot,
-                zRot: this.zRot,
-                xOffset: this.xOffset,
-                yOffset: this.yOffset,
-                zOffset: this.zOffset,
-                color: this.color,
-                scale: this.scale
+                positionalobject: {
+                    x: this.x,
+                    y: this.y,
+                    z: this.z,
+                    xRot: this.xRot,
+                    yRot: this.yRot,
+                    zRot: this.zRot,
+                    xOffset: this.xOffset,
+                    yOffset: this.yOffset,
+                    zOffset: this.zOffset,
+                    color: this.color,
+                    scale: this.scale
+                }
             }
         }
     }

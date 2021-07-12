@@ -6,6 +6,8 @@ export default class BlocksFov extends _Component {
         super(Extend.extend(args, {baseType: "blocksFov"}));
         const hasComponent = args.components && args.components.blocksFov;
 
+        this.blocksFov = false;
+
         if (hasComponent) {
             // Whether the tile can be seen through
             this.blocksFov = args.components.blocksFov.blocksFov || false;
@@ -14,7 +16,9 @@ export default class BlocksFov extends _Component {
 
     save() {
         return {
-            blocksFov: this.blocksFov
+            blocksFov: {
+                blocksFov: this.blocksFov
+            }
         }
     }
 }

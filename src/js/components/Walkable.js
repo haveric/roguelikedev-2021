@@ -6,17 +6,19 @@ export default class Walkable extends _Component {
         super(Extend.extend(args, {baseType: "walkable"}));
         const hasComponent = args.components && args.components.walkable;
 
+        this.walkable = false;
+
         if (hasComponent) {
             // Can walk on top of
             this.walkable = args.components.walkable.walkable || false;
-        } else {
-            this.walkable = false;
         }
     }
 
     save() {
         return {
-            walkable: this.walkable
+            walkable: {
+                walkable: this.walkable
+            }
         }
     }
 }

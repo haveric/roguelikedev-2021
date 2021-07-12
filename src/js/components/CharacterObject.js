@@ -14,20 +14,20 @@ export default class CharacterObject extends _PositionalObject {
 
         super(Extend.extend(args, {type: "characterobject"}));
 
+        this.font = helvetikerFont;
+        this.letter = '@';
+
         if (hasComponent) {
             this.font = args.components.characterobject.font || helvetikerFont;
             this.letter = args.components.characterobject.letter || '@';
-        } else {
-            this.font = helvetikerFont;
-            this.letter = '@';
         }
     }
 
     save() {
-        return Extend.deep(
-            super.save(),
-            {letter: this.letter}
-        );
+        return Extend.deep(super.save(), {
+            characterobject:
+                {letter: this.letter}
+        });
     }
 
     createObject() {

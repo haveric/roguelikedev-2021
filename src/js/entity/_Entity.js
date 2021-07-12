@@ -1,5 +1,6 @@
 import _Component from "../components/_Component";
 import componentLoader from "../components/ComponentLoader";
+import Extend from "../util/Extend";
 
 export default class _Entity {
     constructor(args) {
@@ -66,7 +67,7 @@ export default class _Entity {
         for (const component of this.componentArray) {
             const save = component.save();
             if (save !== null) {
-                json.components[component.type] = save;
+                Extend.deep(json.components, save);
             }
         }
 
