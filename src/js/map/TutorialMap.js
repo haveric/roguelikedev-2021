@@ -80,10 +80,10 @@ export default class TutorialMap extends GameMap {
                 const floorChar = this.floor[this.height - j - 1].charAt(i);
                 switch(floorChar) {
                     case "#":
-                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {x: i, y: j, z: 0});
+                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
                         break;
                     case "≈":
-                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Water', {x: i, y: j, z: 0});
+                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Water', {components: {positionalobject: {x: i, y: j, z: 0}}});
                         break;
                 }
 
@@ -92,27 +92,28 @@ export default class TutorialMap extends GameMap {
                     case "#":
                     case "=":
 
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {x: i, y: j, z: 1});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
                         break;
                     case "+":
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Door', {x: i, y: j, z: 1});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Door', {components: {positionalobject: {x: i, y: j, z: 1}}});
                         break;
                     case ">":
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Stairs Up', {x: i, y: j, z: 1});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Stairs Up', {components: {positionalobject: {x: i, y: j, z: 1}}});
                         break;
                 }
 
                 let overlayChar = this.overlay[this.height - j - 1].charAt(i);
                 if (overlayChar !== "#") {
                     if (overlayChar !== ".") {
-                        this.tiles.get(MapLayer.DecorativeBG)[i][j] = new SolidTile({name: "Backing", x: i, y: j, z: 2, scale: .05, color: 0x000001});
+                        this.tiles.get(MapLayer.DecorativeBG)[i][j] = new SolidTile({name: "Backing", components: {positionalobject: {x: i, y: j, z: 2, scale: .05, color: 0x000001}}});
                     }
 
                     if (overlayChar !== " " && overlayChar !== ".") {
                         if (overlayChar === "_") {
                             overlayChar = ".";
                         }
-                        this.tiles.get(MapLayer.Decorative)[i][j] = new CharacterTile({name: "Art", x: i, y: j, z: 2.05, scale: .1, letter: overlayChar, color: overlayColors[overlayColorIndex]});
+
+                        this.tiles.get(MapLayer.Decorative)[i][j] = new CharacterTile({name: "Art", components: {characterobject: {x: i, y: j, z: 2.05, scale: .1, letter: overlayChar, color: overlayColors[overlayColorIndex]}}});
                         overlayColorIndex ++;
                     }
                 }
@@ -120,18 +121,19 @@ export default class TutorialMap extends GameMap {
         }
 
 
-        engine.player = entityLoader.createFromTemplate('Player', {x: 21, y: 3, z: 1});
+        engine.player = entityLoader.createFromTemplate('Player', {components: {positionalobject: {x: 21, y: 3, z: 1}}});
         engine.gameMap.actors.push(engine.player);
         const positionalObject = engine.player.getComponent("positionalobject");
         positionalObject.setVisible();
         sceneState.updateCameraPosition(engine.player);
 
-        engine.gameMap.actors.push(new Character({name: "a", x: 27, y: 4, z: 1, letter: 'a', color: 0xffffff}));
-        engine.gameMap.actors.push(new Character({name: "D", x: 18, y: 4, z: 1, letter: 'D', color: 0xffffff}));
-        engine.gameMap.actors.push(new Character({name: "g", x: 5, y: 2, z: 1, letter: 'g', color: 0xffffff}));
 
-        engine.gameMap.items.push(new Item({name: "!", x: 3, y: 5, z: 1, letter: '!', color: 0xffffff}));
-        engine.gameMap.items.push(new Item({name: "^", x: 6, y: 5, z: 1, letter: '^', color: 0xffffff}));
-        engine.gameMap.items.push(new Item({name: "]", x: 28, y: 1, z: 1, letter: ']', color: 0xffffff}));
+        engine.gameMap.actors.push(new Character({name: "a", components: {characterobject: {x: 27, y: 4, z: 1, letter: 'a', color: 0xffffff}}}));
+        engine.gameMap.actors.push(new Character({name: "D", components: {characterobject: {x: 18, y: 4, z: 1, letter: 'D', color: 0xffffff}}}));
+        engine.gameMap.actors.push(new Character({name: "g", components: {characterobject: {x: 5, y: 2, z: 1, letter: 'g', color: 0xffffff}}}));
+
+        engine.gameMap.items.push(new Item({name: "!", components: {characterobject: {x: 3, y: 5, z: 1, letter: '!', color: 0xffffff}}}));
+        engine.gameMap.items.push(new Item({name: "^", components: {characterobject: {x: 6, y: 5, z: 1, letter: '^', color: 0xffffff}}}));
+        engine.gameMap.items.push(new Item({name: "]", components: {characterobject: {x: 28, y: 1, z: 1, letter: ']', color: 0xffffff}}}));
     }
 }

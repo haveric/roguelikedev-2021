@@ -5,26 +5,47 @@ import _Tile from "../entity/_Tile";
 export default class _PositionalObject extends _Component {
     constructor(args = {}) {
         super({...args, ...{baseType: "positionalobject"}});
+        const hasComponent = args.components && args.components.positionalobject;
+        if (hasComponent) {
+            this.x = args.components.positionalobject.x || 0;
+            this.y = args.components.positionalobject.y || 0;
+            this.z = args.components.positionalobject.z || 0;
 
-        this.x = args.x || 0;
-        this.y = args.y || 0;
-        this.z = args.z || 0;
+            this.color = args.components.positionalobject.color || 0xffffff;
+            this.object = null;
+            this.highlighted = false;
 
-        this.color = args.color || 0xffffff;
-        this.object = null;
-        this.highlighted = false;
+            this.width = 5;
+            this.height = 5;
+            this.depth = 5;
+            this.scale = args.components.positionalobject.scale || 1;
 
-        this.width = 5;
-        this.height = 5;
-        this.depth = 5;
-        this.scale = args.scale || 1;
+            this.xRot = args.components.positionalobject.xRot || 0;
+            this.yRot = args.components.positionalobject.yRot || 0;
+            this.zRot = args.components.positionalobject.zRot || 0;
+            this.xOffset = args.components.positionalobject.xOffset || 0;
+            this.yOffset = args.components.positionalobject.yOffset || 0;
+            this.zOffset = args.components.positionalobject.zOffset || 0;
+        } else {
+            this.x = 0;
+            this.y = 0;
+            this.z = 0;
+            this.color = 0xffffff;
+            this.object = null;
+            this.highlighted = false;
 
-        this.xRot = args.xRot || 0;
-        this.yRot = args.yRot || 0;
-        this.zRot = args.zRot || 0;
-        this.xOffset = args.xOffset || 0;
-        this.yOffset = args.yOffset || 0;
-        this.zOffset = args.zOffset || 0;
+            this.width = 5;
+            this.height = 5;
+            this.depth = 5;
+            this.scale = 1;
+
+            this.xRot = 0;
+            this.yRot = 0;
+            this.zRot = 0;
+            this.xOffset = 0;
+            this.yOffset = 0;
+            this.zOffset = 0;
+        }
     }
 
     save() {

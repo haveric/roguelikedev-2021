@@ -5,13 +5,21 @@ import helvetikerFont from "../../fonts/helvetiker_regular.typeface.json";
 const cachedTextGeometries = [];
 export default class CharacterObject extends _PositionalObject {
     constructor(args = {}) {
-        if (args.components && args.components.characterobject) {
-            args = {...args, ...args.components.characterobject};
+        const hasComponent = args.components && args.components.characterobject;
+        if (hasComponent) {
+             args.components.positionalobject = args.components.positionalobject || {};
+             args.components.positionalobject = {...args.components.positionalobject, ...args.components.characterobject};
         }
+
         super({...args, ...{type: "characterobject"}});
 
-        this.font = args.font || helvetikerFont;
-        this.letter = args.letter || '@';
+        if (hasComponent) {
+            this.font = args.components.characterobject.font || helvetikerFont;
+            this.letter = args.components.characterobject.letter || '@';
+        } else {
+            this.font = helvetikerFont;
+            this.letter = '@';
+        }
     }
 
     save() {

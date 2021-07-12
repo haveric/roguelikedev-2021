@@ -2,13 +2,15 @@ import _Component from "./_Component";
 
 export default class Walkable extends _Component {
     constructor(args = {}) {
-        if (args.components && args.components.walkable) {
-            args = {...args, ...args.components.walkable};
-        }
         super({...args, ...{baseType: "walkable"}});
+        const hasComponent = args.components && args.components.walkable;
 
-        // Can walk on top of
-        this.walkable = args.walkable || false;
+        if (hasComponent) {
+            // Can walk on top of
+            this.walkable = args.components.walkable.walkable || false;
+        } else {
+            this.walkable = false;
+        }
     }
 
     save() {

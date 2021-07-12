@@ -23,9 +23,9 @@ class ComponentLoader {
         this.types.set(component.type, component);
     }
 
-    create(type, ...args) {
+    create(type, args) {
         const constructor = this.types.get(type).constructor;
-        return new constructor(...args);
+        return new constructor(args);
     }
 }
 

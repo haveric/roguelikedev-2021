@@ -2,14 +2,15 @@ import _Component from "./_Component";
 
 export default class BlocksMovement extends _Component {
     constructor(args = {}) {
-        if (args.components && args.components.blocksMovement) {
-            args = {...args, ...args.components.blocksMovement};
-        }
         super({...args, ...{baseType: "blocksMovement"}});
+        const hasComponent = args.components && args.components.blocksMovement;
 
-
-        // Whether the tile can moved into
-        this.blocksMovement = args.blocksMovement || false;
+        if (hasComponent) {
+            // Whether the tile can moved into
+            this.blocksMovement = args.components.blocksMovement.blocksMovement || false;
+        } else {
+            this.blocksMovement = false;
+        }
     }
 
     save() {

@@ -144,7 +144,7 @@ export default class GameMap {
                             const tile = map[key[index]];
 
                             if (tile) {
-                                tileLayer[i][j] = entityLoader.create(tile, {x: i, y: j, z: entry[0]});
+                                tileLayer[i][j] = entityLoader.create(tile, {components: {positionalobject: {x: i, y: j, z: entry[0]}}});
                             }
                         }
                     }

@@ -5,14 +5,18 @@ import MapLayer from "../map/MapLayer";
 
 export default class Openable extends _Component {
     constructor(args = {}) {
-        if (args.components && args.components.openable) {
-            args = {...args, ...args.components.openable};
-        }
         super({...args, ...{baseType: "openable"}});
+        const hasComponent = args.components && args.components.openable;
 
-        this.isOpen = args.isOpen || false;
-        this.openEntity = args.openEntity;
-        this.closedEntity = args.closedEntity;
+        if (hasComponent) {
+            this.isOpen = args.components.openable.isOpen || false;
+            this.openEntity = args.components.openable.openEntity;
+            this.closedEntity = args.components.openable.closedEntity;
+        } else {
+            this.isOpen = false;
+            this.openEntity = null;
+            this.closedEntity = null;
+        }
     }
 
     save() {
@@ -30,7 +34,7 @@ export default class Openable extends _Component {
             const position = this.parentEntity.getComponent("positionalobject");
             if (position) {
                 position.teardown();
-                this.parentEntity = entityLoader.createFromTemplate(this.openEntity, {x: position.x, y: position.y, z: position.z});
+                this.parentEntity = entityLoader.createFromTemplate(this.openEntity, {components: {positionalobject: {x: position.x, y: position.y, z: position.z}}});
                 engine.gameMap.tiles.get(MapLayer.Wall)[position.x][position.y] = this.parentEntity;
             }
 
@@ -47,7 +51,7 @@ export default class Openable extends _Component {
             const position = this.parent.getComponent("positionalobject");
             if (position) {
                 position.teardown();
-                this.parentEntity = entityLoader.create(this.closedEntity, {x: position.x, y: position.y, z: position.z});
+                this.parentEntity = entityLoader.create(this.closedEntity, {components: {positionalobject: {x: position.x, y: position.y, z: position.z}}});
                 engine.gameMap.tiles.get(MapLayer.Wall)[position.x][position.y] = this.parent;
             }
 

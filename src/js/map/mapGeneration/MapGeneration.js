@@ -64,10 +64,10 @@ export default class MapGeneration {
         } else {
             const floorTile = gameMap.tiles.get(MapLayer.Floor)[i][j];
             if (!floorTile) {
-                gameMap.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {x: i, y: j, z: 1});
+                gameMap.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
             }
         }
 
-        gameMap.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {x: i, y: j, z: 0});
+        gameMap.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
     }
 }

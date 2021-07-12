@@ -21,12 +21,12 @@ export default class Town extends GameMap {
             for (let i = 0; i < this.width; i++) {
                 const floorTile = this.tiles.get(MapLayer.Floor)[i][j];
                 if (!floorTile) {
-                    this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Grass', {x: i, y: j, z: 0});
+                    this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Grass', {components: {positionalobject: {x: i, y: j, z: 0}}});
                 }
             }
         }
 
-        engine.player = entityLoader.createFromTemplate('Player', {x: 5, y: 5, z: 1});
+        engine.player = entityLoader.createFromTemplate('Player', {components: {positionalobject: {x: 5, y: 5, z: 1}}});
         engine.gameMap.actors.push(engine.player);
         const positionalObject = engine.player.getComponent("positionalobject");
         positionalObject.setVisible();

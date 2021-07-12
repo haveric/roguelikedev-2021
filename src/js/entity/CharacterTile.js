@@ -1,17 +1,32 @@
 import pressStartFont from "../../fonts/Press Start 2P_Regular.json";
 import _Tile from "./_Tile";
-import CharacterObject from "../components/CharacterObject";
-import Walkable from "../components/Walkable";
-import BlocksMovement from "../components/BlocksMovement";
-import BlocksFov from "../components/BlocksFov";
+import jquery from "jquery";
 
 export default class CharacterTile extends _Tile {
     constructor(args = {}) {
-        super({...args, ...{type: "charactertile"}});
-        const argsWithParent = {...args, ...{parentEntity: this}};
-        this.setComponent(new CharacterObject({...{font: pressStartFont, xOffset: -.5, yOffset: -.65, zOffset: -.5}, ...argsWithParent}));
-        this.setComponent(new Walkable({...{walkable: false}, ...argsWithParent}));
-        this.setComponent(new BlocksMovement({...{blocksMovement: true}, ...argsWithParent}));
-        this.setComponent(new BlocksFov({...{blocksFov: true}, ...argsWithParent}));
+        super(jquery.extend(true, CharacterTile.getDefaultTemplate(), args));
+    }
+
+    static getDefaultTemplate() {
+        return {
+            type: "charactertile",
+            components: {
+                "characterobject": {
+                    font: pressStartFont,
+                    xOffset: -.5,
+                    yOffset: -.65,
+                    zOffset: -.5
+                },
+                "walkable": {
+                    "walkable": false
+                },
+                "blocksMovement": {
+                    "blocksMovement": true
+                },
+                "blocksFov": {
+                    "blocksFov": true
+                }
+            }
+        }
     }
 }

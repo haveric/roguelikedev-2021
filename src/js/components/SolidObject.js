@@ -4,8 +4,10 @@ import * as THREE from "three";
 const cachedSolidGeometries = [];
 export default class SolidObject extends _PositionalObject {
     constructor(args = {}) {
-        if (args.components && args.components.solidobject) {
-            args = {...args, ...args.components.solidobject};
+        const hasComponent = args.components && args.components.solidobject;
+        if (hasComponent) {
+            args.components.positionalobject = args.components.positionalobject || {};
+            args.components.positionalobject = {...args.components.positionalobject, ...args.components.solidobject};
         }
         super({...args, ...{type: "solidobject"}});
     }

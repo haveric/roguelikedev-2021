@@ -1,4 +1,5 @@
 import _Component from "../components/_Component";
+import componentLoader from "../components/ComponentLoader";
 
 export default class _Entity {
     constructor(args) {
@@ -6,6 +7,24 @@ export default class _Entity {
         this.name = args.name;
         this.componentArray = [];
         this.components = {};
+
+        if (args.components) {
+            this.loadComponents(args, args.components);
+        }
+    }
+
+    loadComponents(args, components) {
+        const self = this;
+        Object.keys(components).forEach(function(key) {
+            const type = componentLoader.types.get(key)
+            if (type) {
+                const baseType = type.baseType;
+                const existingComponent = self.getComponent(baseType);
+                if (!existingComponent) {
+                    self.setComponent(componentLoader.create(key, args));
+                }
+            }
+        });
     }
 
     setComponent(component) {

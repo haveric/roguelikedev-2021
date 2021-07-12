@@ -35,7 +35,7 @@ export default class RectangularRoom {
             for (let j = top; j < bottom; j++) {
                 const previousFloorTile = gameMap.tiles.get(MapLayer.Floor)[i][j];
                 if (!previousFloorTile) {
-                    gameMap.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {x: i, y: j, z: 0});
+                    gameMap.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
                 }
 
                 const isVerticalEdge = (i === this.x1 || i === this.x2) && j >= this.y1 && j <= this.y2;
@@ -43,7 +43,7 @@ export default class RectangularRoom {
                 const wallTile = gameMap.tiles.get(MapLayer.Wall)[i][j];
                 if (isHorizontalEdge || isVerticalEdge) {
                     if (!previousFloorTile && !wallTile) {
-                        gameMap.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {x: i, y: j, z: 1});
+                        gameMap.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
                     }
                 } else {
                     if (wallTile) {
@@ -62,7 +62,7 @@ export default class RectangularRoom {
 
             const blockingActor = engine.gameMap.getBlockingActorAtLocation(x, y);
             if (!blockingActor) {
-                const position = {x: x, y: y, z: 1};
+                const position = {components: {positionalobject: {x: x, y: y, z: 1}}};
                 let actor;
                 if (Math.random() < 0.8) {
                     actor = entityLoader.createFromTemplate('Orc', position);

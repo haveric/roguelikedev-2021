@@ -23,11 +23,10 @@ export default class BasicDungeon extends GameMap {
         // Pre-fill with floor and walls
         for (let j = 0; j < this.height; j++) {
             for (let i = 0; i < this.width; i++) {
-                this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {x: i, y: j, z: 0});
-                this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {x: i, y: j, z: 1});
+                this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
+                this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
             }
         }
-
         const rooms = [];
         for (let i = 0; i < this.maxRooms; i++) {
             const roomWidth = MathUtils.randInt(this.roomMinSize, this.roomMaxSize);
@@ -53,9 +52,12 @@ export default class BasicDungeon extends GameMap {
 
             if (rooms.length === 0) {
                 const position = {
-                    x: newRoom.getCenterX(),
-                    y: newRoom.getCenterY(),
-                    z: 1
+                    components: {
+                        positionalobject: {
+                            x: newRoom.getCenterX(),
+                            y: newRoom.getCenterY(),
+                            z: 1}
+                    }
                 };
 
                 engine.player = entityLoader.createFromTemplate('Player', position);
