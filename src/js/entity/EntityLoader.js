@@ -4,7 +4,9 @@ import Character from "./Character";
 import Item from "./Item";
 import playerList from "../../json/actors/player.json";
 import enemyList from "../../json/actors/enemies.json";
+import npcsList from "../../json/actors/npcs.json";
 import tileList from "../../json/tiles/tiles.json";
+import componentLoader from "../components/ComponentLoader";
 
 class EntityLoader {
     constructor() {
@@ -26,12 +28,22 @@ class EntityLoader {
     create(json, args = {}) {
         const parsedJson = JSON.parse(json);
         const entity = this.types.get(parsedJson.type);
-        return new entity.constructor({...args, ...parsedJson});
+        const newEntity = new entity.constructor({...args, ...parsedJson});
+        Object.keys(parsedJson.components).forEach(function(key) {
+            const baseType = componentLoader.types.get(key).baseType;
+            const existingComponent = newEntity.getComponent(baseType);
+            if (!existingComponent) {
+                newEntity.setComponent(componentLoader.create(key, parsedJson.components[key]));
+            }
+        });
+
+        return newEntity;
     }
 
     loadTemplates() {
         this.loadTemplate(playerList);
         this.loadTemplate(enemyList);
+        this.loadTemplate(npcsList);
         this.loadTemplate(tileList);
     }
 

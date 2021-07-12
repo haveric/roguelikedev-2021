@@ -217,12 +217,20 @@ export default class GameMap {
                 if (object) {
                     const xDiff = Math.abs(x - object.x);
                     const yDiff = Math.abs(y - object.y);
-                    if (object.z >= 1 && xDiff <= 1 && yDiff <= 1) {
+                    if (object.z >= 1) {
                         object.object.material.transparent = true;
                         if (object.z > 1) {
-                            object.object.material.opacity = .1;
+                            if (xDiff <= 3 && yDiff <= 3) {
+                                object.object.material.opacity = .1;
+                            } else {
+                                object.object.material.opacity = 1;
+                            }
                         } else {
-                            object.object.material.opacity = .5;
+                            if (xDiff <= 1 && yDiff <= 1) {
+                                object.object.material.opacity = .5;
+                            } else {
+                                object.object.material.opacity = 1;
+                            }
                         }
                     } else {
                         object.object.material.opacity = 1;
@@ -235,7 +243,9 @@ export default class GameMap {
         for (const oldObject of oldObjects) {
             const object = oldObject.getComponent("positionalobject");
             if (object) {
-                object.object.material.color.multiplyScalar(.5);
+                if (object.hasObject()) {
+                    object.object.material.color.multiplyScalar(.5);
+                }
             }
         }
     }

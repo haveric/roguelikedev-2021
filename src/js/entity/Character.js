@@ -6,7 +6,7 @@ import BlocksMovement from "../components/BlocksMovement";
 export default class Character extends _Entity {
     constructor(args = {}) {
         super({...args, ...{type: "character"}});
-        const argsWithParent = {...args, ...{parent: this}};
+        const argsWithParent = {...args, ...{parentEntity: this}};
         this.setComponent(new CharacterObject({...{scale: .1, font: helvetikerFont, xRot: .5, yRot: .25, xOffset: -.4, yOffset: -.3, zOffset: -.25}, ...argsWithParent }));
         this.setComponent(new BlocksMovement({...{blocksMovement: true}, ...argsWithParent}));
     }

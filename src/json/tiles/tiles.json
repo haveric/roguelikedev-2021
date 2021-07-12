@@ -9,6 +9,15 @@
         }
     },
     {
+        "type": "solidtile",
+        "name": "Grass",
+        "components": {
+            "solidobject": {
+                "color": "#567d46"
+            }
+        }
+    },
+    {
         "type": "charactertile",
         "name": "Wall",
         "components": {
@@ -27,7 +36,36 @@
                 "color": "#964b00"
             },
             "blocksMovement": {
-                "blocksMovement": "true"
+                "blocksMovement": true
+            },
+            "blocksFov": {
+                "blocksFov": true
+            },
+            "openable": {
+                "isOpen": false,
+                "openEntity": "Open Door",
+                "closedEntity": "Door"
+            }
+        }
+    },
+    {
+        "type": "charactertile",
+        "name": "Open Door",
+        "components": {
+            "characterobject": {
+                "letter": "/",
+                "color": "#964b00"
+            },
+            "blocksMovement": {
+                "blocksMovement": false
+            },
+            "blocksFov": {
+                "blocksFov": false
+            },
+            "openable": {
+                "isOpen": true,
+                "openEntity": "Open Door",
+                "closedEntity": "Door"
             }
         }
     },
@@ -41,7 +79,7 @@
                 "scale": ".75"
             },
             "blocksMovement": {
-                "blocksMovement": "false"
+                "blocksMovement": false
             }
         }
     },
@@ -55,7 +93,7 @@
                 "scale": ".7"
             },
             "blocksMovement": {
-                "blocksMovement": "false"
+                "blocksMovement": false
             }
         }
     }

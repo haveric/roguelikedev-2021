@@ -8,7 +8,7 @@ import BlocksFov from "../components/BlocksFov";
 export default class CharacterTile extends _Tile {
     constructor(args = {}) {
         super({...args, ...{type: "charactertile"}});
-        const argsWithParent = {...args, ...{parent: this}};
+        const argsWithParent = {...args, ...{parentEntity: this}};
         this.setComponent(new CharacterObject({...{font: pressStartFont, xOffset: -.5, yOffset: -.65, zOffset: -.5}, ...argsWithParent}));
         this.setComponent(new Walkable({...{walkable: false}, ...argsWithParent}));
         this.setComponent(new BlocksMovement({...{blocksMovement: true}, ...argsWithParent}));

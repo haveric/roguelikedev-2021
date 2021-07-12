@@ -1,6 +1,5 @@
 import MapLayer from "../MapLayer";
-import SolidTile from "../../entity/SolidTile";
-import CharacterTile from "../../entity/CharacterTile";
+import entityLoader from "../../entity/EntityLoader";
 
 export default class MapGeneration {
     constructor() {
@@ -65,10 +64,10 @@ export default class MapGeneration {
         } else {
             const floorTile = gameMap.tiles.get(MapLayer.Floor)[i][j];
             if (!floorTile) {
-                gameMap.tiles.get(MapLayer.Wall)[i][j] = new CharacterTile({name: "Wall", x: i, y: j, z: 1, scale: 1, letter: "#", color: 0x666666});
+                gameMap.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {x: i, y: j, z: 1});
             }
         }
 
-        gameMap.tiles.get(MapLayer.Floor)[i][j] = new SolidTile({name: "Floor", x: i, y: j, z: 0, scale: 1, color: 0x333333});
+        gameMap.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {x: i, y: j, z: 0});
     }
 }

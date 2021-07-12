@@ -50,17 +50,20 @@ export default class BaseFov {
         const tilesIter = engine.gameMap.tiles.entries();
         for (const entry of tilesIter) {
             const tilesArray = entry[1];
-            const tile = tilesArray[x][y];
+            const tileArrayX = tilesArray[x];
+            if (tileArrayX) {
+                const tile = tileArrayX[y];
 
-            if (tile) {
-                this.addVisibleObject(tile);
+                if (tile) {
+                    this.addVisibleObject(tile);
 
-                const fov = tile.getComponent("fov");
-                if (fov) {
-                    fov.explored = true;
-                    fov.visible = true;
-                } else {
-                    tile.setComponent(new Fov({explored: true, visible: true}));
+                    const fov = tile.getComponent("fov");
+                    if (fov) {
+                        fov.explored = true;
+                        fov.visible = true;
+                    } else {
+                        tile.setComponent(new Fov({explored: true, visible: true}));
+                    }
                 }
             }
         }

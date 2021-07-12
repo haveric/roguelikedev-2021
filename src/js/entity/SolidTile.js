@@ -7,7 +7,7 @@ import BlocksFov from "../components/BlocksFov";
 export default class SolidTile extends _Tile {
     constructor(args = {}) {
         super({...args, ...{type: "solidtile"}});
-        const argsWithParent = {...args, ...{parent: this}};
+        const argsWithParent = {...args, ...{parentEntity: this}};
         this.setComponent(new SolidObject(argsWithParent));
         this.setComponent(new Walkable({...{walkable: true}, ...argsWithParent}));
         this.setComponent(new BlocksMovement({...{blocksMovement: true}, ...argsWithParent}));

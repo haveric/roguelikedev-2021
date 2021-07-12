@@ -1,36 +1,21 @@
+import RectangularRoom from "./RectangularRoom";
 import MapLayer from "../MapLayer";
+import entityLoader from "../../entity/EntityLoader";
 import {MathUtils} from "three";
 import engine from "../../Engine";
-import entityLoader from "../../entity/EntityLoader";
 
-export default class RectangularRoom {
+export default class Shop extends RectangularRoom {
     constructor(x, y, width, height) {
-        this.x1 = x;
-        this.y1 = y;
-        this.x2 = x + width;
-        this.y2 = y + height;
-    }
-
-    getCenterX() {
-        return Math.round((this.x1 + this.x2) / 2);
-    }
-
-    getCenterY() {
-        return Math.round((this.y1 + this.y2) / 2);
-    }
-
-    intersects(otherRoom) {
-        return this.x1 <= otherRoom.x2
-            && this.x2 >= otherRoom.x1
-            && this.y1 <= otherRoom.y2
-            && this.y2 >= otherRoom.y1;
+        super(x, y, width, height);
     }
 
     createRoom(gameMap) {
+        this.walls = [];
         const left = Math.max(0, this.x1);
         const right = Math.min(gameMap.width, this.x2 + 1);
         const top = Math.max(0, this.y1);
         const bottom = Math.min(gameMap.height, this.y2 + 1);
+
         for (let i = left; i < right; i++) {
             for (let j = top; j < bottom; j++) {
                 const previousFloorTile = gameMap.tiles.get(MapLayer.Floor)[i][j];
@@ -44,6 +29,12 @@ export default class RectangularRoom {
                 if (isHorizontalEdge || isVerticalEdge) {
                     if (!previousFloorTile && !wallTile) {
                         gameMap.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {x: i, y: j, z: 1});
+                        gameMap.tiles.get(MapLayer.DecorativeBG)[i][j] = entityLoader.createFromTemplate('Wall', {x: i, y: j, z: 2});
+
+                        let isCorner = isHorizontalEdge && isVerticalEdge;
+                        if (!isCorner) {
+                            this.walls.push(gameMap.tiles.get(MapLayer.Wall)[i][j]);
+                        }
                     }
                 } else {
                     if (wallTile) {
@@ -52,26 +43,16 @@ export default class RectangularRoom {
                 }
             }
         }
-    }
 
-    placeEntities(maxMonsters) {
-        const numMonsters = MathUtils.randInt(0, maxMonsters);
-        for (let i = 0; i < numMonsters; i++) {
-            const x = MathUtils.randInt(this.x1 + 1, this.x2 -1);
-            const y = MathUtils.randInt(this.y1 + 1, this.y2 -1);
+        let randWall = MathUtils.randInt(0, this.walls.length - 1);
+        const wall = this.walls[randWall];
+        const position = wall.getComponent("positionalobject");
 
-            const blockingActor = engine.gameMap.getBlockingActorAtLocation(x, y);
-            if (!blockingActor) {
-                const position = {x: x, y: y, z: 1};
-                let actor;
-                if (Math.random() < 0.8) {
-                    actor = entityLoader.createFromTemplate('Orc', position);
-                } else {
-                    actor = entityLoader.createFromTemplate('Troll', position);
-                }
+        gameMap.tiles.get(MapLayer.Wall)[position.x][position.y] = entityLoader.createFromTemplate('Door', {x: position.x, y: position.y, z: 1});
 
-                engine.gameMap.actors.push(actor);
-            }
-        }
+        const x = MathUtils.randInt(this.x1 + 1, this.x2 - 1);
+        const y = MathUtils.randInt(this.y1 + 1, this.y2 - 1);
+        const npc = entityLoader.createFromTemplate('Shop Owner', {x: x, y: y, z: 1});
+        engine.gameMap.actors.push(npc);
     }
 }
