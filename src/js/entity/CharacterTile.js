@@ -1,4 +1,3 @@
-import pressStartFont from "../../fonts/Press Start 2P_Regular.json";
 import _Tile from "./_Tile";
 import Extend from "../util/Extend";
 
@@ -12,10 +11,7 @@ export default class CharacterTile extends _Tile {
             type: "charactertile",
             components: {
                 "characterobject": {
-                    font: pressStartFont,
-                    xOffset: -.5,
-                    yOffset: -.65,
-                    zOffset: -.5
+                    fontName: "pressStart"
                 },
                 "walkable": false,
                 "blocksMovement": true,

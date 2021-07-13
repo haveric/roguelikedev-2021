@@ -10,11 +10,26 @@
     },
     {
         "type": "solidtile",
-        "name": "Grass",
+        "name": "Grass Floor",
         "components": {
             "solidobject": {
                 "color": "#567d46"
             }
+        }
+    },
+    {
+        "type": "charactertile",
+        "name": "Grass",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "░",
+                "color": "#567d46",
+                "scale": "0.1, 0.75",
+                "size": 0.85
+            },
+            "blocksMovement": false,
+            "blocksFov": false
         }
     },
     {

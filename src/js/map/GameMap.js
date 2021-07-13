@@ -205,7 +205,7 @@ export default class GameMap {
                     object.setVisible();
                     sceneState.scene.add(object.object);
                 } else {
-                    object.object.material.color.set(object.color);
+                    object.resetColor();
                 }
             }
         }
@@ -218,22 +218,21 @@ export default class GameMap {
                     const xDiff = Math.abs(x - object.x);
                     const yDiff = Math.abs(y - object.y);
                     if (object.z >= 1) {
-                        object.object.material.transparent = true;
                         if (object.z > 1) {
                             if (xDiff <= 3 && yDiff <= 3) {
-                                object.object.material.opacity = .1;
+                                object.setTransparency(.1);
                             } else {
-                                object.object.material.opacity = 1;
+                                object.setTransparency(1);
                             }
                         } else {
                             if (xDiff <= 1 && yDiff <= 1) {
-                                object.object.material.opacity = .5;
+                                object.setTransparency(.5);
                             } else {
-                                object.object.material.opacity = 1;
+                                object.setTransparency(1);
                             }
                         }
                     } else {
-                        object.object.material.opacity = 1;
+                        object.setTransparency(1);
                     }
                 }
             }
@@ -244,7 +243,7 @@ export default class GameMap {
             const object = oldObject.getComponent("positionalobject");
             if (object) {
                 if (object.hasObject()) {
-                    object.object.material.color.multiplyScalar(.5);
+                    object.shiftColor(.5);
                 }
             }
         }

@@ -2,6 +2,9 @@ import _PositionalObject from "./_PositionalObject";
 import * as THREE from "three";
 import helvetikerFont from "../../fonts/helvetiker_regular.typeface.json";
 import Extend from "../util/Extend";
+import mplusFont from "../../fonts/Rounded Mplus 1c_Regular.json";
+import jetbrainsMonoFont from "../../fonts/JetBrains Mono_Regular.json";
+import pressStartFont from "../../fonts/Press Start 2P_Regular.json";
 
 const cachedTextGeometries = [];
 export default class CharacterObject extends _PositionalObject {
@@ -14,23 +17,43 @@ export default class CharacterObject extends _PositionalObject {
 
         super(Extend.extend(args, {type: "characterobject"}));
 
-        this.font = helvetikerFont;
+        this.fontName = "helvetiker";
         this.letter = '@';
 
         if (hasComponent) {
-            this.font = args.components.characterobject.font || helvetikerFont;
+            this.fontName = args.components.characterobject.fontName || "helvetiker";
             this.letter = args.components.characterobject.letter || '@';
+        }
+
+        switch(this.fontName) {
+            case "mplus":
+                this.font = mplusFont;
+                break;
+            case "jetbrains":
+                this.font = jetbrainsMonoFont;
+                break;
+            case "helvetiker":
+                this.font = helvetikerFont;
+                break;
+            case "pressStart":
+            default:
+                this.font = pressStartFont;
+                break;
         }
     }
 
     save() {
         return Extend.deep(super.save(), {
             characterobject:
-                {letter: this.letter}
+                {
+                    fontName: this.fontName,
+                    letter: this.letter
+                }
         });
     }
 
     createObject() {
+        this.meshes = [];
         const newHeight = this.scale * this.depth;
 
         const font = new THREE.Font(this.font);
@@ -46,7 +69,7 @@ export default class CharacterObject extends _PositionalObject {
         if (!anyFound) {
             this.geometry = new THREE.TextGeometry(this.letter, {
                 font: font,
-                size: 4.1 / 5 * this.depth,
+                size: 4.1 / 5 * this.depth * this.size,
                 height: newHeight,
                 curveSegments: 24,
                 bevelEnabled: true,
@@ -63,6 +86,10 @@ export default class CharacterObject extends _PositionalObject {
             this.geometry,
             new THREE.MeshLambertMaterial({color: this.color})
         );
+        this.object.originalColor = this.color;
+        this.meshes.push(this.object);
+
+        this.geometry.center();
 
         this.updateObjectPosition();
         this.object.rotateX(Math.PI * this.xRot);
@@ -75,6 +102,7 @@ export default class CharacterObject extends _PositionalObject {
         if (!this.hasObject()) {
             this.createObject();
         }
-        this.object.position.set((this.x + this.xOffset) * this.width, (this.y + this.yOffset) * this.height, (this.z + this.zOffset) * this.depth);
+        this.object.position.set((this.x + this.xOffset) * this.width, (this.y + this.yOffset) * this.height, (this.z + this.zOffset) * this.depth - ((this.depth - (this.scale * this.depth)) / 2));
+        //this.object.position.set((this.x + this.xOffset) * this.width, (this.y + this.yOffset) * this.height, (this.z + this.zOffset) * this.depth);
     }
 }

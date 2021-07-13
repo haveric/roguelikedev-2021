@@ -4,7 +4,7 @@
         "name": "Shop Owner",
         "components": {
             "characterobject": {
-                "letter": "@",
+                "letter": "$",
                 "color": "#ffff00"
             }
         }

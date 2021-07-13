@@ -14,6 +14,7 @@ export default class SolidObject extends _PositionalObject {
     }
 
     createObject() {
+        this.meshes = [];
         const newDepth = this.scale * this.depth;
 
         let anyFound = false;
@@ -33,6 +34,8 @@ export default class SolidObject extends _PositionalObject {
             this.geometry,
             new THREE.MeshLambertMaterial({color: this.color})
         );
+        this.object.originalColor = this.color;
+        this.meshes.push(this.object);
 
         this.updateObjectPosition();
         this.object.rotateX(Math.PI * this.xRot);

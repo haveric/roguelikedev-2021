@@ -6,7 +6,8 @@ import Town from "./js/map/Town";
 
 ;(function () {
     const init = function() {
-        engine.gameMap = new BasicDungeon(100, 100);
+        //engine.gameMap = new BasicDungeon(100, 100);
+        engine.gameMap = new Town(50, 50);
         engine.gameMap.create();
 
         sceneState.updateCameraPosition(engine.player);

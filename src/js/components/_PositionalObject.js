@@ -2,6 +2,7 @@ import _Component from "./_Component";
 import sceneState from "../SceneState";
 import _Tile from "../entity/_Tile";
 import Extend from "../util/Extend";
+import {MathUtils} from "three";
 
 export default class _PositionalObject extends _Component {
     constructor(args = {}) {
@@ -9,6 +10,7 @@ export default class _PositionalObject extends _Component {
         const hasComponent = args.components && args.components.positionalobject;
 
         this.object = null;
+        this.meshes = [];
         this.highlighted = false;
         this.width = 5;
         this.height = 5;
@@ -31,14 +33,31 @@ export default class _PositionalObject extends _Component {
             this.y = args.components.positionalobject.y || 0;
             this.z = args.components.positionalobject.z || 0;
             this.color = args.components.positionalobject.color || 0xffffff;
-            this.scale = args.components.positionalobject.scale || 1;
-            this.xRot = args.components.positionalobject.xRot || 0;
-            this.yRot = args.components.positionalobject.yRot || 0;
-            this.zRot = args.components.positionalobject.zRot || 0;
+            this.scale = this.parseRand(args.components.positionalobject.scale, 1);
+            this.xRot = this.parseRand(args.components.positionalobject.xRot, 0);
+            this.yRot = this.parseRand(args.components.positionalobject.yRot, 0);
+            this.zRot = this.parseRand(args.components.positionalobject.zRot, 0);
             this.xOffset = args.components.positionalobject.xOffset || 0;
             this.yOffset = args.components.positionalobject.yOffset || 0;
             this.zOffset = args.components.positionalobject.zOffset || 0;
+            this.size = this.parseRand(args.components.positionalobject.size, 1);
         }
+    }
+
+    parseRand(value, defaultValue) {
+        let returnValue;
+        if (typeof value === "string") {
+            if (value.indexOf(",") !== -1) {
+                const valueSplit = value.split(",");
+                returnValue = MathUtils.randFloat(parseFloat(valueSplit[0].trim()), parseFloat(valueSplit[1].trim())).toFixed(2);
+            } else {
+                returnValue = parseFloat(value) || defaultValue;
+            }
+        } else {
+            returnValue = value || defaultValue;
+        }
+
+        return returnValue;
     }
 
     save() {
@@ -77,6 +96,26 @@ export default class _PositionalObject extends _Component {
         }
     }
 
+    resetColor() {
+        for (const mesh of this.meshes) {
+            mesh.material.color.set(mesh.originalColor);
+        }
+    }
+
+    shiftColor(scalar) {
+        for (const mesh of this.meshes) {
+            mesh.material.transparent = true;
+            mesh.material.color.multiplyScalar(scalar);
+        }
+    }
+
+    setTransparency(opacity) {
+        for (const mesh of this.meshes) {
+            mesh.material.transparent = true;
+            mesh.material.opacity = opacity;
+        }
+    }
+
     updateObjectPosition() {
         if (!this.hasObject()) {
             this.createObject();
@@ -109,7 +148,7 @@ export default class _PositionalObject extends _Component {
     highlight() {
         if (!this.highlighted) {
             if (this.hasObject()) {
-                this.object.material.color.set(0xffffff);
+                this.shiftColor(2.5);
             }
             this.highlighted = true;
         }
@@ -124,7 +163,7 @@ export default class _PositionalObject extends _Component {
                 if (parent) {
                     const fov = parent.getComponent("fov");
                     if (fov && fov.explored && !fov.visible) {
-                        this.object.material.color.multiplyScalar(.5);
+                        this.shiftColor(.5);
                     }
                 }
             }
