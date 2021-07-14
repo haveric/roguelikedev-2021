@@ -1,5 +1,4 @@
 import EditorUIElement from "./_EditorUIElement";
-import CharacterObject from "../components/CharacterObject";
 import engine from "../Engine";
 
 class EditorInfo extends EditorUIElement{
