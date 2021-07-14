@@ -92,6 +92,11 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             if (parentEntity && parentEntity instanceof _Tile) {
                 const parentObject = parentEntity.getComponent("positionalobject");
                 if (parentObject) {
+                    // Skip invisible items
+                    if (parentObject.transparency === 0) {
+                        continue;
+                    }
+
                     this.clearHighlight();
                     this.highlightedTile = parentEntity;
                     parentObject.highlight();

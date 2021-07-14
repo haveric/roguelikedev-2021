@@ -42,6 +42,8 @@ export default class _PositionalObject extends _Component {
             this.zOffset = args.components.positionalobject.zOffset || 0;
             this.size = this.parseRand(args.components.positionalobject.size, 1);
         }
+
+        this.transparency = 1; // for quick reference on mousemove
     }
 
     parseRand(value, defaultValue) {
@@ -110,6 +112,8 @@ export default class _PositionalObject extends _Component {
     }
 
     setTransparency(opacity) {
+        this.transparency = opacity;
+
         for (const mesh of this.meshes) {
             mesh.material.transparent = true;
             mesh.material.opacity = opacity;

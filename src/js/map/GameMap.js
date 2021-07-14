@@ -246,7 +246,7 @@ export default class GameMap {
             const xDiff = Math.abs(x - object.x);
             const yDiff = Math.abs(y - object.y);
             if (object.z > 1) {
-                if (object.x > x && object.y < y && Math.max(xDiff, yDiff) < object.z + 3) {
+                if (object.x >= x && object.y <= y && Math.max(xDiff, yDiff) < object.z + 3) {
                     if (object.z > 2) {
                         object.setTransparency(0);
                     } else {
@@ -256,7 +256,7 @@ export default class GameMap {
                     object.setTransparency(1);
                 }
             } else {
-                if (xDiff <= 1 && yDiff <= 1) {
+                if (object.z <= 2 && xDiff <= 1 && yDiff <= 1) {
                     object.setTransparency(.5);
                 } else {
                     object.setTransparency(1);

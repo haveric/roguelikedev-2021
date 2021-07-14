@@ -89,6 +89,11 @@ export default class EditorEventHandler extends EventHandler {
                     if (parentEntity) {
                         const parentObject = parentEntity.getComponent("positionalobject");
                         if (parentObject) {
+                            // Skip invisible items
+                            if (parentObject.transparency === 0) {
+                                continue;
+                            }
+
                             this.clearSelected();
                             this.selectedEntity = parentEntity;
                             editorInfo.setDataForEntity(this.selectedEntity);
@@ -121,6 +126,11 @@ export default class EditorEventHandler extends EventHandler {
             if (parentEntity) {
                 const parentObject = parentEntity.getComponent("positionalobject");
                 if (parentObject && !parentObject.highlighted) {
+                    // Skip invisible items
+                    if (parentObject.transparency === 0) {
+                        continue;
+                    }
+
                     this.clearHighlight();
                     this.highlightedTile = parentEntity;
                     parentObject.highlight();

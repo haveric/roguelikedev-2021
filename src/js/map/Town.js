@@ -61,11 +61,20 @@ export default class Town extends GameMap {
             for (let i = -2; i <= 2; i++) {
                 for (let j = -2; j <= 2; j++) {
                     if (i !== 0 || j !== 0) {
-                        if ((Math.abs(i) === 2 || Math.abs(j) === 2)) {
+                        const absI = Math.abs(i);
+                        const absJ = Math.abs(j);
+                        if ((absI === 2 || absJ === 2)) {
+                            // Skip corners
+                            if (absI === 2 && absJ === 2) {
+                                continue;
+                            }
+
+                            // Skip top and bottom outsides
                             if ((z === 5 || z === 9)) {
                                 continue;
                             }
 
+                            // Skip some leaves
                             if (Math.random() < .1) {
                                 continue;
                             }
