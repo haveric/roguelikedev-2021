@@ -11,18 +11,18 @@ export default class AdamMilazzoFov extends BaseFov {
         super();
     }
 
-    compute(x, y, radius) {
+    compute(x, y, radius, minZ, maxZ) {
         super.compute(x, y, radius);
 
-        this.exploreTile(x, y, 0, 2);
+        this.exploreTile(x, y, minZ, maxZ);
         for (let octant = 0; octant < 8; octant ++) {
-            this.computeOctant(octant, x, y, radius, 1, new FovSlope(1, 1), new FovSlope(0, 1));
+            this.computeOctant(octant, x, y, radius, 1, new FovSlope(1, 1), new FovSlope(0, 1), minZ, maxZ);
         }
 
         this.postCompute();
     }
 
-    computeOctant(octant, originX, originY, rangeLimit, x, top, bottom) {
+    computeOctant(octant, originX, originY, rangeLimit, x, top, bottom, minZ, maxZ) {
         for (; x <= rangeLimit; x++) {
             let topY;
             if (top.x === 1) {
@@ -63,7 +63,7 @@ export default class AdamMilazzoFov extends BaseFov {
                 const isVisible = isOpaque || ((y !== topY || top.greaterOrEqual(y, x)) && (y !== bottomY || bottom.lessOrEqual(y, x)));
 
                 if (isVisible) {
-                    this.setVisible(octant, originX, originY, x, y);
+                    this.setVisible(octant, originX, originY, x, y, minZ, maxZ);
                 }
 
                 if (x !== rangeLimit) {
@@ -77,7 +77,7 @@ export default class AdamMilazzoFov extends BaseFov {
                                     bottom = new FovSlope(ny, nx);
                                     break;
                                 } else {
-                                    this.computeOctant(octant, originX, originY, rangeLimit, x + 1, top, new FovSlope(ny, nx));
+                                    this.computeOctant(octant, originX, originY, rangeLimit, x + 1, top, new FovSlope(ny, nx), minZ, maxZ);
                                 }
                             } else {
                                 if (y === bottomY) {
@@ -161,7 +161,7 @@ export default class AdamMilazzoFov extends BaseFov {
         return blocksLight;
     }
 
-    setVisible(octant, originX, originY, x, y) {
+    setVisible(octant, originX, originY, x, y, minZ, maxZ) {
         switch(octant) {
             case 0:
                 originX += x;
@@ -197,6 +197,6 @@ export default class AdamMilazzoFov extends BaseFov {
                 break;
         }
 
-        this.exploreTile(originX, originY, 0, 2);
+        this.exploreTile(originX, originY, minZ, maxZ);
     }
 }

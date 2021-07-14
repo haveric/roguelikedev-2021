@@ -46,7 +46,7 @@ export default class BaseFov {
         }
     }
 
-    exploreTile(x, y, minZ, maxZ) {
+    exploreTile(x, y, minZ, maxZ, tilesOnly = false) {
         const tilesIter = engine.gameMap.tiles.entries();
         for (const entry of tilesIter) {
             if (entry[0] >= minZ && entry[0] <= maxZ) {
@@ -70,20 +70,22 @@ export default class BaseFov {
             }
         }
 
-        for (let actor of engine.gameMap.actors) {
-            const positionalObject = actor.getComponent("positionalobject");
-            if (positionalObject) {
-                if (positionalObject.x === x && positionalObject.y === y) {
-                    this.addVisibleObject(actor);
+        if (!tilesOnly) {
+            for (let actor of engine.gameMap.actors) {
+                const positionalObject = actor.getComponent("positionalobject");
+                if (positionalObject) {
+                    if (positionalObject.x === x && positionalObject.y === y) {
+                        this.addVisibleObject(actor);
+                    }
                 }
             }
-        }
 
-        for (let item of engine.gameMap.items) {
-            const positionalObject = item.getComponent("positionalobject");
-            if (positionalObject) {
-                if (positionalObject.x === x && positionalObject.y === y) {
-                    this.addVisibleObject(item);
+            for (let item of engine.gameMap.items) {
+                const positionalObject = item.getComponent("positionalobject");
+                if (positionalObject) {
+                    if (positionalObject.x === x && positionalObject.y === y) {
+                        this.addVisibleObject(item);
+                    }
                 }
             }
         }
