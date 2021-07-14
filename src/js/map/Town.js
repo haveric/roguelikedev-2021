@@ -34,7 +34,13 @@ export default class Town extends GameMap {
                 if (!floorTile) {
                     this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Grass Floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
 
-                    if (Math.random() < .01) {
+                    if (i > 17 && i < 21 && j === 7) {
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Bench', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                    } else if (i === 21 && j === 7) {
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Bench Armrest Right', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                    } else if (i === 17 && j === 7) {
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Bench Armrest Left', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                    } else if (Math.random() < .01) {
                         this.createTree(i, j);
                     } else {
                         if (Math.random() < .3) {
@@ -45,7 +51,7 @@ export default class Town extends GameMap {
             }
         }
 
-        engine.player = entityLoader.createFromTemplate('Player', {components: {positionalobject: {x: 10, y: 10, z: 1}}});
+        engine.player = entityLoader.createFromTemplate('Player', {components: {positionalobject: {x: 6, y: 6, z: 1}}});
         engine.gameMap.actors.push(engine.player);
         const positionalObject = engine.player.getComponent("positionalobject");
         positionalObject.setVisible();
