@@ -14,7 +14,7 @@ export default class AdamMilazzoFov extends BaseFov {
     compute(x, y, radius) {
         super.compute(x, y, radius);
 
-        this.exploreTile(x, y);
+        this.exploreTile(x, y, 0, 2);
         for (let octant = 0; octant < 8; octant ++) {
             this.computeOctant(octant, x, y, radius, 1, new FovSlope(1, 1), new FovSlope(0, 1));
         }
@@ -197,6 +197,6 @@ export default class AdamMilazzoFov extends BaseFov {
                 break;
         }
 
-        this.exploreTile(originX, originY);
+        this.exploreTile(originX, originY, 0, 2);
     }
 }

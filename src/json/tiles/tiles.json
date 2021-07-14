@@ -99,5 +99,29 @@
             },
             "blocksMovement": false
         }
+    },
+    {
+        "type": "charactertile",
+        "name": "Tree Trunk",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "⚫",
+                "color": "#964b00",
+                "size": 0.85
+            }
+        }
+    },
+    {
+        "type": "charactertile",
+        "name": "Tree Leaves",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "░",
+                "color": "#618a3d",
+                "size": 0.85
+            }
+        }
     }
 ]

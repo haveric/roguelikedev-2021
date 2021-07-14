@@ -2,6 +2,7 @@ import UnableToPerformAction from "./actions/UnableToPerformAction";
 import sceneState from "./SceneState";
 import DefaultPlayerEventHandler from "./event/DefaultPlayerEventHandler";
 import AdamMilazzoFov from "./map/fov/AdamMilazzoFov";
+import SimpleFov from "./map/fov/SimpleFov";
 
 class Engine {
     constructor() {
@@ -10,6 +11,7 @@ class Engine {
         this.gameMap = null;
         this.needsMapUpdate = false;
         this.fov = new AdamMilazzoFov();
+        this.airFov = new SimpleFov();
     }
 
     setEventHandler(eventHandler) {

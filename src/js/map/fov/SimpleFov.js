@@ -16,7 +16,7 @@ export default class SimpleFov extends BaseFov {
 
         for (let i = minX; i < maxX; i++) {
             for (let j = minY; j < maxY; j++) {
-                this.exploreTile(i, j);
+                this.exploreTile(i, j, 3, 10);
             }
         }
 

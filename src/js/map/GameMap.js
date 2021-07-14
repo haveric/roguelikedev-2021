@@ -28,6 +28,7 @@ export default class GameMap {
 
     teardown() {
         engine.fov.teardown();
+        engine.airFov.teardown();
 
         const tilesIter = this.tiles.entries();
         for (const entry of tilesIter) {
@@ -194,10 +195,16 @@ export default class GameMap {
 
     updateFOV(x, y, range) {
         engine.fov.compute(x, y, range);
+        engine.airFov.compute(x, y, range * 2);
     }
 
     draw(x, y) {
-        const newObjects = engine.fov.newObjects;
+        this.drawItemsInFov(engine.fov, x, y);
+        this.drawItemsInFov(engine.airFov, x, y);
+    }
+
+    drawItemsInFov(fov, x, y) {
+        const newObjects = fov.newObjects;
         for (const newObject of newObjects) {
             const object = newObject.getComponent("positionalobject");
             if (object) {
@@ -210,42 +217,53 @@ export default class GameMap {
             }
         }
 
-        const visibleObjects = engine.fov.visibleObjects;
+        const visibleObjects = fov.visibleObjects;
         for (const visibleObject of visibleObjects) {
             if (visibleObject instanceof _Tile) {
                 const object = visibleObject.getComponent("positionalobject");
+
                 if (object) {
-                    const xDiff = Math.abs(x - object.x);
-                    const yDiff = Math.abs(y - object.y);
-                    if (object.z >= 1) {
-                        if (object.z > 1) {
-                            if (xDiff <= 3 && yDiff <= 3) {
-                                object.setTransparency(.1);
-                            } else {
-                                object.setTransparency(1);
-                            }
-                        } else {
-                            if (xDiff <= 1 && yDiff <= 1) {
-                                object.setTransparency(.5);
-                            } else {
-                                object.setTransparency(1);
-                            }
-                        }
-                    } else {
-                        object.setTransparency(1);
-                    }
+                    this.setTransparency(object, x, y);
                 }
             }
         }
 
-        const oldObjects = engine.fov.oldObjects;
+        const oldObjects = fov.oldObjects;
         for (const oldObject of oldObjects) {
             const object = oldObject.getComponent("positionalobject");
             if (object) {
+                this.setTransparency(object, x, y);
+
                 if (object.hasObject()) {
                     object.shiftColor(.5);
                 }
             }
+        }
+    }
+
+    setTransparency(object, x, y) {
+        if (object.z >= 1) {
+            const xDiff = Math.abs(x - object.x);
+            const yDiff = Math.abs(y - object.y);
+            if (object.z > 1) {
+                if (object.x > x && object.y < y && Math.max(xDiff, yDiff) < object.z + 3) {
+                    if (object.z > 2) {
+                        object.setTransparency(0);
+                    } else {
+                        object.setTransparency(.1);
+                    }
+                } else {
+                    object.setTransparency(1);
+                }
+            } else {
+                if (xDiff <= 1 && yDiff <= 1) {
+                    object.setTransparency(.5);
+                } else {
+                    object.setTransparency(1);
+                }
+            }
+        } else {
+            object.setTransparency(1);
         }
     }
 
