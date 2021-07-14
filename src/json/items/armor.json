@@ -1,0 +1,12 @@
+[
+    {
+        "type": "item",
+        "name": "Tower Shield",
+        "components": {
+            "characterobject": {
+                "letter": "]",
+                "color": "#ccc"
+            }
+        }
+    }
+]

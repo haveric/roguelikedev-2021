@@ -1,0 +1,12 @@
+[
+    {
+        "type": "item",
+        "name": "Healing Potion",
+        "components": {
+            "characterobject": {
+                "letter": "!",
+                "color": "#990f02"
+            }
+        }
+    }
+]

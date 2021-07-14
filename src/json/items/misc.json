@@ -1,0 +1,12 @@
+[
+    {
+        "type": "item",
+        "name": "^",
+        "components": {
+            "characterobject": {
+                "letter": "^",
+                "color": "#ffffff"
+            }
+        }
+    }
+]

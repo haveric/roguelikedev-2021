@@ -6,6 +6,9 @@ import playerList from "../../json/actors/player.json";
 import enemyList from "../../json/actors/enemies.json";
 import npcsList from "../../json/actors/npcs.json";
 import tileList from "../../json/tiles/tiles.json";
+import armorList from "../../json/items/armor.json";
+import miscList from "../../json/items/misc.json";
+import potionsList from "../../json/items/potions.json";
 import Extend from "../util/Extend";
 
 class EntityLoader {
@@ -36,6 +39,9 @@ class EntityLoader {
         this.loadTemplate(enemyList);
         this.loadTemplate(npcsList);
         this.loadTemplate(tileList);
+        this.loadTemplate(armorList);
+        this.loadTemplate(miscList);
+        this.loadTemplate(potionsList);
     }
 
     loadTemplate(entities) {

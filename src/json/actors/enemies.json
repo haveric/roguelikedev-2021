@@ -18,5 +18,35 @@
                 "color": "#007f00"
             }
         }
+    },
+    {
+        "type": "character",
+        "name": "Ant",
+        "components": {
+            "characterobject": {
+                "letter": "a",
+                "color": "#000000"
+            }
+        }
+    },
+    {
+        "type": "character",
+        "name": "Red Dragon",
+        "components": {
+            "characterobject": {
+                "letter": "D",
+                "color": "#ff0000"
+            }
+        }
+    },
+    {
+        "type": "character",
+        "name": "Goblin",
+        "components": {
+            "characterobject": {
+                "letter": "g",
+                "color": "#3f7f3f"
+            }
+        }
     }
 ]
