@@ -19,10 +19,14 @@ export default class CharacterObject extends _PositionalObject {
 
         this.fontName = "helvetiker";
         this.letter = '@';
+        this.centered = true;
 
         if (hasComponent) {
             this.fontName = args.components.characterobject.fontName || "helvetiker";
             this.letter = args.components.characterobject.letter || '@';
+            if (args.components.characterobject.centered !== undefined) {
+                this.centered = args.components.characterobject.centered;
+            }
         }
 
         switch(this.fontName) {
@@ -47,7 +51,8 @@ export default class CharacterObject extends _PositionalObject {
             characterobject:
                 {
                     fontName: this.fontName,
-                    letter: this.letter
+                    letter: this.letter,
+                    centered: this.centered
                 }
         });
     }
@@ -89,7 +94,9 @@ export default class CharacterObject extends _PositionalObject {
         this.object.originalColor = this.color;
         this.meshes.push(this.object);
 
-        this.geometry.center();
+        if (this.centered) {
+            this.geometry.center();
+        }
 
         this.updateObjectPosition();
         this.object.rotateX(Math.PI * this.xRot);

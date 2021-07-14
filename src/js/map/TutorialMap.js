@@ -105,7 +105,7 @@ export default class TutorialMap extends GameMap {
                 let overlayChar = this.overlay[this.height - j - 1].charAt(i);
                 if (overlayChar !== "#") {
                     if (overlayChar !== ".") {
-                        this.tiles.get(MapLayer.DecorativeBG)[i][j] = new SolidTile({name: "Backing", components: {positionalobject: {x: i, y: j, z: 2, scale: .05, color: 0x000001}}});
+                        this.tiles.get(MapLayer.DecorativeBG)[i][j] = entityLoader.createFromTemplate('Backing', {components: {positionalobject: {x: i, y: j, z: 2}}});
                     }
 
                     if (overlayChar !== " " && overlayChar !== ".") {
@@ -113,7 +113,7 @@ export default class TutorialMap extends GameMap {
                             overlayChar = ".";
                         }
 
-                        this.tiles.get(MapLayer.Decorative)[i][j] = new CharacterTile({name: "Art", components: {characterobject: {x: i, y: j, z: 2.05, scale: .1, letter: overlayChar, color: overlayColors[overlayColorIndex]}}});
+                        this.tiles.get(MapLayer.Decorative)[i][j] = entityLoader.createFromTemplate('Art', {components: {characterobject: {x: i, y: j, z: 2.05, letter: overlayChar, color: overlayColors[overlayColorIndex]}}});
                         overlayColorIndex ++;
                     }
                 }
