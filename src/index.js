@@ -31,7 +31,16 @@ import Town from "./js/map/Town";
     const updateRender = function() {
         const playerPosition = engine.player.getComponent("positionalobject");
         if (playerPosition) {
-            engine.gameMap.updateFOV(playerPosition.x, playerPosition.y, 5);
+            let playerVisibility = 5;
+            const tileAtPlayer = engine.gameMap.tiles.get(playerPosition.z)[playerPosition.x][playerPosition.y];
+            if (tileAtPlayer) {
+                const modifier = tileAtPlayer.getComponent("visibilityModifier");
+                if (modifier) {
+                    playerVisibility = modifier.getVisibility(playerVisibility);
+                }
+            }
+
+            engine.gameMap.updateFOV(playerPosition.x, playerPosition.y, playerVisibility);
             engine.gameMap.draw(playerPosition.x, playerPosition.y);
         }
 

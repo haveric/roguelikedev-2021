@@ -5,6 +5,7 @@ import Walkable from "./Walkable";
 import Fov from "./Fov";
 import BlocksFov from "./BlocksFov";
 import Openable from "./Openable";
+import VisibilityModifier from "./VisibilityModifier";
 
 class ComponentLoader {
     constructor() {
@@ -16,6 +17,7 @@ class ComponentLoader {
         this.load(new Fov());
         this.load(new Openable());
         this.load(new SolidObject());
+        this.load(new VisibilityModifier());
         this.load(new Walkable());
     }
 

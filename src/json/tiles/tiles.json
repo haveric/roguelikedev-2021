@@ -97,7 +97,11 @@
                 "color": "#3333cc",
                 "scale": ".7"
             },
-            "blocksMovement": false
+            "blocksMovement": false,
+            "visibilityModifier": {
+                "modifier": "*",
+                "amount": 0.5
+            }
         }
     },
     {
