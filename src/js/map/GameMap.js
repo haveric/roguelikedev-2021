@@ -192,7 +192,7 @@ export default class GameMap {
     }
 
     updateFOV(x, y, range) {
-        engine.fov.compute(x, y, range, 0, 2);
+        engine.fov.compute(x, y, range, -1, 2);
         engine.airFov.compute(x, y, range * 2, 3, 10);
     }
 
