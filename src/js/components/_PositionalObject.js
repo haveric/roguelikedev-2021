@@ -116,7 +116,11 @@ export default class _PositionalObject extends _Component {
         this.transparency = opacity;
 
         for (const mesh of this.meshes) {
-            mesh.material.transparent = true;
+            if (opacity < 1) {
+                mesh.material.transparent = true;
+            } else {
+                mesh.material.transparent = false;
+            }
             mesh.material.opacity = opacity;
         }
     }
