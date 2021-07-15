@@ -40,8 +40,12 @@ export default class Town extends GameMap {
                         this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Bench Armrest Right', {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else if (i === 17 && j === 7) {
                         this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Bench Armrest Left', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                    } else if (i > 17 && i < 21 && j === 10) {
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Stone Bench', {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else if (Math.random() < .01) {
                         this.createTree(i, j);
+                    } else if (Math.random() < .05) {
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Stone', {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else {
                         if (Math.random() < .3) {
                             this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Grass', {components: {positionalobject: {x: i, y: j, z: 1}}});

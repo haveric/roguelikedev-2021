@@ -37,9 +37,10 @@ export default class _PositionalObject extends _Component {
             this.xRot = this.parseRand(args.components.positionalobject.xRot, 0);
             this.yRot = this.parseRand(args.components.positionalobject.yRot, 0);
             this.zRot = this.parseRand(args.components.positionalobject.zRot, 0);
-            this.xOffset = args.components.positionalobject.xOffset || 0;
-            this.yOffset = args.components.positionalobject.yOffset || 0;
-            this.zOffset = args.components.positionalobject.zOffset || 0;
+
+            this.xOffset = this.parseRand(args.components.positionalobject.xOffset, 0);
+            this.yOffset = this.parseRand(args.components.positionalobject.yOffset, 0);
+            this.zOffset = this.parseRand(args.components.positionalobject.zOffset, 0);
             this.size = this.parseRand(args.components.positionalobject.size, 1);
         }
 
@@ -51,7 +52,7 @@ export default class _PositionalObject extends _Component {
         if (typeof value === "string") {
             if (value.indexOf(",") !== -1) {
                 const valueSplit = value.split(",");
-                returnValue = MathUtils.randFloat(parseFloat(valueSplit[0].trim()), parseFloat(valueSplit[1].trim())).toFixed(2);
+                returnValue = parseFloat(MathUtils.randFloat(parseFloat(valueSplit[0].trim()), parseFloat(valueSplit[1].trim())).toFixed(2));
             } else {
                 returnValue = parseFloat(value) || defaultValue;
             }

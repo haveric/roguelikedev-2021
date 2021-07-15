@@ -143,6 +143,19 @@
     },
     {
         "type": "charactertile",
+        "name": "Stone Bench",
+        "components": {
+            "characterobject": {
+                "letter": "п",
+                "color": "#bbb",
+                "xRot": 0.5,
+                "yRot": 0.5
+            },
+            "blocksFov": false
+        }
+    },
+    {
+        "type": "charactertile",
         "name": "Bench Armrest Right",
         "components": {
             "characterobject": {
@@ -205,6 +218,22 @@
             "blocksFov": false,
             "blocksMovement": false
         }
+    },
+    {
+        "type": "charactertile",
+        "name": "Stone",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "▪",
+                "scale": 0.05,
+                "color": "#666",
+                "xOffset": "-0.25, 0.25",
+                "yOffset": "-0.25, 0.25",
+                "zRot": "0, 2"
+            },
+            "blocksFov": false,
+            "blocksMovement": false
+        }
     }
-
 ]
