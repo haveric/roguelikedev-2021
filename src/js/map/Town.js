@@ -13,7 +13,7 @@ export default class Town extends GameMap {
 
     init() {
         this.tiles = new Map();
-        for (let i = 0; i < 10; i++) {
+        for (let i = -1; i < 10; i++) {
             this.tiles.set(i, ArrayUtil.create2dArray(this.width));
         }
 
@@ -32,7 +32,12 @@ export default class Town extends GameMap {
             for (let i = 5; i < this.width - 5; i++) {
                 const floorTile = this.tiles.get(MapLayer.Floor)[i][j];
                 if (!floorTile) {
-                    this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Grass Floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
+                    if (i >= 23 && i <= 25 && j >= 7 && j <= 10) {
+                        this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('Floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
+                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Water', {components: {positionalobject: {x: i, y: j, z: 0}}});
+                    } else {
+                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Grass Floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
+                    }
 
                     if (i > 17 && i < 21 && j === 7) {
                         this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Bench', {components: {positionalobject: {x: i, y: j, z: 1}}});
@@ -42,13 +47,18 @@ export default class Town extends GameMap {
                         this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Bench Armrest Left', {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else if (i > 17 && i < 21 && j === 10) {
                         this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Stone Bench', {components: {positionalobject: {x: i, y: j, z: 1}}});
-                    } else if (Math.random() < .01) {
-                        this.createTree(i, j);
-                    } else if (Math.random() < .05) {
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Stone', {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else {
-                        if (Math.random() < .3) {
-                            this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Grass', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        const floor = this.tiles.get(MapLayer.Floor)[i][j];
+                        if (floor.components.walkable && floor.components.walkable.walkable) {
+                            if (Math.random() < .01) {
+                                this.createTree(i, j);
+                            } else if (Math.random() < .05) {
+                                this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Stone', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                            } else {
+                                if (Math.random() < .3) {
+                                    this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Grass', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                                }
+                            }
                         }
                     }
                 }

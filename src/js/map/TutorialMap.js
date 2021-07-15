@@ -1,12 +1,9 @@
 import GameMap from "./GameMap";
 import MapLayer from "./MapLayer";
-import CharacterTile from "../entity/CharacterTile";
-import SolidTile from "../entity/SolidTile";
-import Character from "../entity/Character";
-import Item from "../entity/Item";
 import engine from "../Engine";
 import sceneState from "../SceneState";
 import entityLoader from "../entity/EntityLoader";
+import ArrayUtil from "../util/ArrayUtil";
 
 export default class TutorialMap extends GameMap {
     constructor() {
@@ -67,6 +64,12 @@ export default class TutorialMap extends GameMap {
         ];
     }
 
+    init() {
+        super.init();
+
+        this.tiles.set(MapLayer.Decorative, ArrayUtil.create2dArray(this.width));
+    }
+
     create() {
         super.create();
         const overlayColors = [
@@ -83,6 +86,7 @@ export default class TutorialMap extends GameMap {
                         this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
                         break;
                     case "≈":
+                        this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('Floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
                         this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Water', {components: {positionalobject: {x: i, y: j, z: 0}}});
                         break;
                 }

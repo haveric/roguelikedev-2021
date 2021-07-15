@@ -1,5 +1,4 @@
 import ArrayUtil from "../util/ArrayUtil";
-import MapLayer from "./MapLayer";
 import sceneState from "../SceneState";
 import entityLoader from "../entity/EntityLoader";
 import engine from "../Engine";
@@ -15,10 +14,9 @@ export default class GameMap {
 
     init() {
         this.tiles = new Map();
-        this.tiles.set(MapLayer.Floor, ArrayUtil.create2dArray(this.width));
-        this.tiles.set(MapLayer.Wall, ArrayUtil.create2dArray(this.width));
-        this.tiles.set(MapLayer.DecorativeBG, ArrayUtil.create2dArray(this.width));
-        this.tiles.set(MapLayer.Decorative, ArrayUtil.create2dArray(this.width));
+        for (let i = -1; i <= 2; i++) {
+            this.tiles.set(i, ArrayUtil.create2dArray(this.width));
+        }
 
         this.actors = [];
         this.items = [];
