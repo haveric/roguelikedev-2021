@@ -32,8 +32,8 @@ export default class Town extends GameMap {
             for (let i = 5; i < this.width - 5; i++) {
                 const floorTile = this.tiles.get(MapLayer.Floor)[i][j];
                 if (!floorTile) {
+                    this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('Floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
                     if (i >= 23 && i <= 25 && j >= 7 && j <= 10) {
-                        this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('Floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
                         this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Water', {components: {positionalobject: {x: i, y: j, z: 0}}});
                     } else {
                         this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Grass Floor', {components: {positionalobject: {x: i, y: j, z: 0}}});

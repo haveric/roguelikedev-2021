@@ -83,6 +83,7 @@ export default class TutorialMap extends GameMap {
                 const floorChar = this.floor[this.height - j - 1].charAt(i);
                 switch(floorChar) {
                     case "#":
+                        this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('Floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
                         this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
                         break;
                     case "≈":
@@ -95,7 +96,6 @@ export default class TutorialMap extends GameMap {
                 switch(wallChar) {
                     case "#":
                     case "=":
-
                         this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
                         break;
                     case "+":

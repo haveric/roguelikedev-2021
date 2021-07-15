@@ -196,12 +196,12 @@ export default class GameMap {
         engine.airFov.compute(x, y, range * 2, 3, 10);
     }
 
-    draw(x, y) {
-        this.drawItemsInFov(engine.fov, x, y);
-        this.drawItemsInFov(engine.airFov, x, y);
+    draw(x, y, z) {
+        this.drawItemsInFov(engine.fov, x, y, z);
+        this.drawItemsInFov(engine.airFov, x, y, z);
     }
 
-    drawItemsInFov(fov, x, y) {
+    drawItemsInFov(fov, x, y, z) {
         const newObjects = fov.newObjects;
         for (const newObject of newObjects) {
             const object = newObject.getComponent("positionalobject");
@@ -221,7 +221,7 @@ export default class GameMap {
                 const object = visibleObject.getComponent("positionalobject");
 
                 if (object) {
-                    this.setTransparency(object, x, y);
+                    this.setTransparency(object, x, y, z);
                 }
             }
         }
@@ -230,7 +230,7 @@ export default class GameMap {
         for (const oldObject of oldObjects) {
             const object = oldObject.getComponent("positionalobject");
             if (object) {
-                this.setTransparency(object, x, y);
+                this.setTransparency(object, x, y, z);
 
                 if (object.hasObject()) {
                     object.shiftColor(.5);
@@ -239,13 +239,13 @@ export default class GameMap {
         }
     }
 
-    setTransparency(object, x, y) {
-        if (object.z >= 1) {
+    setTransparency(object, x, y, z) {
+        if (object.z >= z) {
             const xDiff = Math.abs(x - object.x);
             const yDiff = Math.abs(y - object.y);
-            if (object.z > 1) {
+            if (object.z > z) {
                 if (object.x >= x && object.y <= y && Math.max(xDiff, yDiff) < object.z + 3) {
-                    if (object.z > 2) {
+                    if (object.z > z + 1) {
                         object.setTransparency(0);
                     } else {
                         object.setTransparency(.1);
@@ -254,7 +254,7 @@ export default class GameMap {
                     object.setTransparency(1);
                 }
             } else {
-                if (object.z <= 2 && xDiff <= 1 && yDiff <= 1) {
+                if (object.z <= z + 1 && xDiff <= 1 && yDiff <= 1) {
                     object.setTransparency(.5);
                 } else {
                     object.setTransparency(1);

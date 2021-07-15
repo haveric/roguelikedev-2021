@@ -41,7 +41,7 @@ import Town from "./js/map/Town";
             }
 
             engine.gameMap.updateFOV(playerPosition.x, playerPosition.y, playerVisibility);
-            engine.gameMap.draw(playerPosition.x, playerPosition.y);
+            engine.gameMap.draw(playerPosition.x, playerPosition.y, playerPosition.z);
         }
 
         sceneState.renderer.render(sceneState.scene, sceneState.camera);
