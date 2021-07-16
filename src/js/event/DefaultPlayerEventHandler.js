@@ -9,6 +9,7 @@ import editorControls from "../ui/EditorControls";
 import EditorEventHandler from "./EditorEventHandler";
 import editorInfo from "../ui/EditorInfo";
 import BumpAction from "../actions/BumpAction";
+import WaitAction from "../actions/WaitAction";
 
 export default class DefaultPlayerEventHandler extends EventHandler {
     constructor() {
@@ -51,7 +52,7 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         } else if (controls.testPressed("se")) {
             action = new BumpAction(1, -1);
         } else if (controls.testPressed("wait")) {
-            action = new BumpAction(0, 0);
+            action = new WaitAction();
         } else if (controls.testPressed("save", 1000)) {
             engine.gameMap.save("save1");
         } else if (controls.testPressed("load", 1000)) {

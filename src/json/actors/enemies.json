@@ -1,52 +1,77 @@
 [
     {
-        "type": "character",
+        "type": "actor",
         "name": "Orc",
         "components": {
             "characterobject": {
                 "letter": "o",
                 "color": "#3f7f3f"
-            }
+            },
+            "faction": {
+                "factions": "monsters",
+                "enemies": "player"
+            },
+            "aiMeleeChase": {}
         }
     },
     {
-        "type": "character",
+        "type": "actor",
         "name": "Troll",
         "components": {
             "characterobject": {
                 "letter": "T",
                 "color": "#007f00"
-            }
+            },
+            "faction": {
+                "factions": "monsters",
+                "enemies": "player"
+            },
+            "aiMeleeChase": {}
         }
     },
     {
-        "type": "character",
+        "type": "actor",
         "name": "Ant",
         "components": {
             "characterobject": {
                 "letter": "a",
                 "color": "#000000"
-            }
+            },
+            "faction": {
+                "factions": "monsters",
+                "enemies": "player"
+            },
+            "aiMeleeChase": {}
         }
     },
     {
-        "type": "character",
+        "type": "actor",
         "name": "Red Dragon",
         "components": {
             "characterobject": {
                 "letter": "D",
                 "color": "#ff0000"
-            }
+            },
+            "faction": {
+                "factions": "monsters",
+                "enemies": "player"
+            },
+            "aiMeleeChase": {}
         }
     },
     {
-        "type": "character",
+        "type": "actor",
         "name": "Goblin",
         "components": {
             "characterobject": {
                 "letter": "g",
                 "color": "#3f7f3f"
-            }
+            },
+            "faction": {
+                "factions": "monsters",
+                "enemies": "player"
+            },
+            "aiMeleeChase": {}
         }
     }
 ]

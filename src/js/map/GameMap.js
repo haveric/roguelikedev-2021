@@ -3,6 +3,7 @@ import sceneState from "../SceneState";
 import entityLoader from "../entity/EntityLoader";
 import engine from "../Engine";
 import _Tile from "../entity/_Tile";
+import Fov from "../components/Fov";
 
 export default class GameMap {
     constructor(width, height) {
@@ -191,9 +192,23 @@ export default class GameMap {
         }
     }
 
-    updateFOV(x, y, range) {
-        engine.fov.compute(x, y, range, -1, 2);
-        engine.airFov.compute(x, y, range * 2, 3, 10);
+    updateFOV(x, y, z, range) {
+        engine.fov.compute(x, y, z, range, z-2, z+1);
+
+        const newObjects = engine.fov.newObjects;
+        for (const newObject of newObjects) {
+            if (newObject instanceof _Tile) {
+                const fovComponent = newObject.getComponent("fov");
+                if (fovComponent) {
+                    fovComponent.explored = true;
+                    fovComponent.visible = true;
+                } else {
+                    newObject.setComponent(new Fov({explored: true, visible: true}));
+                }
+            }
+        }
+
+        engine.airFov.compute(x, y, z,range * 2, z+2, z+8);
     }
 
     draw(x, y, z) {
@@ -202,6 +217,17 @@ export default class GameMap {
     }
 
     drawItemsInFov(fov, x, y, z) {
+        for (const object of fov.previousVisibleObjects) {
+            const index = fov.visibleObjects.indexOf(object);
+            if (index === -1) {
+                const fovComponent = object.getComponent("fov");
+                if (fovComponent) {
+                    fovComponent.visible = false;
+                }
+                fov.oldObjects.push(object);
+            }
+        }
+
         const newObjects = fov.newObjects;
         for (const newObject of newObjects) {
             const object = newObject.getComponent("positionalobject");
@@ -265,11 +291,11 @@ export default class GameMap {
         }
     }
 
-    getBlockingActorAtLocation(x, y) {
+    getBlockingActorAtLocation(x, y, z) {
         let blockingActor = null;
         for (const actor of this.actors) {
             const position = actor.getComponent("positionalobject");
-            if (position && x === position.x && y === position.y) {
+            if (position && x === position.x && y === position.y && z === position.z) {
                 const component = actor.getComponent("blocksMovement");
                 if (component && component.blocksMovement) {
                     blockingActor = actor;

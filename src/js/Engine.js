@@ -38,7 +38,10 @@ class Engine {
     handleEnemyTurns() {
         for (const actor of this.gameMap.actors) {
             if (actor !== this.player) {
-                console.log("The " + actor.name + " wonders when it will get to take a real turn.");
+                const ai = actor.getComponent("ai");
+                if (ai) {
+                    ai.perform();
+                }
             }
         }
     }

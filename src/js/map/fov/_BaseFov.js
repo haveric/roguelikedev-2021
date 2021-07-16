@@ -1,39 +1,37 @@
-import Fov from "../../components/Fov";
 import engine from "../../Engine";
 
 export default class BaseFov {
     constructor() {
         this.previousVisibleObjects = [];
         this.visibleObjects = [];
+        this.visibleActors = [];
         this.oldObjects = [];
         this.newObjects = [];
+        this.left = 0;
+        this.right = 0;
+        this.top = 0;
+        this.bottom = 0;
     }
 
     teardown() {
         this.previousVisibleObjects = [];
         this.visibleObjects = [];
+        this.visibleActors = [];
         this.oldObjects = [];
         this.newObjects = [];
     }
 
-    compute(x, y, radius) {
+    compute(x, y, z, radius) {
         this.previousVisibleObjects = this.visibleObjects;
         this.visibleObjects = [];
+        this.visibleActors = [];
         this.oldObjects = [];
         this.newObjects = [];
-    }
 
-    postCompute() {
-        for (const object of this.previousVisibleObjects) {
-            const index = this.visibleObjects.indexOf(object);
-            if (index === -1) {
-                const fov = object.getComponent("fov");
-                if (fov) {
-                    fov.visible = false;
-                }
-                this.oldObjects.push(object);
-            }
-        }
+        this.left = Math.max(0, x - radius);
+        this.right = Math.min(engine.gameMap.width, x + radius + 1);
+        this.top = Math.max(0, y - radius);
+        this.bottom = Math.min(engine.gameMap.height, y + radius + 1);
     }
 
     addVisibleObject(object) {
@@ -43,6 +41,12 @@ export default class BaseFov {
 
         if (this.previousVisibleObjects.indexOf(object) === -1) {
             this.newObjects.push(object);
+        }
+    }
+
+    addVisibleActor(object) {
+        if (this.visibleActors.indexOf(object) === -1) {
+            this.visibleActors.push(object);
         }
     }
 
@@ -57,14 +61,6 @@ export default class BaseFov {
 
                     if (tile) {
                         this.addVisibleObject(tile);
-
-                        const fov = tile.getComponent("fov");
-                        if (fov) {
-                            fov.explored = true;
-                            fov.visible = true;
-                        } else {
-                            tile.setComponent(new Fov({explored: true, visible: true}));
-                        }
                     }
                 }
             }
@@ -76,6 +72,7 @@ export default class BaseFov {
                 if (positionalObject) {
                     if (positionalObject.x === x && positionalObject.y === y) {
                         this.addVisibleObject(actor);
+                        this.addVisibleActor(actor);
                     }
                 }
             }

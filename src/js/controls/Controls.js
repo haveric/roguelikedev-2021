@@ -79,7 +79,7 @@ class Controls {
     constructor() {
         const self = this;
 
-        self.defaultDelay = 100;
+        self.defaultDelay = 25;
         self.keysDown = [];
         self.keysDelayed = [];
         self.defaults = new Map();

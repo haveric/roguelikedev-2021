@@ -5,7 +5,7 @@ import EventHandler from "./_EventHandler";
 import editorControls from "../ui/EditorControls";
 import DefaultPlayerEventHandler from "./DefaultPlayerEventHandler";
 import _Tile from "../entity/_Tile";
-import Character from "../entity/Character";
+import Actor from "../entity/Actor";
 import Item from "../entity/Item";
 import editorInfo from "../ui/EditorInfo";
 import BumpAction from "../actions/BumpAction";
@@ -163,7 +163,7 @@ export default class EditorEventHandler extends EventHandler {
 
                 if (parentEntity instanceof _Tile) {
                     engine.gameMap.tiles.get(parentObject.z)[parentObject.x][parentObject.y] = null;
-                } else if (parentEntity instanceof Character) {
+                } else if (parentEntity instanceof Actor) {
                     const index = engine.gameMap.actors.indexOf(parentEntity);
                     if (index > -1) {
                         engine.gameMap.actors.splice(index, 1);

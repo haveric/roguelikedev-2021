@@ -1,6 +1,6 @@
 import SolidTile from "./SolidTile";
 import CharacterTile from "./CharacterTile";
-import Character from "./Character";
+import Actor from "./Actor";
 import Item from "./Item";
 import playerList from "../../json/actors/player.json";
 import enemyList from "../../json/actors/enemies.json";
@@ -18,7 +18,7 @@ class EntityLoader {
 
         this.load(new SolidTile());
         this.load(new CharacterTile());
-        this.load(new Character());
+        this.load(new Actor());
         this.load(new Item());
 
         this.loadTemplates();

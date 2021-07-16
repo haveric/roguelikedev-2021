@@ -6,8 +6,8 @@ export default class SimpleFov extends BaseFov {
         super();
     }
 
-    compute(x, y, radius, minZ, maxZ) {
-        super.compute(x, y, radius, minZ, maxZ);
+    compute(x, y, z, radius, minZ, maxZ) {
+        super.compute(x, y, z, radius, minZ, maxZ);
 
         const minX = Math.max(0, x - radius);
         const maxX = Math.min(engine.gameMap.width, x + radius);
@@ -19,7 +19,5 @@ export default class SimpleFov extends BaseFov {
                 this.exploreTile(i, j, minZ, maxZ, true);
             }
         }
-
-        this.postCompute();
     }
 }

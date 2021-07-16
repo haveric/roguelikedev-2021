@@ -98,6 +98,7 @@
                 "scale": ".7"
             },
             "blocksMovement": false,
+            "blocksFov": false,
             "visibilityModifier": {
                 "modifier": "*",
                 "amount": 0.5
@@ -142,6 +143,7 @@
                 "zRot": 0,
                 "zOffset": 0.47
             },
+            "walkable": true,
             "blocksFov": false
         }
     },
@@ -155,6 +157,7 @@
                 "xRot": 0.5,
                 "yRot": 0.5
             },
+            "walkable": true,
             "blocksFov": false
         }
     },

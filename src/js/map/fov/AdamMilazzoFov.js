@@ -11,18 +11,16 @@ export default class AdamMilazzoFov extends BaseFov {
         super();
     }
 
-    compute(x, y, radius, minZ, maxZ) {
-        super.compute(x, y, radius);
+    compute(x, y, z, radius, minZ, maxZ) {
+        super.compute(x, y, z, radius);
 
         this.exploreTile(x, y, minZ, maxZ);
         for (let octant = 0; octant < 8; octant ++) {
-            this.computeOctant(octant, x, y, radius, 1, new FovSlope(1, 1), new FovSlope(0, 1), minZ, maxZ);
+            this.computeOctant(octant, x, y, z, radius, 1, new FovSlope(1, 1), new FovSlope(0, 1), minZ, maxZ);
         }
-
-        this.postCompute();
     }
 
-    computeOctant(octant, originX, originY, rangeLimit, x, top, bottom, minZ, maxZ) {
+    computeOctant(octant, originX, originY, originZ, rangeLimit, x, top, bottom, minZ, maxZ) {
         for (; x <= rangeLimit; x++) {
             let topY;
             if (top.x === 1) {
@@ -30,13 +28,13 @@ export default class AdamMilazzoFov extends BaseFov {
             } else {
                 topY = Math.round(((x * 2 - 1) * top.y + top.x) / (top.x * 2));
 
-                if (this.blocksLight(octant, originX, originY, x, topY)) {
-                    if (top.greaterOrEqual(topY * 2 + 1, x * 2) && !this.blocksLight(octant, originX, originY, x, topY + 1)) {
+                if (this.blocksLight(octant, originX, originY, originZ, x, topY, minZ, maxZ)) {
+                    if (top.greaterOrEqual(topY * 2 + 1, x * 2) && !this.blocksLight(octant, originX, originY, originZ, x, topY + 1, minZ, maxZ)) {
                         topY ++;
                     }
                 } else {
                     let ax = x * 2;
-                    if (this.blocksLight(octant, originX, originY, x + 1, topY + 1)) {
+                    if (this.blocksLight(octant, originX, originY, originZ, x + 1, topY + 1, minZ, maxZ)) {
                         ax ++;
                     }
 
@@ -52,14 +50,14 @@ export default class AdamMilazzoFov extends BaseFov {
             } else {
                 bottomY = ((x * 2 - 1) * bottom.y + bottom.x) / (bottom.x * 2);
 
-                if (bottom.greaterOrEqual(bottomY * 2 + 1, x * 2) && this.blocksLight(octant, originX, originY, x, bottomY) && !this.blocksLight(octant, originX, originY, x, bottomY + 1)) {
+                if (bottom.greaterOrEqual(bottomY * 2 + 1, x * 2) && this.blocksLight(octant, originX, originY, originZ, x, bottomY, minZ, maxZ) && !this.blocksLight(octant, originX, originY, originZ, x, bottomY + 1, minZ, maxZ)) {
                     bottomY ++;
                 }
             }
 
             let wasOpaque = -1; // 0:false, 1:true, -1:not applicable
             for (let y = topY; y >= bottomY; y--) {
-                const isOpaque = this.blocksLight(octant, originX, originY, x, y);
+                const isOpaque = this.blocksLight(octant, originX, originY, originZ, x, y, minZ, maxZ);
                 const isVisible = isOpaque || ((y !== topY || top.greaterOrEqual(y, x)) && (y !== bottomY || bottom.lessOrEqual(y, x)));
 
                 if (isVisible) {
@@ -77,7 +75,7 @@ export default class AdamMilazzoFov extends BaseFov {
                                     bottom = new FovSlope(ny, nx);
                                     break;
                                 } else {
-                                    this.computeOctant(octant, originX, originY, rangeLimit, x + 1, top, new FovSlope(ny, nx), minZ, maxZ);
+                                    this.computeOctant(octant, originX, originY, originZ, rangeLimit, x + 1, top, new FovSlope(ny, nx), minZ, maxZ);
                                 }
                             } else {
                                 if (y === bottomY) {
@@ -110,7 +108,7 @@ export default class AdamMilazzoFov extends BaseFov {
         }
     }
 
-    blocksLight(octant, originX, originY, x, y) {
+    blocksLight(octant, originX, originY, originZ, x, y, minZ, maxZ) {
         switch(octant) {
             case 0:
                 originX += x;
@@ -147,13 +145,15 @@ export default class AdamMilazzoFov extends BaseFov {
         }
 
         let blocksLight = false;
-        const wallTiles = engine.gameMap.tiles.get(MapLayer.Wall);
-        if (wallTiles[originX]) {
-            const wallTile = wallTiles[originX][originY];
-            if (wallTile) {
-                const blocksFov = wallTile.getComponent("blocksFov");
-                if (blocksFov) {
-                    blocksLight = blocksFov.blocksFov;
+        if (engine.gameMap.tiles.has(originZ)) {
+            const wallTiles = engine.gameMap.tiles.get(originZ);
+            if (wallTiles[originX]) {
+                const wallTile = wallTiles[originX][originY];
+                if (wallTile) {
+                    const blocksFov = wallTile.getComponent("blocksFov");
+                    if (blocksFov) {
+                        blocksLight = blocksFov.blocksFov;
+                    }
                 }
             }
         }

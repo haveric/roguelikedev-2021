@@ -1,12 +1,16 @@
 [
     {
-        "type": "character",
+        "type": "actor",
         "name": "Shop Owner",
         "components": {
             "characterobject": {
                 "letter": "$",
                 "color": "#ffff00"
-            }
+            },
+            "faction": {
+                "factions": "npc"
+            },
+            "aiMeleeChase": {}
         }
     }
 ]

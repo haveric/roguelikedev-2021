@@ -22,7 +22,7 @@ export default class _Entity {
                 const baseType = type.baseType;
                 const existingComponent = self.getComponent(baseType);
                 if (!existingComponent) {
-                    self.setComponent(componentLoader.create(key, args));
+                    self.setComponent(componentLoader.create(this, key, args));
                 }
             }
         });
