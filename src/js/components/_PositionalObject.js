@@ -126,11 +126,9 @@ export default class _PositionalObject extends _Component {
     }
 
     updateObjectPosition() {
-        if (!this.hasObject()) {
-            this.createObject();
+        if (this.hasObject()) {
+            this.object.position.set(this.x * this.width, this.y * this.height, (this.z * this.depth) - ((this.depth - (this.scale * this.depth)) / 2));
         }
-
-        this.object.position.set(this.x * this.width, this.y * this.height, (this.z * this.depth) - ((this.depth - (this.scale * this.depth)) / 2));
     }
 
     hasObject() {

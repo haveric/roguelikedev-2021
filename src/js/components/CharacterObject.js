@@ -106,10 +106,8 @@ export default class CharacterObject extends _PositionalObject {
     }
 
     updateObjectPosition() {
-        if (!this.hasObject()) {
-            this.createObject();
+        if (this.hasObject()) {
+            this.object.position.set((this.x + this.xOffset) * this.width, (this.y + this.yOffset) * this.height, (this.z + this.zOffset) * this.depth - ((this.depth - (this.scale * this.depth)) / 2));
         }
-
-        this.object.position.set((this.x + this.xOffset) * this.width, (this.y + this.yOffset) * this.height, (this.z + this.zOffset) * this.depth - ((this.depth - (this.scale * this.depth)) / 2));
     }
 }
