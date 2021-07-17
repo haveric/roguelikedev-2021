@@ -67,7 +67,7 @@ export default class AIMeleeChase extends AI {
             if (closestEnemies.length === 1) {
                 closestEnemy = closestEnemies[0];
             } else if (closestEnemies.length > 1) {
-                const index = MathUtils.randInt(0, closestEnemies.length);
+                const index = MathUtils.randInt(0, closestEnemies.length - 1);
                 closestEnemy = closestEnemies[index];
             }
 
@@ -76,7 +76,7 @@ export default class AIMeleeChase extends AI {
                 this.chaseLocation = new Vector3(closestEnemyPosition.x, closestEnemyPosition.y, closestEnemyPosition.z);
 
                 if (closestDistance <= 1) {
-                    return new MeleeAction(closestEnemyPosition.x, closestEnemyPosition.y, closestEnemyPosition.z);
+                    return new MeleeAction(closestEnemyPosition.x - entityPosition.x, closestEnemyPosition.y - entityPosition.y, closestEnemyPosition.z - entityPosition.z).perform(entity);
                 }
             } else {
                 if (this.chaseLocation !== null && this.chaseLocation.x === entityPosition.x && this.chaseLocation.y === entityPosition.y && this.chaseLocation.z === entityPosition.z) {

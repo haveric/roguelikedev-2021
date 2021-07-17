@@ -19,7 +19,16 @@ export default class MeleeAction extends ActionWithDirection {
 
         const blockingActor = engine.gameMap.getBlockingActorAtLocation(destX, destY, destZ);
         if (blockingActor) {
-            console.log("You kick the " + blockingActor.name + ", much to its annoyance!");
+            let name;
+            let plural;
+            if (entity === engine.player) {
+                name = "You";
+                plural = "";
+            } else {
+                name = entity.name;
+                plural = "s"
+            }
+            console.log(name + " kick" + plural + " the " + blockingActor.name + ", much to its annoyance!");
         } else {
             return new UnableToPerformAction("There's nothing to attack there!");
         }
