@@ -60,7 +60,7 @@ export default class RectangularRoom {
             const x = MathUtils.randInt(this.x1 + 1, this.x2 -1);
             const y = MathUtils.randInt(this.y1 + 1, this.y2 -1);
 
-            const blockingActor = engine.gameMap.getBlockingActorAtLocation(x, y);
+            const blockingActor = engine.gameMap.getBlockingActorAtLocation(x, y, 1);
             if (!blockingActor) {
                 const position = {components: {positionalobject: {x: x, y: y, z: 1}}};
                 let actor;

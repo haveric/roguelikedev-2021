@@ -19,8 +19,9 @@ export default class BumpAction extends ActionWithDirection {
 
         const destX = position.x + this.dx;
         const destY = position.y + this.dy;
+        const destZ = position.z + this.dz;
 
-        const blockingActor = engine.gameMap.getBlockingActorAtLocation(destX, destY);
+        const blockingActor = engine.gameMap.getBlockingActorAtLocation(destX, destY, destZ);
         if (blockingActor) {
             return new MeleeAction(this.dx, this.dy, this.dz).perform(entity);
         } else {

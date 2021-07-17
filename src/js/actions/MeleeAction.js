@@ -15,8 +15,9 @@ export default class MeleeAction extends ActionWithDirection {
 
         const destX = position.x + this.dx;
         const destY = position.y + this.dy;
+        const destZ = position.z + this.dz;
 
-        const blockingActor = engine.gameMap.getBlockingActorAtLocation(destX, destY);
+        const blockingActor = engine.gameMap.getBlockingActorAtLocation(destX, destY, destZ);
         if (blockingActor) {
             console.log("You kick the " + blockingActor.name + ", much to its annoyance!");
         } else {
