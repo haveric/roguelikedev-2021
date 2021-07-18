@@ -3,6 +3,7 @@ import Extend from "../util/Extend";
 import engine from "../Engine";
 import AIDead from "./ai/AIDead";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
+import GameOverEventHandler from "../event/GameOverEventHandler";
 
 export default class Fighter extends _Component {
     constructor(args = {}) {
@@ -58,6 +59,7 @@ export default class Fighter extends _Component {
         const entity = this.parentEntity;
         if (entity === engine.player) {
             deathMessage = "You died!";
+            engine.setEventHandler(new GameOverEventHandler());
         } else {
             deathMessage = entity.name + " is dead!";
         }
