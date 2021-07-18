@@ -48,7 +48,7 @@ export default class Fighter extends _Component {
     takeDamage(damage) {
         this.hp -= damage;
 
-        if (this.hp < 0) {
+        if (this.hp <= 0) {
             this.die();
         }
     }
