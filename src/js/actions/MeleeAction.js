@@ -19,16 +19,36 @@ export default class MeleeAction extends ActionWithDirection {
 
         const blockingActor = engine.gameMap.getBlockingActorAtLocation(destX, destY, destZ);
         if (blockingActor) {
-            let name;
-            let plural;
-            if (entity === engine.player) {
-                name = "You";
-                plural = "";
-            } else {
-                name = entity.name;
-                plural = "s"
+            const entityFighter = entity.getComponent("fighter");
+            const blockingFighter = blockingActor.getComponent("fighter");
+            if (entityFighter && blockingFighter) {
+                const damage = entityFighter.power - blockingFighter.defense;
+
+                let name;
+                let plural;
+                if (entity === engine.player) {
+                    name = "You";
+                    plural = "";
+                } else {
+                    name = entity.name;
+                    plural = "s"
+                }
+
+                let blockingName;
+                if (blockingActor === engine.player) {
+                    blockingName = "You";
+                } else {
+                    blockingName = blockingActor.name;
+                }
+
+                let description = name + " attack" + plural + " " + blockingName;
+                if (damage > 0) {
+                    blockingFighter.takeDamage(damage);
+                    console.log(description + " for " + damage + " hit points.");
+                } else {
+                    console.log(description + ", but does no damage.");
+                }
             }
-            console.log(name + " kick" + plural + " the " + blockingActor.name + ", much to its annoyance!");
         } else {
             return new UnableToPerformAction("There's nothing to attack there!");
         }

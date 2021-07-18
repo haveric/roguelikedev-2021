@@ -3,6 +3,7 @@ import sceneState from './js/SceneState.js';
 import engine from "./js/Engine";
 import BasicDungeon from "./js/map/BasicDungeon";
 import Town from "./js/map/Town";
+import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 
 ;(function () {
     const init = function() {
@@ -24,6 +25,8 @@ import Town from "./js/map/Town";
             updateRender();
             engine.needsMapUpdate = false;
         }
+
+        TWEEN.update();
 
         sceneState.stats.end();
     }

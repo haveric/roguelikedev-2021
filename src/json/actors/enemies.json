@@ -11,7 +11,12 @@
                 "factions": "monsters",
                 "enemies": "player"
             },
-            "aiMeleeChase": {}
+            "aiMeleeChase": {},
+            "fighter": {
+                "hp": 10,
+                "defense": 1,
+                "power": 4
+            }
         }
     },
     {
@@ -26,7 +31,12 @@
                 "factions": "monsters",
                 "enemies": "player"
             },
-            "aiMeleeChase": {}
+            "aiMeleeChase": {},
+            "fighter": {
+                "hp": 16,
+                "defense": 1,
+                "power": 4
+            }
         }
     },
     {
