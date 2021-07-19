@@ -1,6 +1,7 @@
 import ActionWithDirection from "./_ActionWithDirection";
 import UnableToPerformAction from "./UnableToPerformAction";
 import engine from "../Engine";
+import messageConsole from "../ui/MessageConsole";
 
 export default class MeleeAction extends ActionWithDirection {
     constructor(dx, dy, dz) {
@@ -35,18 +36,21 @@ export default class MeleeAction extends ActionWithDirection {
                 }
 
                 let blockingName;
+                let attackColor;
                 if (blockingActor === engine.player) {
                     blockingName = "You";
+                    attackColor = "#C00";
                 } else {
                     blockingName = blockingActor.name;
+                    attackColor = "#999";
                 }
 
                 let description = name + " attack" + plural + " " + blockingName;
                 if (damage > 0) {
+                    messageConsole.text(description + " for " + damage + " hit points.", attackColor).build();
                     blockingFighter.takeDamage(damage);
-                    console.log(description + " for " + damage + " hit points.");
                 } else {
-                    console.log(description + ", but does no damage.");
+                    messageConsole.text(description + ", but does no damage.", attackColor).build();
                 }
             }
         } else {

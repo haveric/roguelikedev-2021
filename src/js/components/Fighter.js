@@ -4,6 +4,7 @@ import engine from "../Engine";
 import AIDead from "./ai/AIDead";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import GameOverEventHandler from "../event/GameOverEventHandler";
+import messageConsole from "../ui/MessageConsole";
 
 export default class Fighter extends _Component {
     constructor(args = {}) {
@@ -55,13 +56,12 @@ export default class Fighter extends _Component {
     }
 
     die() {
-        let deathMessage;
         const entity = this.parentEntity;
         if (entity === engine.player) {
-            deathMessage = "You died!";
+            messageConsole.text("You died!", "#f00");
             engine.setEventHandler(new GameOverEventHandler());
         } else {
-            deathMessage = entity.name + " is dead!";
+            messageConsole.text(entity.name + " dies!", "#ffa030");
         }
 
         const position = entity.getComponent("positionalobject");
@@ -115,6 +115,6 @@ export default class Fighter extends _Component {
 
         entity.name = "Remains of " + entity.name;
 
-        console.log(deathMessage);
+        messageConsole.build();
     }
 }

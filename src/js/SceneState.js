@@ -1,23 +1,43 @@
 import * as THREE from "three";
 import Stats from "stats.js";
 import engine from "./Engine";
+import messageConsole from "./ui/MessageConsole";
 
 class SceneState {
     constructor() {
         this.scene = new THREE.Scene();
 
-        this.renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
-        this.renderer.setClearColor( 0xaaaaaa, 1 );
-        document.body.appendChild( this.renderer.domElement );
+        this.setupGameHtml();
 
         this.setupLights();
         this.updateCamera();
+
+        window.addEventListener( 'resize', this);
+    }
+
+    setupGameHtml() {
+        const gameDom = document.createElement("div");
+        gameDom.classList.add("game");
+
+        this.canvasDom = document.createElement("div");
+        this.canvasDom.classList.add("view");
+
+        const detailsDom = document.createElement("div");
+        detailsDom.classList.add("details");
+
+        gameDom.appendChild(this.canvasDom);
+        gameDom.appendChild(detailsDom);
+        gameDom.appendChild(messageConsole.consoleDom);
+
+        this.renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
+        this.renderer.setClearColor(0xaaaaaa, 1);
+        this.canvasDom.appendChild(this.renderer.domElement);
+        document.body.appendChild(gameDom);
 
         this.stats = new Stats();
         this.stats.showPanel(0);
         document.body.appendChild(this.stats.dom);
 
-        window.addEventListener( 'resize', this);
     }
 
     handleEvent(e) {
@@ -42,15 +62,15 @@ class SceneState {
     }
 
     updateCamera() {
-        const aspectRatio = window.innerWidth / window.innerHeight;
+        const aspectRatio = this.canvasDom.offsetWidth / this.canvasDom.offsetHeight;
 
-        const viewSize = 100;
+        const viewSize = 80;
         const left = -aspectRatio * viewSize / 2
         const right = aspectRatio * viewSize / 2;
         const top = viewSize / 2;
         const bottom = -viewSize / 2;
         this.camera = new THREE.OrthographicCamera(left, right, top, bottom, -10000, 10000);
-        this.renderer.setSize( window.innerWidth, window.innerHeight );
+        this.renderer.setSize(this.canvasDom.offsetWidth, this.canvasDom.offsetHeight);
     }
 
     updateCameraPosition(player) {

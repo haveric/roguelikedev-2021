@@ -1,6 +1,8 @@
 body {
     margin: 0 auto;
     overflow: hidden;
+    width: 100vw;
+    height: 100vh;
 }
 
 .editor-ui {
@@ -60,4 +62,74 @@ body {
 .editor-info__label {
     font-weight: bold;
     text-transform: capitalize;
+}
+
+.game {
+    width: 100vw;
+    height: 100vh;
+}
+
+.view {
+    display: block;
+    float: left;
+    width: 80%;
+    height: 80%;
+}
+
+.details {
+    display: block;
+    float: right;
+    width: 20%;
+    height: 100%;
+}
+
+.console {
+    position: fixed;
+    display: block;
+    left: 0;
+    bottom: 0;
+    width: 80%;
+    height: 20%;
+    background-color: #eee;
+    transition: height 1s ease;
+}
+
+.console.full {
+    height: 80%;
+}
+
+.console.collapsed {
+    height: 35px;
+}
+
+.messages {
+    display:flex;
+    flex-direction:column-reverse;
+    height: calc(100% - 10px);
+    overflow-y: scroll;
+    padding: 5px;
+}
+
+.messages__inn {
+
+}
+
+.message {
+    font-size: 2.2vh;
+}
+
+.message__text {
+
+}
+
+.message__bold {
+    font-weight: bold;
+}
+
+.message__italics {
+    font-style: italic;
+}
+
+.message__amount {
+    margin-left: 1em;
 }

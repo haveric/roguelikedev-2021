@@ -79,8 +79,8 @@ export default class DefaultPlayerEventHandler extends EventHandler {
     }
 
     onMouseMove(e) {
-        this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-        this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        this.mouse.x = (e.clientX / sceneState.canvasDom.offsetWidth) * 2 - 1;
+        this.mouse.y = -(e.clientY / sceneState.canvasDom.offsetHeight) * 2 + 1;
 
         this.raycaster.setFromCamera(this.mouse, sceneState.camera);
 

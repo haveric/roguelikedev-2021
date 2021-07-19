@@ -4,8 +4,9 @@ import engine from "./js/Engine";
 import BasicDungeon from "./js/map/BasicDungeon";
 import Town from "./js/map/Town";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
+import messageConsole from "./js/ui/MessageConsole";
 
-;(function () {
+(function () {
     const init = function() {
         //engine.gameMap = new BasicDungeon(100, 100);
         engine.gameMap = new Town(50, 50);
@@ -15,6 +16,8 @@ import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 
         sceneState.renderer.setAnimationLoop(animation);
         engine.needsMapUpdate = true;
+
+        messageConsole.text("Welcome adventurer!").build();
     }
 
     const animation = function(time) {
