@@ -68,7 +68,7 @@ export default class MeleeAction extends ActionWithDirection {
                 const blockingPosition = blockingActor.getComponent("positionalobject");
 
                 const originalPosition = new Vector3(position.object.position.x, position.object.position.y, position.object.position.z);
-                const attackPosition = new Vector3(blockingPosition.object.position.x, blockingPosition.object.position.y, blockingPosition.object.position.z);
+                const attackPosition = new Vector3((position.object.position.x + blockingPosition.object.position.x) / 2, (position.object.position.y + blockingPosition.object.position.y) / 2, (position.object.position.z + blockingPosition.object.position.z) / 2);
                 const currentPosition = originalPosition.clone();
 
                 entity.tweenAttack = new TWEEN.Tween(currentPosition).to(attackPosition, 100);
