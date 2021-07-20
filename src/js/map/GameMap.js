@@ -5,6 +5,7 @@ import engine from "../Engine";
 import _Tile from "../entity/_Tile";
 import Fov from "../components/Fov";
 import characterHealth from "../ui/CharacterHealth";
+import details from "../ui/Details";
 
 export default class GameMap {
     constructor(width, height) {
@@ -325,5 +326,6 @@ export default class GameMap {
 
         const playerFighter = engine.player.getComponent("fighter");
         characterHealth.updateHealth(playerFighter.hp, playerFighter.maxHp);
+        details.updatePlayerDetails();
     }
 }

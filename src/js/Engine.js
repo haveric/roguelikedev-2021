@@ -3,6 +3,7 @@ import sceneState from "./SceneState";
 import DefaultPlayerEventHandler from "./event/DefaultPlayerEventHandler";
 import AdamMilazzoFov from "./map/fov/AdamMilazzoFov";
 import SimpleFov from "./map/fov/SimpleFov";
+import details from "./ui/Details";
 
 class Engine {
     constructor() {
@@ -29,6 +30,8 @@ class Engine {
             if (!(performedAction instanceof UnableToPerformAction)) {
                 sceneState.updateCameraPosition(engine.player);
                 engine.needsMapUpdate = true;
+
+                details.updatePlayerDetails();
 
                 this.handleEnemyTurns();
             }

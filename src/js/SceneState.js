@@ -3,6 +3,7 @@ import Stats from "stats.js";
 import engine from "./Engine";
 import messageConsole from "./ui/MessageConsole";
 import characterHealth from "./ui/CharacterHealth";
+import details from "./ui/Details";
 
 class SceneState {
     constructor() {
@@ -23,11 +24,9 @@ class SceneState {
         this.canvasDom = document.createElement("div");
         this.canvasDom.classList.add("view");
 
-        const detailsDom = document.createElement("div");
-        detailsDom.classList.add("details");
 
         gameDom.appendChild(this.canvasDom);
-        gameDom.appendChild(detailsDom);
+        gameDom.appendChild(details.dom);
         gameDom.appendChild(messageConsole.consoleDom);
         gameDom.appendChild(characterHealth.dom);
 

@@ -190,3 +190,9 @@ body {
     z-index: 30;
     text-shadow: 1px 1px 3px #eee;
 }
+
+.details {
+    padding: 10px 15px;
+    box-sizing: border-box;
+    font-size: 2vh;
+}
