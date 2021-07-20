@@ -25,11 +25,16 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         this.clearHighlight();
     }
 
-    clearHighlight() {
+    clearHighlight(updatePlayer = false) {
         if (this.highlightedTile !== null) {
             const object = this.highlightedTile.getComponent("positionalobject");
             if (object) {
                 object.removeHighlight();
+            }
+
+            this.highlightedTile = null;
+            if (updatePlayer) {
+                details.updatePlayerDetails();
             }
         }
     }
@@ -100,22 +105,26 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                     if (parentObject.transparency === 0) {
                         continue;
                     }
+
+                    if (!parentObject.hasObject()) {
+                        continue;
+                    }
+
                     if (this.highlightedTile !== parentEntity) {
                         this.clearHighlight();
                         this.highlightedTile = parentEntity;
                         parentObject.highlight();
                         details.updatePositionDetails(parentEntity);
                     }
-                }
 
-                anyFound = true;
-                break;
+                    anyFound = true;
+                    break;
+                }
             }
         }
 
-        if (!anyFound && this.highlightedTile !== null) {
-            this.clearHighlight();
-            details.updatePlayerDetails();
+        if (!anyFound) {
+            this.clearHighlight(true);
         }
 
         engine.needsMapUpdate = true;

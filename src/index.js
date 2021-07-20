@@ -47,7 +47,7 @@ import details from "./js/ui/Details";
                 }
             }
 
-            const isFovNew = engine.fov.newObjects.length === 0;
+            const isFovNew = engine.fov.visibleObjects.length === 0;
 
             engine.gameMap.updateFOV(playerPosition.x, playerPosition.y, playerPosition.z, playerVisibility);
             engine.gameMap.draw(playerPosition.x, playerPosition.y, playerPosition.z);
