@@ -196,20 +196,6 @@ export default class GameMap {
 
     updateFOV(x, y, z, range) {
         engine.fov.compute(x, y, z, range, z-2, z+1);
-
-        const newObjects = engine.fov.newObjects;
-        for (const newObject of newObjects) {
-            if (newObject instanceof _Tile) {
-                const fovComponent = newObject.getComponent("fov");
-                if (fovComponent) {
-                    fovComponent.explored = true;
-                    fovComponent.visible = true;
-                } else {
-                    newObject.setComponent(new Fov({explored: true, visible: true}));
-                }
-            }
-        }
-
         engine.airFov.compute(x, y, z,range * 2, z+2, z+8);
     }
 
@@ -219,6 +205,19 @@ export default class GameMap {
     }
 
     drawItemsInFov(fov, x, y, z) {
+        const newObjects = fov.newObjects;
+        for (const newObject of newObjects) {
+            if (newObject instanceof _Tile) {
+                const fovComponent = newObject.getComponent("fov");
+                if (fovComponent) {
+                    fovComponent.explored = true;
+                    fovComponent.visible = true;
+                } else {
+                    newObject.setComponent(new Fov({components: {fov: {explored: true, visible: true}}}));
+                }
+            }
+        }
+
         for (const object of fov.previousVisibleObjects) {
             const index = fov.visibleObjects.indexOf(object);
             if (index === -1) {
@@ -230,7 +229,6 @@ export default class GameMap {
             }
         }
 
-        const newObjects = fov.newObjects;
         for (const newObject of newObjects) {
             const object = newObject.getComponent("positionalobject");
             if (object) {
