@@ -119,9 +119,11 @@ export default class AIMeleeChase extends AI {
             }
 
             for (const actor of this.fov.visibleActors) {
-                const actorPosition = actor.getComponent("positionalobject");
-                if (actorPosition) {
-                    cost[actorPosition.x][actorPosition.y] += 100;
+                if (actor.isAlive()) {
+                    const actorPosition = actor.getComponent("positionalobject");
+                    if (actorPosition) {
+                        cost[actorPosition.x][actorPosition.y] += 100;
+                    }
                 }
             }
 
