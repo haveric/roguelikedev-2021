@@ -14,6 +14,8 @@ export default class Fighter extends _Component {
 
         this.hp = 30;
         this.maxHp = 30;
+        this.mana = 20;
+        this.maxMana = 20;
         this.defense = 0;
         this.power = 2;
 
@@ -25,6 +27,14 @@ export default class Fighter extends _Component {
 
             if (fighter.maxHp !== undefined) {
                 this.maxHp = fighter.maxHp;
+            }
+
+            if (fighter.mana !== undefined) {
+                this.mana = fighter.mana;
+            }
+
+            if (fighter.maxMana !== undefined) {
+                this.maxMana = fighter.maxMana;
             }
 
             if (fighter.defense !== undefined) {
@@ -42,6 +52,8 @@ export default class Fighter extends _Component {
             fighter: {
                 hp: this.hp,
                 maxHp: this.maxHp,
+                mana: this.mana,
+                maxMana: this.maxMana,
                 defense: this.defense,
                 power: this.power
             }
@@ -52,7 +64,7 @@ export default class Fighter extends _Component {
         this.hp -= damage;
 
         if (this.parentEntity === engine.player) {
-            characterHealth.updateHealth(this.hp, this.maxHp);
+            characterHealth.update(this.hp, this.maxHp);
         }
 
         if (this.hp <= 0) {

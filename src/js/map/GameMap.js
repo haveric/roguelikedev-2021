@@ -6,6 +6,7 @@ import _Tile from "../entity/_Tile";
 import Fov from "../components/Fov";
 import characterHealth from "../ui/CharacterHealth";
 import details from "../ui/Details";
+import characterMana from "../ui/CharacterMana";
 
 export default class GameMap {
     constructor(width, height) {
@@ -323,7 +324,8 @@ export default class GameMap {
         sceneState.updateCameraPosition(engine.player);
 
         const playerFighter = engine.player.getComponent("fighter");
-        characterHealth.updateHealth(playerFighter.hp, playerFighter.maxHp);
+        characterHealth.update(playerFighter.hp, playerFighter.maxHp);
+        characterMana.update(playerFighter.mana, playerFighter.maxMana);
         details.updatePlayerDetails();
     }
 }

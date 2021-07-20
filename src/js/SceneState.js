@@ -4,6 +4,7 @@ import engine from "./Engine";
 import messageConsole from "./ui/MessageConsole";
 import characterHealth from "./ui/CharacterHealth";
 import details from "./ui/Details";
+import characterMana from "./ui/CharacterMana";
 
 class SceneState {
     constructor() {
@@ -29,6 +30,7 @@ class SceneState {
         gameDom.appendChild(details.dom);
         gameDom.appendChild(messageConsole.consoleDom);
         gameDom.appendChild(characterHealth.dom);
+        gameDom.appendChild(characterMana.dom);
 
         this.renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
         this.renderer.setClearColor(0xaaaaaa, 1);

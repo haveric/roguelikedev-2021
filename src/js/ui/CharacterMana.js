@@ -1,19 +1,19 @@
-class CharacterHealth {
+class CharacterMana {
     constructor() {
         this.dom = document.createElement("div");
         this.dom.classList.add("character-info");
-        this.dom.id = "character-health";
+        this.dom.id = "character-mana";
 
         this.wrapDom = document.createElement("div");
         this.wrapDom.classList.add("character-info__wrap");
 
         this.bgDom = document.createElement("div");
         this.bgDom.classList.add("character-info__bg");
-        this.bgDom.innerText = "@";
+        this.bgDom.innerText = "Ω";
 
         this.fgDom = document.createElement("div");
         this.fgDom.classList.add("character-info__fg");
-        this.fgDom.innerText = "@";
+        this.fgDom.innerText = "Ω";
 
         this.textDom = document.createElement("div");
         this.textDom.classList.add("character-info__text");
@@ -26,12 +26,12 @@ class CharacterHealth {
 
     update(current, max) {
         const percent = current / max;
-        const height = percent * 80;
-        this.fgDom.style.height = height + "%";
+        const height = percent * 76;
+        this.fgDom.style.height = (100 - height) + "%";
 
         this.textDom.innerText = current + " / " + max;
     }
 }
 
-const characterHealth = new CharacterHealth();
-export default characterHealth;
+const characterMana = new CharacterMana();
+export default characterMana;
