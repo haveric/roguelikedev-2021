@@ -9,8 +9,8 @@ import details from "./js/ui/Details";
 
 (function () {
     const init = function() {
-        //engine.gameMap = new BasicDungeon(100, 100);
-        engine.gameMap = new Town(50, 50);
+        engine.gameMap = new BasicDungeon(100, 100);
+        //engine.gameMap = new Town(50, 50);
         engine.gameMap.create();
 
         sceneState.updateCameraPosition(engine.player);
