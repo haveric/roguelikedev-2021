@@ -5,6 +5,7 @@ import BasicDungeon from "./js/map/BasicDungeon";
 import Town from "./js/map/Town";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import messageConsole from "./js/ui/MessageConsole";
+import details from "./js/ui/Details";
 
 (function () {
     const init = function() {
@@ -46,8 +47,14 @@ import messageConsole from "./js/ui/MessageConsole";
                 }
             }
 
+            const isFovNew = engine.fov.newObjects.length === 0;
+
             engine.gameMap.updateFOV(playerPosition.x, playerPosition.y, playerPosition.z, playerVisibility);
             engine.gameMap.draw(playerPosition.x, playerPosition.y, playerPosition.z);
+
+            if (isFovNew) {
+                details.updatePlayerDetails();
+            }
         }
 
         sceneState.renderer.render(sceneState.scene, sceneState.camera);

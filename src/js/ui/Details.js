@@ -44,6 +44,40 @@ class Details {
             }
         }
 
+        let nearby = new Map();
+        for (const actor of engine.fov.visibleActors) {
+            if (actor === engine.player || !actor.isAlive()) {
+                continue;
+            }
+
+            const position = actor.getComponent("positionalobject");
+            if (position) {
+                const name = position.letter + ": " + actor.name;
+
+                if (nearby.has(name)) {
+                    const num = nearby.get(name);
+                    nearby.set(name, num + 1);
+                } else {
+                    nearby.set(name, 1);
+                }
+            }
+        }
+
+        if (nearby.size > 0) {
+            text += "\nNearby:\n";
+        }
+        for (const entry of nearby.entries()) {
+            const nameString = entry[0];
+            const count = entry[1];
+            text += nameString;
+
+            if (count > 1) {
+                text += " x" + count;
+            }
+
+            text += "\n";
+        }
+
         this.dom.innerText = text;
     }
 }
