@@ -98,11 +98,12 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                     if (parentObject.transparency === 0) {
                         continue;
                     }
-
-                    this.clearHighlight();
-                    this.highlightedTile = parentEntity;
-                    parentObject.highlight();
-                    details.updatePositionDetails(parentEntity);
+                    if (this.highlightedTile !== parentEntity) {
+                        this.clearHighlight();
+                        this.highlightedTile = parentEntity;
+                        parentObject.highlight();
+                        details.updatePositionDetails(parentEntity);
+                    }
                 }
 
                 anyFound = true;
@@ -110,7 +111,7 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             }
         }
 
-        if (!anyFound) {
+        if (!anyFound && this.highlightedTile !== null) {
             this.clearHighlight();
             details.updatePlayerDetails();
         }
