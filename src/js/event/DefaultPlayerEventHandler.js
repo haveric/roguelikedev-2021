@@ -10,6 +10,7 @@ import EditorEventHandler from "./EditorEventHandler";
 import editorInfo from "../ui/EditorInfo";
 import BumpAction from "../actions/BumpAction";
 import WaitAction from "../actions/WaitAction";
+import details from "../ui/Details";
 
 export default class DefaultPlayerEventHandler extends EventHandler {
     constructor() {
@@ -101,6 +102,7 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                     this.clearHighlight();
                     this.highlightedTile = parentEntity;
                     parentObject.highlight();
+                    details.updatePositionDetails(parentEntity);
                 }
 
                 anyFound = true;
@@ -110,6 +112,7 @@ export default class DefaultPlayerEventHandler extends EventHandler {
 
         if (!anyFound) {
             this.clearHighlight();
+            details.updatePlayerDetails();
         }
 
         engine.needsMapUpdate = true;

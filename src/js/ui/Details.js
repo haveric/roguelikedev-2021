@@ -7,12 +7,11 @@ class Details {
     }
 
     updatePlayerDetails() {
-        this.updatePositionDetails(true);
+        this.updatePositionDetails(engine.player, true);
     }
 
-    updatePositionDetails(skipPlayer) {
-        const player = engine.player;
-        const position = player.getComponent("positionalobject");
+    updatePositionDetails(entity, skipPlayer = false) {
+        const position = entity.getComponent("positionalobject");
         const x = position.x;
         const y = position.y;
         const z = position.z;
@@ -33,14 +32,14 @@ class Details {
             }
 
             const position = actor.getComponent("positionalobject");
-            if (position && x === position.x && y === position.y && z === position.z) {
+            if (position && x === position.x && y === position.y && Math.abs(z - position.z) < 2) {
                 text += position.letter + ": " + actor.name + "\n";
             }
         }
 
         for (const item of engine.gameMap.items) {
             const position = item.getComponent("positionalobject");
-            if (position && x === position.x && y === position.y && z === position.z) {
+            if (position && x === position.x && y === position.y && Math.abs(z - position.z) < 2) {
                 text += position.letter + ": " + item.name + "\n";
             }
         }
