@@ -86,9 +86,9 @@ body {
 .console {
     position: fixed;
     display: block;
-    left: 0;
+    left: 15%;
     bottom: 0;
-    width: 80%;
+    width: 65%;
     height: 20%;
     background-color: #eee;
     transition: height 1s ease;
@@ -132,4 +132,61 @@ body {
 
 .message__amount {
     margin-left: 1em;
+}
+
+#character-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 15%;
+    height: 20%;
+    font-family: Arial, serif;
+    font-weight: bold;
+    font-size: 15vh;
+    text-align: center;
+    color: #c00;
+    background-color: #aaa;
+}
+
+.character-info__health {
+    position: absolute;
+    top: 5%;
+    bottom: 5%;
+    left: 0;
+    right: 0;
+}
+
+.character-info__healthbg {
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    color: #ffe0e0;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow: hidden;
+}
+
+.character-info__healthfg {
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow: hidden;
+}
+
+.character-info__healthtext {
+    position: absolute;
+    top: 38%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 3vh;
+    color: #000;
+    z-index: 30;
+    text-shadow: 1px 1px 3px #eee;
 }

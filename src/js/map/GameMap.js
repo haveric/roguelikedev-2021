@@ -4,6 +4,7 @@ import entityLoader from "../entity/EntityLoader";
 import engine from "../Engine";
 import _Tile from "../entity/_Tile";
 import Fov from "../components/Fov";
+import characterHealth from "../ui/CharacterHealth";
 
 export default class GameMap {
     constructor(width, height) {
@@ -305,5 +306,24 @@ export default class GameMap {
         }
 
         return blockingActor;
+    }
+
+    addPlayer(x, y, z = 1) {
+        const position = {
+            components: {
+                positionalobject: {
+                    x: x,
+                    y: y,
+                    z: z}
+            }
+        };
+        engine.player = entityLoader.createFromTemplate('Player', position);
+        engine.gameMap.actors.push(engine.player);
+        const positionalObject = engine.player.getComponent("positionalobject");
+        positionalObject.setVisible();
+        sceneState.updateCameraPosition(engine.player);
+
+        const playerFighter = engine.player.getComponent("fighter");
+        characterHealth.updateHealth(playerFighter.hp, playerFighter.maxHp);
     }
 }

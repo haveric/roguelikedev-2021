@@ -5,6 +5,7 @@ import AIDead from "./ai/AIDead";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import GameOverEventHandler from "../event/GameOverEventHandler";
 import messageConsole from "../ui/MessageConsole";
+import characterHealth from "../ui/CharacterHealth";
 
 export default class Fighter extends _Component {
     constructor(args = {}) {
@@ -49,6 +50,10 @@ export default class Fighter extends _Component {
 
     takeDamage(damage) {
         this.hp -= damage;
+
+        if (this.parentEntity === engine.player) {
+            characterHealth.updateHealth(this.hp, this.maxHp);
+        }
 
         if (this.hp <= 0) {
             this.die();

@@ -65,11 +65,7 @@ export default class Town extends GameMap {
             }
         }
 
-        engine.player = entityLoader.createFromTemplate('Player', {components: {positionalobject: {x: 6, y: 6, z: 1}}});
-        engine.gameMap.actors.push(engine.player);
-        const positionalObject = engine.player.getComponent("positionalobject");
-        positionalObject.setVisible();
-        sceneState.updateCameraPosition(engine.player);
+        this.addPlayer(6, 6);
     }
 
     createTree(x, y) {

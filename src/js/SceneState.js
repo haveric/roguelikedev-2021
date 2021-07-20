@@ -2,6 +2,7 @@ import * as THREE from "three";
 import Stats from "stats.js";
 import engine from "./Engine";
 import messageConsole from "./ui/MessageConsole";
+import characterHealth from "./ui/CharacterHealth";
 
 class SceneState {
     constructor() {
@@ -28,6 +29,7 @@ class SceneState {
         gameDom.appendChild(this.canvasDom);
         gameDom.appendChild(detailsDom);
         gameDom.appendChild(messageConsole.consoleDom);
+        gameDom.appendChild(characterHealth.dom);
 
         this.renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
         this.renderer.setClearColor(0xaaaaaa, 1);
@@ -37,7 +39,6 @@ class SceneState {
         this.stats = new Stats();
         this.stats.showPanel(0);
         document.body.appendChild(this.stats.dom);
-
     }
 
     handleEvent(e) {

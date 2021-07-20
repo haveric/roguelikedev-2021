@@ -52,20 +52,7 @@ export default class BasicDungeon extends GameMap {
             newRoom.createRoom(this);
 
             if (rooms.length === 0) {
-                const position = {
-                    components: {
-                        positionalobject: {
-                            x: newRoom.getCenterX(),
-                            y: newRoom.getCenterY(),
-                            z: 1}
-                    }
-                };
-
-                engine.player = entityLoader.createFromTemplate('Player', position);
-                engine.gameMap.actors.push(engine.player);
-                const positionalObject = engine.player.getComponent("positionalobject");
-                positionalObject.setVisible();
-                sceneState.updateCameraPosition(engine.player);
+                this.addPlayer(newRoom.getCenterX(), newRoom.getCenterY());
             } else {
                 const lastRoom = rooms[rooms.length - 1];
                 MapGeneration.tunnelBetween(this, lastRoom.getCenterX(), lastRoom.getCenterY(), newRoom.getCenterX(), newRoom.getCenterY());

@@ -3,7 +3,6 @@ import Message from "./message/Message";
 
 class MessageConsole {
     constructor() {
-        const self = this;
         this.messages = [];
         this.builder = [];
 

@@ -124,13 +124,7 @@ export default class TutorialMap extends GameMap {
             }
         }
 
-
-        engine.player = entityLoader.createFromTemplate('Player', {components: {positionalobject: {x: 21, y: 3, z: 1}}});
-        engine.gameMap.actors.push(engine.player);
-        const positionalObject = engine.player.getComponent("positionalobject");
-        positionalObject.setVisible();
-        sceneState.updateCameraPosition(engine.player);
-
+        this.addPlayer(21, 3);
 
         engine.gameMap.actors.push(entityLoader.createFromTemplate('Ant', {components: {positionalobject: {x: 27, y: 4, z: 1}}}));
         engine.gameMap.actors.push(entityLoader.createFromTemplate('Red Dragon', {components: {positionalobject: {x: 18, y: 4, z: 1}}}));
