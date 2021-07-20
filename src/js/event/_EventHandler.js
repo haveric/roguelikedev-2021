@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import sceneState from "../SceneState";
-import engine from "../Engine";
 
 export default class EventHandler {
     constructor() {
@@ -13,6 +12,8 @@ export default class EventHandler {
         window.addEventListener("mouseup", this);
         window.addEventListener("click", this);
         window.addEventListener("contextmenu", this);
+
+        this.isPlayerTurn = true;
     }
 
     teardown() {

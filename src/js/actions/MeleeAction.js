@@ -55,12 +55,12 @@ export default class MeleeAction extends ActionWithDirection {
                     messageConsole.text(description + ", but does no damage.", attackColor).build();
                 }
 
-                if (this.tweenAttack) {
-                    this.tweenAttack.stop();
+                if (entity.tweenAttack) {
+                    entity.tweenAttack.stop();
                 }
 
-                if (this.tweenReturn) {
-                    this.tweenReturn.stop();
+                if (entity.tweenReturn) {
+                    entity.tweenReturn.stop();
                 }
 
                 position.updateObjectPosition();
@@ -71,24 +71,24 @@ export default class MeleeAction extends ActionWithDirection {
                 const attackPosition = new Vector3(blockingPosition.object.position.x, blockingPosition.object.position.y, blockingPosition.object.position.z);
                 const currentPosition = originalPosition.clone();
 
-                this.tweenAttack = new TWEEN.Tween(currentPosition).to(attackPosition, 100);
-                this.tweenAttack.onUpdate(function() {
+                entity.tweenAttack = new TWEEN.Tween(currentPosition).to(attackPosition, 100);
+                entity.tweenAttack.onUpdate(function() {
                     position.object.position.x = currentPosition.x;
                     position.object.position.y = currentPosition.y;
                     position.object.position.z = currentPosition.z;
                     engine.needsMapUpdate = true;
                 });
 
-                this.tweenReturn = new TWEEN.Tween(currentPosition).to(originalPosition, 100);
-                this.tweenReturn.onUpdate(function() {
+                entity.tweenReturn = new TWEEN.Tween(currentPosition).to(originalPosition, 100);
+                entity.tweenReturn.onUpdate(function() {
                     position.object.position.x = currentPosition.x;
                     position.object.position.y = currentPosition.y;
                     position.object.position.z = currentPosition.z;
                     engine.needsMapUpdate = true;
                 });
 
-                this.tweenAttack.chain(this.tweenReturn);
-                this.tweenAttack.start();
+                entity.tweenAttack.chain(entity.tweenReturn);
+                entity.tweenAttack.start();
             }
         } else {
             return new UnableToPerformAction("There's nothing to attack there!");

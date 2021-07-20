@@ -73,4 +73,14 @@ export default class _Entity {
 
         return json;
     }
+
+    stopAnimations() {
+        if (this.tweenAttack) {
+            this.tweenAttack.stop();
+        }
+
+        if (this.tweenReturn) {
+            this.tweenReturn.stop();
+        }
+    }
 }

@@ -179,6 +179,7 @@ export default class _PositionalObject extends _Component {
     }
 
     move(x, y = 0, z = 0) {
+        this.parentEntity.stopAnimations();
         this.x += x;
         this.y += y;
         this.z += z;

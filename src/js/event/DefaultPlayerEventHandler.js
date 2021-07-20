@@ -36,44 +36,46 @@ export default class DefaultPlayerEventHandler extends EventHandler {
 
     handleInput() {
         let action = null;
-        if (controls.testPressed("up")) {
-            action = new BumpAction(0, 1);
-        } else if (controls.testPressed("down")) {
-            action = new BumpAction(0, -1);
-        } else if (controls.testPressed("left")) {
-            action = new BumpAction(-1);
-        } else if (controls.testPressed("right")) {
-            action = new BumpAction(1);
-        } else if (controls.testPressed("nw")) {
-            action = new BumpAction(-1, 1);
-        } else if (controls.testPressed("ne")) {
-            action = new BumpAction(1, 1);
-        } else if (controls.testPressed("sw")) {
-            action = new BumpAction(-1, -1);
-        } else if (controls.testPressed("se")) {
-            action = new BumpAction(1, -1);
-        } else if (controls.testPressed("wait")) {
-            action = new WaitAction();
-        } else if (controls.testPressed("save", 1000)) {
-            engine.gameMap.save("save1");
-        } else if (controls.testPressed("load", 1000)) {
-            engine.gameMap.load("save1");
-        } else if (controls.testPressed("debug")) {
-            engine.gameMap.reveal();
-            engine.needsMapUpdate = true;
-            engine.setEventHandler(new EditorEventHandler());
-            editorControls.show();
-            editorInfo.show();
-        } else if (controls.testPressed("debug2")) {
-            engine.gameMap.teardown();
-            engine.gameMap = new TutorialMap();
-            engine.gameMap.create();
-            engine.needsMapUpdate = true;
-        } else if (controls.testPressed("reset")) {
-            engine.gameMap.teardown();
-            engine.gameMap = new BasicDungeon(100, 100);
-            engine.gameMap.create();
-            engine.needsMapUpdate = true;
+        if (this.isPlayerTurn) {
+            if (controls.testPressed("up")) {
+                action = new BumpAction(0, 1);
+            } else if (controls.testPressed("down")) {
+                action = new BumpAction(0, -1);
+            } else if (controls.testPressed("left")) {
+                action = new BumpAction(-1);
+            } else if (controls.testPressed("right")) {
+                action = new BumpAction(1);
+            } else if (controls.testPressed("nw")) {
+                action = new BumpAction(-1, 1);
+            } else if (controls.testPressed("ne")) {
+                action = new BumpAction(1, 1);
+            } else if (controls.testPressed("sw")) {
+                action = new BumpAction(-1, -1);
+            } else if (controls.testPressed("se")) {
+                action = new BumpAction(1, -1);
+            } else if (controls.testPressed("wait")) {
+                action = new WaitAction();
+            } else if (controls.testPressed("save", 1000)) {
+                engine.gameMap.save("save1");
+            } else if (controls.testPressed("load", 1000)) {
+                engine.gameMap.load("save1");
+            } else if (controls.testPressed("debug")) {
+                engine.gameMap.reveal();
+                engine.needsMapUpdate = true;
+                engine.setEventHandler(new EditorEventHandler());
+                editorControls.show();
+                editorInfo.show();
+            } else if (controls.testPressed("debug2")) {
+                engine.gameMap.teardown();
+                engine.gameMap = new TutorialMap();
+                engine.gameMap.create();
+                engine.needsMapUpdate = true;
+            } else if (controls.testPressed("reset")) {
+                engine.gameMap.teardown();
+                engine.gameMap = new BasicDungeon(100, 100);
+                engine.gameMap.create();
+                engine.needsMapUpdate = true;
+            }
         }
 
         return action;
