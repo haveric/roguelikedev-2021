@@ -83,9 +83,6 @@ export default class Fighter extends _Component {
 
         const position = entity.getComponent("positionalobject");
         if (position) {
-            position.color = "#BF0000";
-            position.letter = "%";
-
             const rotation = {
                 xRot: position.xRot,
                 yRot: position.yRot,
