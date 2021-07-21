@@ -3,7 +3,9 @@ import UnableToPerformAction from "./UnableToPerformAction";
 import engine from "../Engine";
 import messageConsole from "../ui/MessageConsole";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
-import {Vector3} from "three";
+import {MathUtils, Vector3} from "three";
+import CharacterObject from "../components/CharacterObject";
+import sceneState from "../SceneState";
 
 export default class MeleeAction extends ActionWithDirection {
     constructor(dx, dy, dz) {
@@ -89,9 +91,51 @@ export default class MeleeAction extends ActionWithDirection {
 
                 entity.tweenAttack.chain(entity.tweenReturn);
                 entity.tweenAttack.start();
+
+                this.createDamageIndicator(blockingPosition, damage, attackColor);
             }
         } else {
             return new UnableToPerformAction("There's nothing to attack there!");
         }
+    }
+
+    createDamageIndicator(position, damage, attackColor) {
+        const xRand = position.x + MathUtils.randFloat(-.25, .25);
+        const yRand = position.y + MathUtils.randFloat(-.25, .25);
+        const zRand = position.z + 1.1 + MathUtils.randFloat(0, 1);
+        const args = {
+            components: {
+                characterobject: {
+                    letter: "" + damage,
+                    x: xRand,
+                    y: yRand,
+                    z: zRand,
+                    xRot: position.xRot,
+                    yRot: position.yRot,
+                    zRot: position.zRot,
+                    color: attackColor,
+                    scale: .05,
+                    size: .5
+                }
+            }
+        }
+
+        const indicator = new CharacterObject(args);
+        indicator.parentEntity = this;
+        indicator.setVisible();
+        const current = new Vector3(position.x, position.y, zRand);
+        const target = new Vector3(position.x, position.y, zRand + 3)
+
+        const tween = new TWEEN.Tween(current).to(target, 500);
+        tween.easing(TWEEN.Easing.Cubic.In);
+        tween.onUpdate(function() {
+            indicator.z = current.z;
+            indicator.updateObjectPosition();
+            engine.needsMapUpdate = true;
+        });
+        tween.onComplete(function() {
+            sceneState.scene.remove(indicator.object);
+        });
+        tween.start();
     }
 }
