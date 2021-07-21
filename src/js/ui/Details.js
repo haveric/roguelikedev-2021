@@ -32,7 +32,7 @@ class Details {
             }
 
             const position = actor.getComponent("positionalobject");
-            if (position && x === position.x && y === position.y && Math.abs(z - position.z) < 2) {
+            if (position && position.isVisible() && x === position.x && y === position.y && Math.abs(z - position.z) < 2) {
                 text += position.letter + ": " + actor.name + "\n";
             }
         }

@@ -7,6 +7,7 @@ import Fov from "../components/Fov";
 import characterHealth from "../ui/CharacterHealth";
 import details from "../ui/Details";
 import characterMana from "../ui/CharacterMana";
+import Actor from "../entity/Actor";
 
 export default class GameMap {
     constructor(width, height) {
@@ -255,12 +256,17 @@ export default class GameMap {
 
         const oldObjects = fov.oldObjects;
         for (const oldObject of oldObjects) {
-            const object = oldObject.getComponent("positionalobject");
-            if (object) {
-                this.setTransparency(object, x, y, z);
+            const position = oldObject.getComponent("positionalobject");
+            if (position) {
+                if (oldObject instanceof Actor) {
+                    // TODO: Create remnants of actor
+                    position.setVisible(false);
+                } else {
+                    this.setTransparency(position, x, y, z);
 
-                if (object.hasObject()) {
-                    object.shiftColor(.5);
+                    if (position.hasObject()) {
+                        position.shiftColor(.5);
+                    }
                 }
             }
         }
