@@ -94,25 +94,62 @@ body {
     left: 25%;
     bottom: 0;
     width: 50%;
-    height: 20%;
+    height: 18.75%;
     background-color: #eee;
-    transition: height 1s ease;
+    transition: all 1s ease;
+    transform: translate(0, 0);
+    opacity: .95;
 }
 
 .console.full {
     height: 80%;
+    transform: translate(0, -10%);
+    opacity: 1;
 }
 
 .console.collapsed {
-    height: 35px;
+    height: 8.25%;
+}
+
+.console__button {
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    opacity: 1;
+}
+
+.console__increase {
+    right: 40px;
+}
+
+.console.full .console__increase {
+    opacity: 0;
+    z-index: -1;
+}
+
+.console__decrease {
+    right: 64px;
+}
+
+.console.collapsed .console__decrease {
+    opacity: 0;
+    z-index: -1;
+}
+
+.messages__wrap {
+    position: absolute;
+    opacity: 1;
+    padding: 5px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
 }
 
 .messages {
     display:flex;
     flex-direction:column-reverse;
-    height: calc(100% - 10px);
+    height: 100%;
     overflow-y: scroll;
-    padding: 5px;
 }
 
 .messages__inn {
