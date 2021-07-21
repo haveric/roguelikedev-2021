@@ -37,13 +37,24 @@ class Details {
             }
         }
 
+
+        const itemLines = [];
         for (const item of engine.gameMap.items) {
             const position = item.getComponent("positionalobject");
             if (position && x === position.x && y === position.y && Math.abs(z - position.z) < 2) {
-                text += "<span class='details__line'><span style='color:" + position.color + "'>" + position.letter + "</span>: " + item.name + "</span>";
+                itemLines.push("<span class='details__line'><span style='color:" + position.color + "'>" + position.letter + "</span>: " + item.name + "</span>");
             }
         }
 
+        if (itemLines.length > 0) {
+            text += "<span class='details__line details__header'>Items:</span>";
+        }
+
+        for (const line of itemLines) {
+            text += line;
+        }
+
+        
         let nearby = new Map();
         for (const actor of engine.fov.visibleActors) {
             if (actor === engine.player || !actor.isAlive()) {
@@ -64,7 +75,7 @@ class Details {
         }
 
         if (nearby.size > 0) {
-            text += "<span class='details__line details__nearby'>Nearby:</span>";
+            text += "<span class='details__line details__header'>Nearby:</span>";
         }
         for (const entry of nearby.entries()) {
             const nameString = entry[0];
