@@ -88,6 +88,14 @@ body {
     background-color: #ddd;
 }
 
+
+.details__nearby {
+    margin-top: 20px;
+}
+.details__line {
+    display: block;
+}
+
 .console {
     position: fixed;
     display: block;

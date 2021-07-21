@@ -15,13 +15,13 @@ class Details {
         const x = position.x;
         const y = position.y;
         const z = position.z;
-        let text = "Looking at: X:" + x + " - Y:" + y + "\n";
+        let text = "<span class='details__line'>Looking at: X:" + x + " - Y:" + y + "</span>";
         const tiles = engine.gameMap.tiles;
         for (let i = z - 1; i <= z; i++) {
             if (tiles.get(i) && tiles.get(i)[x]) {
                 const tile = tiles.get(i)[x][y];
                 if (tile) {
-                    text += tile.name + "\n";
+                    text += "<span class='details__line'>" + tile.name + "</span>";
                 }
             }
         }
@@ -33,14 +33,14 @@ class Details {
 
             const position = actor.getComponent("positionalobject");
             if (position && position.isVisible() && x === position.x && y === position.y && Math.abs(z - position.z) < 2) {
-                text += position.letter + ": " + actor.name + "\n";
+                text += "<span class='details__line'><span style='color:" + position.color + "'>" + position.letter + "</span>: " + actor.name + "</span>";
             }
         }
 
         for (const item of engine.gameMap.items) {
             const position = item.getComponent("positionalobject");
             if (position && x === position.x && y === position.y && Math.abs(z - position.z) < 2) {
-                text += position.letter + ": " + item.name + "\n";
+                text += "<span class='details__line'><span style='color:" + position.color + "'>" + position.letter + "</span>: " + item.name + "</span>";
             }
         }
 
@@ -52,7 +52,7 @@ class Details {
 
             const position = actor.getComponent("positionalobject");
             if (position) {
-                const name = position.letter + ": " + actor.name;
+                const name = "<span style='color:" + position.color + "'>" + position.letter + "</span>: " + actor.name;
 
                 if (nearby.has(name)) {
                     const num = nearby.get(name);
@@ -64,21 +64,21 @@ class Details {
         }
 
         if (nearby.size > 0) {
-            text += "\nNearby:\n";
+            text += "<span class='details__line details__nearby'>Nearby:</span>";
         }
         for (const entry of nearby.entries()) {
             const nameString = entry[0];
             const count = entry[1];
-            text += nameString;
+            text += "<span class='details__line'>" + nameString;
 
             if (count > 1) {
                 text += " x" + count;
             }
 
-            text += "\n";
+            text += "</span>";
         }
 
-        this.dom.innerText = text;
+        this.dom.innerHTML = text;
     }
 }
 
