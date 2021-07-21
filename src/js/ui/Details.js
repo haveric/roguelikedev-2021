@@ -54,7 +54,7 @@ class Details {
             text += line;
         }
 
-        
+
         let nearby = new Map();
         for (const actor of engine.fov.visibleActors) {
             if (actor === engine.player || !actor.isAlive()) {
