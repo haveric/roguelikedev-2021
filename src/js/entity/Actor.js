@@ -27,4 +27,8 @@ export default class Actor extends _Entity {
         const fighter = this.getComponent("fighter");
         return fighter && fighter.hp > 0;
     }
+
+    clone() {
+        return new Actor(this.save());
+    }
 }

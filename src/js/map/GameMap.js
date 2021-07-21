@@ -8,6 +8,7 @@ import characterHealth from "../ui/CharacterHealth";
 import details from "../ui/Details";
 import characterMana from "../ui/CharacterMana";
 import Actor from "../entity/Actor";
+import Remnant from "../components/Remnant";
 
 export default class GameMap {
     constructor(width, height) {
@@ -217,6 +218,58 @@ export default class GameMap {
                 } else {
                     newObject.setComponent(new Fov({components: {fov: {explored: true, visible: true}}}));
                 }
+            } else if (newObject instanceof Actor) {
+                const remnant = newObject.getComponent("remnant");
+                if (remnant) {
+                    if (remnant.isRemnant) {
+                        sceneState.scene.remove(newObject.getComponent("positionalobject").object);
+                        const index = this.actors.indexOf(newObject);
+                        if (index > -1) {
+                            this.actors.splice(index, 1);
+                        }
+
+                        const newIndex = newObjects.indexOf(newObject);
+                        if (newIndex > -1) {
+                            newObjects.splice(newIndex, 1);
+                        }
+
+                        const visibleIndex = fov.visibleObjects.indexOf(newObject);
+                        if (visibleIndex > -1 ) {
+                            fov.visibleObjects.splice(visibleIndex, 1);
+                        }
+                    } else {
+                        // Remove remnant of now visible actor
+                        for (const actor of this.actors) {
+                            if (actor === newObject) {
+                                continue;
+                            }
+
+                            const actorRemnant = actor.getComponent("remnant");
+                            if (actorRemnant && actorRemnant.isRemnant) {
+                                if (remnant.x === actorRemnant.x && remnant.y === actorRemnant.y && remnant.z === actorRemnant.z) {
+                                    sceneState.scene.remove(actor.getComponent("positionalobject").object);
+                                    const index = this.actors.indexOf(actor);
+                                    if (index > -1) {
+                                        this.actors.splice(index, 1);
+                                    }
+
+                                    const newIndex = newObjects.indexOf(actor);
+                                    if (newIndex > -1) {
+                                        newObjects.splice(newIndex, 1);
+                                    }
+
+                                    const visibleIndex = fov.visibleObjects.indexOf(actor);
+                                    if (visibleIndex > -1 ) {
+                                        fov.visibleObjects.splice(visibleIndex, 1);
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+
+                        newObject.removeComponent("remnant");
+                    }
+                }
             }
         }
 
@@ -258,8 +311,20 @@ export default class GameMap {
         for (const oldObject of oldObjects) {
             const position = oldObject.getComponent("positionalobject");
             if (position) {
-                if (oldObject instanceof Actor) {
-                    // TODO: Create remnants of actor
+                if (oldObject instanceof Actor && oldObject.isAlive()) {
+                    const remnant = oldObject.clone();
+                    remnant.name = "Sighting of " + remnant.name;
+                    remnant.removeComponent("ai");
+                    remnant.removeComponent("blocksMovement");
+                    remnant.removeComponent("blocksFov");
+                    remnant.setComponent(new Remnant({components: {remnant: {isRemnant: true, x: position.x, y: position.y, z: position.z}}}));
+
+                    const remnantPosition = remnant.getComponent("positionalobject");
+                    remnantPosition.setVisible();
+                    remnantPosition.shiftColor(.5);
+                    this.actors.push(remnant);
+
+                    oldObject.setComponent(new Remnant({components: {remnant: {isRemnant: false, x: position.x, y: position.y, z: position.z}}}));
                     position.setVisible(false);
                 } else {
                     this.setTransparency(position, x, y, z);

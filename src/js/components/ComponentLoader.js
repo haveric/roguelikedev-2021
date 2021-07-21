@@ -9,6 +9,7 @@ import VisibilityModifier from "./VisibilityModifier";
 import Fighter from "./Fighter";
 import AIMeleeChase from "./ai/AIMeleeChase";
 import Faction from "./Faction";
+import Remnant from "./Remnant";
 
 class ComponentLoader {
     constructor() {
@@ -22,6 +23,7 @@ class ComponentLoader {
         this.load(new Fighter());
         this.load(new Fov());
         this.load(new Openable());
+        this.load(new Remnant());
         this.load(new SolidObject());
         this.load(new VisibilityModifier());
         this.load(new Walkable());

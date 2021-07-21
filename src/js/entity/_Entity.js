@@ -74,6 +74,10 @@ export default class _Entity {
         return json;
     }
 
+    clone() {
+        return new _Entity(this.save());
+    }
+
     stopAnimations() {
         if (this.tweenAttack) {
             this.tweenAttack.stop();

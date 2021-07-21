@@ -39,7 +39,7 @@ export default class BaseFov {
             this.visibleObjects.push(object);
         }
 
-        if (this.previousVisibleObjects.indexOf(object) === -1) {
+        if (this.previousVisibleObjects.indexOf(object) === -1 && this.newObjects.indexOf(object) === -1) {
             this.newObjects.push(object);
         }
     }
