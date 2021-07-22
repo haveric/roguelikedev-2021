@@ -3,6 +3,7 @@ import engine from "../Engine";
 import messageConsole from "../ui/MessageConsole";
 import UnableToPerformAction from "./UnableToPerformAction";
 import sceneState from "../SceneState";
+import inventory from "../ui/Inventory";
 
 export default class PickupAction extends Action {
     constructor(entity) {
@@ -11,17 +12,19 @@ export default class PickupAction extends Action {
 
     perform() {
         const position = this.entity.getComponent("positionalobject");
-        const inventory = this.entity.getComponent("inventory");
+        const entityInventory = this.entity.getComponent("inventory");
         for (const item of engine.gameMap.items) {
             const itemPosition = item.getComponent("positionalobject");
             if (position.x === itemPosition.x && position.y === itemPosition.y && position.z === itemPosition.z) {
-                if (inventory.items.length < inventory.capacity) {
+                if (entityInventory.items.length < entityInventory.capacity) {
                     const itemIndex = engine.gameMap.items.indexOf(item);
                     engine.gameMap.items.splice(itemIndex, 1);
                     sceneState.scene.remove(itemPosition.object);
 
-                    inventory.items.push(item);
+                    item.parent = entityInventory;
+                    entityInventory.items.push(item);
                     if (this.entity === engine.player) {
+                        inventory.populateInventory(engine.player);
                         messageConsole.text("You picked up the " + item.name).build();
                     }
                     return this;

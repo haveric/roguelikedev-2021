@@ -8,6 +8,7 @@ export default class _Entity {
         this.name = args.name;
         this.componentArray = [];
         this.components = {};
+        this.parent = null;
 
         if (args.components) {
             this.loadComponents(args, args.components);

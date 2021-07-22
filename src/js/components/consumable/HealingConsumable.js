@@ -38,6 +38,7 @@ export default class HealingConsumable extends Consumable {
             const amountHealed = fighter.heal(this.amount);
 
             if (amountHealed > 0) {
+                this.consume();
                 if (this.parentEntity === engine.player) {
                     messageConsole.text("You consume the " + this.parentEntity.name + ", and recover " + amountHealed + " HP!").build();
                 }

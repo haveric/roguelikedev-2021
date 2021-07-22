@@ -10,6 +10,14 @@ export default class Consumable extends _Component {
         return null;
     }
 
+    consume() {
+        const item = this.parentEntity;
+        const parentInventory = item.parent;
+        if (parentInventory) {
+            parentInventory.remove(item);
+        }
+    }
+
     activate(action) {
         console.err("Not Implemented");
     }

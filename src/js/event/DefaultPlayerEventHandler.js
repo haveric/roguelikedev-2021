@@ -12,6 +12,8 @@ import BumpAction from "../actions/actionWithDirection/BumpAction";
 import WaitAction from "../actions/WaitAction";
 import details from "../ui/Details";
 import PickupAction from "../actions/PickupAction";
+import inventory from "../ui/Inventory";
+import ItemAction from "../actions/ItemAction";
 
 export default class DefaultPlayerEventHandler extends EventHandler {
     constructor() {
@@ -63,6 +65,13 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                 action = new WaitAction(engine.player);
             } else if (controls.testPressed("get")) {
                 action = new PickupAction(engine.player);
+            } else if (controls.testPressed("inventory")) {
+                if (inventory.isOpen()) {
+                    inventory.close();
+                } else {
+                    inventory.populateInventory(engine.player);
+                    inventory.open();
+                }
             } else if (controls.testPressed("save", 1000)) {
                 engine.gameMap.save("save1");
             } else if (controls.testPressed("load", 1000)) {
@@ -133,4 +142,13 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         engine.needsMapUpdate = true;
     }
 
+    onLeftClick(e) {
+        const target = e.target;
+        if (target.classList.contains("inventory__storage-slot") && target.classList.contains("has-item")) {
+            const slot = target.getAttribute("data-index");
+            const playerInventory = engine.player.getComponent("inventory");
+            engine.processAction(new ItemAction(engine.player, playerInventory.items[slot]));
+            inventory.populateInventory(engine.player);
+        }
+    }
 }

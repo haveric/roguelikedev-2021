@@ -24,8 +24,11 @@ class Engine {
     }
 
     handleEvents() {
-        const action = this.eventHandler.handleInput();
-        if (action != null) {
+        this.processAction(this.eventHandler.handleInput());
+    }
+
+    processAction(action) {
+        if (action != null && this.eventHandler.isPlayerTurn) {
             const performedAction = action.perform();
             if (!(performedAction instanceof UnableToPerformAction)) {
                 sceneState.updateCameraPosition(engine.player);

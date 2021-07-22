@@ -10,11 +10,16 @@ export default class Inventory extends _Component {
 
         this.capacity = 10;
         this.items = [];
+        this.gold = 0;
 
         if (hasComponent) {
             const inventory = args.components.inventory;
             if (inventory.capacity !== undefined) {
-                this.capacity = args.components.inventory.capacity;
+                this.capacity = inventory.capacity;
+            }
+
+            if (inventory.gold !== undefined) {
+                this.gold = inventory.gold;
             }
 
             if (inventory.items !== undefined) {
@@ -26,17 +31,23 @@ export default class Inventory extends _Component {
     }
 
     save() {
-        const itemSave = [];
+        const itemJson = [];
         for (const item of this.items) {
-            itemSave.push(item.save());
+            itemJson.push(JSON.stringify(item.save()));
         }
 
         return {
             inventory: {
                 capacity: this.capacity,
-                items: itemSave.toString()
+                gold: this.gold,
+                items: itemJson
             }
         }
+    }
+
+    remove(item) {
+        const index = this.items.indexOf(item);
+        this.items.splice(index, 1);
     }
 
     drop(item) {
@@ -47,9 +58,9 @@ export default class Inventory extends _Component {
         position.y = parentPosition.y;
         position.z = parentPosition.z;
         item.setVisible();
+        item.parent = null;
         engine.gameMap.items.push(item);
 
-        const index = this.items.indexOf(item);
-        this.items.slice(index, 1);
+        this.remove(item);
     }
 }

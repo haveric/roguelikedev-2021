@@ -103,6 +103,7 @@ class Controls {
         self.defaults.set("wait", [Key.NUMPAD_5]);
         self.defaults.set("action", [Key.SPACE, Key.ENTER, Btn.A]);
         self.defaults.set("get", ["g"]);
+        self.defaults.set("inventory", ["i"]);
 
         self.defaults.set("save", ["F8"]);
         self.defaults.set("load", ["F9"]);

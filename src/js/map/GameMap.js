@@ -9,6 +9,7 @@ import details from "../ui/Details";
 import characterMana from "../ui/CharacterMana";
 import Actor from "../entity/Actor";
 import Remnant from "../components/Remnant";
+import inventory from "../ui/Inventory";
 
 export default class GameMap {
     constructor(width, height) {
@@ -416,5 +417,6 @@ export default class GameMap {
         characterHealth.update(playerFighter.hp, playerFighter.maxHp);
         characterMana.update(playerFighter.mana, playerFighter.maxMana);
         details.updatePlayerDetails();
+        inventory.populateInventory(engine.player);
     }
 }
