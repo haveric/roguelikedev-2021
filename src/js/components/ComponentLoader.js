@@ -12,6 +12,7 @@ import Faction from "./Faction";
 import Remnant from "./Remnant";
 import AIDead from "./ai/AIDead";
 import HealingConsumable from "./consumable/HealingConsumable";
+import Inventory from "./Inventory";
 
 class ComponentLoader {
     constructor() {
@@ -26,6 +27,7 @@ class ComponentLoader {
         this.load(new Faction());
         this.load(new Fighter());
         this.load(new Fov());
+        this.load(new Inventory());
         this.load(new Openable());
         this.load(new Remnant());
         this.load(new SolidObject());

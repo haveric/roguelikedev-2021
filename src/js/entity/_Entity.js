@@ -60,7 +60,7 @@ export default class _Entity {
     save() {
         let json = {
             type: this.type,
-            name: this.name,
+            name: this.name
         };
 
         json.components = {};

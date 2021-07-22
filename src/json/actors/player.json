@@ -15,6 +15,9 @@
                 "hp": 30,
                 "defense": 2,
                 "power": 5
+            },
+            "inventory": {
+                "capacity": 26
             }
         }
     }
