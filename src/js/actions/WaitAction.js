@@ -5,5 +5,7 @@ export default class WaitAction extends Action {
         super(entity);
     }
 
-    perform() { }
+    perform() {
+        return this;
+    }
 }

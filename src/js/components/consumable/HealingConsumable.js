@@ -39,8 +39,9 @@ export default class HealingConsumable extends Consumable {
 
             if (amountHealed > 0) {
                 if (this.parentEntity === engine.player) {
-                    messageConsole.text("You consume the " + this.parentEntity.name + ", and recover " + amountHealed + " HP!");
+                    messageConsole.text("You consume the " + this.parentEntity.name + ", and recover " + amountHealed + " HP!").build();
                 }
+                return this;
             } else {
                 return new UnableToPerformAction(this.entity, "Your health is already full");
             }

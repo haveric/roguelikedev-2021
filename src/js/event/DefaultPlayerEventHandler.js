@@ -11,6 +11,7 @@ import editorInfo from "../ui/EditorInfo";
 import BumpAction from "../actions/actionWithDirection/BumpAction";
 import WaitAction from "../actions/WaitAction";
 import details from "../ui/Details";
+import PickupAction from "../actions/PickupAction";
 
 export default class DefaultPlayerEventHandler extends EventHandler {
     constructor() {
@@ -60,6 +61,8 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                 action = new BumpAction(engine.player, 1, -1);
             } else if (controls.testPressed("wait")) {
                 action = new WaitAction(engine.player);
+            } else if (controls.testPressed("get")) {
+                action = new PickupAction(engine.player);
             } else if (controls.testPressed("save", 1000)) {
                 engine.gameMap.save("save1");
             } else if (controls.testPressed("load", 1000)) {
