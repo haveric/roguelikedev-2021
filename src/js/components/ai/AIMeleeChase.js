@@ -2,7 +2,7 @@ import AI from "./_AI";
 import Extend from "../../util/Extend";
 import AdamMilazzoFov from "../../map/fov/AdamMilazzoFov";
 import {MathUtils, Vector3} from "three";
-import WanderAction from "../../actions/actionWithDirection/WanderAction";
+import WanderAction from "../../actions/WanderAction";
 import MeleeAction from "../../actions/actionWithDirection/MeleeAction";
 import AStar from "../../pathfinding/AStar";
 import Graph from "../../pathfinding/Graph";

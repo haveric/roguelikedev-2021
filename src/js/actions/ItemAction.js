@@ -2,6 +2,12 @@ import Action from "./_Action";
 import engine from "../Engine";
 
 export default class ItemAction extends Action {
+    /**
+     *
+     * @param entity
+     * @param item
+     * @param {Vector3} targetPosition
+     */
     constructor(entity, item, targetPosition) {
         super(entity);
 
