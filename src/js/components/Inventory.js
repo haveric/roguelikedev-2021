@@ -2,6 +2,7 @@ import _Component from "./_Component";
 import Extend from "../util/Extend";
 import entityLoader from "../entity/EntityLoader";
 import engine from "../Engine";
+import messageConsole from "../ui/MessageConsole";
 
 export default class Inventory extends _Component {
     constructor(args = {}) {
@@ -57,9 +58,13 @@ export default class Inventory extends _Component {
         position.x = parentPosition.x;
         position.y = parentPosition.y;
         position.z = parentPosition.z;
-        item.setVisible();
         item.parent = null;
         engine.gameMap.items.push(item);
+        position.setVisible();
+
+        if (parent === engine.player) {
+            messageConsole.text("You dropped the " + item.name).build();
+        }
 
         this.remove(item);
     }

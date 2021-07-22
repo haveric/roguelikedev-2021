@@ -13,7 +13,8 @@ import WaitAction from "../actions/WaitAction";
 import details from "../ui/Details";
 import PickupAction from "../actions/PickupAction";
 import inventory from "../ui/Inventory";
-import ItemAction from "../actions/ItemAction";
+import ItemAction from "../actions/itemAction/ItemAction";
+import DropAction from "../actions/itemAction/DropAction";
 
 export default class DefaultPlayerEventHandler extends EventHandler {
     constructor() {
@@ -148,6 +149,17 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             const slot = target.getAttribute("data-index");
             const playerInventory = engine.player.getComponent("inventory");
             engine.processAction(new ItemAction(engine.player, playerInventory.items[slot]));
+            inventory.populateInventory(engine.player);
+        }
+    }
+
+    onRightClick(e) {
+        e.preventDefault();
+        const target = e.target;
+        if (target.classList.contains("inventory__storage-slot") && target.classList.contains("has-item")) {
+            const slot = target.getAttribute("data-index");
+            const playerInventory = engine.player.getComponent("inventory");
+            engine.processAction(new DropAction(engine.player, playerInventory.items[slot]));
             inventory.populateInventory(engine.player);
         }
     }

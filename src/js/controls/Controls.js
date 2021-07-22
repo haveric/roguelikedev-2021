@@ -85,10 +85,10 @@ class Controls {
         self.defaults = new Map();
 
         self.controls = new Map();
-        self.defaults.set("left", [Key.LEFT, "a", Key.NUMPAD_4, Btn.LEFT, Btn.LEFT_STICK_LEFT]);
-        self.defaults.set("right", [Key.RIGHT, "d", Key.NUMPAD_6, Btn.RIGHT, Btn.LEFT_STICK_RIGHT]);
-        self.defaults.set("up", [Key.UP, "w", Key.NUMPAD_8, Btn.UP, Btn.LEFT_STICK_UP]);
-        self.defaults.set("down", [Key.DOWN, "s", Key.NUMPAD_2, Btn.DOWN, Btn.LEFT_STICK_DOWN]);
+        self.defaults.set("left", [Key.LEFT, Key.NUMPAD_4, Btn.LEFT, Btn.LEFT_STICK_LEFT]);
+        self.defaults.set("right", [Key.RIGHT, Key.NUMPAD_6, Btn.RIGHT, Btn.LEFT_STICK_RIGHT]);
+        self.defaults.set("up", [Key.UP, Key.NUMPAD_8, Btn.UP, Btn.LEFT_STICK_UP]);
+        self.defaults.set("down", [Key.DOWN, Key.NUMPAD_2, Btn.DOWN, Btn.LEFT_STICK_DOWN]);
 
         self.defaults.set("editor-left", [Key.LEFT, Btn.LEFT, Btn.LEFT_STICK_LEFT]);
         self.defaults.set("editor-right", [Key.RIGHT, Btn.RIGHT, Btn.LEFT_STICK_RIGHT]);
@@ -102,6 +102,7 @@ class Controls {
 
         self.defaults.set("wait", [Key.NUMPAD_5]);
         self.defaults.set("action", [Key.SPACE, Key.ENTER, Btn.A]);
+        self.defaults.set("drop", ["d"]);
         self.defaults.set("get", ["g"]);
         self.defaults.set("inventory", ["i"]);
 

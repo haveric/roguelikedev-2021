@@ -2,7 +2,6 @@ import Action from "./_Action";
 import engine from "../Engine";
 import messageConsole from "../ui/MessageConsole";
 import UnableToPerformAction from "./UnableToPerformAction";
-import sceneState from "../SceneState";
 import inventory from "../ui/Inventory";
 
 export default class PickupAction extends Action {
@@ -19,7 +18,7 @@ export default class PickupAction extends Action {
                 if (entityInventory.items.length < entityInventory.capacity) {
                     const itemIndex = engine.gameMap.items.indexOf(item);
                     engine.gameMap.items.splice(itemIndex, 1);
-                    sceneState.scene.remove(itemPosition.object);
+                    itemPosition.teardown();
 
                     item.parent = entityInventory;
                     entityInventory.items.push(item);

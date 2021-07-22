@@ -1,5 +1,5 @@
-import Action from "./_Action";
-import engine from "../Engine";
+import Action from "../_Action";
+import engine from "../../Engine";
 
 export default class ItemAction extends Action {
     /**

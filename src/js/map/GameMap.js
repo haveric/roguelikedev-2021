@@ -223,7 +223,7 @@ export default class GameMap {
                 const remnant = newObject.getComponent("remnant");
                 if (remnant) {
                     if (remnant.isRemnant) {
-                        sceneState.scene.remove(newObject.getComponent("positionalobject").object);
+                        newObject.getComponent("positionalobject").teardown();
                         const index = this.actors.indexOf(newObject);
                         if (index > -1) {
                             this.actors.splice(index, 1);
@@ -248,7 +248,7 @@ export default class GameMap {
                             const actorRemnant = actor.getComponent("remnant");
                             if (actorRemnant && actorRemnant.isRemnant) {
                                 if (remnant.x === actorRemnant.x && remnant.y === actorRemnant.y && remnant.z === actorRemnant.z) {
-                                    sceneState.scene.remove(actor.getComponent("positionalobject").object);
+                                    actor.getComponent("positionalobject").teardown();
                                     const index = this.actors.indexOf(actor);
                                     if (index > -1) {
                                         this.actors.splice(index, 1);
@@ -401,10 +401,7 @@ export default class GameMap {
     addPlayer(x, y, z = 1) {
         const position = {
             components: {
-                positionalobject: {
-                    x: x,
-                    y: y,
-                    z: z}
+                positionalobject: {x: x, y: y, z: z}
             }
         };
         engine.player = entityLoader.createFromTemplate('Player', position);
