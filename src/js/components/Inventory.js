@@ -24,8 +24,11 @@ export default class Inventory extends _Component {
             }
 
             if (inventory.items !== undefined) {
-                for (const item of inventory.items) {
-                    this.items.push(entityLoader.create(item));
+                for (let i = 0; i < inventory.items.length; i++) {
+                    const item = inventory.items[i];
+                    if (item !== null) {
+                        this.items[i] = entityLoader.create(item);
+                    }
                 }
             }
         }
@@ -34,7 +37,11 @@ export default class Inventory extends _Component {
     save() {
         const itemJson = [];
         for (const item of this.items) {
-            itemJson.push(JSON.stringify(item.save()));
+            if (item === null) {
+                itemJson.push(null);
+            } else {
+                itemJson.push(JSON.stringify(item.save()));
+            }
         }
 
         return {
@@ -46,9 +53,20 @@ export default class Inventory extends _Component {
         }
     }
 
+    add(item) {
+        for (let i = 0; i < this.capacity; i++) {
+            if (!this.items[i]) {
+                this.items[i] = item;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     remove(item) {
         const index = this.items.indexOf(item);
-        this.items.splice(index, 1);
+        this.items.splice(index, 1, null);
     }
 
     drop(item) {

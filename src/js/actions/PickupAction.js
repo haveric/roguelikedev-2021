@@ -15,18 +15,20 @@ export default class PickupAction extends Action {
         for (const item of engine.gameMap.items) {
             const itemPosition = item.getComponent("positionalobject");
             if (position.x === itemPosition.x && position.y === itemPosition.y && position.z === itemPosition.z) {
-                if (entityInventory.items.length < entityInventory.capacity) {
+                item.parent = entityInventory;
+                if (entityInventory.add(item)) {
                     const itemIndex = engine.gameMap.items.indexOf(item);
                     engine.gameMap.items.splice(itemIndex, 1);
                     itemPosition.teardown();
 
-                    item.parent = entityInventory;
-                    entityInventory.items.push(item);
+
                     if (this.entity === engine.player) {
                         inventory.populateInventory(engine.player);
                         messageConsole.text("You picked up the " + item.name).build();
                     }
                     return this;
+                } else {
+                    return new UnableToPerformAction(this.entity, "Your inventory is full!");
                 }
             }
         }
