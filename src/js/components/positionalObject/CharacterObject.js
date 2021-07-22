@@ -1,10 +1,10 @@
 import _PositionalObject from "./_PositionalObject";
 import * as THREE from "three";
-import helvetikerFont from "../../fonts/helvetiker_regular.typeface.json";
-import Extend from "../util/Extend";
-import mplusCustomFont from "../../fonts/mplus_custom.json";
-import jetbrainsMonoFont from "../../fonts/JetBrains Mono_Regular.json";
-import pressStartFont from "../../fonts/Press Start 2P_Regular.json";
+import helvetikerFont from "../../../fonts/helvetiker_regular.typeface.json";
+import Extend from "../../util/Extend";
+import mplusCustomFont from "../../../fonts/mplus_custom.json";
+import jetbrainsMonoFont from "../../../fonts/JetBrains Mono_Regular.json";
+import pressStartFont from "../../../fonts/Press Start 2P_Regular.json";
 
 const cachedTextGeometries = [];
 export default class CharacterObject extends _PositionalObject {

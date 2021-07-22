@@ -1,5 +1,5 @@
-import SolidObject from "./SolidObject";
-import CharacterObject from "./CharacterObject";
+import SolidObject from "./positionalObject/SolidObject";
+import CharacterObject from "./positionalObject/CharacterObject";
 import BlocksMovement from "./BlocksMovement";
 import Walkable from "./Walkable";
 import Fov from "./Fov";
@@ -10,12 +10,16 @@ import Fighter from "./Fighter";
 import AIMeleeChase from "./ai/AIMeleeChase";
 import Faction from "./Faction";
 import Remnant from "./Remnant";
+import AIDead from "./ai/AIDead";
+import HealingConsumable from "./consumable/HealingConsumable";
 
 class ComponentLoader {
     constructor() {
         this.types = new Map();
 
+        this.load(new AIDead());
         this.load(new AIMeleeChase());
+        this.load(new HealingConsumable());
         this.load(new BlocksFov());
         this.load(new BlocksMovement());
         this.load(new CharacterObject());

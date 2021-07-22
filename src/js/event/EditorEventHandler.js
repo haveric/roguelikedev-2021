@@ -8,7 +8,7 @@ import _Tile from "../entity/_Tile";
 import Actor from "../entity/Actor";
 import Item from "../entity/Item";
 import editorInfo from "../ui/EditorInfo";
-import BumpAction from "../actions/BumpAction";
+import BumpAction from "../actions/actionWithDirection/BumpAction";
 
 export default class EditorEventHandler extends EventHandler {
     constructor() {
@@ -50,13 +50,13 @@ export default class EditorEventHandler extends EventHandler {
     handleInput() {
         let action = null;
         if (controls.testPressed("editor-up")) {
-            action = new BumpAction(0, 1);
+            action = new BumpAction(engine.player, 0, 1);
         } else if (controls.testPressed("editor-down")) {
-            action = new BumpAction(0, -1);
+            action = new BumpAction(engine.player, 0, -1);
         } else if (controls.testPressed("editor-left")) {
-            action = new BumpAction(-1);
+            action = new BumpAction(engine.player, -1);
         } else if (controls.testPressed("editor-right")) {
-            action = new BumpAction(1);
+            action = new BumpAction(engine.player, 1);
         } else if (controls.testPressed("save", 1000)) {
             engine.gameMap.save("debug1");
         } else if (controls.testPressed("load", 1000)) {

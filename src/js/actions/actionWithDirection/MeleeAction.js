@@ -1,21 +1,21 @@
 import ActionWithDirection from "./_ActionWithDirection";
-import UnableToPerformAction from "./UnableToPerformAction";
-import engine from "../Engine";
-import messageConsole from "../ui/MessageConsole";
+import UnableToPerformAction from "../UnableToPerformAction";
+import engine from "../../Engine";
+import messageConsole from "../../ui/MessageConsole";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import {MathUtils, Vector3} from "three";
-import CharacterObject from "../components/CharacterObject";
-import sceneState from "../SceneState";
+import CharacterObject from "../../components/positionalObject/CharacterObject";
+import sceneState from "../../SceneState";
 
 export default class MeleeAction extends ActionWithDirection {
-    constructor(dx, dy, dz) {
-        super(dx, dy, dz);
+    constructor(entity, dx, dy, dz) {
+        super(entity, dx, dy, dz);
     }
 
-    perform(entity) {
-        const position = entity.getComponent("positionalobject");
+    perform() {
+        const position = this.entity.getComponent("positionalobject");
         if (!position) {
-            return new UnableToPerformAction("Entity doesn't have a position.");
+            return new UnableToPerformAction(this.entity, "Entity doesn't have a position.");
         }
 
         const destX = position.x + this.dx;
@@ -24,18 +24,18 @@ export default class MeleeAction extends ActionWithDirection {
 
         const blockingActor = engine.gameMap.getBlockingActorAtLocation(destX, destY, destZ);
         if (blockingActor) {
-            const entityFighter = entity.getComponent("fighter");
+            const entityFighter = this.entity.getComponent("fighter");
             const blockingFighter = blockingActor.getComponent("fighter");
             if (entityFighter && blockingFighter) {
                 const damage = entityFighter.power - blockingFighter.defense;
 
                 let name;
                 let plural;
-                if (entity === engine.player) {
+                if (this.entity === engine.player) {
                     name = "You";
                     plural = "";
                 } else {
-                    name = entity.name;
+                    name = this.entity.name;
                     plural = "s"
                 }
 
@@ -57,12 +57,12 @@ export default class MeleeAction extends ActionWithDirection {
                     messageConsole.text(description + ", but does no damage.", attackColor).build();
                 }
 
-                if (entity.tweenAttack) {
-                    entity.tweenAttack.stop();
+                if (this.entity.tweenAttack) {
+                    this.entity.tweenAttack.stop();
                 }
 
-                if (entity.tweenReturn) {
-                    entity.tweenReturn.stop();
+                if (this.entity.tweenReturn) {
+                    this.entity.tweenReturn.stop();
                 }
 
                 position.updateObjectPosition();
@@ -73,29 +73,29 @@ export default class MeleeAction extends ActionWithDirection {
                 const attackPosition = new Vector3((position.object.position.x + blockingPosition.object.position.x) / 2, (position.object.position.y + blockingPosition.object.position.y) / 2, (position.object.position.z + blockingPosition.object.position.z) / 2);
                 const currentPosition = originalPosition.clone();
 
-                entity.tweenAttack = new TWEEN.Tween(currentPosition).to(attackPosition, 100);
-                entity.tweenAttack.onUpdate(function() {
+                this.entity.tweenAttack = new TWEEN.Tween(currentPosition).to(attackPosition, 100);
+                this.entity.tweenAttack.onUpdate(function() {
                     position.object.position.x = currentPosition.x;
                     position.object.position.y = currentPosition.y;
                     position.object.position.z = currentPosition.z;
                     engine.needsMapUpdate = true;
                 });
 
-                entity.tweenReturn = new TWEEN.Tween(currentPosition).to(originalPosition, 100);
-                entity.tweenReturn.onUpdate(function() {
+                this.entity.tweenReturn = new TWEEN.Tween(currentPosition).to(originalPosition, 100);
+                this.entity.tweenReturn.onUpdate(function() {
                     position.object.position.x = currentPosition.x;
                     position.object.position.y = currentPosition.y;
                     position.object.position.z = currentPosition.z;
                     engine.needsMapUpdate = true;
                 });
 
-                entity.tweenAttack.chain(entity.tweenReturn);
-                entity.tweenAttack.start();
+                this.entity.tweenAttack.chain(this.entity.tweenReturn);
+                this.entity.tweenAttack.start();
 
                 this.createDamageIndicator(blockingPosition, damage, attackColor);
             }
         } else {
-            return new UnableToPerformAction("There's nothing to attack there!");
+            return new UnableToPerformAction(this.entity, "There's nothing to attack there!");
         }
     }
 

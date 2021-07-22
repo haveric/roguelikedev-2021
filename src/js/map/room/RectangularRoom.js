@@ -74,4 +74,22 @@ export default class RectangularRoom {
             }
         }
     }
+
+    placeItems(maxItems) {
+        const numItems = MathUtils.randInt(0, maxItems);
+        for (let i = 0; i < numItems; i++) {
+            const x = MathUtils.randInt(this.x1 + 1, this.x2 -1);
+            const y = MathUtils.randInt(this.y1 + 1, this.y2 -1);
+
+            const position = {components: {positionalobject: {x: x, y: y, z: 1}}};
+            let item;
+            if (Math.random() < 0.8) {
+                item = entityLoader.createFromTemplate('Health Potion', position);
+            } else {
+                item = entityLoader.createFromTemplate('Mana Potion', position);
+            }
+
+            engine.gameMap.items.push(item);
+        }
+    }
 }

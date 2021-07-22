@@ -1,9 +1,7 @@
 import GameMap from "./GameMap";
 import RectangularRoom from "./room/RectangularRoom";
-import engine from "../Engine";
 import MapGeneration from "./mapGeneration/MapGeneration";
 import MapLayer from "./MapLayer";
-import sceneState from "../SceneState";
 import entityLoader from "../entity/EntityLoader";
 import {MathUtils} from "three";
 
@@ -15,6 +13,7 @@ export default class BasicDungeon extends GameMap {
         this.roomMinSize = args.roomMinSize || 6;
         this.roomMaxSize = args.roomMaxSize || 10;
         this.maxMonstersPerRoom = args.maxMonstersPerRoom || 2;
+        this.maxItemsPerRoom = args.maxItemsPerRoom || 2;
     }
 
     create() {
@@ -59,6 +58,7 @@ export default class BasicDungeon extends GameMap {
             }
 
             newRoom.placeEntities(this.maxMonstersPerRoom);
+            newRoom.placeItems(this.maxItemsPerRoom);
 
             rooms.push(newRoom);
         }

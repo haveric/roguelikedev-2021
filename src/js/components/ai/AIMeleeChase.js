@@ -2,13 +2,13 @@ import AI from "./_AI";
 import Extend from "../../util/Extend";
 import AdamMilazzoFov from "../../map/fov/AdamMilazzoFov";
 import {MathUtils, Vector3} from "three";
-import WanderAction from "../../actions/WanderAction";
-import MeleeAction from "../../actions/MeleeAction";
+import WanderAction from "../../actions/actionWithDirection/WanderAction";
+import MeleeAction from "../../actions/actionWithDirection/MeleeAction";
 import AStar from "../../pathfinding/AStar";
 import Graph from "../../pathfinding/Graph";
 import engine from "../../Engine";
 import WaitAction from "../../actions/WaitAction";
-import BumpAction from "../../actions/BumpAction";
+import BumpAction from "../../actions/actionWithDirection/BumpAction";
 
 export default class AIMeleeChase extends AI {
     constructor(args = {}) {
@@ -76,7 +76,7 @@ export default class AIMeleeChase extends AI {
                 this.chaseLocation = new Vector3(closestEnemyPosition.x, closestEnemyPosition.y, closestEnemyPosition.z);
 
                 if (closestDistance <= 1) {
-                    return new MeleeAction(closestEnemyPosition.x - entityPosition.x, closestEnemyPosition.y - entityPosition.y, closestEnemyPosition.z - entityPosition.z).perform(entity);
+                    return new MeleeAction(entity, closestEnemyPosition.x - entityPosition.x, closestEnemyPosition.y - entityPosition.y, closestEnemyPosition.z - entityPosition.z).perform();
                 }
             } else {
                 if (this.chaseLocation !== null && this.chaseLocation.x === entityPosition.x && this.chaseLocation.y === entityPosition.y && this.chaseLocation.z === entityPosition.z) {
@@ -84,7 +84,7 @@ export default class AIMeleeChase extends AI {
                 }
 
                 if (this.chaseLocation === null) {
-                    return new WanderAction().perform(entity);
+                    return new WanderAction(entity).perform();
                 }
             }
 
@@ -135,9 +135,9 @@ export default class AIMeleeChase extends AI {
             const path = AStar.search(costGraph, start, end);
             if (path && path.length > 0) {
                 const next = path.shift();
-                return new BumpAction(next.x - entityPosition.x, next.y - entityPosition.y, entityPosition.z).perform(entity)
+                return new BumpAction(entity, next.x - entityPosition.x, next.y - entityPosition.y, entityPosition.z).perform()
             } else {
-                return new WaitAction().perform(entity);
+                return new WaitAction(entity).perform();
             }
         }
     }

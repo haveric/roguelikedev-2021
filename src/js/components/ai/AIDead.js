@@ -4,12 +4,15 @@ import Extend from "../../util/Extend";
 export default class AIDead extends AI {
     constructor(args = {}) {
         super(Extend.extend(args, {type: "aiDead"}));
+        const hasComponent = args.components && args.components.aiDead !== undefined;
 
         this.previousAI = "";
 
-        const aiDead = args.components.aiDead;
-        if (aiDead && aiDead.previousAI) {
-            this.previousAI = aiDead.previousAI;
+        if (hasComponent) {
+            const aiDead = args.components.aiDead;
+            if (aiDead && aiDead.previousAI) {
+                this.previousAI = aiDead.previousAI;
+            }
         }
     }
 

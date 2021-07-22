@@ -1,7 +1,7 @@
-import _Component from "./_Component";
-import sceneState from "../SceneState";
-import _Tile from "../entity/_Tile";
-import Extend from "../util/Extend";
+import _Component from "../_Component";
+import sceneState from "../../SceneState";
+import _Tile from "../../entity/_Tile";
+import Extend from "../../util/Extend";
 import {MathUtils} from "three";
 
 export default class _PositionalObject extends _Component {

@@ -1,16 +1,16 @@
-import UnableToPerformAction from "./UnableToPerformAction";
-import engine from "../Engine";
+import UnableToPerformAction from "../UnableToPerformAction";
+import engine from "../../Engine";
 import ActionWithDirection from "./_ActionWithDirection";
 
 export default class MovementAction extends ActionWithDirection {
-    constructor(dx, dy, dz) {
-        super(dx, dy, dz);
+    constructor(entity, dx, dy, dz) {
+        super(entity, dx, dy, dz);
     }
 
-    perform(entity) {
-        const position = entity.getComponent("positionalobject");
+    perform() {
+        const position = this.entity.getComponent("positionalobject");
         if (!position) {
-            return new UnableToPerformAction("Entity doesn't have a position.");
+            return new UnableToPerformAction(this.entity, "Entity doesn't have a position.");
         }
 
         const destX = position.x + this.dx;
@@ -19,7 +19,7 @@ export default class MovementAction extends ActionWithDirection {
 
         const gameMap = engine.gameMap;
         if (!gameMap.isInBounds(destX, destY)) {
-            return new UnableToPerformAction("Location is outside the map!");
+            return new UnableToPerformAction(this.entity, "Location is outside the map!");
         }
 
         const ground = this.tryMoveTo(gameMap, destX, destY, destZ);
@@ -46,7 +46,7 @@ export default class MovementAction extends ActionWithDirection {
     tryMoveTo(gameMap, destX, destY, destZ) {
         const blockingActor = gameMap.getBlockingActorAtLocation(destX, destY, destZ);
         if (blockingActor) {
-            return new UnableToPerformAction("There's something in the way!");
+            return new UnableToPerformAction(this.entity, "There's something in the way!");
         }
 
         if (gameMap.tiles.has(destZ)) {
@@ -54,25 +54,25 @@ export default class MovementAction extends ActionWithDirection {
             if (wallTile) {
                 const blocksMovementComponent = wallTile.getComponent("blocksMovement");
                 if (blocksMovementComponent && blocksMovementComponent.blocksMovement) {
-                    return new UnableToPerformAction("There's a wall in the way!");
+                    return new UnableToPerformAction(this.entity, "There's a wall in the way!");
                 }
             }
         }
 
         if (!gameMap.tiles.has(destZ - 1)) {
-            return new UnableToPerformAction("No level to walk on!");
+            return new UnableToPerformAction(this.entity, "No level to walk on!");
         }
 
         const floorTile = gameMap.tiles.get(destZ - 1)[destX][destY];
         if (!floorTile) {
-            return new UnableToPerformAction("No floor to walk on.");
+            return new UnableToPerformAction(this.entity, "No floor to walk on.");
         }
 
         const walkableComponent = floorTile.getComponent("walkable");
         if (walkableComponent && walkableComponent.walkable) {
             return this;
         } else {
-            return new UnableToPerformAction("There's nothing to walk on.");
+            return new UnableToPerformAction(this.entity, "There's nothing to walk on.");
         }
     }
 }

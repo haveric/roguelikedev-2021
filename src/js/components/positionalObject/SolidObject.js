@@ -1,6 +1,6 @@
 import _PositionalObject from "./_PositionalObject";
 import * as THREE from "three";
-import Extend from "../util/Extend";
+import Extend from "../../util/Extend";
 
 const cachedSolidGeometries = [];
 export default class SolidObject extends _PositionalObject {

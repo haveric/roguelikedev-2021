@@ -1,8 +1,8 @@
 import Action from "./_Action";
 
 export default class UnableToPerformAction extends Action {
-    constructor(reason) {
-        super();
+    constructor(entity, reason) {
+        super(entity);
 
         this.reason = reason;
     }

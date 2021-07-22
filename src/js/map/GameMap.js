@@ -363,6 +363,24 @@ export default class GameMap {
         }
     }
 
+    /**
+     * @param {Vector3} location
+     */
+    getAliveActorAtLocation(location) {
+        let aliveActor = null;
+        for (const actor of this.actors) {
+            if (actor.isAlive()) {
+                const position = actor.getComponent("positionalobject");
+                if (position && location.x === position.x && location.y === position.y && location.z === position.z) {
+                    aliveActor = actor;
+                    break;
+                }
+            }
+        }
+
+        return aliveActor;
+    }
+
     getBlockingActorAtLocation(x, y, z) {
         let blockingActor = null;
         for (const actor of this.actors) {

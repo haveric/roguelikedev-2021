@@ -1,20 +1,20 @@
 import ActionWithDirection from "./_ActionWithDirection";
-import UnableToPerformAction from "./UnableToPerformAction";
-import engine from "../Engine";
+import UnableToPerformAction from "../UnableToPerformAction";
+import engine from "../../Engine";
 import MeleeAction from "./MeleeAction";
 import MovementAction from "./MovementAction";
-import MapLayer from "../map/MapLayer";
+import MapLayer from "../../map/MapLayer";
 import OpenAction from "./OpenAction";
 
 export default class BumpAction extends ActionWithDirection {
-    constructor(dx, dy, dz) {
-        super(dx, dy, dz);
+    constructor(entity, dx, dy, dz) {
+        super(entity, dx, dy, dz);
     }
 
-    perform(entity) {
-        const position = entity.getComponent("positionalobject");
+    perform() {
+        const position = this.entity.getComponent("positionalobject");
         if (!position) {
-            return new UnableToPerformAction("Entity doesn't have a position.");
+            return new UnableToPerformAction(this.entity, "Entity doesn't have a position.");
         }
 
         const destX = position.x + this.dx;
@@ -23,7 +23,7 @@ export default class BumpAction extends ActionWithDirection {
 
         const blockingActor = engine.gameMap.getBlockingActorAtLocation(destX, destY, destZ);
         if (blockingActor) {
-            return new MeleeAction(this.dx, this.dy, this.dz).perform(entity);
+            return new MeleeAction(this.entity, this.dx, this.dy, this.dz).perform();
         } else {
             const tileX = engine.gameMap.tiles.get(MapLayer.Wall)[destX];
             if (tileX) {
@@ -31,12 +31,12 @@ export default class BumpAction extends ActionWithDirection {
                 if (wallTile) {
                     const openable = wallTile.getComponent("openable");
                     if (openable && !openable.isOpen) {
-                        return new OpenAction(this.dx, this.dy, this.dz).perform(entity);
+                        return new OpenAction(this.entity, this.dx, this.dy, this.dz).perform();
                     }
                 }
-                return new MovementAction(this.dx, this.dy, this.dz).perform(entity);
+                return new MovementAction(this.entity, this.dx, this.dy, this.dz).perform();
             } else {
-                return new UnableToPerformAction("Nowhere to move.");
+                return new UnableToPerformAction(this.entity, "Nowhere to move.");
             }
         }
     }

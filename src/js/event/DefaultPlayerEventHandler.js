@@ -8,7 +8,7 @@ import EventHandler from "./_EventHandler";
 import editorControls from "../ui/EditorControls";
 import EditorEventHandler from "./EditorEventHandler";
 import editorInfo from "../ui/EditorInfo";
-import BumpAction from "../actions/BumpAction";
+import BumpAction from "../actions/actionWithDirection/BumpAction";
 import WaitAction from "../actions/WaitAction";
 import details from "../ui/Details";
 
@@ -43,23 +43,23 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         let action = null;
         if (this.isPlayerTurn) {
             if (controls.testPressed("up")) {
-                action = new BumpAction(0, 1);
+                action = new BumpAction(engine.player, 0, 1);
             } else if (controls.testPressed("down")) {
-                action = new BumpAction(0, -1);
+                action = new BumpAction(engine.player, 0, -1);
             } else if (controls.testPressed("left")) {
-                action = new BumpAction(-1);
+                action = new BumpAction(engine.player, -1);
             } else if (controls.testPressed("right")) {
-                action = new BumpAction(1);
+                action = new BumpAction(engine.player, 1);
             } else if (controls.testPressed("nw")) {
-                action = new BumpAction(-1, 1);
+                action = new BumpAction(engine.player, -1, 1);
             } else if (controls.testPressed("ne")) {
-                action = new BumpAction(1, 1);
+                action = new BumpAction(engine.player, 1, 1);
             } else if (controls.testPressed("sw")) {
-                action = new BumpAction(-1, -1);
+                action = new BumpAction(engine.player, -1, -1);
             } else if (controls.testPressed("se")) {
-                action = new BumpAction(1, -1);
+                action = new BumpAction(engine.player, 1, -1);
             } else if (controls.testPressed("wait")) {
-                action = new WaitAction();
+                action = new WaitAction(engine.player);
             } else if (controls.testPressed("save", 1000)) {
                 engine.gameMap.save("save1");
             } else if (controls.testPressed("load", 1000)) {

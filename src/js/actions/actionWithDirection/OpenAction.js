@@ -1,17 +1,17 @@
-import UnableToPerformAction from "./UnableToPerformAction";
+import UnableToPerformAction from "../UnableToPerformAction";
 import ActionWithDirection from "./_ActionWithDirection";
-import engine from "../Engine";
-import MapLayer from "../map/MapLayer";
+import engine from "../../Engine";
+import MapLayer from "../../map/MapLayer";
 
 export default class OpenAction extends ActionWithDirection {
-    constructor(dx, dy, dz) {
-        super(dx, dy, dz);
+    constructor(entity, dx, dy, dz) {
+        super(entity, dx, dy, dz);
     }
 
-    perform(entity) {
-        const position = entity.getComponent("positionalobject");
+    perform() {
+        const position = this.entity.getComponent("positionalobject");
         if (!position) {
-            return new UnableToPerformAction("Entity doesn't have a position.");
+            return new UnableToPerformAction(this.entity, "Entity doesn't have a position.");
         }
 
         const destX = position.x + this.dx;
@@ -19,7 +19,7 @@ export default class OpenAction extends ActionWithDirection {
 
         const gameMap = engine.gameMap;
         if (!gameMap.isInBounds(destX, destY)) {
-            return new UnableToPerformAction("Location is outside the map!");
+            return new UnableToPerformAction(this.entity, "Location is outside the map!");
         }
 
         const wallTile = gameMap.tiles.get(MapLayer.Wall)[destX][destY];
@@ -29,11 +29,11 @@ export default class OpenAction extends ActionWithDirection {
                 if (openable.open()) {
                     return this;
                 } else {
-                    return new UnableToPerformAction("That cannot be opened.");
+                    return new UnableToPerformAction(this.entity, "That cannot be opened.");
                 }
             }
         }
 
-        return new UnableToPerformAction("There's nothing to open there!");
+        return new UnableToPerformAction(this.entity, "There's nothing to open there!");
     }
 }

@@ -1,9 +1,9 @@
 import Action from "./_Action";
 
 export default class WaitAction extends Action {
-    constructor() {
-        super();
+    constructor(entity) {
+        super(entity);
     }
 
-    perform(entity) { }
+    perform() { }
 }

@@ -1,7 +1,9 @@
 export default class Action {
-    constructor() {}
+    constructor(entity) {
+        this.entity = entity;
+    }
 
-    perform(entity) {
+    perform() {
         console.err("Not Implemented");
     }
 }

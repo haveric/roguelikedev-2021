@@ -1,11 +1,24 @@
 [
     {
         "type": "item",
-        "name": "Healing Potion",
+        "name": "Health Potion",
         "components": {
             "characterobject": {
                 "letter": "!",
                 "color": "#990f02"
+            },
+            "healingConsumable": {
+                "amount": 4
+            }
+        }
+    },
+    {
+        "type": "item",
+        "name": "Mana Potion",
+        "components": {
+            "characterobject": {
+                "letter": "!",
+                "color": "#020f99"
             }
         }
     }

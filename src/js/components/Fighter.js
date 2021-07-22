@@ -72,6 +72,22 @@ export default class Fighter extends _Component {
         }
     }
 
+    heal(amount) {
+        if (this.hp === this.maxHp) {
+            return 0;
+        }
+
+        const newHp = Math.min(this.maxHp, this.hp + amount);
+        const healedHp = newHp - this.hp;
+        this.hp = newHp;
+
+        if (this.parentEntity === engine.player) {
+            characterHealth.update(this.hp, this.maxHp);
+        }
+
+        return healedHp;
+    }
+
     die() {
         const entity = this.parentEntity;
         if (entity === engine.player) {
