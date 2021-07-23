@@ -91,5 +91,16 @@ export default class RectangularRoom {
 
             engine.gameMap.items.push(item);
         }
+
+        const numGoldItems = MathUtils.randInt(0, maxItems);
+        for (let i = 0; i < numGoldItems; i++) {
+            const x = MathUtils.randInt(this.x1 + 1, this.x2 -1);
+            const y = MathUtils.randInt(this.y1 + 1, this.y2 -1);
+            const amount = MathUtils.randInt(1, 25);
+            const position = {amount: amount, components: {positionalobject: {x: x, y: y, z: 1}}};
+            let item = entityLoader.createFromTemplate('Gold', position);
+
+            engine.gameMap.items.push(item);
+        }
     }
 }

@@ -329,6 +329,10 @@ body {
     position: relative;
 }
 
+.item__icon {
+
+}
+
 .item__amount {
     position: absolute;
     right: 5%;

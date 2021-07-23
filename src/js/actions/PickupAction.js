@@ -24,7 +24,14 @@ export default class PickupAction extends Action {
 
                     if (this.isPlayer()) {
                         inventory.populateInventory(engine.player);
-                        messageConsole.text("You picked up the " + item.name).build();
+
+
+                        if (item.amount > 1) {
+                            messageConsole.text("You picked up " + item.amount + " " + item.name);
+                        } else {
+                            messageConsole.text("You picked up the " + item.name);
+                        }
+                        messageConsole.build();
                     }
                     return this;
                 } else {

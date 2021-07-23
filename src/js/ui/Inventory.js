@@ -24,6 +24,13 @@ class Inventory {
         this.goldDisplayDom = document.createElement("div");
         this.goldDisplayDom.classList.add("inventory__golddisplay");
 
+        this.goldCountDom = document.createElement("span");
+        this.goldTextDom = document.createElement("span");
+        this.goldTextDom.innerText = " Gold";
+
+        this.goldDisplayDom.appendChild(this.goldCountDom);
+        this.goldDisplayDom.appendChild(this.goldTextDom);
+
         this.dom.appendChild(this.equipmentDom);
         this.dom.appendChild(this.storageDom);
         this.dom.appendChild(this.goldDisplayDom);
@@ -52,7 +59,7 @@ class Inventory {
                     const itemPosition = inventoryItem.getComponent("positionalobject");
                     if (itemPosition) {
                         slot.classList.add("has-item");
-                        let html = "<div class='item' style='color:" + itemPosition.color + "'>" + itemPosition.letter;
+                        let html = "<div class='item' style='color:" + itemPosition.color + "'><div class='item__icon'>" + itemPosition.letter + "</div>";
 
                         if (inventoryItem.amount > 1) {
                             html += "<span class='item__amount'>" + inventoryItem.amount + "</span>";
@@ -75,7 +82,7 @@ class Inventory {
                     slot.classList.add("disabled");
                 }
             }
-            this.goldDisplayDom.innerText = inventory.gold + " Gold";
+            this.goldCountDom.innerText = inventory.gold;
         }
     }
 }

@@ -1,6 +1,19 @@
 [
     {
         "type": "item",
+        "name": "Gold",
+        "maxStackSize": -1,
+        "components": {
+            "characterobject": {
+                "letter": "•",
+                "color": "#f5b82c",
+                "scale": 0.05,
+                "size": 0.5
+            }
+        }
+    },
+    {
+        "type": "item",
         "name": "^",
         "components": {
             "characterobject": {

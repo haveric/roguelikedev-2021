@@ -54,6 +54,11 @@ export default class Inventory extends _Component {
     }
 
     add(item) {
+        if (item.name === "Gold") {
+            this.gold += item.amount;
+            return true;
+        }
+
         const originalAmount = item.amount;
         let amountToAdd = item.amount;
         // Add partial stack
