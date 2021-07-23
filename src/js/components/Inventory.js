@@ -37,7 +37,7 @@ export default class Inventory extends _Component {
     save() {
         const itemJson = [];
         for (const item of this.items) {
-            if (item === null) {
+            if (!item) {
                 itemJson.push(null);
             } else {
                 itemJson.push(JSON.stringify(item.save()));

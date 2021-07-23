@@ -139,6 +139,7 @@ export default class Fighter extends _Component {
                     }
                 }
             }
+            entity.removeComponent("ai");
             const newAI = new AIDead(aiArgs);
             entity.setComponent(newAI);
         }

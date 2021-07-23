@@ -29,19 +29,20 @@ export default class _PositionalObject extends _Component {
         this.zOffset = 0;
 
         if (hasComponent) {
-            this.x = args.components.positionalobject.x || 0;
-            this.y = args.components.positionalobject.y || 0;
-            this.z = args.components.positionalobject.z || 0;
-            this.color = args.components.positionalobject.color || 0xffffff;
-            this.scale = this.parseRand(args.components.positionalobject.scale, 1);
-            this.xRot = this.parseRand(args.components.positionalobject.xRot, 0);
-            this.yRot = this.parseRand(args.components.positionalobject.yRot, 0);
-            this.zRot = this.parseRand(args.components.positionalobject.zRot, 0);
+            const positionalobject = args.components.positionalobject;
+            this.x = positionalobject.x || 0;
+            this.y = positionalobject.y || 0;
+            this.z = positionalobject.z || 0;
+            this.color = positionalobject.color || 0xffffff;
+            this.scale = this.parseRand(positionalobject.scale, 1);
+            this.xRot = this.parseRand(positionalobject.xRot, 0);
+            this.yRot = this.parseRand(positionalobject.yRot, 0);
+            this.zRot = this.parseRand(positionalobject.zRot, 0);
 
-            this.xOffset = this.parseRand(args.components.positionalobject.xOffset, 0);
-            this.yOffset = this.parseRand(args.components.positionalobject.yOffset, 0);
-            this.zOffset = this.parseRand(args.components.positionalobject.zOffset, 0);
-            this.size = this.parseRand(args.components.positionalobject.size, 1);
+            this.xOffset = this.parseRand(positionalobject.xOffset, 0);
+            this.yOffset = this.parseRand(positionalobject.yOffset, 0);
+            this.zOffset = this.parseRand(positionalobject.zOffset, 0);
+            this.size = this.parseRand(positionalobject.size, 1);
         }
 
         this.transparency = 1; // for quick reference on mousemove

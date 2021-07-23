@@ -12,7 +12,7 @@ export default class CharacterObject extends _PositionalObject {
         const hasComponent = args.components && args.components.characterobject;
         if (hasComponent) {
              args.components.positionalobject = args.components.positionalobject || {};
-             args.components.positionalobject = Extend.extend(args.components.positionalobject, args.components.characterobject);
+             args.components.positionalobject = Extend.extend(args.components.characterobject, args.components.positionalobject);
         }
 
         super(Extend.extend(args, {type: "characterobject"}));

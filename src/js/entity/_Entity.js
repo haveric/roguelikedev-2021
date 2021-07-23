@@ -50,7 +50,7 @@ export default class _Entity {
 
         this.components[baseType] = undefined;
         for (const component of this.componentArray) {
-            if (component.type === baseType) {
+            if (component.baseType === baseType) {
                 const index = this.componentArray.indexOf(component);
                 this.componentArray.splice(index, 1);
                 break;
