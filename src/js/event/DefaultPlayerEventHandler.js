@@ -113,21 +113,21 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             const object = intersects[i].object;
             const parentEntity = object.parentEntity;
             if (parentEntity && parentEntity instanceof _Tile) {
-                const parentObject = parentEntity.getComponent("positionalobject");
-                if (parentObject) {
+                const parentPosition = parentEntity.getComponent("positionalobject");
+                if (parentPosition) {
                     // Skip invisible items
-                    if (parentObject.transparency === 0) {
+                    if (parentPosition.transparency === 0) {
                         continue;
                     }
 
-                    if (!parentObject.hasObject()) {
+                    if (!parentPosition.hasObject()) {
                         continue;
                     }
 
                     if (this.highlightedTile !== parentEntity) {
                         this.clearHighlight();
                         this.highlightedTile = parentEntity;
-                        parentObject.highlight();
+                        parentPosition.highlight();
                         details.updatePositionDetails(parentEntity);
                     }
 
@@ -237,6 +237,12 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                     playerInventory.move(slotFrom, slot);
                     inventory.populateInventory(engine.player);
                 }
+            } else if (target.tagName === "CANVAS") {
+                const slotFrom = this.slotDragging.getAttribute("data-index");
+                const playerInventory = engine.player.getComponent("inventory");
+
+                engine.processAction(new DropAction(engine.player, playerInventory.items[slotFrom]));
+                inventory.populateInventory(engine.player);
             }
         }
     }
