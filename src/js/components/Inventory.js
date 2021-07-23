@@ -104,6 +104,15 @@ export default class Inventory extends _Component {
         this.items.splice(index, 1, null);
     }
 
+    move(fromIndex, toIndex) {
+        if (fromIndex !== toIndex) {
+            const fromItem = this.items[fromIndex];
+
+            this.items[fromIndex] = this.items[toIndex];
+            this.items[toIndex] = fromItem;
+        }
+    }
+
     drop(item) {
         const parentPosition = this.parentEntity.getComponent("positionalobject");
         const position = item.getComponent("positionalobject");

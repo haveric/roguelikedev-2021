@@ -15,6 +15,7 @@ import PickupAction from "../actions/PickupAction";
 import inventory from "../ui/Inventory";
 import ItemAction from "../actions/itemAction/ItemAction";
 import DropAction from "../actions/itemAction/DropAction";
+import {Vector2} from "three";
 
 export default class DefaultPlayerEventHandler extends EventHandler {
     constructor() {
@@ -140,28 +141,103 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             this.clearHighlight(true);
         }
 
+        if (this.attemptToDrag) {
+            this.dragDistance = Math.max(Math.abs(this.dragStart.x - e.clientX), Math.abs(this.dragStart.y - e.clientY));
+
+            if (this.dragDistance > 10) {
+                this.attemptToDrag = false;
+                this.startDragging();
+            }
+        }
+
+        if (this.isDragging) {
+            inventory.itemDragDom.style.left = (e.clientX + this.dragOffset.x) + "px";
+            inventory.itemDragDom.style.top = (e.clientY + this.dragOffset.y) + "px";
+        }
+
         engine.needsMapUpdate = true;
     }
 
+    startDragging() {
+        this.isDragging = true;
+
+        this.slotDragging.classList.add("dragging");
+        inventory.itemDragDom.classList.add("active");
+    }
+
     onLeftClick(e) {
-        const target = e.target;
-        if (target.classList.contains("inventory__storage-slot") && target.classList.contains("has-item")) {
-            const slot = target.getAttribute("data-index");
-            const playerInventory = engine.player.getComponent("inventory");
-            engine.processAction(new ItemAction(engine.player, playerInventory.items[slot]));
-            inventory.populateInventory(engine.player);
+        if (this.isDragging) {
+            this.isDragging = false;
+        } else {
+            const target = e.target;
+            if (target.classList.contains("inventory__storage-slot") && target.classList.contains("has-item")) {
+                const slot = target.getAttribute("data-index");
+                const playerInventory = engine.player.getComponent("inventory");
+                engine.processAction(new ItemAction(engine.player, playerInventory.items[slot]));
+                inventory.populateInventory(engine.player);
+            }
         }
     }
 
     onRightClick(e) {
+        if (this.isDragging) {
+            this.isDragging = false;
+        } else {
+            const target = e.target;
+            if (target.classList.contains("inventory__storage-slot") && target.classList.contains("has-item")) {
+                e.preventDefault();
+
+                const slot = target.getAttribute("data-index");
+                const playerInventory = engine.player.getComponent("inventory");
+                engine.processAction(new DropAction(engine.player, playerInventory.items[slot]));
+                inventory.populateInventory(engine.player);
+            }
+        }
+    }
+
+    onMouseDown(e) {
         const target = e.target;
         if (target.classList.contains("inventory__storage-slot") && target.classList.contains("has-item")) {
-            e.preventDefault();
+            this.slotDragging = target;
+            document.body.classList.add("disable-select");
 
-            const slot = target.getAttribute("data-index");
-            const playerInventory = engine.player.getComponent("inventory");
-            engine.processAction(new DropAction(engine.player, playerInventory.items[slot]));
-            inventory.populateInventory(engine.player);
+            const targetRect = target.getBoundingClientRect();
+            this.dragStart = new Vector2(e.clientX, e.clientY);
+            this.attemptToDrag = true;
+
+            this.dragOffset = new Vector2(targetRect.left - e.clientX, targetRect.top - e.clientY);
+
+            const item = target.getElementsByClassName("item")[0];
+            const clone = item.cloneNode(true);
+
+            inventory.itemDragDom.innerHTML = "";
+            inventory.itemDragDom.appendChild(clone);
+            inventory.itemDragDom.style.width = targetRect.width + "px";
+            inventory.itemDragDom.style.height = targetRect.height + "px";
+            inventory.itemDragDom.style.left = (e.clientX + this.dragOffset.x) + "px";
+            inventory.itemDragDom.style.top = (e.clientY + this.dragOffset.y) + "px";
+        }
+    }
+
+    onMouseUp(e) {
+        this.attemptToDrag = false;
+        document.body.classList.remove("disable-select");
+
+        if (this.isDragging) {
+            this.slotDragging.classList.remove("dragging");
+            inventory.itemDragDom.classList.remove("active");
+
+            const target = e.target;
+            if (target.classList.contains("inventory__storage-slot") && !target.classList.contains("disabled")) {
+                const slot = target.getAttribute("data-index");
+                const slotFrom = this.slotDragging.getAttribute("data-index");
+
+                if (slot !== slotFrom) {
+                    const playerInventory = engine.player.getComponent("inventory");
+                    playerInventory.move(slotFrom, slot);
+                    inventory.populateInventory(engine.player);
+                }
+            }
         }
     }
 }

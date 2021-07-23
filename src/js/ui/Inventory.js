@@ -9,9 +9,6 @@ class Inventory {
         this.storageDom = document.createElement("div");
         this.storageDom.classList.add("inventory__storage");
 
-        this.itemTooltipDom = document.createElement("div");
-        this.itemTooltipDom.classList.add("item__tooltip");
-
         this.slots = [];
         for (let i = 0; i < 40; i++) {
             const slot = document.createElement("div");
@@ -34,6 +31,15 @@ class Inventory {
         this.dom.appendChild(this.equipmentDom);
         this.dom.appendChild(this.storageDom);
         this.dom.appendChild(this.goldDisplayDom);
+
+        this.itemTooltipDom = document.createElement("div");
+        this.itemTooltipDom.classList.add("item__tooltip");
+
+        this.itemDragDom = document.createElement("div");
+        this.itemDragDom.classList.add("item__drag");
+
+        document.body.appendChild(this.itemTooltipDom);
+        document.body.appendChild(this.itemDragDom);
     }
 
     isOpen() {
