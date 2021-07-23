@@ -1,3 +1,5 @@
+import engine from "../Engine";
+
 export default class _Component {
     constructor(args = {}) {
         this.baseType = args.baseType || "component";
@@ -7,5 +9,9 @@ export default class _Component {
 
     save() {
         return null;
+    }
+
+    isPlayer() {
+        return this.parentEntity === engine.player;
     }
 }

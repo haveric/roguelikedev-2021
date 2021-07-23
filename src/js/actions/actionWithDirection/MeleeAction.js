@@ -31,7 +31,7 @@ export default class MeleeAction extends ActionWithDirection {
 
                 let name;
                 let plural;
-                if (this.entity === engine.player) {
+                if (this.isPlayer()) {
                     name = "You";
                     plural = "";
                 } else {

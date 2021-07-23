@@ -60,7 +60,6 @@ export default class Inventory extends _Component {
         for (let i = 0; i < this.capacity; i++) {
             const inventoryItem = this.items[i];
             if (inventoryItem) {
-                console.log(inventoryItem, item.name, inventoryItem.name);
                 // TODO: Use a better method of determining equality
                 if (item.name === inventoryItem.name) {
                     let amountCanAdd = inventoryItem.maxStackSize - inventoryItem.amount;
@@ -101,8 +100,7 @@ export default class Inventory extends _Component {
     }
 
     drop(item) {
-        const parent = this.parentEntity;
-        const parentPosition = parent.getComponent("positionalobject");
+        const parentPosition = this.parentEntity.getComponent("positionalobject");
         const position = item.getComponent("positionalobject");
         position.x = parentPosition.x;
         position.y = parentPosition.y;
@@ -111,7 +109,7 @@ export default class Inventory extends _Component {
         engine.gameMap.items.push(item);
         position.setVisible();
 
-        if (parent === engine.player) {
+        if (this.isPlayer()) {
             messageConsole.text("You dropped the " + item.name).build();
         }
 

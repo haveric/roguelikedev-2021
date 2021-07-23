@@ -63,7 +63,7 @@ export default class Fighter extends _Component {
     takeDamage(damage) {
         this.hp -= damage;
 
-        if (this.parentEntity === engine.player) {
+        if (this.isPlayer()) {
             characterHealth.update(this.hp, this.maxHp);
         }
 
@@ -81,7 +81,7 @@ export default class Fighter extends _Component {
         const healedHp = newHp - this.hp;
         this.hp = newHp;
 
-        if (this.parentEntity === engine.player) {
+        if (this.isPlayer()) {
             characterHealth.update(this.hp, this.maxHp);
         }
 
@@ -90,7 +90,7 @@ export default class Fighter extends _Component {
 
     die() {
         const entity = this.parentEntity;
-        if (entity === engine.player) {
+        if (this.isPlayer()) {
             messageConsole.text("You died!", "#f00");
             engine.setEventHandler(new GameOverEventHandler());
         } else {

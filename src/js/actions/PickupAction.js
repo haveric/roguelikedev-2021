@@ -22,7 +22,7 @@ export default class PickupAction extends Action {
                     itemPosition.teardown();
 
 
-                    if (this.entity === engine.player) {
+                    if (this.isPlayer()) {
                         inventory.populateInventory(engine.player);
                         messageConsole.text("You picked up the " + item.name).build();
                     }

@@ -1,3 +1,5 @@
+import engine from "../Engine";
+
 export default class Action {
     constructor(entity) {
         this.entity = entity;
@@ -5,5 +7,9 @@ export default class Action {
 
     perform() {
         console.err("Not Implemented");
+    }
+
+    isPlayer() {
+        return this.entity === engine.player;
     }
 }

@@ -39,7 +39,7 @@ export default class HealingConsumable extends Consumable {
 
             if (amountHealed > 0) {
                 this.consume();
-                if (this.parentEntity === engine.player) {
+                if (this.isPlayer()) {
                     messageConsole.text("You consume the " + this.parentEntity.name + ", and recover " + amountHealed + " HP!").build();
                 }
                 return this;
