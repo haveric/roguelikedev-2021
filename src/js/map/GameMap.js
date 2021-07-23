@@ -174,6 +174,8 @@ export default class GameMap {
             const positionalObject = engine.player.getComponent("positionalobject");
             positionalObject.setVisible();
             sceneState.updateCameraPosition(engine.player);
+
+            this.updatePlayerUI();
         }
     }
 
@@ -410,6 +412,10 @@ export default class GameMap {
         positionalObject.setVisible();
         sceneState.updateCameraPosition(engine.player);
 
+        this.updatePlayerUI();
+    }
+
+    updatePlayerUI() {
         const playerFighter = engine.player.getComponent("fighter");
         characterHealth.update(playerFighter.hp, playerFighter.maxHp);
         characterMana.update(playerFighter.mana, playerFighter.maxMana);
