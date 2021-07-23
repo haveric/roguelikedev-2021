@@ -1,5 +1,6 @@
 import _Component from "../_Component";
 import Extend from "../../util/Extend";
+import engine from "../../Engine";
 
 export default class Consumable extends _Component {
     constructor(args = {}) {
@@ -20,5 +21,9 @@ export default class Consumable extends _Component {
 
     activate(action) {
         console.err("Not Implemented");
+    }
+
+    isPlayer() {
+        return this.parentEntity.parent.parentEntity === engine.player;
     }
 }

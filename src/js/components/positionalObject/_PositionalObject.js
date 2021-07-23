@@ -186,4 +186,12 @@ export default class _PositionalObject extends _Component {
 
         this.updateObjectPosition();
     }
+
+    /**
+     *
+     * @param {_PositionalObject} other
+     */
+    distance(other) {
+        return Math.abs(this.x - other.x) + Math.abs(this.y - other.y) + Math.abs(this.z - other.z);
+    }
 }

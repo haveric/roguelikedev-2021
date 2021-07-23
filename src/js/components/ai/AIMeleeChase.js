@@ -34,28 +34,23 @@ export default class AIMeleeChase extends AI {
             let closestDistance = null;
             const entityFaction = entity.getComponent("faction");
             if (entityFaction) {
-                const enemyFactions = entityFaction.enemies;
-
                 for (const actor of this.fov.visibleActors) {
                     if (actor.isAlive()) {
-                        const actorPosition = actor.getComponent("positionalobject");
                         const actorFaction = actor.getComponent("faction");
-                        if (actorPosition && actorFaction) {
-                            for (const faction of actorFaction.factions) {
-                                if (enemyFactions.indexOf(faction) > -1) {
-                                    const dx = Math.abs(actorPosition.x - entityPosition.x);
-                                    const dy = Math.abs(actorPosition.y - entityPosition.y);
-                                    const distance = Math.max(dx, dy);
+                        if (entityFaction.isEnemyOf(actorFaction)) {
+                            const actorPosition = actor.getComponent("positionalobject");
 
-                                    if (closestDistance === null || distance < closestDistance) {
-                                        closestEnemies = [];
-                                        closestEnemies.push(actor);
-                                        closestDistance = distance;
-                                    } else if (distance === closestDistance) {
-                                        closestEnemies.push(actor);
-                                    }
+                            if (actorPosition) {
+                                const dx = Math.abs(actorPosition.x - entityPosition.x);
+                                const dy = Math.abs(actorPosition.y - entityPosition.y);
+                                const distance = Math.max(dx, dy);
 
-                                    break;
+                                if (closestDistance === null || distance < closestDistance) {
+                                    closestEnemies = [];
+                                    closestEnemies.push(actor);
+                                    closestDistance = distance;
+                                } else if (distance === closestDistance) {
+                                    closestEnemies.push(actor);
                                 }
                             }
                         }

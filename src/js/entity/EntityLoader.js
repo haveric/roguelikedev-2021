@@ -9,6 +9,7 @@ import tileList from "../../json/tiles/tiles.json";
 import armorList from "../../json/items/armor.json";
 import miscList from "../../json/items/misc.json";
 import potionsList from "../../json/items/potions.json";
+import scrollsList from "../../json/items/scrolls.json";
 import Extend from "../util/Extend";
 
 class EntityLoader {
@@ -42,6 +43,7 @@ class EntityLoader {
         this.loadTemplate(armorList);
         this.loadTemplate(miscList);
         this.loadTemplate(potionsList);
+        this.loadTemplate(scrollsList);
     }
 
     loadTemplate(entities) {

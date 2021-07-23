@@ -21,6 +21,15 @@ export default class Faction extends _Component {
         }
     }
 
+    save() {
+        return {
+            "faction": {
+                factions: this.factions.toString(),
+                enemies: this.enemies.toString()
+            }
+        }
+    }
+
     setFactions(factionList) {
         for (const faction of factionList) {
             this.factions.push(faction.trim());
@@ -33,12 +42,21 @@ export default class Faction extends _Component {
         }
     }
 
-    save() {
-        return {
-            "faction": {
-                factions: this.factions.toString(),
-                enemies: this.enemies.toString()
+    /**
+     *
+     * @param {Faction} otherFaction
+     */
+    isEnemyOf(otherFaction) {
+        if (!otherFaction) {
+            return false;
+        }
+
+        for (const faction of this.factions) {
+            if (otherFaction.enemies.indexOf(faction) > -1) {
+                return true;
             }
         }
+
+        return false;
     }
 }

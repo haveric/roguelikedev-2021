@@ -1,0 +1,17 @@
+[
+    {
+        "type": "item",
+        "name": "Lightning Scroll",
+        "maxStackSize": 20,
+        "components": {
+            "characterobject": {
+                "letter": "~",
+                "color": "#ffff00"
+            },
+            "damageNearestConsumable": {
+                "damage": 20,
+                "maxRange": 5
+            }
+        }
+    }
+]

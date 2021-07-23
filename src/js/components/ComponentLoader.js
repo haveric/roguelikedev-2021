@@ -13,6 +13,7 @@ import Remnant from "./Remnant";
 import AIDead from "./ai/AIDead";
 import HealingConsumable from "./consumable/HealingConsumable";
 import Inventory from "./Inventory";
+import DamageNearestConsumable from "./consumable/DamageNearestConsumable";
 
 class ComponentLoader {
     constructor() {
@@ -20,6 +21,7 @@ class ComponentLoader {
 
         this.load(new AIDead());
         this.load(new AIMeleeChase());
+        this.load(new DamageNearestConsumable());
         this.load(new HealingConsumable());
         this.load(new BlocksFov());
         this.load(new BlocksMovement());

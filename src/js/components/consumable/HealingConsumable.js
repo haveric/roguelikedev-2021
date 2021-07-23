@@ -2,7 +2,6 @@ import Consumable from "./_Consumable";
 import Extend from "../../util/Extend";
 import UnableToPerformAction from "../../actions/UnableToPerformAction";
 import messageConsole from "../../ui/MessageConsole";
-import engine from "../../Engine";
 
 export default class HealingConsumable extends Consumable {
     constructor(args = {}) {
@@ -44,7 +43,7 @@ export default class HealingConsumable extends Consumable {
                 }
                 return this;
             } else {
-                return new UnableToPerformAction(this.entity, "Your health is already full");
+                return new UnableToPerformAction(action.entity, "Your health is already full");
             }
         }
     }
