@@ -2,7 +2,7 @@ import _Component from "../_Component";
 import sceneState from "../../SceneState";
 import _Tile from "../../entity/_Tile";
 import Extend from "../../util/Extend";
-import {MathUtils} from "three";
+import {MathUtils, Vector3} from "three";
 
 export default class _PositionalObject extends _Component {
     constructor(args = {}) {
@@ -123,6 +123,10 @@ export default class _PositionalObject extends _Component {
             }
             mesh.material.opacity = opacity;
         }
+    }
+
+    getObjectPosition() {
+        return new Vector3(this.x * this.width, this.y * this.height, (this.z * this.depth) - ((this.depth - (this.scale * this.depth)) / 2));
     }
 
     updateObjectPosition() {

@@ -33,6 +33,7 @@ const Key = {
     NUMPAD_SUBTRACT: "Numpad -",
     NUMPAD_ADD: "Numpad +",
     NUMPAD_ENTER: "Numpad Enter",
+
     NUMPAD_PERIOD: "Numpad .",
     NUMPAD_0: "Numpad 0",
     NUMPAD_1: "Numpad 1",
@@ -44,6 +45,19 @@ const Key = {
     NUMPAD_7: "Numpad 7",
     NUMPAD_8: "Numpad 8",
     NUMPAD_9: "Numpad 9",
+
+    NUMPAD_DELETE: "Numpad Delete",
+    NUMPAD_INSERT: "Numpad Insert",
+    NUMPAD_END: "Numpad End",
+    NUMPAD_ARROW_DOWN: "Numpad ArrowDown",
+    NUMPAD_PAGE_DOWN: "Numpad PageDown",
+    NUMPAD_ARROW_LEFT: "Numpad ArrowLeft",
+    NUMPAD_CLEAR: "Numpad Clear",
+    NUMPAD_ARROW_RIGHT: "Numpad ArrowRight",
+    NUMPAD_HOME: "Numpad Home",
+    NUMPAD_ARROW_UP: "Numpad ArrowUp",
+    NUMPAD_PAGE_UP: "Numpad PageUp",
+
 }
 
 // Controllers (Tested with XBOX 360)
@@ -80,6 +94,8 @@ class Controls {
         const self = this;
 
         self.defaultDelay = 25;
+        self.lastShiftUp = null;
+        self.treatShiftNumpadEqual = true;
         self.keysDown = [];
         self.keysDelayed = [];
         self.defaults = new Map();
@@ -99,12 +115,18 @@ class Controls {
         self.defaults.set("ne", [Key.NUMPAD_9]);
         self.defaults.set("sw", [Key.NUMPAD_1]);
         self.defaults.set("se", [Key.NUMPAD_3]);
-
         self.defaults.set("wait", [Key.NUMPAD_5]);
-        self.defaults.set("action", [Key.SPACE, Key.ENTER, Btn.A]);
+
         self.defaults.set("drop", ["d"]);
         self.defaults.set("get", ["g"]);
         self.defaults.set("inventory", ["i"]);
+        self.defaults.set("look", ["/"]);
+
+        self.defaults.set("confirm", [Key.ENTER, Key.NUMPAD_ENTER, Btn.A]);
+        self.defaults.set("cancel", [Key.ESCAPE, Key.BACKSPACE]);
+        self.defaults.set("modifier-speed1", [Key.SHIFT_LEFT, Key.SHIFT_RIGHT]);
+        self.defaults.set("modifier-speed2", [Key.CONTROL_LEFT, Key.CONTROL_RIGHT]);
+        self.defaults.set("modifier-speed3", [Key.ALT_LEFT, Key.ALT_RIGHT]);
 
         self.defaults.set("save", ["F8"]);
         self.defaults.set("load", ["F9"]);
@@ -116,16 +138,35 @@ class Controls {
         self.resetToDefault();
 
         addEventListener("keydown", function (e) {
-            //console.log("Keydown: " + e.keyCode + ", Location: " + e.location);
+            // TODO: Evaluate if this should be generalized. I don't want to prevent all keys necessarily.
+            if (e.key === "/") {
+                e.preventDefault();
+            }
+
+            if (self.treatShiftNumpadEqual) {
+                const numLockOn = e.getModifierState("NumLock");
+                // Re-add Shift key from Numpad press
+                if (numLockOn && !e.shiftKey && e.code.startsWith("Numpad") && e.keyCode < 90) {
+                    if (self.lastShiftUp) {
+                        self.keysDown[self.lastShiftUp] = true;
+                        //console.log("Bonus Key Down: ", self.lastShiftUp);
+                    }
+                }
+            }
+
             let key = self.getKey(e.key, e.code);
+            //console.log("Key Down: ", key);
             self.keysDown[key] = true;
         }, false);
 
 
         addEventListener("keyup", function (e) {
-            //console.log("Keyup: " + e.keyCode + ", Location: " + e.location);
             let key = self.getKey(e.key, e.code);
+            if (key === Key.SHIFT_LEFT || key === Key.SHIFT_RIGHT) {
+                self.lastShiftUp = key;
+            }
 
+            //console.log("Key Up: ", key);
             delete self.keysDown[key];
             delete self.keysDelayed[key];
         }, false);
@@ -139,6 +180,22 @@ class Controls {
                 key = "Right " + key;
             } else if (code.startsWith("Numpad")) {
                 key = "Numpad " + key;
+            }
+        }
+
+        if (this.treatShiftNumpadEqual) {
+            switch(key) {
+                case Key.NUMPAD_DELETE: key = Key.NUMPAD_PERIOD; break;
+                case Key.NUMPAD_INSERT: key = Key.NUMPAD_0; break;
+                case Key.NUMPAD_END: key = Key.NUMPAD_1; break;
+                case Key.NUMPAD_ARROW_DOWN: key = Key.NUMPAD_2; break;
+                case Key.NUMPAD_PAGE_DOWN: key = Key.NUMPAD_3; break;
+                case Key.NUMPAD_ARROW_LEFT: key = Key.NUMPAD_4; break;
+                case Key.NUMPAD_CLEAR: key = Key.NUMPAD_5; break;
+                case Key.NUMPAD_ARROW_RIGHT: key = Key.NUMPAD_6; break;
+                case Key.NUMPAD_HOME: key = Key.NUMPAD_7; break;
+                case Key.NUMPAD_ARROW_UP: key = Key.NUMPAD_8; break;
+                case Key.NUMPAD_PAGE_UP: key = Key.NUMPAD_9; break;
             }
         }
 
@@ -161,7 +218,11 @@ class Controls {
         const self = this;
         let pressed = false;
 
-        self.controls.get(key).forEach(function(keyToTest) {
+        const keys = self.controls.get(key);
+        if (!keys) {
+            console.err("Missing keybindings for: ", key);
+        }
+        keys.forEach(function(keyToTest) {
             if (keyToTest in self.keysDown) {
                 pressed = true;
             }

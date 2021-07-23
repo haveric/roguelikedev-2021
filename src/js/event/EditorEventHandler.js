@@ -14,28 +14,13 @@ export default class EditorEventHandler extends EventHandler {
     constructor() {
         super();
 
-        this.highlightedTile = null;
         this.selectedEntity = null;
     }
 
     teardown() {
         super.teardown();
 
-        this.clearHighlight();
         this.clearSelected();
-    }
-
-    clearHighlight() {
-        if (this.highlightedTile !== null) {
-            // Leave the highlight on selected tiles
-            if (this.highlightedTile === this.selectedEntity) {
-                return;
-            }
-            const object = this.highlightedTile.getComponent("positionalobject");
-            if (object) {
-                object.removeHighlight();
-            }
-        }
     }
 
     clearSelected() {
@@ -131,9 +116,9 @@ export default class EditorEventHandler extends EventHandler {
                         continue;
                     }
 
-                    this.clearHighlight();
-                    this.highlightedTile = parentEntity;
-                    parentObject.highlight();
+                    if (!this.isHighlighted(parentEntity)) {
+                        this.clearAndSetHighlight(parentEntity);
+                    }
                 }
 
                 anyFound = true;
@@ -142,7 +127,7 @@ export default class EditorEventHandler extends EventHandler {
         }
 
         if (!anyFound) {
-            this.clearHighlight();
+            this.clearHighlights(true);
         }
 
         if (this.mouseDown && editorControls.activeAction === 'delete') {

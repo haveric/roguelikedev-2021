@@ -76,14 +76,16 @@ class SceneState {
         this.renderer.setSize(this.canvasDom.offsetWidth, this.canvasDom.offsetHeight);
     }
 
-    updateCameraPosition(player) {
+    updateCameraPosition(player, lookAt = player) {
         this.player = player;
         this.camera.up.set(0, 0, 1);
-        const playerObject = player.getComponent("positionalobject");
-
-        this.camera.position.set(200 + playerObject.object.position.x, -200 + playerObject.object.position.y, 300);
-        this.camera.lookAt(playerObject.object.position.x, playerObject.object.position.y, 0);
-        engine.needsMapUpdate = true;
+        const positionalObject = lookAt.getComponent("positionalobject");
+        if (positionalObject) {
+            const position = positionalObject.getObjectPosition();
+            this.camera.position.set(200 + position.x, -200 + position.y, 300);
+            this.camera.lookAt(position.x, position.y, 0);
+            engine.needsMapUpdate = true;
+        }
     }
 }
 

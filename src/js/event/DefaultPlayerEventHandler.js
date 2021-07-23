@@ -10,38 +10,16 @@ import EditorEventHandler from "./EditorEventHandler";
 import editorInfo from "../ui/EditorInfo";
 import BumpAction from "../actions/actionWithDirection/BumpAction";
 import WaitAction from "../actions/WaitAction";
-import details from "../ui/Details";
 import PickupAction from "../actions/PickupAction";
 import inventory from "../ui/Inventory";
 import ItemAction from "../actions/itemAction/ItemAction";
 import DropAction from "../actions/itemAction/DropAction";
 import {Vector2} from "three";
+import LookHandler from "./selectIndexHandler/LookHandler";
 
 export default class DefaultPlayerEventHandler extends EventHandler {
     constructor() {
         super();
-
-        this.highlightedTile = null;
-    }
-
-    teardown() {
-        super.teardown();
-
-        this.clearHighlight();
-    }
-
-    clearHighlight(updatePlayer = false) {
-        if (this.highlightedTile !== null) {
-            const object = this.highlightedTile.getComponent("positionalobject");
-            if (object) {
-                object.removeHighlight();
-            }
-
-            this.highlightedTile = null;
-            if (updatePlayer) {
-                details.updatePlayerDetails();
-            }
-        }
     }
 
     handleInput() {
@@ -67,6 +45,8 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                 action = new WaitAction(engine.player);
             } else if (controls.testPressed("get")) {
                 action = new PickupAction(engine.player);
+            } else if (controls.testPressed("look")) {
+                engine.setEventHandler(new LookHandler());
             } else if (controls.testPressed("inventory")) {
                 if (inventory.isOpen()) {
                     inventory.close();
@@ -115,20 +95,13 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             if (parentEntity && parentEntity instanceof _Tile) {
                 const parentPosition = parentEntity.getComponent("positionalobject");
                 if (parentPosition) {
-                    // Skip invisible items
-                    if (parentPosition.transparency === 0) {
+                    // Skip invisible/unseen items
+                    if (parentPosition.transparency === 0 || !parentPosition.hasObject()) {
                         continue;
                     }
 
-                    if (!parentPosition.hasObject()) {
-                        continue;
-                    }
-
-                    if (this.highlightedTile !== parentEntity) {
-                        this.clearHighlight();
-                        this.highlightedTile = parentEntity;
-                        parentPosition.highlight();
-                        details.updatePositionDetails(parentEntity);
+                    if (!this.isHighlighted(parentEntity)) {
+                        this.clearAndSetHighlight(parentEntity);
                     }
 
                     anyFound = true;
@@ -138,7 +111,7 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         }
 
         if (!anyFound) {
-            this.clearHighlight(true);
+            this.clearHighlights(true);
         }
 
         if (this.attemptToDrag) {

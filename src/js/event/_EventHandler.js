@@ -1,5 +1,7 @@
 import * as THREE from "three";
 import sceneState from "../SceneState";
+import details from "../ui/Details";
+import engine from "../Engine";
 
 export default class EventHandler {
     constructor() {
@@ -14,6 +16,7 @@ export default class EventHandler {
         window.addEventListener("contextmenu", this);
 
         this.isPlayerTurn = true;
+        this.highlightedTiles = [];
     }
 
     teardown() {
@@ -22,6 +25,8 @@ export default class EventHandler {
         window.removeEventListener("mouseup", this);
         window.removeEventListener("click", this);
         window.removeEventListener("contextmenu", this);
+
+        this.clearHighlights();
     }
 
     handleEvent(e) {
@@ -67,5 +72,44 @@ export default class EventHandler {
         this.raycaster.setFromCamera(this.mouse, sceneState.camera);
 
         return this.raycaster.intersectObject(sceneState.scene, true);
+    }
+
+    isHighlighted(tile) {
+        for (const highlightedTile of this.highlightedTiles) {
+            if (tile === highlightedTile) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    clearAndSetHighlight(tile) {
+        this.clearHighlights();
+        const position = tile.getComponent("positionalobject");
+        if (position) {
+            position.highlight();
+            this.highlightedTiles.push(tile);
+        }
+
+        details.updatePositionDetails(tile);
+        engine.needsMapUpdate = true;
+    }
+
+    clearHighlights(updatePlayer = false) {
+        for (const highlightedTile of this.highlightedTiles) {
+            const position = highlightedTile.getComponent("positionalobject");
+            if (position) {
+                position.removeHighlight();
+            }
+        }
+
+        this.highlightedTiles = [];
+
+        if (updatePlayer) {
+            details.updatePlayerDetails();
+        }
+
+        engine.needsMapUpdate = true;
     }
 }

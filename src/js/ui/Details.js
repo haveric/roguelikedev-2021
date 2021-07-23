@@ -10,12 +10,23 @@ class Details {
         this.updatePositionDetails(engine.player, true);
     }
 
+    getPosition(entity) {
+        const position = entity.getComponent("positionalobject");
+        const x = position.x;
+        const y = position.y;
+        return "<span class='details__line'>Looking at: X:" + x + " - Y:" + y + "</span>";
+    }
+
+    updatePositionOnly(entity) {
+        this.dom.innerHTML = this.getPosition(entity);
+    }
+
     updatePositionDetails(entity, skipPlayer = false) {
         const position = entity.getComponent("positionalobject");
         const x = position.x;
         const y = position.y;
         const z = position.z;
-        let text = "<span class='details__line'>Looking at: X:" + x + " - Y:" + y + "</span>";
+        let text = this.getPosition(entity);
         const tiles = engine.gameMap.tiles;
         for (let i = z - 1; i <= z; i++) {
             if (tiles.get(i) && tiles.get(i)[x]) {
