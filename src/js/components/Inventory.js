@@ -28,6 +28,7 @@ export default class Inventory extends _Component {
                     const item = inventory.items[i];
                     if (item !== null) {
                         this.items[i] = entityLoader.create(item);
+                        this.items[i].parent = this;
                     }
                 }
             }
