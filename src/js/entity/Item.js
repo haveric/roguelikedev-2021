@@ -4,6 +4,23 @@ import Extend from "../util/Extend";
 export default class Item extends _Entity {
     constructor(args = {}) {
         super(Extend.deep(Item.getDefaultTemplate(), args));
+
+        this.amount = 1;
+        this.maxStackSize = 1;
+        if (args.amount !== undefined) {
+            this.amount = args.amount;
+        }
+
+        if (args.maxStackSize !== undefined) {
+            this.maxStackSize = args.maxStackSize;
+        }
+    }
+
+    save() {
+        return Extend.deep(super.save(), {
+            amount: this.amount,
+            maxStackSize: this.maxStackSize
+        });
     }
 
     static getDefaultTemplate() {

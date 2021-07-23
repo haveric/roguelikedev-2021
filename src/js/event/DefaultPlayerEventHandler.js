@@ -154,9 +154,10 @@ export default class DefaultPlayerEventHandler extends EventHandler {
     }
 
     onRightClick(e) {
-        e.preventDefault();
         const target = e.target;
         if (target.classList.contains("inventory__storage-slot") && target.classList.contains("has-item")) {
+            e.preventDefault();
+
             const slot = target.getAttribute("data-index");
             const playerInventory = engine.player.getComponent("inventory");
             engine.processAction(new DropAction(engine.player, playerInventory.items[slot]));

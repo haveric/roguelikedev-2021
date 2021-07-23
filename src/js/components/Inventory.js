@@ -54,6 +54,29 @@ export default class Inventory extends _Component {
     }
 
     add(item) {
+        const originalAmount = item.amount;
+        let amountToAdd = item.amount;
+        // Add partial stack
+        for (let i = 0; i < this.capacity; i++) {
+            const inventoryItem = this.items[i];
+            if (inventoryItem) {
+                console.log(inventoryItem, item.name, inventoryItem.name);
+                // TODO: Use a better method of determining equality
+                if (item.name === inventoryItem.name) {
+                    let amountCanAdd = inventoryItem.maxStackSize - inventoryItem.amount;
+                    if (amountCanAdd >= amountToAdd) {
+                        inventoryItem.amount += amountToAdd;
+                        return true;
+                    } else {
+                        inventoryItem.amount += amountCanAdd;
+                        item.amount -= amountCanAdd;
+                        amountToAdd -= amountCanAdd;
+                    }
+                }
+            }
+        }
+
+        // Add full stack
         for (let i = 0; i < this.capacity; i++) {
             if (!this.items[i]) {
                 this.items[i] = item;
@@ -61,7 +84,15 @@ export default class Inventory extends _Component {
             }
         }
 
-        return false;
+        return originalAmount !== amountToAdd;
+    }
+
+    use(item, amount) {
+        item.amount -= amount;
+
+        if (item.amount <= 0) {
+            this.remove(item);
+        }
     }
 
     remove(item) {

@@ -326,6 +326,16 @@ body {
 
 .item {
     pointer-events: none;
+    position: relative;
+}
+
+.item__amount {
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
+    font-size: 1.1vw;
+    color: #fff;
+    line-height: 0.7vw;
 }
 
 .item__details {

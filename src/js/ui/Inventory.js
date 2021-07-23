@@ -52,10 +52,17 @@ class Inventory {
                     const itemPosition = inventoryItem.getComponent("positionalobject");
                     if (itemPosition) {
                         slot.classList.add("has-item");
-                        slot.innerHTML = "<div class='item' style='color:" + itemPosition.color + "'>" + itemPosition.letter
-                            + "<div class='item__details'>"
+                        let html = "<div class='item' style='color:" + itemPosition.color + "'>" + itemPosition.letter;
+
+                        if (inventoryItem.amount > 1) {
+                            html += "<span class='item__amount'>" + inventoryItem.amount + "</span>";
+                        }
+
+                        html += "<div class='item__details'>"
                             + "<span class='item__name'>" + inventoryItem.name + "</span>"
                             + "</div></div>";
+
+                        slot.innerHTML = html;
                     }
                 } else {
                     slot.classList.remove("has-item");

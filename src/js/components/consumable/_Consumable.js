@@ -14,7 +14,7 @@ export default class Consumable extends _Component {
         const item = this.parentEntity;
         const parentInventory = item.parent;
         if (parentInventory) {
-            parentInventory.remove(item);
+            parentInventory.use(item, 1);
         }
     }
 

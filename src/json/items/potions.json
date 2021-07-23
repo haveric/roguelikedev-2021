@@ -2,6 +2,7 @@
     {
         "type": "item",
         "name": "Health Potion",
+        "maxStackSize": 20,
         "components": {
             "characterobject": {
                 "letter": "!",
@@ -15,6 +16,7 @@
     {
         "type": "item",
         "name": "Mana Potion",
+        "maxStackSize": 20,
         "components": {
             "characterobject": {
                 "letter": "!",
