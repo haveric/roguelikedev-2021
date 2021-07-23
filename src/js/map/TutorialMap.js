@@ -1,7 +1,6 @@
 import GameMap from "./GameMap";
 import MapLayer from "./MapLayer";
 import engine from "../Engine";
-import sceneState from "../SceneState";
 import entityLoader from "../entity/EntityLoader";
 import ArrayUtil from "../util/ArrayUtil";
 
@@ -130,7 +129,7 @@ export default class TutorialMap extends GameMap {
         engine.gameMap.actors.push(entityLoader.createFromTemplate('Red Dragon', {components: {positionalobject: {x: 18, y: 4, z: 1}}}));
         engine.gameMap.actors.push(entityLoader.createFromTemplate('Goblin', {components: {positionalobject: {x: 5, y: 2, z: 1}}}));
 
-        engine.gameMap.items.push(entityLoader.createFromTemplate('Healing Potion', {components: {positionalobject: {x: 3, y: 5, z: 1}}}));
+        engine.gameMap.items.push(entityLoader.createFromTemplate('Health Potion', {components: {positionalobject: {x: 3, y: 5, z: 1}}}));
         engine.gameMap.items.push(entityLoader.createFromTemplate('^', {components: {positionalobject: {x: 6, y: 5, z: 1}}}));
         engine.gameMap.items.push(entityLoader.createFromTemplate('Tower Shield', {components: {positionalobject: {x: 28, y: 1, z: 1}}}));
     }

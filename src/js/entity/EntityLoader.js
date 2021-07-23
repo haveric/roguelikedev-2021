@@ -60,6 +60,8 @@ class EntityLoader {
             const template = this.templates.get(name);
 
             return this.create(template, args);
+        } else {
+            console.error("Json template for " + name + " is missing.");
         }
 
         return null;
