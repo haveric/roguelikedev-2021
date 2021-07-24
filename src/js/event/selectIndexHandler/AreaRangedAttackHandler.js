@@ -11,7 +11,7 @@ export default class AreaRangedAttackHandler extends SelectIndexHandler {
         this.radius = radius;
     }
 
-    selectIndex() {
+    selectIndex(moveCamera = true) {
         let centerIsObscured = true;
         let centerTile = null;
         let visibleTiles = [];
@@ -49,7 +49,10 @@ export default class AreaRangedAttackHandler extends SelectIndexHandler {
         }
 
         if (centerTile) {
-            sceneState.updateCameraPosition(engine.player, centerTile);
+            if (moveCamera) {
+                sceneState.updateCameraPosition(engine.player, centerTile);
+            }
+
             if (centerIsObscured) {
                 details.updatePositionOnly(centerTile);
             } else {

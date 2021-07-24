@@ -5,6 +5,7 @@ import controls from "../../controls/Controls";
 import DefaultPlayerEventHandler from "../DefaultPlayerEventHandler";
 import details from "../../ui/Details";
 import sceneState from "../../SceneState";
+import _Tile from "../../entity/_Tile";
 
 export default class SelectIndexHandler extends EventHandler {
     constructor() {
@@ -90,7 +91,7 @@ export default class SelectIndexHandler extends EventHandler {
         }
     }
 
-    selectIndex() {
+    selectIndex(moveCamera = true) {
         let obscuredTile = null;
         let visibleTile = null;
         const tiles = engine.gameMap.tiles.get(this.position.z);
@@ -115,10 +116,14 @@ export default class SelectIndexHandler extends EventHandler {
 
         if (obscuredTile) {
             this.clearHighlights(false);
-            sceneState.updateCameraPosition(engine.player, obscuredTile);
+            if (moveCamera) {
+                sceneState.updateCameraPosition(engine.player, obscuredTile);
+            }
             details.updatePositionOnly(obscuredTile);
         } else if (visibleTile) {
-            sceneState.updateCameraPosition(engine.player, visibleTile);
+            if (moveCamera) {
+                sceneState.updateCameraPosition(engine.player, visibleTile);
+            }
             this.clearAndSetHighlight(visibleTile);
         } else {
             this.clearHighlights(true);
@@ -127,5 +132,42 @@ export default class SelectIndexHandler extends EventHandler {
 
     confirmIndex() {
         console.err("Not Implemented");
+    }
+
+    onMouseMove(e) {
+        this.mouse.x = (e.clientX / sceneState.canvasDom.offsetWidth) * 2 - 1;
+        this.mouse.y = -(e.clientY / sceneState.canvasDom.offsetHeight) * 2 + 1;
+
+        this.raycaster.setFromCamera(this.mouse, sceneState.camera);
+
+        const intersects = this.raycaster.intersectObject(sceneState.scene, true);
+
+        for (let i = 0; i < intersects.length; i++) {
+            const object = intersects[i].object;
+            const parentEntity = object.parentEntity;
+            if (parentEntity && parentEntity instanceof _Tile) {
+                const parentPosition = parentEntity.getComponent("positionalobject");
+                if (parentPosition) {
+                    // Skip invisible/unseen items
+                    if (parentPosition.transparency === 0 || !parentPosition.hasObject()) {
+                        continue;
+                    }
+
+                    if (this.position.x !== parentPosition.x || this.position.y !== parentPosition.y) {
+                        this.position.x = parentPosition.x;
+                        this.position.y = parentPosition.y;
+
+                        this.selectIndex(false);
+                        engine.needsMapUpdate = true;
+                    }
+
+                    break;
+                }
+            }
+        }
+    }
+
+    onLeftClick(e) {
+        this.confirmIndex();
     }
 }
