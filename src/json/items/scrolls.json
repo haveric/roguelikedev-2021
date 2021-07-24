@@ -13,6 +13,7 @@
         "id": "scroll_lightning",
         "extends": "scroll",
         "name": "Lightning Scroll",
+        "description": "Shoots a bolt of lightning at the nearest enemy",
         "components": {
             "characterobject": {
                 "color": "#ffff00"
@@ -27,6 +28,7 @@
         "id": "scroll_confusion",
         "extends": "scroll",
         "name": "Confusion Scroll",
+        "description": "Confuse an enemy, causing them to wander aimlessly",
         "components": {
             "characterobject": {
                 "color": "#cf3fff"
@@ -40,6 +42,7 @@
         "id": "scroll_fireball",
         "extends": "scroll",
         "name": "Fireball Scroll",
+        "description": "Engulf an area in flames",
         "components": {
             "characterobject": {
                 "color": "#ff0000"

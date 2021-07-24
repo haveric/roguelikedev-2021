@@ -13,6 +13,7 @@
         "id": "potion_health",
         "extends": "potion",
         "name": "Health Potion",
+        "description": "Recover a minor amount of health",
         "components": {
             "characterobject": {
                 "color": "#990f02"
@@ -26,6 +27,7 @@
         "id": "potion_mana",
         "extends": "potion",
         "name": "Mana Potion",
+        "description": "Recover a minor amount of mana",
         "components": {
             "characterobject": {
                 "color": "#020f99"

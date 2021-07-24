@@ -12,7 +12,6 @@ import BumpAction from "../actions/actionWithDirection/BumpAction";
 import WaitAction from "../actions/WaitAction";
 import PickupAction from "../actions/PickupAction";
 import inventory from "../ui/Inventory";
-import ItemAction from "../actions/itemAction/ItemAction";
 import DropAction from "../actions/itemAction/DropAction";
 import {Vector2} from "three";
 import LookHandler from "./selectIndexHandler/LookHandler";
@@ -54,6 +53,8 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                     inventory.populateInventory(engine.player);
                     inventory.open();
                 }
+
+                this.hideItemTooltip();
             } else if (controls.testPressed("save", 1000)) {
                 engine.gameMap.save("save1");
             } else if (controls.testPressed("load", 1000)) {
@@ -81,6 +82,7 @@ export default class DefaultPlayerEventHandler extends EventHandler {
     }
 
     onMouseMove(e) {
+        const target = e.target;
         this.mouse.x = (e.clientX / sceneState.canvasDom.offsetWidth) * 2 - 1;
         this.mouse.y = -(e.clientY / sceneState.canvasDom.offsetHeight) * 2 + 1;
 
@@ -128,6 +130,29 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             inventory.itemDragDom.style.top = (e.clientY + this.dragOffset.y) + "px";
         }
 
+        if (this.attemptToDrag || this.isDragging) {
+            this.hoveringOver = null;
+        } else {
+            if (target.classList.contains("inventory__storage-slot") && target.classList.contains("has-item")) {
+                if (target !== this.hoveringOver) {
+                    this.hoveringOver = e.target;
+                    const details = target.getElementsByClassName("item__details")[0];
+                    const clone = details.cloneNode(true);
+
+
+                    inventory.itemTooltipDom.innerHTML = "";
+                    inventory.itemTooltipDom.appendChild(clone);
+
+                    this.updateToolTipSize(e);
+                    inventory.itemTooltipDom.classList.add("active");
+                } else {
+                    this.updateToolTipSize(e);
+                }
+            } else {
+                this.hideItemTooltip();
+            }
+        }
+
         engine.needsMapUpdate = true;
     }
 
@@ -136,6 +161,17 @@ export default class DefaultPlayerEventHandler extends EventHandler {
 
         this.slotDragging.classList.add("dragging");
         inventory.itemDragDom.classList.add("active");
+    }
+
+    updateToolTipSize(e) {
+        const tooltipRect = inventory.itemTooltipDom.getBoundingClientRect();
+        inventory.itemTooltipDom.style.left = (e.clientX - tooltipRect.width - 25) + "px";
+        inventory.itemTooltipDom.style.top = (e.clientY - (tooltipRect.height / 2)) + "px";
+    }
+
+    hideItemTooltip() {
+        this.hoveringOver = null;
+        inventory.itemTooltipDom.classList.remove("active");
     }
 
     onLeftClick(e) {
@@ -149,8 +185,10 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                 const item = playerInventory.items[slot];
                 const consumable = item.getComponent("consumable");
                 if (consumable) {
-                    engine.processAction(consumable.getAction());
-                    inventory.populateInventory(engine.player);
+                    if (engine.processAction(consumable.getAction())) {
+                        inventory.populateInventory(engine.player);
+                        this.hideItemTooltip();
+                    }
                 }
             }
         }
@@ -166,8 +204,11 @@ export default class DefaultPlayerEventHandler extends EventHandler {
 
                 const slot = target.getAttribute("data-index");
                 const playerInventory = engine.player.getComponent("inventory");
-                engine.processAction(new DropAction(engine.player, playerInventory.items[slot]));
-                inventory.populateInventory(engine.player);
+
+                if (engine.processAction(new DropAction(engine.player, playerInventory.items[slot]))) {
+                    inventory.populateInventory(engine.player);
+                    this.hideItemTooltip();
+                }
             }
         }
     }

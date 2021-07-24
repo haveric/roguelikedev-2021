@@ -3,6 +3,7 @@
         "id": "gold",
         "type": "item",
         "name": "Gold",
+        "description": "Helps to fund your adventures",
         "maxStackSize": -1,
         "components": {
             "characterobject": {

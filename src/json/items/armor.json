@@ -3,6 +3,7 @@
         "id": "tower_shield",
         "type": "item",
         "name": "Tower Shield",
+        "description": "Large rectangular shield. The surface is heavily scarred from battle",
         "components": {
             "characterobject": {
                 "letter": "]",

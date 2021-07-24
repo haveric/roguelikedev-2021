@@ -72,7 +72,12 @@ class Inventory {
                         }
 
                         html += "<div class='item__details'>"
-                            + "<span class='item__name'>" + inventoryItem.name + "</span>"
+                            + "<span class='item__details-line item__name'>" + inventoryItem.name + "</span>";
+                        if (inventoryItem.description) {
+                            html += "<span class='item__details-line item__description'>" + inventoryItem.description + "</span>"
+                        }
+
+                        html += "<span class='item__details-line'><hr/></span>"
                             + "</div></div>";
 
                         slot.innerHTML = html;

@@ -356,6 +356,14 @@ body.disable-select * {
     display: none;
 }
 
+.item__tooltip .item__details {
+    display: block;
+}
+
+.item__details-line  {
+    display: block;
+}
+
 .inventory__golddisplay {
     width: 100%;
     height: 5%;
@@ -364,8 +372,15 @@ body.disable-select * {
 }
 
 .item__tooltip {
-    position: absolute;
+    position: fixed;
     display: none;
+    z-index: 1000;
+    pointer-events: none;
+    background: #ccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    max-width: 30%;
+    font-size: 1.5vh;
 }
 
 .item__tooltip.active {
@@ -382,4 +397,13 @@ body.disable-select * {
 
 .item__drag.active {
     display: block;
+}
+
+.item__name {
+    font-weight: bold;
+    font-size: 2.5vh;
+}
+
+.item__description {
+    font-style: italic;
 }

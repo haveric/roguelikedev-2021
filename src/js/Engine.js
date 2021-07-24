@@ -33,13 +33,14 @@ class Engine {
         if (action != null && this.eventHandler.isPlayerTurn) {
             const performedAction = action.perform();
             if (performedAction instanceof NoAction) {
-                return;
+                return false;
             }
 
             if (performedAction instanceof UnableToPerformAction) {
                 if (performedAction.reason) {
                     messageConsole.text(performedAction.reason).build();
                 }
+                return false;
             } else {
                 sceneState.updateCameraPosition(engine.player);
 
@@ -47,6 +48,8 @@ class Engine {
                 engine.needsMapUpdate = true;
 
                 this.handleEnemyTurns();
+
+                return true;
             }
         }
     }

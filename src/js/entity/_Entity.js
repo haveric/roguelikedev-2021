@@ -6,7 +6,8 @@ export default class _Entity {
     constructor(args) {
         this.type = args.type || "entity";
         this.id = args.id;
-        this.name = args.name;
+        this.name = args.name || "";
+        this.description = args.description || "";
         this.componentArray = [];
         this.components = {};
         this.parent = null;
@@ -61,8 +62,10 @@ export default class _Entity {
 
     save() {
         let json = {
+            id: this.id,
             type: this.type,
-            name: this.name
+            name: this.name,
+            description: this.description
         };
 
         json.components = {};
