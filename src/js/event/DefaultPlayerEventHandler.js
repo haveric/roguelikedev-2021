@@ -185,9 +185,9 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                 const item = playerInventory.items[slot];
                 const consumable = item.getComponent("consumable");
                 if (consumable) {
+                    this.hideItemTooltip();
                     if (engine.processAction(consumable.getAction())) {
                         inventory.populateInventory(engine.player);
-                        this.hideItemTooltip();
                     }
                 }
             }
@@ -205,9 +205,10 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                 const slot = target.getAttribute("data-index");
                 const playerInventory = engine.player.getComponent("inventory");
 
+                this.hideItemTooltip();
+
                 if (engine.processAction(new DropAction(engine.player, playerInventory.items[slot]))) {
                     inventory.populateInventory(engine.player);
-                    this.hideItemTooltip();
                 }
             }
         }
