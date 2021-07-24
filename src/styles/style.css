@@ -172,6 +172,7 @@ body.disable-select * {
 
 .message {
     font-size: 2.2vh;
+    text-shadow: 1px 1px 0 #888;
 }
 
 .message__text {

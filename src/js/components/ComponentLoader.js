@@ -14,13 +14,17 @@ import AIDead from "./ai/AIDead";
 import HealingConsumable from "./consumable/HealingConsumable";
 import Inventory from "./Inventory";
 import DamageNearestConsumable from "./consumable/DamageNearestConsumable";
+import ConfusionConsumable from "./consumable/ConfusionConsumable";
+import AIConfusedEnemy from "./ai/AIConfusedEnemy";
 
 class ComponentLoader {
     constructor() {
         this.types = new Map();
 
+        this.load(new AIConfusedEnemy());
         this.load(new AIDead());
         this.load(new AIMeleeChase());
+        this.load(new ConfusionConsumable());
         this.load(new DamageNearestConsumable());
         this.load(new HealingConsumable());
         this.load(new BlocksFov());

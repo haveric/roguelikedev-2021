@@ -5,6 +5,10 @@ export default class Action {
         this.entity = entity;
     }
 
+    /**
+     *
+     * @returns {Action}
+     */
     perform() {
         console.err("Not Implemented");
     }

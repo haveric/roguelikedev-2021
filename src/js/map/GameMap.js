@@ -10,6 +10,7 @@ import characterMana from "../ui/CharacterMana";
 import Actor from "../entity/Actor";
 import Remnant from "../components/Remnant";
 import inventory from "../ui/Inventory";
+import {Vector3} from "three";
 
 export default class GameMap {
     constructor(width, height) {

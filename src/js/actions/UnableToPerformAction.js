@@ -6,4 +6,8 @@ export default class UnableToPerformAction extends Action {
 
         this.reason = reason;
     }
+
+    perform() {
+        return this;
+    }
 }

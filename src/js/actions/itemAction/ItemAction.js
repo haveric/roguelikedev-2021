@@ -1,5 +1,6 @@
 import Action from "../_Action";
 import engine from "../../Engine";
+import {Vector3} from "three";
 
 export default class ItemAction extends Action {
     /**
@@ -23,6 +24,7 @@ export default class ItemAction extends Action {
     }
 
     getTargetActor() {
-        return engine.gameMap.getAliveActorAtLocation(this.targetPosition);
+        const actorPosition = new Vector3(this.targetPosition.x, this.targetPosition.y, this.targetPosition.z + 1);
+        return engine.gameMap.getAliveActorAtLocation(actorPosition);
     }
 }

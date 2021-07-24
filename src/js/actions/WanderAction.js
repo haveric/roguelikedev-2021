@@ -9,13 +9,12 @@ export default class WanderAction extends Action {
     }
 
     perform() {
-        // Wait
-        if (Math.random() < .4) {
+        const x = MathUtils.randInt(-1, 1);
+        const y = MathUtils.randInt(-1, 1);
+
+        if (x === 0 && y === 0) {
             return new WaitAction(this.entity).perform();
         } else {
-            const x = MathUtils.randInt(-1, 1);
-            const y = MathUtils.randInt(-1, 1);
-
             return new MovementAction(this.entity, x, y, 0).perform();
         }
     }

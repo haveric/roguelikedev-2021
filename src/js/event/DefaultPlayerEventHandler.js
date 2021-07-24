@@ -146,8 +146,12 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             if (target.classList.contains("inventory__storage-slot") && target.classList.contains("has-item")) {
                 const slot = target.getAttribute("data-index");
                 const playerInventory = engine.player.getComponent("inventory");
-                engine.processAction(new ItemAction(engine.player, playerInventory.items[slot]));
-                inventory.populateInventory(engine.player);
+                const item = playerInventory.items[slot];
+                const consumable = item.getComponent("consumable");
+                if (consumable) {
+                    engine.processAction(consumable.getAction());
+                    inventory.populateInventory(engine.player);
+                }
             }
         }
     }

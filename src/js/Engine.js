@@ -5,6 +5,7 @@ import AdamMilazzoFov from "./map/fov/AdamMilazzoFov";
 import SimpleFov from "./map/fov/SimpleFov";
 import details from "./ui/Details";
 import messageConsole from "./ui/MessageConsole";
+import NoAction from "./actions/NoAction";
 
 class Engine {
     constructor() {
@@ -31,8 +32,14 @@ class Engine {
     processAction(action) {
         if (action != null && this.eventHandler.isPlayerTurn) {
             const performedAction = action.perform();
+            if (performedAction instanceof NoAction) {
+                return;
+            }
+
             if (performedAction instanceof UnableToPerformAction) {
-                messageConsole.text(performedAction.reason).build();
+                if (performedAction.reason) {
+                    messageConsole.text(performedAction.reason).build();
+                }
             } else {
                 sceneState.updateCameraPosition(engine.player);
                 engine.needsMapUpdate = true;

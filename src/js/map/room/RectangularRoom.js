@@ -86,8 +86,10 @@ export default class RectangularRoom {
             const chance = Math.random();
             if (chance < .5) {
                 item = entityLoader.createFromTemplate('Health Potion', position);
-            } else if (chance < .9) {
+            } else if (chance < .7) {
                 item = entityLoader.createFromTemplate('Lightning Scroll', position);
+            } else if (chance < .9) {
+                item = entityLoader.createFromTemplate('Confusion Scroll', position);
             } else {
                 item = entityLoader.createFromTemplate('Mana Potion', position);
             }

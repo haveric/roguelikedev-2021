@@ -13,5 +13,19 @@
                 "maxRange": 5
             }
         }
+    },
+    {
+        "type": "item",
+        "name": "Confusion Scroll",
+        "maxStackSize": 20,
+        "components": {
+            "characterobject": {
+                "letter": "~",
+                "color": "#cf3fff"
+            },
+            "confusionConsumable": {
+                "turns": 10
+            }
+        }
     }
 ]
