@@ -47,4 +47,8 @@ export default class HealingConsumable extends Consumable {
             }
         }
     }
+
+    getDescription() {
+        return "<span class='item__details-line'>Recovers <span style='color: #c00;'>" + this.amount + "</span> health</span>";
+    }
 }

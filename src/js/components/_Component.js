@@ -11,6 +11,10 @@ export default class _Component {
         return null;
     }
 
+    getDescription() {
+        return "";
+    }
+
     isPlayer() {
         return this.parentEntity === engine.player;
     }

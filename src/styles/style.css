@@ -364,6 +364,10 @@ body.disable-select * {
     display: block;
 }
 
+.item__details-line span {
+    font-weight: bold;
+}
+
 .inventory__golddisplay {
     width: 100%;
     height: 5%;

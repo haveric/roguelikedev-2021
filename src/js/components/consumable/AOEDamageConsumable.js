@@ -92,4 +92,11 @@ export default class AOEDamageConsumable extends Consumable {
 
         return targetsHit;
     }
+
+    getDescription() {
+        const areaOfEffect = (this.radius * 2) + 1;
+        const areaOfEffectText = areaOfEffect + "x" + areaOfEffect;
+        return "<span class='item__details-line'>Fire Damage: <span style='color: #c00;'>" + this.damage + "</span></span>" +
+            "<span class='item__details-line'>Area of effect: <span style='color: #ccc;'>" + areaOfEffectText + "</span></span>";
+    }
 }

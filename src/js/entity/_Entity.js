@@ -83,6 +83,15 @@ export default class _Entity {
         return new _Entity(this.save());
     }
 
+    getComponentDescriptions() {
+        let description = "";
+        for (const component of this.componentArray) {
+            description += component.getDescription();
+        }
+
+        return description;
+    }
+
     stopAnimations() {
         if (this.tweenAttack) {
             this.tweenAttack.stop();

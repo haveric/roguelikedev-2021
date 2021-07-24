@@ -6,6 +6,7 @@ import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import GameOverEventHandler from "../event/GameOverEventHandler";
 import messageConsole from "../ui/MessageConsole";
 import characterHealth from "../ui/CharacterHealth";
+import characterMana from "../ui/CharacterMana";
 
 export default class Fighter extends _Component {
     constructor(args = {}) {
@@ -86,6 +87,34 @@ export default class Fighter extends _Component {
         }
 
         return healedHp;
+    }
+
+    consumeMana(amount) {
+        if (this.mana < amount) {
+            return false;
+        }
+
+        this.mana -= amount;
+
+        if (this.isPlayer()) {
+            characterMana.update(this.mana, this.maxMana);
+        }
+    }
+
+    recoverMana(amount) {
+        if (this.mana === this.maxMana) {
+            return 0;
+        }
+
+        const newMana = Math.min(this.maxMana, this.mana + amount);
+        const recoveredMana = newMana - this.mana;
+        this.mana = newMana;
+
+        if (this.isPlayer()) {
+            characterMana.update(this.mana, this.maxMana);
+        }
+
+        return recoveredMana;
     }
 
     die() {

@@ -88,4 +88,8 @@ export default class ConfusionConsumable extends Consumable {
 
         return this;
     }
+
+    getDescription() {
+        return "<span class='item__details-line'>Confuses for: <span style='color: #cf3fff;'>" + this.turns + "</span> turns</span>";
+    }
 }

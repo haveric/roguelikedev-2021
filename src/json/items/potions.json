@@ -31,6 +31,9 @@
         "components": {
             "characterobject": {
                 "color": "#020f99"
+            },
+            "manaConsumable": {
+                "amount": 4
             }
         }
     }

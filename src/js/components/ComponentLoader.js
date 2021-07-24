@@ -17,6 +17,7 @@ import DamageNearestConsumable from "./consumable/DamageNearestConsumable";
 import ConfusionConsumable from "./consumable/ConfusionConsumable";
 import AIConfusedEnemy from "./ai/AIConfusedEnemy";
 import AOEDamageConsumable from "./consumable/AOEDamageConsumable";
+import ManaConsumable from "./consumable/ManaConsumable";
 
 class ComponentLoader {
     constructor() {
@@ -29,6 +30,7 @@ class ComponentLoader {
         this.load(new ConfusionConsumable());
         this.load(new DamageNearestConsumable());
         this.load(new HealingConsumable());
+        this.load(new ManaConsumable());
         this.load(new BlocksFov());
         this.load(new BlocksMovement());
         this.load(new CharacterObject());

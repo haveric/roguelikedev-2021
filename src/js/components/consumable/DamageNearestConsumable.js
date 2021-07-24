@@ -114,4 +114,9 @@ export default class DamageNearestConsumable extends Consumable {
 
         return closestEnemy;
     }
+
+    getDescription() {
+        return "<span class='item__details-line'>Lightning Damage: <span style='color: #aa6;'>" + this.damage + "</span></span>" +
+                "<span class='item__details-line'>Range: <span style='color: #666;'>" + this.maxRange + "</span></span>";
+    }
 }

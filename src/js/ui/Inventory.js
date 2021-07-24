@@ -77,8 +77,11 @@ class Inventory {
                             html += "<span class='item__details-line item__description'>" + inventoryItem.description + "</span>"
                         }
 
-                        html += "<span class='item__details-line'><hr/></span>"
-                            + "</div></div>";
+                        html += "<span class='item__details-line'><hr/></span>";
+
+                        html += inventoryItem.getComponentDescriptions();
+
+                        html += "</div></div>";
 
                         slot.innerHTML = html;
                     }
