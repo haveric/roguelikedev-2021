@@ -401,6 +401,36 @@ export default class GameMap {
         return blockingActor;
     }
 
+    /**
+     *
+     * @param {Vector3} position
+     */
+    isPositionVisible(position) {
+        let isVisible = false;
+
+        for (let z = position.z - 1; z <= position.z + 1; z++) {
+            const tiles = this.tiles.get(position.z);
+            if (tiles) {
+                const tileX = tiles[position.x];
+                if (tileX) {
+                    const tile = tileX[position.y];
+                    if (tile) {
+                        const fov = tile.getComponent("fov");
+                        if (fov) {
+                            if (fov.visible) {
+                                isVisible = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        return isVisible;
+    }
+
     addPlayer(x, y, z = 1) {
         const position = {
             components: {

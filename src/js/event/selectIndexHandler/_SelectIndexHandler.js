@@ -11,13 +11,20 @@ export default class SelectIndexHandler extends EventHandler {
         super();
 
         this.resetPosition();
+        this.initted = false;
+    }
+
+    init() {
+        if (!this.initted) {
+            this.selectIndex();
+            this.initted = true;
+        }
     }
 
     resetPosition() {
         this.player = engine.player;
         const position = this.player.getComponent("positionalobject");
         this.position = new Vector3(position.x, position.y, position.z - 1);
-        this.selectIndex();
     }
 
     exit() {
@@ -26,6 +33,8 @@ export default class SelectIndexHandler extends EventHandler {
     }
 
     handleInput() {
+        this.init();
+
         if (controls.testPressed("cancel")) {
             this.exit();
         } else if (controls.testPressed("confirm")) {
@@ -94,7 +103,7 @@ export default class SelectIndexHandler extends EventHandler {
                 if (position) {
                     // Skip invisible/unseen items
                     if (position.transparency === 1 && position.hasObject()) {
-                        if (!this.isHighlighted(visibleTile)) {
+                        if (!this.isHighlighted(tile)) {
                             visibleTile = tile;
                         }
                     } else {

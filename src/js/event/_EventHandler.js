@@ -84,6 +84,18 @@ export default class EventHandler {
         return false;
     }
 
+    clearAndSetHighlights(tiles) {
+        this.clearHighlights();
+        for (const tile of tiles) {
+            const position = tile.getComponent("positionalobject");
+            if (position) {
+                position.highlight();
+                this.highlightedTiles.push(tile);
+            }
+        }
+        engine.needsMapUpdate = true;
+    }
+
     clearAndSetHighlight(tile) {
         this.clearHighlights();
         const position = tile.getComponent("positionalobject");

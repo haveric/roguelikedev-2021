@@ -27,5 +27,20 @@
                 "turns": 10
             }
         }
+    },
+    {
+        "type": "item",
+        "name": "Fireball Scroll",
+        "maxStackSize": 20,
+        "components": {
+            "characterobject": {
+                "letter": "~",
+                "color": "#ff0000"
+            },
+            "aoeDamageConsumable": {
+                "damage": 12,
+                "radius": 1
+            }
+        }
     }
 ]

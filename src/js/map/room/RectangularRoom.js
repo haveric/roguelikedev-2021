@@ -88,6 +88,8 @@ export default class RectangularRoom {
                 item = entityLoader.createFromTemplate('Health Potion', position);
             } else if (chance < .7) {
                 item = entityLoader.createFromTemplate('Lightning Scroll', position);
+            } else if (chance < .8) {
+                item = entityLoader.createFromTemplate('Fireball Scroll', position);
             } else if (chance < .9) {
                 item = entityLoader.createFromTemplate('Confusion Scroll', position);
             } else {

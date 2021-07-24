@@ -16,6 +16,7 @@ import Inventory from "./Inventory";
 import DamageNearestConsumable from "./consumable/DamageNearestConsumable";
 import ConfusionConsumable from "./consumable/ConfusionConsumable";
 import AIConfusedEnemy from "./ai/AIConfusedEnemy";
+import AOEDamageConsumable from "./consumable/AOEDamageConsumable";
 
 class ComponentLoader {
     constructor() {
@@ -24,6 +25,7 @@ class ComponentLoader {
         this.load(new AIConfusedEnemy());
         this.load(new AIDead());
         this.load(new AIMeleeChase());
+        this.load(new AOEDamageConsumable());
         this.load(new ConfusionConsumable());
         this.load(new DamageNearestConsumable());
         this.load(new HealingConsumable());

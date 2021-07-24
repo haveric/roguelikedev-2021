@@ -42,9 +42,9 @@ class Engine {
                 }
             } else {
                 sceneState.updateCameraPosition(engine.player);
-                engine.needsMapUpdate = true;
 
-                details.updatePlayerDetails();
+                engine.gameMap.updatePlayerUI();
+                engine.needsMapUpdate = true;
 
                 this.handleEnemyTurns();
             }

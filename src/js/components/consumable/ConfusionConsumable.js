@@ -31,7 +31,6 @@ export default class ConfusionConsumable extends Consumable {
         }
     }
 
-
     getAction() {
         const self = this;
         if (this.isPlayer()) {
@@ -44,6 +43,7 @@ export default class ConfusionConsumable extends Consumable {
 
         return new NoAction(this.parentEntity);
     }
+
     /**
      *
      * @param {ItemAction} action
@@ -59,7 +59,6 @@ export default class ConfusionConsumable extends Consumable {
         if (target === consumer) {
             return new UnableToPerformAction(this.parentEntity, "You cannot confuse yourself.");
         }
-
 
         if (engine.fov.visibleActors.indexOf(target) === -1 && engine.airFov.visibleActors.indexOf(target) === -1) {
             return new UnableToPerformAction(this.parentEntity, "You cannot target an area that you cannot see.");
