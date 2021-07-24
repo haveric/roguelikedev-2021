@@ -85,8 +85,9 @@ export default class AIMeleeChase extends AI {
 
             // Move towards enemy
             const gameMap = engine.gameMap;
-            // TODO: Optimize cost width/height to match fov width/height and offset positions later
-            const cost = Array(gameMap.width).fill().map(() => Array(gameMap.height).fill(0));
+            const fovWidth = this.fov.right - this.fov.left;
+            const fovHeight = this.fov.bottom - this.fov.top;
+            const cost = Array(fovWidth).fill().map(() => Array(fovHeight).fill(0));
 
             for (let i = this.fov.left; i < this.fov.right; i++) {
                 for (let j = this.fov.top; j < this.fov.bottom; j++) {
@@ -107,7 +108,7 @@ export default class AIMeleeChase extends AI {
                     if (floorTile) {
                         const walkableComponent = floorTile.getComponent("walkable");
                         if (walkableComponent && walkableComponent.walkable) {
-                            cost[i][j] += 10;
+                            cost[i - this.fov.left][j - this.fov.top] += 10;
                         }
                     }
                 }
@@ -117,20 +118,20 @@ export default class AIMeleeChase extends AI {
                 if (actor.isAlive()) {
                     const actorPosition = actor.getComponent("positionalobject");
                     if (actorPosition) {
-                        cost[actorPosition.x][actorPosition.y] += 100;
+                        cost[actorPosition.x - this.fov.left][actorPosition.y - this.fov.top] += 100;
                     }
                 }
             }
 
             const costGraph = new Graph(cost, { diagonal: true });
 
-            const start = costGraph.grid[entityPosition.x][entityPosition.y];
-            const end = costGraph.grid[this.chaseLocation.x][this.chaseLocation.y];
+            const start = costGraph.grid[entityPosition.x - this.fov.left][entityPosition.y - this.fov.top];
+            const end = costGraph.grid[this.chaseLocation.x - this.fov.left][this.chaseLocation.y - this.fov.top];
 
             const path = AStar.search(costGraph, start, end);
             if (path && path.length > 0) {
                 const next = path.shift();
-                return new BumpAction(entity, next.x - entityPosition.x, next.y - entityPosition.y, entityPosition.z).perform()
+                return new BumpAction(entity, next.x + this.fov.left - entityPosition.x, next.y + this.fov.top - entityPosition.y, entityPosition.z).perform();
             } else {
                 return new WaitAction(entity).perform();
             }
