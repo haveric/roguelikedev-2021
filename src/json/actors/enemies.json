@@ -1,5 +1,6 @@
 [
     {
+        "id": "orc",
         "type": "actor",
         "name": "Orc",
         "components": {
@@ -20,6 +21,7 @@
         }
     },
     {
+        "id": "troll",
         "type": "actor",
         "name": "Troll",
         "components": {
@@ -40,6 +42,7 @@
         }
     },
     {
+        "id": "ant",
         "type": "actor",
         "name": "Ant",
         "components": {
@@ -55,6 +58,7 @@
         }
     },
     {
+        "id": "dragon_red",
         "type": "actor",
         "name": "Red Dragon",
         "components": {
@@ -70,6 +74,7 @@
         }
     },
     {
+        "id": "goblin",
         "type": "actor",
         "name": "Goblin",
         "components": {

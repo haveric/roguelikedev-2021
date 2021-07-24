@@ -1,5 +1,6 @@
 [
     {
+        "id": "potion_health",
         "type": "item",
         "name": "Health Potion",
         "maxStackSize": 20,
@@ -14,6 +15,7 @@
         }
     },
     {
+        "id": "potion_mana",
         "type": "item",
         "name": "Mana Potion",
         "maxStackSize": 20,

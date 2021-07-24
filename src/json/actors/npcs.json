@@ -1,5 +1,6 @@
 [
     {
+        "id": "shop_owner",
         "type": "actor",
         "name": "Shop Owner",
         "components": {

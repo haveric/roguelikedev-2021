@@ -1,5 +1,6 @@
 [
     {
+        "id": "scroll_lightning",
         "type": "item",
         "name": "Lightning Scroll",
         "maxStackSize": 20,
@@ -15,6 +16,7 @@
         }
     },
     {
+        "id": "scroll_confusion",
         "type": "item",
         "name": "Confusion Scroll",
         "maxStackSize": 20,
@@ -29,6 +31,7 @@
         }
     },
     {
+        "id": "scroll_fireball",
         "type": "item",
         "name": "Fireball Scroll",
         "maxStackSize": 20,

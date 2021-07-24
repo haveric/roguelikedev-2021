@@ -5,6 +5,7 @@ import Extend from "../util/Extend";
 export default class _Entity {
     constructor(args) {
         this.type = args.type || "entity";
+        this.id = args.id;
         this.name = args.name;
         this.componentArray = [];
         this.components = {};

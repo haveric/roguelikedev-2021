@@ -1,5 +1,6 @@
 [
     {
+        "id": "floor",
         "type": "solidtile",
         "name": "Floor",
         "components": {
@@ -9,6 +10,7 @@
         }
     },
     {
+        "id": "floor_grass",
         "type": "solidtile",
         "name": "Grass Floor",
         "components": {
@@ -18,6 +20,7 @@
         }
     },
     {
+        "id": "grass",
         "type": "charactertile",
         "name": "Grass",
         "components": {
@@ -33,6 +36,7 @@
         }
     },
     {
+        "id": "wall",
         "type": "charactertile",
         "name": "Wall",
         "components": {
@@ -43,6 +47,7 @@
         }
     },
     {
+        "id": "door",
         "type": "charactertile",
         "name": "Door",
         "components": {
@@ -54,14 +59,15 @@
             "blocksFov": true,
             "openable": {
                 "isOpen": false,
-                "openEntity": "Open Door",
-                "closedEntity": "Door"
+                "openEntity": "door_open",
+                "closedEntity": "door"
             }
         }
     },
     {
+        "id": "door_open",
         "type": "charactertile",
-        "name": "Open Door",
+        "name": "Door",
         "components": {
             "characterobject": {
                 "letter": "/",
@@ -71,12 +77,13 @@
             "blocksFov": false,
             "openable": {
                 "isOpen": true,
-                "openEntity": "Open Door",
-                "closedEntity": "Door"
+                "openEntity": "door_open",
+                "closedEntity": "door"
             }
         }
     },
     {
+        "id": "stairs_up",
         "type": "charactertile",
         "name": "Stairs Up",
         "components": {
@@ -89,6 +96,7 @@
         }
     },
     {
+        "id": "water",
         "type": "charactertile",
         "name": "Water",
         "components": {
@@ -106,6 +114,7 @@
         }
     },
     {
+        "id": "tree_trunk",
         "type": "charactertile",
         "name": "Tree Trunk",
         "components": {
@@ -118,6 +127,7 @@
         }
     },
     {
+        "id": "tree_leaves",
         "type": "charactertile",
         "name": "Tree Leaves",
         "components": {
@@ -130,6 +140,7 @@
         }
     },
     {
+        "id": "bench",
         "type": "charactertile",
         "name": "Bench",
         "components": {
@@ -148,6 +159,7 @@
         }
     },
     {
+        "id": "bench_stone",
         "type": "charactertile",
         "name": "Stone Bench",
         "components": {
@@ -162,8 +174,9 @@
         }
     },
     {
+        "id": "bench_armrest_right",
         "type": "charactertile",
-        "name": "Bench Armrest Right",
+        "name": "Armrest",
         "components": {
             "characterobject": {
                 "fontName": "mplus",
@@ -182,8 +195,9 @@
         }
     },
     {
+        "id": "bench_armrest_left",
         "type": "charactertile",
-        "name": "Bench Armrest Left",
+        "name": "Armrest",
         "components": {
             "characterobject": {
                 "fontName": "mplus",
@@ -202,6 +216,7 @@
         }
     },
     {
+        "id": "art_backing",
         "type": "solidtile",
         "name": "Backing",
         "components": {
@@ -212,6 +227,7 @@
         }
     },
     {
+        "id": "art",
         "type": "charactertile",
         "name": "Art",
         "components": {
@@ -227,6 +243,7 @@
         }
     },
     {
+        "id": "stone",
         "type": "charactertile",
         "name": "Stone",
         "components": {

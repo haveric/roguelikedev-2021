@@ -437,7 +437,7 @@ export default class GameMap {
                 positionalobject: {x: x, y: y, z: z}
             }
         };
-        engine.player = entityLoader.createFromTemplate('Player', position);
+        engine.player = entityLoader.createFromTemplate('player', position);
         engine.gameMap.actors.push(engine.player);
         const positionalObject = engine.player.getComponent("positionalobject");
         positionalObject.setVisible();

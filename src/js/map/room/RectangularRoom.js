@@ -35,7 +35,7 @@ export default class RectangularRoom {
             for (let j = top; j < bottom; j++) {
                 const previousFloorTile = gameMap.tiles.get(MapLayer.Floor)[i][j];
                 if (!previousFloorTile) {
-                    gameMap.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('Floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
+                    gameMap.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
                 }
 
                 const isVerticalEdge = (i === this.x1 || i === this.x2) && j >= this.y1 && j <= this.y2;
@@ -43,7 +43,7 @@ export default class RectangularRoom {
                 const wallTile = gameMap.tiles.get(MapLayer.Wall)[i][j];
                 if (isHorizontalEdge || isVerticalEdge) {
                     if (!previousFloorTile && !wallTile) {
-                        gameMap.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('Wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        gameMap.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
                     }
                 } else {
                     if (wallTile) {
@@ -65,9 +65,9 @@ export default class RectangularRoom {
                 const position = {components: {positionalobject: {x: x, y: y, z: 1}}};
                 let actor;
                 if (Math.random() < 0.8) {
-                    actor = entityLoader.createFromTemplate('Orc', position);
+                    actor = entityLoader.createFromTemplate('orc', position);
                 } else {
-                    actor = entityLoader.createFromTemplate('Troll', position);
+                    actor = entityLoader.createFromTemplate('troll', position);
                 }
 
                 engine.gameMap.actors.push(actor);
@@ -85,15 +85,15 @@ export default class RectangularRoom {
             let item;
             const chance = Math.random();
             if (chance < .5) {
-                item = entityLoader.createFromTemplate('Health Potion', position);
+                item = entityLoader.createFromTemplate('potion_health', position);
             } else if (chance < .7) {
-                item = entityLoader.createFromTemplate('Lightning Scroll', position);
+                item = entityLoader.createFromTemplate('scroll_lightning', position);
             } else if (chance < .8) {
-                item = entityLoader.createFromTemplate('Fireball Scroll', position);
+                item = entityLoader.createFromTemplate('scroll_fireball', position);
             } else if (chance < .9) {
-                item = entityLoader.createFromTemplate('Confusion Scroll', position);
+                item = entityLoader.createFromTemplate('scroll_confusion', position);
             } else {
-                item = entityLoader.createFromTemplate('Mana Potion', position);
+                item = entityLoader.createFromTemplate('potion_mana', position);
             }
 
             engine.gameMap.items.push(item);
@@ -105,7 +105,7 @@ export default class RectangularRoom {
             const y = MathUtils.randInt(this.y1 + 1, this.y2 -1);
             const amount = MathUtils.randInt(1, 25);
             const position = {amount: amount, components: {positionalobject: {x: x, y: y, z: 1}}};
-            let item = entityLoader.createFromTemplate('Gold', position);
+            let item = entityLoader.createFromTemplate('gold', position);
 
             engine.gameMap.items.push(item);
         }

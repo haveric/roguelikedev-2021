@@ -1,5 +1,6 @@
 [
     {
+        "id": "player",
         "type": "actor",
         "name": "Player",
         "components": {

@@ -1,5 +1,6 @@
 [
     {
+        "id": "tower_shield",
         "type": "item",
         "name": "Tower Shield",
         "components": {

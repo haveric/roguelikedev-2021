@@ -48,22 +48,22 @@ class EntityLoader {
 
     loadTemplate(entities) {
         for (const entity of entities) {
-            const name = entity.name;
-            if (this.templates.has(name)) {
-                console.error("Template for entity '" + name + "' already exists.");
+            const id = entity.id;
+            if (this.templates.has(id)) {
+                console.error("Template for entity id '" + id + "' already exists.");
             } else {
-                this.templates.set(name, JSON.stringify(entity));
+                this.templates.set(id, JSON.stringify(entity));
             }
         }
     }
 
-    createFromTemplate(name, args = {}) {
-        if (this.templates.has(name)) {
-            const template = this.templates.get(name);
+    createFromTemplate(id, args = {}) {
+        if (this.templates.has(id)) {
+            const template = this.templates.get(id);
 
             return this.create(template, args);
         } else {
-            console.error("Json template for " + name + " is missing.");
+            console.error("Json template for id '" + id + "' is missing.");
         }
 
         return null;
