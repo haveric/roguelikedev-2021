@@ -30,7 +30,20 @@ class EntityLoader {
     }
 
     create(json, args = {}) {
-        const parsedJson = JSON.parse(json);
+        let parsedJson;
+        if (typeof json === 'object') {
+            parsedJson = json;
+        } else {
+            parsedJson = JSON.parse(json);
+        }
+
+        if (parsedJson.extends !== undefined) {
+            const template = JSON.parse(this.templates.get(parsedJson.extends));
+
+            delete parsedJson["extends"];
+            return this.create(Extend.deep(template, parsedJson), args);
+        }
+
         const entity = this.types.get(parsedJson.type);
         return new entity.constructor(Extend.deep(parsedJson, args));
     }

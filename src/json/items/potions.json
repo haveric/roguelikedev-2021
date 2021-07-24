@@ -1,12 +1,20 @@
 [
     {
-        "id": "potion_health",
+        "id": "potion",
         "type": "item",
-        "name": "Health Potion",
         "maxStackSize": 20,
         "components": {
             "characterobject": {
-                "letter": "!",
+                "letter": "!"
+            }
+        }
+    },
+    {
+        "id": "potion_health",
+        "extends": "potion",
+        "name": "Health Potion",
+        "components": {
+            "characterobject": {
                 "color": "#990f02"
             },
             "healingConsumable": {
@@ -16,12 +24,10 @@
     },
     {
         "id": "potion_mana",
-        "type": "item",
+        "extends": "potion",
         "name": "Mana Potion",
-        "maxStackSize": 20,
         "components": {
             "characterobject": {
-                "letter": "!",
                 "color": "#020f99"
             }
         }

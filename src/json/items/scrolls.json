@@ -1,12 +1,20 @@
 [
     {
-        "id": "scroll_lightning",
+        "id": "scroll",
         "type": "item",
-        "name": "Lightning Scroll",
         "maxStackSize": 20,
         "components": {
             "characterobject": {
-                "letter": "~",
+                "letter": "~"
+            }
+        }
+    },
+    {
+        "id": "scroll_lightning",
+        "extends": "scroll",
+        "name": "Lightning Scroll",
+        "components": {
+            "characterobject": {
                 "color": "#ffff00"
             },
             "damageNearestConsumable": {
@@ -17,12 +25,10 @@
     },
     {
         "id": "scroll_confusion",
-        "type": "item",
+        "extends": "scroll",
         "name": "Confusion Scroll",
-        "maxStackSize": 20,
         "components": {
             "characterobject": {
-                "letter": "~",
                 "color": "#cf3fff"
             },
             "confusionConsumable": {
@@ -32,12 +38,10 @@
     },
     {
         "id": "scroll_fireball",
-        "type": "item",
+        "extends": "scroll",
         "name": "Fireball Scroll",
-        "maxStackSize": 20,
         "components": {
             "characterobject": {
-                "letter": "~",
                 "color": "#ff0000"
             },
             "aoeDamageConsumable": {
