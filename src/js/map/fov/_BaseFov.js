@@ -5,6 +5,7 @@ export default class BaseFov {
         this.previousVisibleObjects = [];
         this.visibleObjects = [];
         this.visibleActors = [];
+        this.visibleItems = [];
         this.oldObjects = [];
         this.newObjects = [];
         this.left = 0;
@@ -17,6 +18,7 @@ export default class BaseFov {
         this.previousVisibleObjects = [];
         this.visibleObjects = [];
         this.visibleActors = [];
+        this.visibleItems = [];
         this.oldObjects = [];
         this.newObjects = [];
     }
@@ -25,6 +27,7 @@ export default class BaseFov {
         this.previousVisibleObjects = this.visibleObjects;
         this.visibleObjects = [];
         this.visibleActors = [];
+        this.visibleItems = [];
         this.oldObjects = [];
         this.newObjects = [];
 
@@ -47,6 +50,12 @@ export default class BaseFov {
     addVisibleActor(object) {
         if (this.visibleActors.indexOf(object) === -1) {
             this.visibleActors.push(object);
+        }
+    }
+
+    addVisibleItem(object) {
+        if (this.visibleItems.indexOf(object) === -1) {
+            this.visibleItems.push(object);
         }
     }
 
@@ -82,6 +91,7 @@ export default class BaseFov {
                 if (positionalObject) {
                     if (positionalObject.x === x && positionalObject.y === y) {
                         this.addVisibleObject(item);
+                        this.addVisibleItem(item);
                     }
                 }
             }

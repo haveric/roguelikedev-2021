@@ -1,5 +1,15 @@
 [
     {
+        "id": "base_mplus_actor",
+        "type": "actor",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "zOffset": 0.1
+            }
+        }
+    },
+    {
         "id": "orc",
         "type": "actor",
         "name": "Orc",
@@ -88,5 +98,56 @@
             },
             "aiMeleeChase": {}
         }
+    },
+    {
+        "id": "snake",
+        "extends": "base_mplus_actor",
+        "name": "Snake",
+        "components": {
+            "characterobject": {
+                "letter": "〰",
+                "color": "#ff0000"
+            },
+            "faction": {
+                "factions": "monsters",
+                "enemies": "player"
+            },
+            "fighter": {
+                "hp": 6,
+                "defense": 0,
+                "power": 6
+            },
+            "aiMeleeChase": {}
+        }
+    },
+    {
+        "id": "gelatinous_cube",
+        "extends": "base_mplus_actor",
+        "name": "Gelatinous Cube",
+        "components": {
+            "characterobject": {
+                "letter": "■",
+                "color": "#90EE90",
+                "scale": 0.9,
+                "xRot": 0,
+                "yRot": 0,
+                "zRot": 0,
+                "opacity": 0.65
+            },
+            "faction": {
+                "factions": "monsters",
+                "enemies": "player"
+            },
+            "fighter": {
+                "hp": 40,
+                "defense": 2,
+                "power": 3
+            },
+            "aiGelatinousCube": {},
+            "inventory": {
+                "capacity": -1
+            }
+        }
     }
+
 ]

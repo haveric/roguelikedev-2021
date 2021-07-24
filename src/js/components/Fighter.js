@@ -158,6 +158,11 @@ export default class Fighter extends _Component {
             blocksMovement.blocksMovement = false;
         }
 
+        const inventory = entity.getComponent("inventory");
+        if (inventory) {
+            inventory.dropAll();
+        }
+
         const ai = entity.getComponent("ai");
         if (ai) {
             const aiType = ai.type;

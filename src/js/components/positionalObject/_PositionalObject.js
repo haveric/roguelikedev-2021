@@ -21,6 +21,7 @@ export default class _PositionalObject extends _Component {
         this.y = 0;
         this.z = 0;
         this.color = 0xffffff;
+        this.opacity = 1;
         this.xRot = 0;
         this.yRot = 0;
         this.zRot = 0;
@@ -34,6 +35,10 @@ export default class _PositionalObject extends _Component {
             this.y = positionalobject.y || 0;
             this.z = positionalobject.z || 0;
             this.color = positionalobject.color || 0xffffff;
+            if (positionalobject.opacity !== undefined) {
+                this.opacity = positionalobject.opacity;
+            }
+
             this.scale = this.parseRand(positionalobject.scale, 1);
             this.xRot = this.parseRand(positionalobject.xRot, 0);
             this.yRot = this.parseRand(positionalobject.yRot, 0);
@@ -69,6 +74,7 @@ export default class _PositionalObject extends _Component {
             return {
                 positionalobject: {
                     color: this.color,
+                    opacity: this.opacity,
                     scale: this.scale
                 }
             }
@@ -85,6 +91,7 @@ export default class _PositionalObject extends _Component {
                     yOffset: this.yOffset,
                     zOffset: this.zOffset,
                     color: this.color,
+                    opacity: this.opacity,
                     scale: this.scale
                 }
             }
@@ -113,16 +120,17 @@ export default class _PositionalObject extends _Component {
         }
     }
 
-    setTransparency(opacity) {
+    setTransparency(opacity = 1) {
         this.transparency = opacity;
 
+        const actualOpacity = opacity * this.opacity;
         for (const mesh of this.meshes) {
-            if (opacity < 1) {
+            if (actualOpacity < 1) {
                 mesh.material.transparent = true;
             } else {
                 mesh.material.transparent = false;
             }
-            mesh.material.opacity = opacity;
+            mesh.material.opacity = actualOpacity;
         }
     }
 
@@ -208,4 +216,15 @@ export default class _PositionalObject extends _Component {
         return Math.max(Math.abs(this.x - other.x), Math.abs(this.y - other.y));
     }
 
+    /**
+     *
+     * @param {_PositionalObject} other
+     */
+    isSamePosition(other) {
+        if (!other) {
+            return false;
+        }
+
+        return this.x === other.x && this.y === other.y && this.z === other.z;
+    }
 }

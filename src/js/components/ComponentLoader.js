@@ -18,6 +18,7 @@ import ConfusionConsumable from "./consumable/ConfusionConsumable";
 import AIConfusedEnemy from "./ai/AIConfusedEnemy";
 import AOEDamageConsumable from "./consumable/AOEDamageConsumable";
 import ManaConsumable from "./consumable/ManaConsumable";
+import AIGelatinousCube from "./ai/AIGelatinousCube";
 
 class ComponentLoader {
     constructor() {
@@ -25,6 +26,7 @@ class ComponentLoader {
 
         this.load(new AIConfusedEnemy());
         this.load(new AIDead());
+        this.load(new AIGelatinousCube());
         this.load(new AIMeleeChase());
         this.load(new AOEDamageConsumable());
         this.load(new ConfusionConsumable());

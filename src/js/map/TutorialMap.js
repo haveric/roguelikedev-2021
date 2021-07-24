@@ -124,6 +124,8 @@ export default class TutorialMap extends GameMap {
         }
 
         this.addPlayer(21, 3);
+        engine.gameMap.items.push(entityLoader.createFromTemplate('chest', {components: {positionalobject: {x: 19, y: 3, z: 1}}}));
+        engine.gameMap.items.push(entityLoader.createFromTemplate('chest_lid', {components: {positionalobject: {x: 19, y: 3, z: 2}}}));
 
         engine.gameMap.actors.push(entityLoader.createFromTemplate('ant', {components: {positionalobject: {x: 27, y: 4, z: 1}}}));
         engine.gameMap.actors.push(entityLoader.createFromTemplate('dragon_red', {components: {positionalobject: {x: 18, y: 4, z: 1}}}));

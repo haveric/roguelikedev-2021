@@ -62,8 +62,15 @@ export default class Inventory extends _Component {
 
         const originalAmount = item.amount;
         let amountToAdd = item.amount;
+
+        let partialMax;
+        if (this.capacity === -1) {
+            partialMax = this.items.length;
+        } else {
+            partialMax = this.capacity;
+        }
         // Add partial stack
-        for (let i = 0; i < this.capacity; i++) {
+        for (let i = 0; i < partialMax; i++) {
             const inventoryItem = this.items[i];
             if (inventoryItem) {
                 // TODO: Use a better method of determining equality
@@ -81,11 +88,16 @@ export default class Inventory extends _Component {
             }
         }
 
+
         // Add full stack
-        for (let i = 0; i < this.capacity; i++) {
-            if (!this.items[i]) {
-                this.items[i] = item;
-                return true;
+        if (this.capacity === -1) {
+            this.items[this.items.length] = item;
+        } else {
+            for (let i = 0; i < this.capacity; i++) {
+                if (!this.items[i]) {
+                    this.items[i] = item;
+                    return true;
+                }
             }
         }
 
@@ -102,7 +114,9 @@ export default class Inventory extends _Component {
 
     remove(item) {
         const index = this.items.indexOf(item);
-        this.items.splice(index, 1, null);
+        if (index > -1) {
+            this.items.splice(index, 1, null);
+        }
     }
 
     move(fromIndex, toIndex) {
@@ -111,6 +125,19 @@ export default class Inventory extends _Component {
 
             this.items[fromIndex] = this.items[toIndex];
             this.items[toIndex] = fromItem;
+        }
+    }
+
+    dropAll() {
+        for (const item of this.items) {
+            this.drop(item);
+        }
+
+        const gold = this.gold;
+        if (gold > 0) {
+            let goldItem = entityLoader.createFromTemplate('gold');
+            goldItem.amount = gold;
+            this.drop(goldItem);
         }
     }
 

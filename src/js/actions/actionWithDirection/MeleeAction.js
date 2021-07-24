@@ -110,9 +110,9 @@ export default class MeleeAction extends ActionWithDirection {
                     x: xRand,
                     y: yRand,
                     z: zRand,
-                    xRot: position.xRot,
-                    yRot: position.yRot,
-                    zRot: position.zRot,
+                    xRot: .5,
+                    yRot: .25,
+                    zRot: 0,
                     color: attackColor,
                     scale: .05,
                     size: .5

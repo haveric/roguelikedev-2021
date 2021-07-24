@@ -21,7 +21,6 @@ export default class PickupAction extends Action {
                     engine.gameMap.items.splice(itemIndex, 1);
                     itemPosition.teardown();
 
-
                     if (this.isPlayer()) {
                         inventory.populateInventory(engine.player);
 

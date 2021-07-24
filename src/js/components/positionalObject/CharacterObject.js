@@ -22,10 +22,11 @@ export default class CharacterObject extends _PositionalObject {
         this.centered = true;
 
         if (hasComponent) {
-            this.fontName = args.components.characterobject.fontName || "helvetiker";
-            this.letter = args.components.characterobject.letter || '@';
-            if (args.components.characterobject.centered !== undefined) {
-                this.centered = args.components.characterobject.centered;
+            const characterobject = args.components.characterobject;
+            this.fontName = characterobject.fontName || "helvetiker";
+            this.letter = characterobject.letter || '@';
+            if (characterobject.centered !== undefined) {
+                this.centered = characterobject.centered;
             }
         }
 
@@ -97,6 +98,8 @@ export default class CharacterObject extends _PositionalObject {
         if (this.centered) {
             this.geometry.center();
         }
+
+        this.setTransparency();
 
         this.updateObjectPosition();
         this.object.parentEntity = this.parentEntity;
