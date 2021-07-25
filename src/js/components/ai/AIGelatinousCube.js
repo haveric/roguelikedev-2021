@@ -258,24 +258,26 @@ export default class AIGelatinousCube extends AI {
 
                 const tweenAttack = new TWEEN.Tween(currentPosition).to(attackPosition, 100);
                 tweenAttack.onUpdate(function () {
-                    if (!position.hasObject()) {
+                    if (position.hasObject()) {
+                        position.object.position.x = currentPosition.x;
+                        position.object.position.y = currentPosition.y;
+                        position.object.position.z = currentPosition.z;
+                        engine.needsMapUpdate = true;
+                    } else {
                         this.stop();
                     }
-                    position.object.position.x = currentPosition.x;
-                    position.object.position.y = currentPosition.y;
-                    position.object.position.z = currentPosition.z;
-                    engine.needsMapUpdate = true;
                 });
 
                 const tweenReturn = new TWEEN.Tween(currentPosition).to(originalPosition, 100);
                 tweenReturn.onUpdate(function () {
-                    if (!position.hasObject()) {
+                    if (position.hasObject()) {
+                        position.object.position.x = currentPosition.x;
+                        position.object.position.y = currentPosition.y;
+                        position.object.position.z = currentPosition.z;
+                        engine.needsMapUpdate = true;
+                    } else {
                         this.stop();
                     }
-                    position.object.position.x = currentPosition.x;
-                    position.object.position.y = currentPosition.y;
-                    position.object.position.z = currentPosition.z;
-                    engine.needsMapUpdate = true;
                 });
 
                 tweenAttack.chain(tweenReturn);
