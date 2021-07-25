@@ -130,7 +130,9 @@ export default class Inventory extends _Component {
 
     dropAll() {
         for (const item of this.items) {
-            this.drop(item);
+            if (item) {
+                this.drop(item);
+            }
         }
 
         const gold = this.gold;
@@ -142,20 +144,22 @@ export default class Inventory extends _Component {
     }
 
     drop(item) {
-        const parentPosition = this.parentEntity.getComponent("positionalobject");
-        const position = item.getComponent("positionalobject");
-        position.x = parentPosition.x;
-        position.y = parentPosition.y;
-        position.z = parentPosition.z;
-        item.parent = null;
-        engine.gameMap.items.push(item);
-        position.setVisible();
+        if (item) {
+            const parentPosition = this.parentEntity.getComponent("positionalobject");
+            const position = item.getComponent("positionalobject");
+            position.x = parentPosition.x;
+            position.y = parentPosition.y;
+            position.z = parentPosition.z;
+            item.parent = null;
+            engine.gameMap.items.push(item);
+            position.setVisible();
 
-        if (this.isPlayer()) {
-            messageConsole.text("You dropped the " + item.name).build();
+            if (this.isPlayer()) {
+                messageConsole.text("You dropped the " + item.name).build();
+            }
+
+            this.remove(item);
         }
-
-        this.remove(item);
     }
 
     onEntityDeath() {
