@@ -44,7 +44,13 @@ class Details {
 
             const position = actor.getComponent("positionalobject");
             if (position && position.isVisible() && x === position.x && y === position.y && Math.abs(z - position.z) < 2) {
-                text += "<span class='details__line'><span style='color:" + position.color + "'>" + position.letter + "</span>: " + actor.name + "</span>";
+                text += "<span class='details__line'><span style='color:" + position.color + "'>" + position.letter + "</span>: " + actor.name;
+
+                const fighter = actor.getComponent("fighter");
+                if (fighter) {
+                    text += " " + fighter.getDamageDescription();
+                }
+                text += "</span>";
             }
         }
 
@@ -66,7 +72,7 @@ class Details {
         }
 
 
-        let nearby = new Map();
+        let nearby = [];
         for (const actor of engine.fov.visibleActors) {
             if (actor === engine.player || !actor.isAlive()) {
                 continue;
@@ -74,30 +80,27 @@ class Details {
 
             const position = actor.getComponent("positionalobject");
             if (position) {
-                const name = "<span style='color:" + position.color + "'>" + position.letter + "</span>: " + actor.name;
+                nearby.push(actor);
+            }
+        }
 
-                if (nearby.has(name)) {
-                    const num = nearby.get(name);
-                    nearby.set(name, num + 1);
-                } else {
-                    nearby.set(name, 1);
+        if (nearby.length > 0) {
+            text += "<span class='details__line details__header'>Nearby:</span>";
+
+            for (const actor of nearby) {
+                const position = actor.getComponent("positionalobject");
+                if (position) {
+                    text += "<span class='details__line'>"
+                    text += "<span style='color:" + position.color + "'>" + position.letter + "</span>: " + actor.name;
+
+                    const fighter = actor.getComponent("fighter");
+                    if (fighter) {
+                        text += " " + fighter.getDamageDescription();
+                    }
+
+                    text += "</span>";
                 }
             }
-        }
-
-        if (nearby.size > 0) {
-            text += "<span class='details__line details__header'>Nearby:</span>";
-        }
-        for (const entry of nearby.entries()) {
-            const nameString = entry[0];
-            const count = entry[1];
-            text += "<span class='details__line'>" + nameString;
-
-            if (count > 1) {
-                text += " x" + count;
-            }
-
-            text += "</span>";
         }
 
         this.dom.innerHTML = text;

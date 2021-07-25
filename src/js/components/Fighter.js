@@ -27,6 +27,7 @@ export default class Fighter extends _Component {
             const fighter = args.components.fighter;
             if (fighter.hp !== undefined) {
                 this.hp = fighter.hp;
+                this.maxHp = this.hp;
             }
 
             if (fighter.maxHp !== undefined) {
@@ -195,5 +196,26 @@ export default class Fighter extends _Component {
             const newAI = new AIDead(aiArgs);
             entity.setComponent(newAI);
         }
+    }
+
+    getDamageDescription() {
+        const percent = (this.hp / this.maxHp) * 100;
+        let description = "";
+
+        if (percent >= 90 && percent < 100) {
+            description = "(Barely Scratched)";
+        } else if (percent >= 75 && percent < 90) {
+            description = "(Lightly Damaged)";
+        } else if (percent >= 50 && percent < 75) {
+            description = "(Damaged)";
+        } else if (percent >= 25 && percent < 50) {
+            description = "(Very Damaged)";
+        } else if (percent >= 10 && percent < 25) {
+            description = "(Extremely Damaged)";
+        } else if (percent > 0 && percent < 10) {
+            description = "(Nearly Dead)";
+        }
+
+        return description;
     }
 }
