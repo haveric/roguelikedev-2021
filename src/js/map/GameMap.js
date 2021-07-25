@@ -177,6 +177,10 @@ export default class GameMap {
             sceneState.updateCameraPosition(engine.player);
 
             this.updatePlayerUI();
+
+            for (const actor of this.actors) {
+                actor.callEvent("onPostLoad");
+            }
         }
     }
 

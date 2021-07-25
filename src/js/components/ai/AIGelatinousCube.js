@@ -295,4 +295,21 @@ export default class AIGelatinousCube extends AI {
             item.stopCombatAnimations();
         }
     }
+
+    onPostLoad() {
+        // Re-add items that have been picked up
+        const entity = this.parentEntity;
+        const entityPosition = entity.getComponent("positionalobject");
+        if (entityPosition) {
+            // Pickup all items in spot
+            for (const item of engine.gameMap.items) {
+                const itemPosition = item.getComponent("positionalobject");
+                if (entityPosition.isSamePosition(itemPosition)) {
+                    if (this.floatingItems.indexOf(item) === -1) {
+                        this.floatingItems.push(item);
+                    }
+                }
+            }
+        }
+    }
 }
