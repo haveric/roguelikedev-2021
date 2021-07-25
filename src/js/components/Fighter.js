@@ -177,6 +177,7 @@ export default class Fighter extends _Component {
         } else {
             messageConsole.text(entity.name + " dies!", "#ffa030");
         }
+        messageConsole.build();
 
         entity.callEvent("onEntityDeath");
 
@@ -194,7 +195,5 @@ export default class Fighter extends _Component {
             const newAI = new AIDead(aiArgs);
             entity.setComponent(newAI);
         }
-
-        messageConsole.build();
     }
 }
