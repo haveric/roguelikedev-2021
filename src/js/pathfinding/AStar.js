@@ -64,7 +64,7 @@ export default class AStar {
             // Find all neighbors for the current node.
             const neighbors = graph.neighbors(currentNode);
 
-            for (var i = 0, il = neighbors.length; i < il; ++i) {
+            for (let i = 0, il = neighbors.length; i < il; ++i) {
                 let neighbor = neighbors[i];
 
                 if (neighbor.closed || neighbor.isWall()) {

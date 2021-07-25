@@ -2,10 +2,6 @@ import ActionWithDirection from "./_ActionWithDirection";
 import UnableToPerformAction from "../UnableToPerformAction";
 import engine from "../../Engine";
 import messageConsole from "../../ui/MessageConsole";
-import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
-import {MathUtils, Vector3} from "three";
-import CharacterObject from "../../components/positionalObject/CharacterObject";
-import sceneState from "../../SceneState";
 
 export default class MeleeAction extends ActionWithDirection {
     constructor(entity, dx, dy, dz) {

@@ -1,6 +1,5 @@
 import BaseFov from "./_BaseFov";
 import FovSlope from "./FovSlope";
-import MapLayer from "../MapLayer";
 import engine from "../../Engine";
 
 /**
