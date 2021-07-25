@@ -96,7 +96,8 @@ export default class _PositionalObject extends _Component {
                     zOffset: this.zOffset,
                     color: this.color,
                     opacity: this.opacity,
-                    scale: this.scale
+                    scale: this.scale,
+                    size: this.size
                 }
             }
         }
@@ -196,12 +197,13 @@ export default class _PositionalObject extends _Component {
     }
 
     move(x, y = 0, z = 0) {
-        this.parentEntity.callEvent("onEntityMove");
         this.x += x;
         this.y += y;
         this.z += z;
 
         this.updateObjectPosition();
+
+        this.parentEntity.callEvent("onEntityMove");
     }
 
     /**

@@ -21,24 +21,34 @@ import ManaConsumable from "./consumable/ManaConsumable";
 import AIGelatinousCube from "./ai/AIGelatinousCube";
 import AIPlayer from "./ai/AIPlayer";
 import ExplodeOnDeath from "./ExplodeOnDeath";
+import AttachedItems from "./AttachedItems";
 
 class ComponentLoader {
     constructor() {
         this.types = new Map();
 
+        // AI
         this.load(new AIConfusedEnemy());
         this.load(new AIDead());
         this.load(new AIGelatinousCube());
         this.load(new AIMeleeChase());
         this.load(new AIPlayer());
+
+        // Consumables
         this.load(new AOEDamageConsumable());
         this.load(new ConfusionConsumable());
         this.load(new DamageNearestConsumable());
         this.load(new HealingConsumable());
         this.load(new ManaConsumable());
+
+        // Positionalobjects
+        this.load(new CharacterObject());
+        this.load(new SolidObject());
+
+        // Default components
+        this.load(new AttachedItems());
         this.load(new BlocksFov());
         this.load(new BlocksMovement());
-        this.load(new CharacterObject());
         this.load(new ExplodeOnDeath());
         this.load(new Faction());
         this.load(new Fighter());
@@ -46,7 +56,6 @@ class ComponentLoader {
         this.load(new Inventory());
         this.load(new Openable());
         this.load(new Remnant());
-        this.load(new SolidObject());
         this.load(new VisibilityModifier());
         this.load(new Walkable());
     }

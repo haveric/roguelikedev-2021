@@ -302,6 +302,8 @@ export default class GameMap {
                     object.resetColor();
                 }
             }
+
+            newObject.callEvent("onAddToScene");
         }
 
         const visibleObjects = fov.visibleObjects;

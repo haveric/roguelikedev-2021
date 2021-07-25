@@ -144,7 +144,8 @@
                 "power": 3
             },
             "aiGelatinousCube": {},
-            "explodeOnDeath": {}
+            "explodeOnDeath": {},
+            "attachedItems": {}
         }
     },
     {

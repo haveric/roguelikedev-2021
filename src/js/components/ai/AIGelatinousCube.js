@@ -19,8 +19,6 @@ export default class AIGelatinousCube extends AI {
 
         this.fov = new AdamMilazzoFov();
         this.chaseLocation = null;
-
-        this.floatingItems = [];
     }
 
     save() {
@@ -147,157 +145,104 @@ export default class AIGelatinousCube extends AI {
 
             performAction.perform();
 
-            // Pickup all items in spot
-            for (const item of this.fov.visibleItems) {
-                const itemPosition = item.getComponent("positionalobject");
-                if (entityPosition.isSamePosition(itemPosition)) {
-                    if (this.floatingItems.indexOf(item) === -1) {
-                        this.floatingItems.push(item);
+            const attachedItems = entity.getComponent("attachedItems");
+            if (attachedItems) {
+                // Pickup all items in spot
+                for (const item of this.fov.visibleItems) {
+                    const itemPosition = item.getComponent("positionalobject");
+                    if (entityPosition.isSamePosition(itemPosition)) {
+                        if (attachedItems.add(item)) {
+                            const itemIndex = engine.gameMap.items.indexOf(item);
+                            if (itemIndex > -1) {
+                                engine.gameMap.items.splice(itemIndex, 1);
+                            }
 
-                        const position = {
-                            xOffset: itemPosition.xOffset,
-                            yOffset: itemPosition.yOffset,
-                            zOffset: itemPosition.zOffset,
-                            xRot: itemPosition.xRot,
-                            yRot: itemPosition.yRot,
-                            zRot: itemPosition.zRot
-                        }
+                            const fovItemIndex = this.fov.visibleItems.indexOf(item);
+                            if (fovItemIndex > -1) {
+                                this.fov.visibleItems.splice(fovItemIndex, 1);
+                            }
 
-                        const finalPosition = {
-                            xOffset: position.xOffset + MathUtils.randFloat(0, .1),
-                            yOffset: position.yOffset + MathUtils.randFloat(0, .1),
-                            zOffset: position.zOffset + MathUtils.randFloat(.2, .7),
-                            xRot: MathUtils.randFloat(0, 2),
-                            yRot: MathUtils.randFloat(0, 2),
-                            zRot: MathUtils.randFloat(0, 2)
+                            const position = {
+                                xOffset: itemPosition.xOffset,
+                                yOffset: itemPosition.yOffset,
+                                zOffset: itemPosition.zOffset,
+                                xRot: itemPosition.xRot,
+                                yRot: itemPosition.yRot,
+                                zRot: itemPosition.zRot
+                            }
+
+                            const finalPosition = {
+                                xOffset: position.xOffset + MathUtils.randFloat(0, .1),
+                                yOffset: position.yOffset + MathUtils.randFloat(0, .1),
+                                zOffset: position.zOffset + MathUtils.randFloat(.2, .7),
+                                xRot: MathUtils.randFloat(0, 2),
+                                yRot: MathUtils.randFloat(0, 2),
+                                zRot: MathUtils.randFloat(0, 2)
+                            }
+                            const tween = new TWEEN.Tween(position).to(finalPosition, 200);
+                            tween.start();
+                            tween.onUpdate(function() {
+                                itemPosition.xRot = position.xRot;
+                                itemPosition.yRot = position.yRot;
+                                itemPosition.zRot = position.zRot;
+                                itemPosition.xOffset = position.xOffset;
+                                itemPosition.yOffset = position.yOffset;
+                                itemPosition.zOffset = position.zOffset;
+                                itemPosition.updateObjectPosition();
+                                engine.needsMapUpdate = true;
+                            });
                         }
-                        const tween = new TWEEN.Tween(position).to(finalPosition, 200);
-                        tween.start();
-                        tween.onUpdate(function() {
-                            itemPosition.xRot = position.xRot;
-                            itemPosition.yRot = position.yRot;
-                            itemPosition.zRot = position.zRot;
-                            itemPosition.xOffset = position.xOffset;
-                            itemPosition.yOffset = position.yOffset;
-                            itemPosition.zOffset = position.zOffset;
-                            itemPosition.updateObjectPosition();
-                            engine.needsMapUpdate = true;
-                        });
                     }
-                }
-            }
-
-            for (const item of this.floatingItems) {
-                const itemPosition = item.getComponent("positionalobject");
-                if (itemPosition) {
-                    itemPosition.x = entityPosition.x;
-                    itemPosition.y = entityPosition.y;
-                    itemPosition.updateObjectPosition();
-                    engine.needsMapUpdate = true;
                 }
             }
         }
     }
 
     onEntityDeath() {
-        for (const item of this.floatingItems) {
-            const itemPosition = item.getComponent("positionalobject");
-            if (itemPosition) {
-                const template = entityLoader.createFromTemplate(item.id);
-                const templatePosition = template.getComponent("positionalobject");
-                const position = {
-                    xOffset: itemPosition.xOffset,
-                    yOffset: itemPosition.yOffset,
-                    zOffset: itemPosition.zOffset,
-                    xRot: itemPosition.xRot,
-                    yRot: itemPosition.yRot
-                }
-
-                const finalPosition = {
-                    xOffset: templatePosition.xOffset,
-                    yOffset: templatePosition.yOffset,
-                    zOffset: templatePosition.zOffset,
-                    xRot: templatePosition.xRot,
-                    yRot: templatePosition.yRot
-                }
-
-                const tween = new TWEEN.Tween(position).to(finalPosition, 200);
-                tween.start();
-                tween.onUpdate(function () {
-                    itemPosition.xRot = position.xRot;
-                    itemPosition.yRot = position.yRot;
-                    itemPosition.xOffset = position.xOffset;
-                    itemPosition.yOffset = position.yOffset;
-                    itemPosition.zOffset = position.zOffset;
-                    itemPosition.updateObjectPosition();
-                    engine.needsMapUpdate = true;
-                });
-            }
-        }
-    }
-
-    onMeleeAttack(blockingActor) {
         const entity = this.parentEntity;
-        this.animateEntity(entity, blockingActor);
+        const attachedItems = entity.getComponent("attachedItems");
+        if (attachedItems) {
+            for (const item of attachedItems.items) {
+                engine.gameMap.items.push(item);
 
-        for (const item of this.floatingItems) {
-            this.animateEntity(item, blockingActor);
-        }
-    }
-
-    animateEntity(entity, blockingActor) {
-        const position = entity.getComponent("positionalobject");
-        if (position && position.hasObject()) {
-            entity.stopCombatAnimations();
-
-            const blockingPosition = blockingActor.getComponent("positionalobject");
-            if (blockingPosition && blockingPosition.hasObject()) {
-                const originalPosition = new Vector3(position.object.position.x, position.object.position.y, position.object.position.z);
-                const attackPosition = new Vector3((position.object.position.x + blockingPosition.object.position.x) / 2, (position.object.position.y + blockingPosition.object.position.y) / 2, (position.object.position.z + blockingPosition.object.position.z) / 2);
-                const currentPosition = originalPosition.clone();
-
-                const tweenAttack = new TWEEN.Tween(currentPosition).to(attackPosition, 100);
-                tweenAttack.onUpdate(function () {
-                    if (position.hasObject()) {
-                        position.object.position.x = currentPosition.x;
-                        position.object.position.y = currentPosition.y;
-                        position.object.position.z = currentPosition.z;
-                        engine.needsMapUpdate = true;
-                    } else {
-                        this.stop();
+                const itemPosition = item.getComponent("positionalobject");
+                if (itemPosition) {
+                    const template = entityLoader.createFromTemplate(item.id);
+                    const templatePosition = template.getComponent("positionalobject");
+                    const position = {
+                        xOffset: itemPosition.xOffset,
+                        yOffset: itemPosition.yOffset,
+                        zOffset: itemPosition.zOffset,
+                        xRot: itemPosition.xRot,
+                        yRot: itemPosition.yRot
                     }
-                });
 
-                const tweenReturn = new TWEEN.Tween(currentPosition).to(originalPosition, 100);
-                tweenReturn.onUpdate(function () {
-                    if (position.hasObject()) {
-                        position.object.position.x = currentPosition.x;
-                        position.object.position.y = currentPosition.y;
-                        position.object.position.z = currentPosition.z;
-                        engine.needsMapUpdate = true;
-                    } else {
-                        this.stop();
+                    const finalPosition = {
+                        xOffset: templatePosition.xOffset,
+                        yOffset: templatePosition.yOffset,
+                        zOffset: templatePosition.zOffset,
+                        xRot: templatePosition.xRot,
+                        yRot: templatePosition.yRot
                     }
-                });
 
-                tweenAttack.chain(tweenReturn);
-                tweenAttack.start();
-
-                entity.combatTweens.push(tweenAttack);
-                entity.combatTweens.push(tweenReturn);
+                    const tween = new TWEEN.Tween(position).to(finalPosition, 200);
+                    tween.start();
+                    tween.onUpdate(function () {
+                        itemPosition.xRot = position.xRot;
+                        itemPosition.yRot = position.yRot;
+                        itemPosition.xOffset = position.xOffset;
+                        itemPosition.yOffset = position.yOffset;
+                        itemPosition.zOffset = position.zOffset;
+                        itemPosition.updateObjectPosition();
+                        engine.needsMapUpdate = true;
+                    });
+                }
             }
+
+            attachedItems.clearItems();
         }
     }
-
-    onEntityMove() {
-        const entity = this.parentEntity;
-        entity.stopCombatAnimations();
-
-        for (const item of this.floatingItems) {
-            item.stopCombatAnimations();
-        }
-    }
-
+/*
     onPostLoad() {
         // Re-add items that have been picked up
         const entity = this.parentEntity;
@@ -314,4 +259,5 @@ export default class AIGelatinousCube extends AI {
             }
         }
     }
+ */
 }

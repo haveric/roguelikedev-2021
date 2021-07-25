@@ -3,7 +3,6 @@ import sceneState from "./SceneState";
 import DefaultPlayerEventHandler from "./event/DefaultPlayerEventHandler";
 import AdamMilazzoFov from "./map/fov/AdamMilazzoFov";
 import SimpleFov from "./map/fov/SimpleFov";
-import details from "./ui/Details";
 import messageConsole from "./ui/MessageConsole";
 import NoAction from "./actions/NoAction";
 
