@@ -26,4 +26,8 @@ export default class BlocksMovement extends _Component {
             blocksMovement: this.blocksMovement
         }
     }
+
+    onEntityDeath() {
+        this.blocksMovement = false;
+    }
 }

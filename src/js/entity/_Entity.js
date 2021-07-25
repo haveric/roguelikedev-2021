@@ -11,6 +11,7 @@ export default class _Entity {
         this.componentArray = [];
         this.components = {};
         this.parent = null;
+        this.combatTweens = [];
 
         if (args.components) {
             this.loadComponents(args, args.components);
@@ -83,6 +84,18 @@ export default class _Entity {
         return new _Entity(this.save());
     }
 
+    callEvent(event, args) {
+        for (const component of this.componentArray) {
+            if (component[event]) {
+                component[event](args);
+            }
+        }
+
+        if (this[event]) {
+            this[event](args);
+        }
+    }
+
     getComponentDescriptions() {
         let description = "";
         for (const component of this.componentArray) {
@@ -92,13 +105,18 @@ export default class _Entity {
         return description;
     }
 
-    stopAnimations() {
-        if (this.tweenAttack) {
-            this.tweenAttack.stop();
+    stopCombatAnimations() {
+        for (const tween of this.combatTweens) {
+            tween.stop();
         }
 
-        if (this.tweenReturn) {
-            this.tweenReturn.stop();
+        const position = this.getComponent("positionalobject");
+        if (position) {
+            position.updateObjectPosition();
         }
+    }
+
+    onEntityDeath() {
+        this.name = "Remains of " + this.name;
     }
 }

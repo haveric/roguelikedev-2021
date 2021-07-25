@@ -144,10 +144,32 @@
                 "power": 3
             },
             "aiGelatinousCube": {},
-            "inventory": {
-                "capacity": -1
+            "explodeOnDeath": {}
+        }
+    },
+    {
+        "id": "exploding_sheep",
+        "type": "actor",
+        "name": "Exploding Sheep",
+        "components": {
+            "characterobject": {
+                "letter": "s",
+                "color": "#ffffff"
+            },
+            "faction": {
+                "factions": "monsters",
+                "enemies": "player"
+            },
+            "fighter": {
+                "hp": 10,
+                "defense": 0,
+                "power": 1
+            },
+            "aiMeleeChase": {},
+            "explodeOnDeath": {
+                "damage": 5,
+                "radius": 1
             }
         }
     }
-
 ]

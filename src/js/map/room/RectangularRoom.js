@@ -65,15 +65,16 @@ export default class RectangularRoom {
                 const position = {components: {positionalobject: {x: x, y: y, z: 1}}};
                 let actor;
                 const chance = Math.random();
-                if (chance < 0.1) {
+                if (chance < 0.5) {
                     actor = entityLoader.createFromTemplate('orc', position);
-                } else if (chance < 0.7) {
-                    actor = entityLoader.createFromTemplate('gelatinous_cube', position);
-
+                } else if (chance < .7) {
+                    actor = entityLoader.createFromTemplate('troll', position);
                 } else if (chance < 0.8) {
                     actor = entityLoader.createFromTemplate('snake', position);
+                } else if (chance < 0.9) {
+                    actor = entityLoader.createFromTemplate('gelatinous_cube', position);
                 } else {
-                    actor = entityLoader.createFromTemplate('troll', position);
+                    actor = entityLoader.createFromTemplate('exploding_sheep', position);
                 }
 
                 engine.gameMap.actors.push(actor);

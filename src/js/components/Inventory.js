@@ -157,4 +157,8 @@ export default class Inventory extends _Component {
 
         this.remove(item);
     }
+
+    onEntityDeath() {
+        this.dropAll();
+    }
 }

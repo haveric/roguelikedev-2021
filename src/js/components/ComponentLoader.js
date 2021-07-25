@@ -19,6 +19,8 @@ import AIConfusedEnemy from "./ai/AIConfusedEnemy";
 import AOEDamageConsumable from "./consumable/AOEDamageConsumable";
 import ManaConsumable from "./consumable/ManaConsumable";
 import AIGelatinousCube from "./ai/AIGelatinousCube";
+import AIPlayer from "./ai/AIPlayer";
+import ExplodeOnDeath from "./ExplodeOnDeath";
 
 class ComponentLoader {
     constructor() {
@@ -28,6 +30,7 @@ class ComponentLoader {
         this.load(new AIDead());
         this.load(new AIGelatinousCube());
         this.load(new AIMeleeChase());
+        this.load(new AIPlayer());
         this.load(new AOEDamageConsumable());
         this.load(new ConfusionConsumable());
         this.load(new DamageNearestConsumable());
@@ -36,6 +39,7 @@ class ComponentLoader {
         this.load(new BlocksFov());
         this.load(new BlocksMovement());
         this.load(new CharacterObject());
+        this.load(new ExplodeOnDeath());
         this.load(new Faction());
         this.load(new Fighter());
         this.load(new Fov());

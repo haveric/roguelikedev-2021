@@ -2,11 +2,14 @@ import _Component from "./_Component";
 import Extend from "../util/Extend";
 import engine from "../Engine";
 import AIDead from "./ai/AIDead";
-import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import GameOverEventHandler from "../event/GameOverEventHandler";
 import messageConsole from "../ui/MessageConsole";
 import characterHealth from "../ui/CharacterHealth";
 import characterMana from "../ui/CharacterMana";
+import {MathUtils, Vector3} from "three";
+import CharacterObject from "./positionalObject/CharacterObject";
+import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
+import sceneState from "../SceneState";
 
 export default class Fighter extends _Component {
     constructor(args = {}) {
@@ -61,11 +64,58 @@ export default class Fighter extends _Component {
         }
     }
 
+
+    createDamageIndicator(damage, color) {
+        const position = this.parentEntity.getComponent("positionalobject");
+        if (position) {
+            const xRand = position.x + MathUtils.randFloat(-.25, .25);
+            const yRand = position.y + MathUtils.randFloat(-.25, .25);
+            const zRand = position.z + 1.1 + MathUtils.randFloat(0, 1);
+            const args = {
+                components: {
+                    characterobject: {
+                        letter: "" + damage,
+                        x: xRand,
+                        y: yRand,
+                        z: zRand,
+                        xRot: .5,
+                        yRot: .25,
+                        zRot: 0,
+                        color: color,
+                        scale: .05,
+                        size: .5
+                    }
+                }
+            }
+
+            const indicator = new CharacterObject(args);
+            indicator.parentEntity = this;
+            indicator.setVisible();
+            const current = new Vector3(position.x, position.y, zRand);
+            const target = new Vector3(position.x, position.y, zRand + 3)
+
+            const tween = new TWEEN.Tween(current).to(target, 500);
+            tween.easing(TWEEN.Easing.Cubic.In);
+            tween.onUpdate(function () {
+                indicator.z = current.z;
+                indicator.updateObjectPosition();
+                engine.needsMapUpdate = true;
+            });
+            tween.onComplete(function () {
+                sceneState.scene.remove(indicator.object);
+            });
+            tween.start();
+        }
+    }
+
     takeDamage(damage) {
         this.hp -= damage;
 
         if (this.isPlayer()) {
             characterHealth.update(this.hp, this.maxHp);
+            this.createDamageIndicator(damage, "#C00");
+        } else {
+            this.createDamageIndicator(damage, "#999");
         }
 
         if (this.hp <= 0) {
@@ -85,6 +135,8 @@ export default class Fighter extends _Component {
         if (this.isPlayer()) {
             characterHealth.update(this.hp, this.maxHp);
         }
+
+        this.createDamageIndicator(healedHp, "#090");
 
         return healedHp;
     }
@@ -126,42 +178,7 @@ export default class Fighter extends _Component {
             messageConsole.text(entity.name + " dies!", "#ffa030");
         }
 
-        const position = entity.getComponent("positionalobject");
-        if (position) {
-            const rotation = {
-                xRot: position.xRot,
-                yRot: position.yRot,
-                zRot: position.zRot,
-                zOffset: position.zOffset
-            }
-            const finalRotation = {
-                xRot: 0,
-                yRot: 0,
-                zRot: Math.random() * 2,
-                zOffset: 0
-            };
-
-            const tween = new TWEEN.Tween(rotation).to(finalRotation, 200);
-            tween.start();
-            tween.onUpdate(function() {
-                position.xRot = rotation.xRot;
-                position.yRot = rotation.yRot;
-                position.zRot = rotation.zRot;
-                position.zOffset = rotation.zOffset;
-                position.updateObjectPosition();
-                engine.needsMapUpdate = true;
-            });
-        }
-
-        const blocksMovement = entity.getComponent("blocksMovement");
-        if (blocksMovement) {
-            blocksMovement.blocksMovement = false;
-        }
-
-        const inventory = entity.getComponent("inventory");
-        if (inventory) {
-            inventory.dropAll();
-        }
+        entity.callEvent("onEntityDeath");
 
         const ai = entity.getComponent("ai");
         if (ai) {
@@ -177,8 +194,6 @@ export default class Fighter extends _Component {
             const newAI = new AIDead(aiArgs);
             entity.setComponent(newAI);
         }
-
-        entity.name = "Remains of " + entity.name;
 
         messageConsole.build();
     }

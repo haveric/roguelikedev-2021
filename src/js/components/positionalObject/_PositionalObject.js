@@ -3,6 +3,8 @@ import sceneState from "../../SceneState";
 import _Tile from "../../entity/_Tile";
 import Extend from "../../util/Extend";
 import {MathUtils, Vector3} from "three";
+import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
+import engine from "../../Engine";
 
 export default class _PositionalObject extends _Component {
     constructor(args = {}) {
@@ -28,6 +30,8 @@ export default class _PositionalObject extends _Component {
         this.xOffset = 0;
         this.yOffset = 0;
         this.zOffset = 0;
+
+        this.deathAnimation = null;
 
         if (hasComponent) {
             const positionalobject = args.components.positionalobject;
@@ -101,6 +105,10 @@ export default class _PositionalObject extends _Component {
     createObject() { }
 
     teardown() {
+        if (this.deathAnimation) {
+            this.deathAnimation.stop();
+        }
+
         if (this.hasObject()) {
             sceneState.scene.remove(this.object);
             this.object = undefined;
@@ -192,7 +200,7 @@ export default class _PositionalObject extends _Component {
     }
 
     move(x, y = 0, z = 0) {
-        this.parentEntity.stopAnimations();
+        this.parentEntity.callEvent("onEntityMove");
         this.x += x;
         this.y += y;
         this.z += z;
@@ -226,5 +234,32 @@ export default class _PositionalObject extends _Component {
         }
 
         return this.x === other.x && this.y === other.y && this.z === other.z;
+    }
+
+    onEntityDeath() {
+        const self = this;
+        const rotation = {
+            xRot: this.xRot,
+            yRot: this.yRot,
+            zRot: this.zRot,
+            zOffset: this.zOffset
+        }
+        const finalRotation = {
+            xRot: 0,
+            yRot: 0,
+            zRot: Math.random() * 2,
+            zOffset: 0
+        };
+
+        this.deathAnimation = new TWEEN.Tween(rotation).to(finalRotation, 200);
+        this.deathAnimation.onUpdate(function () {
+            self.xRot = rotation.xRot;
+            self.yRot = rotation.yRot;
+            self.zRot = rotation.zRot;
+            self.zOffset = rotation.zOffset;
+            self.updateObjectPosition();
+            engine.needsMapUpdate = true;
+        });
+        this.deathAnimation.start();
     }
 }
