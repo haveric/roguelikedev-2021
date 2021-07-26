@@ -21,14 +21,18 @@ class Details {
         this.dom.innerHTML = this.getPosition(entity);
     }
 
-    updatePositionDetails(entity, skipPlayer = false) {
+    updatePositionDetails(entity, skipPlayer = false, ) {
         const position = entity.getComponent("positionalobject");
         const x = position.x;
         const y = position.y;
         const z = position.z;
+        let zStart = z - 1;
+        if (entity !== engine.player) {
+            zStart = z;
+        }
         let text = this.getPosition(entity);
         const tiles = engine.gameMap.tiles;
-        for (let i = z - 1; i <= z; i++) {
+        for (let i = zStart; i <= z; i++) {
             if (tiles.get(i) && tiles.get(i)[x]) {
                 const tile = tiles.get(i)[x][y];
                 if (tile) {
