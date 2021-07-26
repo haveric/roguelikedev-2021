@@ -70,8 +70,12 @@ export default class BaseFov {
             this.oldObjects.splice(oldIndex, 1);
         }
 
+        this.removeVisible(object);
+    }
+
+    removeVisible(object) {
         const visibleIndex = this.visibleObjects.indexOf(object);
-        if (visibleIndex > -1) {
+        if (visibleIndex > -1 ) {
             this.visibleObjects.splice(visibleIndex, 1);
         }
 

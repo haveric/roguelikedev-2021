@@ -67,10 +67,67 @@ export default class GameMap {
         }
 
     }
+
     removeItem(item) {
         const index = this.items.indexOf(item);
         if (index > -1) {
             this.items.splice(index, 1);
+        }
+    }
+
+    /**
+     *
+     * @param item
+     * @param groundPosition
+     * @returns {boolean} true if item added <br/>
+     *                    false if item merged and item is deleted
+     */
+    addItem(item, groundPosition) {
+        const itemPosition = item.getComponent("positionalobject");
+        if (!groundPosition) {
+            groundPosition = itemPosition;
+        }
+
+        let amountToAdd = item.amount;
+        for (const mapItem of this.items) {
+            if (mapItem.id === item.id) {
+                const position = mapItem.getComponent("positionalobject");
+                const remnant = mapItem.getComponent("remnant");
+                if (position && groundPosition.isSamePosition(position) && (!remnant || !remnant.isRemnant)) {
+                    if (mapItem.maxStackSize === -1) {
+                        mapItem.amount += item.amount;
+                        itemPosition.teardown();
+                        return false;
+                    }
+
+                    let amountCanAdd = mapItem.maxStackSize - mapItem.amount;
+                    if (amountCanAdd >= amountToAdd) {
+                        mapItem.amount += amountToAdd;
+                        itemPosition.teardown();
+                        return false;
+                    } else {
+                        mapItem.amount += amountCanAdd;
+                        item.amount -= amountCanAdd;
+                        amountToAdd -= amountCanAdd;
+                    }
+                }
+            }
+        }
+
+
+        if (amountToAdd > 0) {
+            item.amount = amountToAdd;
+
+            itemPosition.x = groundPosition.x;
+            itemPosition.y = groundPosition.y;
+            itemPosition.z = groundPosition.z;
+            item.parent = null;
+            this.items.push(item);
+            itemPosition.setVisible();
+            return true;
+        } else {
+            itemPosition.teardown();
+            return false;
         }
     }
 
@@ -249,20 +306,7 @@ export default class GameMap {
 
                     newObjectsRemoved.push(newObject);
 
-                    const visibleIndex = fov.visibleObjects.indexOf(newObject);
-                    if (visibleIndex > -1) {
-                        fov.visibleObjects.splice(visibleIndex, 1);
-                    }
-
-                    const visibleItemsIndex = fov.visibleItems.indexOf(newObject);
-                    if (visibleItemsIndex > -1) {
-                        fov.visibleItems.splice(visibleIndex, 1);
-                    }
-
-                    const previousVisibleItemsIndex = fov.previousVisibleObjects.indexOf(newObject);
-                    if (previousVisibleItemsIndex > -1) {
-                        fov.previousVisibleObjects.splice(previousVisibleItemsIndex, 1);
-                    }
+                    fov.removeVisible(newObject);
                 }
             } else if (newObject instanceof Actor) {
                 const remnant = newObject.getComponent("remnant");
@@ -311,21 +355,7 @@ export default class GameMap {
                                                     itemPosition.teardown();
                                                 }
                                                 newObjectsRemoved.push(item);
-
-                                                const visibleIndex = fov.visibleObjects.indexOf(item);
-                                                if (visibleIndex > -1 ) {
-                                                    fov.visibleObjects.splice(visibleIndex, 1);
-                                                }
-
-                                                const visibleItemsIndex = fov.visibleItems.indexOf(item);
-                                                if (visibleItemsIndex > -1) {
-                                                    fov.visibleItems.splice(visibleItemsIndex, 1);
-                                                }
-
-                                                const previousVisibleItemsIndex = fov.previousVisibleObjects.indexOf(item);
-                                                if (previousVisibleItemsIndex > -1) {
-                                                    fov.previousVisibleObjects.splice(previousVisibleItemsIndex, 1);
-                                                }
+                                                fov.removeVisible(newObject);
                                             }
                                         }
                                     }

@@ -219,39 +219,40 @@ export default class AIGelatinousCube extends AI {
         const attachedItems = entity.getComponent("attachedItems");
         if (attachedItems) {
             for (const item of attachedItems.items) {
-                engine.gameMap.items.push(item);
+                if (engine.gameMap.addItem(item)) {
 
-                const itemPosition = item.getComponent("positionalobject");
-                if (itemPosition) {
-                    const template = entityLoader.createFromTemplate(item.id);
-                    const templatePosition = template.getComponent("positionalobject");
-                    const position = {
-                        xOffset: itemPosition.xOffset,
-                        yOffset: itemPosition.yOffset,
-                        zOffset: itemPosition.zOffset,
-                        xRot: itemPosition.xRot,
-                        yRot: itemPosition.yRot
+                    const itemPosition = item.getComponent("positionalobject");
+                    if (itemPosition) {
+                        const template = entityLoader.createFromTemplate(item.id);
+                        const templatePosition = template.getComponent("positionalobject");
+                        const position = {
+                            xOffset: itemPosition.xOffset,
+                            yOffset: itemPosition.yOffset,
+                            zOffset: itemPosition.zOffset,
+                            xRot: itemPosition.xRot,
+                            yRot: itemPosition.yRot
+                        }
+
+                        const finalPosition = {
+                            xOffset: templatePosition.xOffset,
+                            yOffset: templatePosition.yOffset,
+                            zOffset: templatePosition.zOffset,
+                            xRot: templatePosition.xRot,
+                            yRot: templatePosition.yRot
+                        }
+
+                        const tween = new TWEEN.Tween(position).to(finalPosition, 200);
+                        tween.start();
+                        tween.onUpdate(function () {
+                            itemPosition.xRot = position.xRot;
+                            itemPosition.yRot = position.yRot;
+                            itemPosition.xOffset = position.xOffset;
+                            itemPosition.yOffset = position.yOffset;
+                            itemPosition.zOffset = position.zOffset;
+                            itemPosition.updateObjectPosition();
+                            engine.needsMapUpdate = true;
+                        });
                     }
-
-                    const finalPosition = {
-                        xOffset: templatePosition.xOffset,
-                        yOffset: templatePosition.yOffset,
-                        zOffset: templatePosition.zOffset,
-                        xRot: templatePosition.xRot,
-                        yRot: templatePosition.yRot
-                    }
-
-                    const tween = new TWEEN.Tween(position).to(finalPosition, 200);
-                    tween.start();
-                    tween.onUpdate(function () {
-                        itemPosition.xRot = position.xRot;
-                        itemPosition.yRot = position.yRot;
-                        itemPosition.xOffset = position.xOffset;
-                        itemPosition.yOffset = position.yOffset;
-                        itemPosition.zOffset = position.zOffset;
-                        itemPosition.updateObjectPosition();
-                        engine.needsMapUpdate = true;
-                    });
                 }
             }
 
