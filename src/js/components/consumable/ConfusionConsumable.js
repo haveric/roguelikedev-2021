@@ -7,6 +7,7 @@ import componentLoader from "../ComponentLoader";
 import SingleRangedAttackHandler from "../../event/selectIndexHandler/SingleRangedAttackHandler";
 import ItemAction from "../../actions/itemAction/ItemAction";
 import NoAction from "../../actions/NoAction";
+import AIConfusedEnemy from "../ai/AIConfusedEnemy";
 
 export default class ConfusionConsumable extends Consumable {
     constructor(args = {}) {
@@ -70,18 +71,22 @@ export default class ConfusionConsumable extends Consumable {
 
         const ai = target.getComponent("ai");
         if (ai) {
-            const aiType = ai.type;
-            const aiArgs = {
-                components: {
-                    aiConfusedEnemy: {
-                        previousAI: aiType,
-                        turnsRemaining: this.turns
+            if (ai instanceof AIConfusedEnemy) {
+                ai.turnsRemaining = this.turns;
+            } else {
+                const aiType = ai.type;
+                const aiArgs = {
+                    components: {
+                        aiConfusedEnemy: {
+                            previousAI: aiType,
+                            turnsRemaining: this.turns
+                        }
                     }
                 }
+                target.removeComponent("ai");
+                const newAI = componentLoader.create(target, "aiConfusedEnemy", aiArgs);
+                target.setComponent(newAI);
             }
-            target.removeComponent("ai");
-            const newAI = componentLoader.create(target, "aiConfusedEnemy", aiArgs);
-            target.setComponent(newAI);
 
             this.consume();
         }
