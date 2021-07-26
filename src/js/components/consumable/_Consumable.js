@@ -32,7 +32,7 @@ export default class Consumable extends _Component {
     }
 
     activate(action) {
-        console.err("Not Implemented");
+        console.error("Not Implemented");
     }
 
     getItem() {

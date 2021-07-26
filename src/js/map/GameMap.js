@@ -218,20 +218,28 @@ export default class GameMap {
                 }
             } else if (newObject instanceof Item) {
                 const remnant = newObject.getComponent("remnant");
-                if (remnant) {
-                    if (remnant.isRemnant) {
-                        newObject.getComponent("positionalobject").teardown();
-                        const index = this.items.indexOf(newObject);
-                        if (index > -1) {
-                            this.items.splice(index, 1);
-                        }
+                if (remnant && remnant.isRemnant) {
+                    newObject.getComponent("positionalobject").teardown();
+                    const index = this.items.indexOf(newObject);
+                    if (index > -1) {
+                        this.items.splice(index, 1);
+                    }
 
-                        newObjectsRemoved.push(newObject);
+                    newObjectsRemoved.push(newObject);
 
-                        const visibleIndex = fov.visibleObjects.indexOf(newObject);
-                        if (visibleIndex > -1) {
-                            fov.visibleObjects.splice(visibleIndex, 1);
-                        }
+                    const visibleIndex = fov.visibleObjects.indexOf(newObject);
+                    if (visibleIndex > -1) {
+                        fov.visibleObjects.splice(visibleIndex, 1);
+                    }
+
+                    const visibleItemsIndex = fov.visibleItems.indexOf(newObject);
+                    if (visibleItemsIndex > -1) {
+                        fov.visibleItems.splice(visibleIndex, 1);
+                    }
+
+                    const previousVisibleItemsIndex = fov.previousVisibleObjects.indexOf(newObject);
+                    if (previousVisibleItemsIndex > -1) {
+                        fov.previousVisibleObjects.splice(previousVisibleItemsIndex, 1);
                     }
                 }
             } else if (newObject instanceof Actor) {
@@ -280,12 +288,23 @@ export default class GameMap {
                                             if (remnant.x === itemRemnant.x && remnant.y === itemRemnant.y && remnant.z === itemRemnant.z) {
                                                 itemsRemoved.push(item);
                                                 item.getComponent("positionalobject").teardown();
+                                                item.removeComponent("positionalobject");
 
                                                 newObjectsRemoved.push(item);
 
-                                                const visibleIndex = fov.visibleObjects.indexOf(newObject);
+                                                const visibleIndex = fov.visibleObjects.indexOf(item);
                                                 if (visibleIndex > -1 ) {
                                                     fov.visibleObjects.splice(visibleIndex, 1);
+                                                }
+
+                                                const visibleItemsIndex = fov.visibleItems.indexOf(item);
+                                                if (visibleItemsIndex > -1) {
+                                                    fov.visibleItems.splice(visibleItemsIndex, 1);
+                                                }
+
+                                                const previousVisibleItemsIndex = fov.previousVisibleObjects.indexOf(item);
+                                                if (previousVisibleItemsIndex > -1) {
+                                                    fov.previousVisibleObjects.splice(previousVisibleItemsIndex, 1);
                                                 }
                                             }
                                         }
@@ -316,9 +335,10 @@ export default class GameMap {
             }
         }
 
-        for (const newObject of newObjectsRemoved) {
+        for (let newObject of newObjectsRemoved) {
             const newIndex = newObjects.indexOf(newObject);
             if (newIndex > -1) {
+                delete newObjects[newIndex];
                 newObjects.splice(newIndex, 1);
             }
         }
@@ -339,7 +359,6 @@ export default class GameMap {
             if (object) {
                 if (!object.isVisible()) {
                     object.setVisible();
-                    sceneState.scene.add(object.object);
                 } else {
                     object.resetColor();
                 }

@@ -10,7 +10,7 @@ export default class Action {
      * @returns {Action}
      */
     perform() {
-        console.err("Not Implemented");
+        console.error("Not Implemented");
     }
 
     isPlayer() {

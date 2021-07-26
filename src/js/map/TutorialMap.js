@@ -135,7 +135,7 @@ export default class TutorialMap extends GameMap {
          */
 
         engine.gameMap.actors.push(entityLoader.createFromTemplate('gelatinous_cube', {components: {positionalobject: {x: 18, y: 4, z: 1}}}));
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 2; i++) {
             engine.gameMap.items.push(entityLoader.createFromTemplate('scroll_confusion', {components: {positionalobject: {x: 21, y: 3, z: 1}}}));
         }
         engine.gameMap.items.push(entityLoader.createFromTemplate('potion_health', {components: {positionalobject: {x: 19, y: 4, z: 1}}}));

@@ -131,7 +131,7 @@ export default class SelectIndexHandler extends EventHandler {
     }
 
     confirmIndex() {
-        console.err("Not Implemented");
+        console.error("Not Implemented");
     }
 
     onMouseMove(e) {

@@ -103,7 +103,7 @@ export default class _PositionalObject extends _Component {
         }
     }
 
-    createObject() { }
+    createObject() {}
 
     teardown() {
         if (this.deathAnimation) {
@@ -112,8 +112,10 @@ export default class _PositionalObject extends _Component {
 
         if (this.hasObject()) {
             sceneState.scene.remove(this.object);
-            this.object = undefined;
         }
+
+        this.object = undefined;
+        this.meshes = [];
     }
 
     onMapTeardown() {
@@ -158,15 +160,17 @@ export default class _PositionalObject extends _Component {
     }
 
     setVisible(visible = true) {
-        if (!this.hasObject()) {
+        if (visible && !this.hasObject()) {
             this.createObject();
             sceneState.scene.add(this.object);
         }
 
-        if (visible && !this.object.visible) {
-            this.object.visible = true;
-        } else if (!visible && this.object.visible) {
-            this.object.visible = false;
+        if (this.hasObject()) {
+            if (visible && !this.object.visible) {
+                this.object.visible = true;
+            } else if (!visible && this.object.visible) {
+                this.object.visible = false;
+            }
         }
     }
 

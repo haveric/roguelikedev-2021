@@ -23,6 +23,10 @@ export default class Item extends _Entity {
         });
     }
 
+    clone() {
+        return new Item(this.save());
+    }
+
     static getDefaultTemplate() {
         return {
             type: "item",

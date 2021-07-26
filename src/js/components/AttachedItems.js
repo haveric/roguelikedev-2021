@@ -4,7 +4,6 @@ import {Vector3} from "three";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import engine from "../Engine";
 import entityLoader from "../entity/EntityLoader";
-import sceneState from "../SceneState";
 import Remnant from "./Remnant";
 
 export default class AttachedItems extends _Component {
@@ -124,11 +123,6 @@ export default class AttachedItems extends _Component {
         const entityPosition = entity.getComponent("positionalobject");
         if (entityPosition) {
             for (const item of this.items) {
-                const itemRemnant = item.getComponent("remnant");
-                if (itemRemnant && itemRemnant.isRemnant) {
-                    continue;
-                }
-
                 const itemPosition = item.getComponent("positionalobject");
                 if (itemPosition) {
                     itemPosition.x = entityPosition.x;
@@ -142,13 +136,12 @@ export default class AttachedItems extends _Component {
 
     onAddToScene() {
         for (const item of this.items) {
-            const object = item.getComponent("positionalobject");
-            if (object) {
-                if (!object.isVisible()) {
-                    object.setVisible();
-                    sceneState.scene.add(object.object);
+            const position = item.getComponent("positionalobject");
+            if (position) {
+                if (!position.isVisible()) {
+                    position.setVisible();
                 } else {
-                    object.resetColor();
+                    position.resetColor();
                 }
             }
         }
@@ -165,7 +158,6 @@ export default class AttachedItems extends _Component {
             const position = item.getComponent("positionalobject");
             if (position) {
                 const remnant = item.clone();
-
                 remnant.setComponent(new Remnant({components: {remnant: {isRemnant: true, x: position.x, y: position.y, z: position.z}}}));
 
                 const remnantPosition = remnant.getComponent("positionalobject");
@@ -184,6 +176,13 @@ export default class AttachedItems extends _Component {
             const itemRemnant = item.getComponent("remnant");
             if (itemRemnant) {
                 item.removeComponent("remnant");
+            }
+
+            const position = item.getComponent("positionalobject");
+            if (position) {
+                position.setVisible(true);
+                position.updateObjectPosition();
+                engine.needsMapUpdate = true;
             }
         }
     }

@@ -220,7 +220,7 @@ class Controls {
 
         const keys = self.controls.get(key);
         if (!keys) {
-            console.err("Missing keybindings for: ", key);
+            console.error("Missing keybindings for: ", key);
         }
         keys.forEach(function(keyToTest) {
             if (keyToTest in self.keysDown) {

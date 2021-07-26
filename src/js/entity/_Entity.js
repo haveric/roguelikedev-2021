@@ -80,8 +80,11 @@ export default class _Entity {
         return json;
     }
 
+    /**
+     * @returns {_Entity}
+     */
     clone() {
-        return new _Entity(this.save());
+        console.error("Not implemented");
     }
 
     callEvent(event, args) {

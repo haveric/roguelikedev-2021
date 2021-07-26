@@ -14,7 +14,7 @@ export default class AI extends _Component {
     }
 
     perform() {
-        console.err("Not Implemented");
+        console.error("Not Implemented");
     }
 
     onMeleeAttack(blockingActor) {

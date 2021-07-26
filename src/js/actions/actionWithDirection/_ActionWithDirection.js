@@ -10,6 +10,6 @@ export default class ActionWithDirection extends Action {
     }
 
     perform() {
-        console.err("Not Implemented");
+        console.error("Not Implemented");
     }
 }

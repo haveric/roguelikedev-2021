@@ -59,6 +59,7 @@ export default class CharacterObject extends _PositionalObject {
     }
 
     createObject() {
+        super.createObject();
         this.meshes = [];
         const newHeight = this.scale * this.depth;
 
