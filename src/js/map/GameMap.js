@@ -59,6 +59,28 @@ export default class GameMap {
         }
     }
 
+    removeEntity(entity) {
+        if (entity instanceof Actor) {
+            this.removeActor(entity);
+        } else if (entity instanceof Item) {
+            this.removeItem(entity);
+        }
+
+    }
+    removeItem(item) {
+        const index = this.items.indexOf(item);
+        if (index > -1) {
+            this.items.splice(index, 1);
+        }
+    }
+
+    removeActor(actor) {
+        const index = this.actors.indexOf(actor);
+        if (index > -1) {
+            this.actors.splice(index, 1);
+        }
+    }
+
     save(name) {
         let saveData = {
             width: this.width,
@@ -223,10 +245,7 @@ export default class GameMap {
                     if (position) {
                         position.teardown();
                     }
-                    const index = this.items.indexOf(newObject);
-                    if (index > -1) {
-                        this.items.splice(index, 1);
-                    }
+                    this.removeItem(newObject);
 
                     newObjectsRemoved.push(newObject);
 
@@ -250,10 +269,7 @@ export default class GameMap {
                 if (remnant) {
                     if (remnant.isRemnant) {
                         newObject.getComponent("positionalobject").teardown();
-                        const index = this.actors.indexOf(newObject);
-                        if (index > -1) {
-                            this.actors.splice(index, 1);
-                        }
+                        this.removeActor(newObject);
 
                         newObjectsRemoved.push(newObject);
 
@@ -315,10 +331,7 @@ export default class GameMap {
                                     }
 
                                     for (const item of itemsRemoved) {
-                                        const index = this.items.indexOf(item);
-                                        if (index > -1) {
-                                            this.items.splice(index, 1);
-                                        }
+                                        this.removeItem(item);
                                     }
 
                                     break;
@@ -327,10 +340,7 @@ export default class GameMap {
                         }
 
                         for (const actor of actorsRemoved) {
-                            const index = this.actors.indexOf(actor);
-                            if (index > -1) {
-                                this.actors.splice(index, 1);
-                            }
+                            this.removeActor(actor);
                         }
 
                         newObject.removeComponent("remnant");

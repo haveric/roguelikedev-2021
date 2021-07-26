@@ -17,13 +17,14 @@ export default class PickupAction extends Action {
             if (position.x === itemPosition.x && position.y === itemPosition.y && position.z === itemPosition.z) {
                 item.parent = entityInventory;
                 if (entityInventory.add(item)) {
-                    const itemIndex = engine.gameMap.items.indexOf(item);
-                    engine.gameMap.items.splice(itemIndex, 1);
+                    engine.gameMap.removeItem(item);
                     itemPosition.teardown();
+
+                    engine.fov.remove(item);
+                    engine.needsMapUpdate = true;
 
                     if (this.isPlayer()) {
                         inventory.populateInventory(engine.player);
-
 
                         if (item.amount > 1) {
                             messageConsole.text("You picked up " + item.amount + " " + item.name);

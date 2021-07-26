@@ -52,7 +52,7 @@ export default class Inventory extends _Component {
     }
 
     add(item) {
-        if (item.name === "Gold") {
+        if (item.id === "gold") {
             this.gold += item.amount;
             return true;
         }
@@ -70,8 +70,7 @@ export default class Inventory extends _Component {
         for (let i = 0; i < partialMax; i++) {
             const inventoryItem = this.items[i];
             if (inventoryItem) {
-                // TODO: Use a better method of determining equality
-                if (item.name === inventoryItem.name) {
+                if (item.id === inventoryItem.id) {
                     let amountCanAdd = inventoryItem.maxStackSize - inventoryItem.amount;
                     if (amountCanAdd >= amountToAdd) {
                         inventoryItem.amount += amountToAdd;
@@ -114,6 +113,8 @@ export default class Inventory extends _Component {
         if (index > -1) {
             this.items.splice(index, 1, null);
         }
+
+        engine.needsMapUpdate = true;
     }
 
     move(fromIndex, toIndex) {
@@ -142,7 +143,46 @@ export default class Inventory extends _Component {
 
     drop(item) {
         if (item) {
-            const parentPosition = this.parentEntity.getComponent("positionalobject");
+            this.mergeItemOnGround(item);
+
+            if (this.isPlayer()) {
+                messageConsole.text("You dropped the " + item.name).build();
+            }
+
+            this.remove(item);
+        }
+    }
+
+    mergeItemOnGround(item) {
+        const parentPosition = this.parentEntity.getComponent("positionalobject");
+
+        let amountToAdd = item.amount;
+        for (const mapItem of engine.gameMap.items) {
+            if (mapItem.id === item.id) {
+                const position = mapItem.getComponent("positionalobject");
+                const remnant = mapItem.getComponent("remnant");
+                if (position && parentPosition.isSamePosition(position) && (!remnant || !remnant.isRemnant)) {
+                    if (item.id === "gold") {
+                        mapItem.gold += item.amount;
+                        return true;
+                    }
+
+                    let amountCanAdd = mapItem.maxStackSize - mapItem.amount;
+                    if (amountCanAdd >= amountToAdd) {
+                        mapItem.amount += amountToAdd;
+                        return true;
+                    } else {
+                        mapItem.amount += amountCanAdd;
+                        item.amount -= amountCanAdd;
+                        amountToAdd -= amountCanAdd;
+                    }
+                }
+            }
+        }
+
+        if (amountToAdd > 0) {
+            item.amount = amountToAdd;
+
             const position = item.getComponent("positionalobject");
             position.x = parentPosition.x;
             position.y = parentPosition.y;
@@ -150,12 +190,6 @@ export default class Inventory extends _Component {
             item.parent = null;
             engine.gameMap.items.push(item);
             position.setVisible();
-
-            if (this.isPlayer()) {
-                messageConsole.text("You dropped the " + item.name).build();
-            }
-
-            this.remove(item);
         }
     }
 

@@ -149,15 +149,9 @@ export default class EditorEventHandler extends EventHandler {
                 if (parentEntity instanceof _Tile) {
                     engine.gameMap.tiles.get(parentObject.z)[parentObject.x][parentObject.y] = null;
                 } else if (parentEntity instanceof Actor) {
-                    const index = engine.gameMap.actors.indexOf(parentEntity);
-                    if (index > -1) {
-                        engine.gameMap.actors.splice(index, 1);
-                    }
+                    engine.gameMap.removeActor(parentEntity);
                 } else if (parentEntity instanceof Item) {
-                    const index = engine.gameMap.items.indexOf(parentEntity);
-                    if (index > -1) {
-                        engine.gameMap.items.splice(index, 1);
-                    }
+                    engine.gameMap.removeItem(parentEntity)
                 }
                 parentObject.teardown();
 

@@ -207,25 +207,8 @@ export default class AIGelatinousCube extends AI {
                 }
 
                 for (const item of itemsPickedUp) {
-                    const itemIndex = engine.gameMap.items.indexOf(item);
-                    if (itemIndex > -1) {
-                        engine.gameMap.items.splice(itemIndex, 1);
-                    }
-
-                    const fovPreviousIndex = engine.fov.previousVisibleObjects.indexOf(item);
-                    if (fovPreviousIndex > -1) {
-                        engine.fov.previousVisibleObjects.splice(fovPreviousIndex, 1);
-                    }
-
-                    const fovObjectIndex = engine.fov.visibleObjects.indexOf(item);
-                    if (fovObjectIndex > -1) {
-                        engine.fov.visibleObjects.splice(fovObjectIndex, 1);
-                    }
-
-                    const fovItemIndex = engine.fov.visibleItems.indexOf(item);
-                    if (fovItemIndex > -1) {
-                        engine.fov.visibleItems.splice(fovItemIndex, 1);
-                    }
+                    engine.gameMap.removeItem(item);
+                    engine.fov.remove(item);
                 }
             }
         }

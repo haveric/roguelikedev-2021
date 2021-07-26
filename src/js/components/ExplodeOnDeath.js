@@ -38,10 +38,7 @@ export default class ExplodeOnDeath extends _Component {
         if (position) {
             position.teardown();
 
-            const index = engine.gameMap.actors.indexOf(entity);
-            if (index > -1) {
-                engine.gameMap.actors.splice(index, 1);
-            }
+            engine.gameMap.removeActor(entity);
 
             if (this.damage > 0) {
                 for (const actor of engine.gameMap.actors) {

@@ -59,6 +59,33 @@ export default class BaseFov {
         }
     }
 
+    remove(object) {
+        const newIndex = this.newObjects.indexOf(object);
+        if (newIndex > -1) {
+            this.newObjects.splice(newIndex, 1);
+        }
+
+        const oldIndex = this.oldObjects.indexOf(object);
+        if (oldIndex > -1) {
+            this.oldObjects.splice(oldIndex, 1);
+        }
+
+        const visibleIndex = this.visibleObjects.indexOf(object);
+        if (visibleIndex > -1) {
+            this.visibleObjects.splice(visibleIndex, 1);
+        }
+
+        const visibleItemsIndex = this.visibleItems.indexOf(object);
+        if (visibleItemsIndex > -1) {
+            this.visibleItems.splice(visibleItemsIndex, 1);
+        }
+
+        const previousVisibleItemsIndex = this.previousVisibleObjects.indexOf(object);
+        if (previousVisibleItemsIndex > -1) {
+            this.previousVisibleObjects.splice(previousVisibleItemsIndex, 1);
+        }
+    }
+
     exploreTile(x, y, minZ, maxZ, tilesOnly = false) {
         const tilesIter = engine.gameMap.tiles.entries();
         for (const entry of tilesIter) {
