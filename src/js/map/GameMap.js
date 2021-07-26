@@ -11,6 +11,7 @@ import Actor from "../entity/Actor";
 import Remnant from "../components/Remnant";
 import inventory from "../ui/Inventory";
 import {Vector3} from "three";
+import Item from "../entity/Item";
 
 export default class GameMap {
     constructor(width, height) {
@@ -43,27 +44,18 @@ export default class GameMap {
                 for (let j = 0; j < this.height; j++) {
                     const tile = tilesArray[i][j];
                     if (tile) {
-                        const position = tile.getComponent("positionalobject");
-                        if (position) {
-                            position.teardown();
-                        }
+                        tile.callEvent("onMapTeardown");
                     }
                 }
             }
         }
 
         for (const actor of this.actors) {
-            const position = actor.getComponent("positionalobject");
-            if (position) {
-                position.teardown();
-            }
+            actor.callEvent("onMapTeardown");
         }
 
         for (const item of this.items) {
-            const position = item.getComponent("positionalobject");
-            if (position) {
-                position.teardown();
-            }
+            item.callEvent("onMapTeardown");
         }
     }
 
@@ -177,10 +169,6 @@ export default class GameMap {
             sceneState.updateCameraPosition(engine.player);
 
             this.updatePlayerUI();
-
-            for (const actor of this.actors) {
-                actor.callEvent("onPostLoad");
-            }
         }
     }
 
@@ -217,6 +205,8 @@ export default class GameMap {
 
     drawItemsInFov(fov, x, y, z) {
         const newObjects = fov.newObjects;
+
+        const newObjectsRemoved = [];
         for (const newObject of newObjects) {
             if (newObject instanceof _Tile) {
                 const fovComponent = newObject.getComponent("fov");
@@ -225,6 +215,24 @@ export default class GameMap {
                     fovComponent.visible = true;
                 } else {
                     newObject.setComponent(new Fov({components: {fov: {explored: true, visible: true}}}));
+                }
+            } else if (newObject instanceof Item) {
+                const remnant = newObject.getComponent("remnant");
+                if (remnant) {
+                    if (remnant.isRemnant) {
+                        newObject.getComponent("positionalobject").teardown();
+                        const index = this.items.indexOf(newObject);
+                        if (index > -1) {
+                            this.items.splice(index, 1);
+                        }
+
+                        newObjectsRemoved.push(newObject);
+
+                        const visibleIndex = fov.visibleObjects.indexOf(newObject);
+                        if (visibleIndex > -1) {
+                            fov.visibleObjects.splice(visibleIndex, 1);
+                        }
+                    }
                 }
             } else if (newObject instanceof Actor) {
                 const remnant = newObject.getComponent("remnant");
@@ -236,16 +244,14 @@ export default class GameMap {
                             this.actors.splice(index, 1);
                         }
 
-                        const newIndex = newObjects.indexOf(newObject);
-                        if (newIndex > -1) {
-                            newObjects.splice(newIndex, 1);
-                        }
+                        newObjectsRemoved.push(newObject);
 
                         const visibleIndex = fov.visibleObjects.indexOf(newObject);
                         if (visibleIndex > -1 ) {
                             fov.visibleObjects.splice(visibleIndex, 1);
                         }
                     } else {
+                        const actorsRemoved = [];
                         // Remove remnant of now visible actor
                         for (const actor of this.actors) {
                             if (actor === newObject) {
@@ -256,28 +262,64 @@ export default class GameMap {
                             if (actorRemnant && actorRemnant.isRemnant) {
                                 if (remnant.x === actorRemnant.x && remnant.y === actorRemnant.y && remnant.z === actorRemnant.z) {
                                     actor.getComponent("positionalobject").teardown();
-                                    const index = this.actors.indexOf(actor);
-                                    if (index > -1) {
-                                        this.actors.splice(index, 1);
-                                    }
+                                    actorsRemoved.push(actor);
 
-                                    const newIndex = newObjects.indexOf(actor);
-                                    if (newIndex > -1) {
-                                        newObjects.splice(newIndex, 1);
-                                    }
+                                    newObjectsRemoved.push(actor);
 
                                     const visibleIndex = fov.visibleObjects.indexOf(actor);
                                     if (visibleIndex > -1 ) {
                                         fov.visibleObjects.splice(visibleIndex, 1);
                                     }
+
+                                    actor.callEvent("onDestroyRemnant");
+
+                                    const itemsRemoved = [];
+                                    for (const item of this.items) {
+                                        const itemRemnant = item.getComponent("remnant");
+                                        if (itemRemnant && itemRemnant.isRemnant) {
+                                            if (remnant.x === itemRemnant.x && remnant.y === itemRemnant.y && remnant.z === itemRemnant.z) {
+                                                itemsRemoved.push(item);
+                                                item.getComponent("positionalobject").teardown();
+
+                                                newObjectsRemoved.push(item);
+
+                                                const visibleIndex = fov.visibleObjects.indexOf(newObject);
+                                                if (visibleIndex > -1 ) {
+                                                    fov.visibleObjects.splice(visibleIndex, 1);
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    for (const item of itemsRemoved) {
+                                        const index = this.items.indexOf(item);
+                                        if (index > -1) {
+                                            this.items.splice(index, 1);
+                                        }
+                                    }
+
                                     break;
                                 }
+                            }
+                        }
+
+                        for (const actor of actorsRemoved) {
+                            const index = this.actors.indexOf(actor);
+                            if (index > -1) {
+                                this.actors.splice(index, 1);
                             }
                         }
 
                         newObject.removeComponent("remnant");
                     }
                 }
+            }
+        }
+
+        for (const newObject of newObjectsRemoved) {
+            const newIndex = newObjects.indexOf(newObject);
+            if (newIndex > -1) {
+                newObjects.splice(newIndex, 1);
             }
         }
 
@@ -336,6 +378,8 @@ export default class GameMap {
 
                     oldObject.setComponent(new Remnant({components: {remnant: {isRemnant: false, x: position.x, y: position.y, z: position.z}}}));
                     position.setVisible(false);
+
+                    oldObject.callEvent("onCreateRemnant");
                 } else {
                     this.setTransparency(position, x, y, z);
 

@@ -116,6 +116,10 @@ export default class _PositionalObject extends _Component {
         }
     }
 
+    onMapTeardown() {
+        this.teardown();
+    }
+
     resetColor() {
         for (const mesh of this.meshes) {
             mesh.material.color.set(mesh.originalColor);

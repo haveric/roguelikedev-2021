@@ -5,6 +5,7 @@ import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import engine from "../Engine";
 import entityLoader from "../entity/EntityLoader";
 import sceneState from "../SceneState";
+import Remnant from "./Remnant";
 
 export default class AttachedItems extends _Component {
     constructor(args = {}) {
@@ -109,6 +110,7 @@ export default class AttachedItems extends _Component {
                 tweenAttack.start();
 
                 entity.combatTweens.push(tweenAttack);
+                entity.combatTweens.push(tweenReturn);
             }
         }
     }
@@ -122,6 +124,11 @@ export default class AttachedItems extends _Component {
         const entityPosition = entity.getComponent("positionalobject");
         if (entityPosition) {
             for (const item of this.items) {
+                const itemRemnant = item.getComponent("remnant");
+                if (itemRemnant && itemRemnant.isRemnant) {
+                    continue;
+                }
+
                 const itemPosition = item.getComponent("positionalobject");
                 if (itemPosition) {
                     itemPosition.x = entityPosition.x;
@@ -143,6 +150,40 @@ export default class AttachedItems extends _Component {
                 } else {
                     object.resetColor();
                 }
+            }
+        }
+    }
+
+    onMapTeardown() {
+        for (const item of this.items) {
+            item.callEvent("onMapTeardown");
+        }
+    }
+
+    onCreateRemnant() {
+        for (const item of this.items) {
+            const position = item.getComponent("positionalobject");
+            if (position) {
+                const remnant = item.clone();
+
+                remnant.setComponent(new Remnant({components: {remnant: {isRemnant: true, x: position.x, y: position.y, z: position.z}}}));
+
+                const remnantPosition = remnant.getComponent("positionalobject");
+                remnantPosition.setVisible();
+                remnantPosition.shiftColor(.5);
+                engine.gameMap.items.push(remnant);
+
+                item.setComponent(new Remnant({components: {remnant: {isRemnant: false, x: position.x, y: position.y, z: position.z}}}));
+                position.setVisible(false);
+            }
+        }
+    }
+
+    onDestroyRemnant() {
+        for (const item of this.items) {
+            const itemRemnant = item.getComponent("remnant");
+            if (itemRemnant) {
+                item.removeComponent("remnant");
             }
         }
     }

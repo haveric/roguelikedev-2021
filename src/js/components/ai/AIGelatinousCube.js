@@ -147,20 +147,19 @@ export default class AIGelatinousCube extends AI {
 
             const attachedItems = entity.getComponent("attachedItems");
             if (attachedItems) {
+                const itemsPickedUp = [];
+
                 // Pickup all items in spot
                 for (const item of this.fov.visibleItems) {
+                    const remnant = item.getComponent("remnant");
+                    if (remnant && remnant.isRemnant) {
+                        continue;
+                    }
+
                     const itemPosition = item.getComponent("positionalobject");
                     if (entityPosition.isSamePosition(itemPosition)) {
                         if (attachedItems.add(item)) {
-                            const itemIndex = engine.gameMap.items.indexOf(item);
-                            if (itemIndex > -1) {
-                                engine.gameMap.items.splice(itemIndex, 1);
-                            }
-
-                            const fovItemIndex = this.fov.visibleItems.indexOf(item);
-                            if (fovItemIndex > -1) {
-                                this.fov.visibleItems.splice(fovItemIndex, 1);
-                            }
+                            itemsPickedUp.push(item);
 
                             const position = {
                                 xOffset: itemPosition.xOffset,
@@ -192,6 +191,18 @@ export default class AIGelatinousCube extends AI {
                                 engine.needsMapUpdate = true;
                             });
                         }
+                    }
+                }
+
+                for (const item of itemsPickedUp) {
+                    const itemIndex = engine.gameMap.items.indexOf(item);
+                    if (itemIndex > -1) {
+                        engine.gameMap.items.splice(itemIndex, 1);
+                    }
+
+                    const fovItemIndex = this.fov.visibleItems.indexOf(item);
+                    if (fovItemIndex > -1) {
+                        this.fov.visibleItems.splice(fovItemIndex, 1);
                     }
                 }
             }
@@ -242,22 +253,4 @@ export default class AIGelatinousCube extends AI {
             attachedItems.clearItems();
         }
     }
-/*
-    onPostLoad() {
-        // Re-add items that have been picked up
-        const entity = this.parentEntity;
-        const entityPosition = entity.getComponent("positionalobject");
-        if (entityPosition) {
-            // Pickup all items in spot
-            for (const item of engine.gameMap.items) {
-                const itemPosition = item.getComponent("positionalobject");
-                if (entityPosition.isSamePosition(itemPosition)) {
-                    if (this.floatingItems.indexOf(item) === -1) {
-                        this.floatingItems.push(item);
-                    }
-                }
-            }
-        }
-    }
- */
 }

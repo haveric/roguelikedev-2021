@@ -124,9 +124,7 @@ export default class TutorialMap extends GameMap {
         }
 
         this.addPlayer(21, 3);
-        engine.gameMap.items.push(entityLoader.createFromTemplate('chest', {components: {positionalobject: {x: 19, y: 3, z: 1}}}));
-        engine.gameMap.items.push(entityLoader.createFromTemplate('chest_lid', {components: {positionalobject: {x: 19, y: 3, z: 2}}}));
-
+        /*
         engine.gameMap.actors.push(entityLoader.createFromTemplate('ant', {components: {positionalobject: {x: 27, y: 4, z: 1}}}));
         engine.gameMap.actors.push(entityLoader.createFromTemplate('dragon_red', {components: {positionalobject: {x: 18, y: 4, z: 1}}}));
         engine.gameMap.actors.push(entityLoader.createFromTemplate('goblin', {components: {positionalobject: {x: 5, y: 2, z: 1}}}));
@@ -134,5 +132,14 @@ export default class TutorialMap extends GameMap {
         engine.gameMap.items.push(entityLoader.createFromTemplate('potion_health', {components: {positionalobject: {x: 3, y: 5, z: 1}}}));
         engine.gameMap.items.push(entityLoader.createFromTemplate('^', {components: {positionalobject: {x: 6, y: 5, z: 1}}}));
         engine.gameMap.items.push(entityLoader.createFromTemplate('tower_shield', {components: {positionalobject: {x: 28, y: 1, z: 1}}}));
+         */
+
+        engine.gameMap.actors.push(entityLoader.createFromTemplate('gelatinous_cube', {components: {positionalobject: {x: 18, y: 4, z: 1}}}));
+        for (let i = 0; i < 5; i++) {
+            engine.gameMap.items.push(entityLoader.createFromTemplate('scroll_confusion', {components: {positionalobject: {x: 21, y: 3, z: 1}}}));
+        }
+        engine.gameMap.items.push(entityLoader.createFromTemplate('potion_health', {components: {positionalobject: {x: 19, y: 4, z: 1}}}));
+        engine.gameMap.items.push(entityLoader.createFromTemplate('tower_shield', {components: {positionalobject: {x: 19, y: 4, z: 1}}}));
+        engine.gameMap.items.push(entityLoader.createFromTemplate('gold', {amount: 5, components: {positionalobject: {x: 19, y: 4, z: 1}}}));
     }
 }
