@@ -66,7 +66,8 @@ export default class CharacterObject extends _PositionalObject {
         const font = new THREE.Font(this.font);
         let anyFound = false;
         for (const geometry of cachedTextGeometries) {
-            if (geometry.parameters.options.font.data.familyName === font.data.familyName && geometry.parameters.options.height === newHeight && geometry.letter === this.letter) {
+            const sameFont = geometry.parameters.options.font.data.familyName === font.data.familyName;
+            if (sameFont && geometry.parameters.options.height === newHeight && geometry.letter === this.letter && geometry.centered === this.centered) {
                 this.geometry = geometry;
                 anyFound = true;
                 break;
@@ -86,6 +87,11 @@ export default class CharacterObject extends _PositionalObject {
                 bevelSegments: 1
             });
             this.geometry.letter = this.letter;
+            this.geometry.centered = this.centered;
+            if (this.centered) {
+                this.geometry.center();
+            }
+
             cachedTextGeometries.push(this.geometry);
         }
 
@@ -95,10 +101,6 @@ export default class CharacterObject extends _PositionalObject {
         );
         this.object.originalColor = this.color;
         this.meshes.push(this.object);
-
-        if (this.centered) {
-            this.geometry.center();
-        }
 
         this.setTransparency();
 

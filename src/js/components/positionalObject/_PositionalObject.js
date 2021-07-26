@@ -2,7 +2,7 @@ import _Component from "../_Component";
 import sceneState from "../../SceneState";
 import _Tile from "../../entity/_Tile";
 import Extend from "../../util/Extend";
-import {MathUtils, Vector3} from "three";
+import {Vector3} from "three";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import engine from "../../Engine";
 
