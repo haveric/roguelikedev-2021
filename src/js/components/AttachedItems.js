@@ -177,13 +177,6 @@ export default class AttachedItems extends _Component {
             if (itemRemnant) {
                 item.removeComponent("remnant");
             }
-
-            const position = item.getComponent("positionalobject");
-            if (position) {
-                position.setVisible(true);
-                position.updateObjectPosition();
-                engine.needsMapUpdate = true;
-            }
         }
     }
 }

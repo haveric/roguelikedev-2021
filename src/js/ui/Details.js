@@ -62,7 +62,7 @@ class Details {
         const itemLines = [];
         for (const item of engine.gameMap.items) {
             const position = item.getComponent("positionalobject");
-            if (position && x === position.x && y === position.y && Math.abs(z - position.z) < 2) {
+            if (position && position.isVisible() && x === position.x && y === position.y && Math.abs(z - position.z) < 2) {
                 itemLines.push("<span class='details__line'><span style='color:" + position.color + "'>" + position.letter + "</span>: " + item.name + "</span>");
             }
         }

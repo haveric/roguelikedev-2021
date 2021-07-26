@@ -140,6 +140,12 @@ export default class TutorialMap extends GameMap {
         }
         engine.gameMap.items.push(entityLoader.createFromTemplate('potion_health', {components: {positionalobject: {x: 19, y: 4, z: 1}}}));
         engine.gameMap.items.push(entityLoader.createFromTemplate('tower_shield', {components: {positionalobject: {x: 19, y: 4, z: 1}}}));
-        engine.gameMap.items.push(entityLoader.createFromTemplate('gold', {amount: 5, components: {positionalobject: {x: 19, y: 4, z: 1}}}));
+
+
+        for (let i = 18; i <= 22; i++) {
+            for (let j = 2; j <= 4; j++) {
+                engine.gameMap.items.push(entityLoader.createFromTemplate('gold', {amount: 5, components: {positionalobject: {x: i, y: j, z: 1}}}));
+            }
+        }
     }
 }

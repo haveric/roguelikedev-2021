@@ -219,7 +219,10 @@ export default class GameMap {
             } else if (newObject instanceof Item) {
                 const remnant = newObject.getComponent("remnant");
                 if (remnant && remnant.isRemnant) {
-                    newObject.getComponent("positionalobject").teardown();
+                    const position = newObject.getComponent("positionalobject");
+                    if (position) {
+                        position.teardown();
+                    }
                     const index = this.items.indexOf(newObject);
                     if (index > -1) {
                         this.items.splice(index, 1);
@@ -287,9 +290,10 @@ export default class GameMap {
                                         if (itemRemnant && itemRemnant.isRemnant) {
                                             if (remnant.x === itemRemnant.x && remnant.y === itemRemnant.y && remnant.z === itemRemnant.z) {
                                                 itemsRemoved.push(item);
-                                                item.getComponent("positionalobject").teardown();
-                                                item.removeComponent("positionalobject");
-
+                                                const itemPosition = item.getComponent("positionalobject");
+                                                if (itemPosition) {
+                                                    itemPosition.teardown();
+                                                }
                                                 newObjectsRemoved.push(item);
 
                                                 const visibleIndex = fov.visibleObjects.indexOf(item);
@@ -338,7 +342,6 @@ export default class GameMap {
         for (let newObject of newObjectsRemoved) {
             const newIndex = newObjects.indexOf(newObject);
             if (newIndex > -1) {
-                delete newObjects[newIndex];
                 newObjects.splice(newIndex, 1);
             }
         }
@@ -382,7 +385,7 @@ export default class GameMap {
         for (const oldObject of oldObjects) {
             const position = oldObject.getComponent("positionalobject");
             if (position) {
-                if (oldObject instanceof Actor && oldObject.isAlive()) {
+                if (oldObject instanceof Actor || oldObject instanceof Item) {
                     const remnant = oldObject.clone();
                     remnant.name = "Sighting of " + remnant.name;
                     remnant.removeComponent("ai");
@@ -393,7 +396,11 @@ export default class GameMap {
                     const remnantPosition = remnant.getComponent("positionalobject");
                     remnantPosition.setVisible();
                     remnantPosition.shiftColor(.5);
-                    this.actors.push(remnant);
+                    if (oldObject instanceof Actor) {
+                        this.actors.push(remnant);
+                    } else {
+                        this.items.push(remnant);
+                    }
 
                     oldObject.setComponent(new Remnant({components: {remnant: {isRemnant: false, x: position.x, y: position.y, z: position.z}}}));
                     position.setVisible(false);

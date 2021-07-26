@@ -178,18 +178,30 @@ export default class AIGelatinousCube extends AI {
                                 yRot: MathUtils.randFloat(0, 2),
                                 zRot: MathUtils.randFloat(0, 2)
                             }
-                            const tween = new TWEEN.Tween(position).to(finalPosition, 200);
-                            tween.start();
-                            tween.onUpdate(function() {
-                                itemPosition.xRot = position.xRot;
-                                itemPosition.yRot = position.yRot;
-                                itemPosition.zRot = position.zRot;
-                                itemPosition.xOffset = position.xOffset;
-                                itemPosition.yOffset = position.yOffset;
-                                itemPosition.zOffset = position.zOffset;
+
+                            if (remnant && !remnant.isRemnant) {
+                                itemPosition.xRot = finalPosition.xRot;
+                                itemPosition.yRot = finalPosition.yRot;
+                                itemPosition.zRot = finalPosition.zRot;
+                                itemPosition.xOffset = finalPosition.xOffset;
+                                itemPosition.yOffset = finalPosition.yOffset;
+                                itemPosition.zOffset = finalPosition.zOffset;
                                 itemPosition.updateObjectPosition();
                                 engine.needsMapUpdate = true;
-                            });
+                            } else {
+                                const tween = new TWEEN.Tween(position).to(finalPosition, 200);
+                                tween.start();
+                                tween.onUpdate(function() {
+                                    itemPosition.xRot = position.xRot;
+                                    itemPosition.yRot = position.yRot;
+                                    itemPosition.zRot = position.zRot;
+                                    itemPosition.xOffset = position.xOffset;
+                                    itemPosition.yOffset = position.yOffset;
+                                    itemPosition.zOffset = position.zOffset;
+                                    itemPosition.updateObjectPosition();
+                                    engine.needsMapUpdate = true;
+                                });
+                            }
                         }
                     }
                 }
@@ -200,19 +212,19 @@ export default class AIGelatinousCube extends AI {
                         engine.gameMap.items.splice(itemIndex, 1);
                     }
 
-                    const fovPreviousIndex = this.fov.previousVisibleObjects.indexOf(item);
+                    const fovPreviousIndex = engine.fov.previousVisibleObjects.indexOf(item);
                     if (fovPreviousIndex > -1) {
-                        this.fov.previousVisibleObjects.splice(fovPreviousIndex, 1);
+                        engine.fov.previousVisibleObjects.splice(fovPreviousIndex, 1);
                     }
 
-                    const fovObjectIndex = this.fov.visibleObjects.indexOf(item);
+                    const fovObjectIndex = engine.fov.visibleObjects.indexOf(item);
                     if (fovObjectIndex > -1) {
-                        this.fov.visibleObjects.splice(fovObjectIndex, 1);
+                        engine.fov.visibleObjects.splice(fovObjectIndex, 1);
                     }
 
-                    const fovItemIndex = this.fov.visibleItems.indexOf(item);
+                    const fovItemIndex = engine.fov.visibleItems.indexOf(item);
                     if (fovItemIndex > -1) {
-                        this.fov.visibleItems.splice(fovItemIndex, 1);
+                        engine.fov.visibleItems.splice(fovItemIndex, 1);
                     }
                 }
             }
