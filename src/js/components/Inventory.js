@@ -19,10 +19,7 @@ export default class Inventory extends _Component {
                 this.capacity = inventory.capacity;
             }
 
-            if (inventory.gold !== undefined) {
-                this.gold = inventory.gold;
-            }
-
+            this.gold = this.parseRandInt(inventory.gold, 0);
             if (inventory.items !== undefined) {
                 for (let i = 0; i < inventory.items.length; i++) {
                     const item = inventory.items[i];

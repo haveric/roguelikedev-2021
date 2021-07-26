@@ -27,6 +27,9 @@
                 "hp": 10,
                 "defense": 1,
                 "power": 4
+            },
+            "inventory": {
+                "gold": "1,10"
             }
         }
     },
@@ -48,6 +51,9 @@
                 "hp": 16,
                 "defense": 1,
                 "power": 4
+            },
+            "inventory": {
+                "gold": "5,15"
             }
         }
     },

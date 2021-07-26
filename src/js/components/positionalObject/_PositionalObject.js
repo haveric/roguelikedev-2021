@@ -43,34 +43,18 @@ export default class _PositionalObject extends _Component {
                 this.opacity = positionalobject.opacity;
             }
 
-            this.scale = this.parseRand(positionalobject.scale, 1);
-            this.xRot = this.parseRand(positionalobject.xRot, 0);
-            this.yRot = this.parseRand(positionalobject.yRot, 0);
-            this.zRot = this.parseRand(positionalobject.zRot, 0);
+            this.scale = this.parseRandFloat(positionalobject.scale, 1);
+            this.xRot = this.parseRandFloat(positionalobject.xRot, 0);
+            this.yRot = this.parseRandFloat(positionalobject.yRot, 0);
+            this.zRot = this.parseRandFloat(positionalobject.zRot, 0);
 
-            this.xOffset = this.parseRand(positionalobject.xOffset, 0);
-            this.yOffset = this.parseRand(positionalobject.yOffset, 0);
-            this.zOffset = this.parseRand(positionalobject.zOffset, 0);
-            this.size = this.parseRand(positionalobject.size, 1);
+            this.xOffset = this.parseRandFloat(positionalobject.xOffset, 0);
+            this.yOffset = this.parseRandFloat(positionalobject.yOffset, 0);
+            this.zOffset = this.parseRandFloat(positionalobject.zOffset, 0);
+            this.size = this.parseRandFloat(positionalobject.size, 1);
         }
 
         this.transparency = 1; // for quick reference on mousemove
-    }
-
-    parseRand(value, defaultValue) {
-        let returnValue;
-        if (typeof value === "string") {
-            if (value.indexOf(",") !== -1) {
-                const valueSplit = value.split(",");
-                returnValue = parseFloat(MathUtils.randFloat(parseFloat(valueSplit[0].trim()), parseFloat(valueSplit[1].trim())).toFixed(2));
-            } else {
-                returnValue = parseFloat(value) || defaultValue;
-            }
-        } else {
-            returnValue = value || defaultValue;
-        }
-
-        return returnValue;
     }
 
     save() {
