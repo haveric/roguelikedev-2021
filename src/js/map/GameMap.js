@@ -247,12 +247,59 @@ export default class GameMap {
             positionalObject.setVisible();
             sceneState.updateCameraPosition(engine.player);
 
+            this.revealPreviouslyExplored();
+
             this.updatePlayerUI();
         }
     }
 
     isInBounds(x, y) {
         return 0 <= x && x < this.width && 0 <= y && y < this.height;
+    }
+
+    revealPreviouslyExplored() {
+        const tileIter = this.tiles.entries();
+        for (const entry of tileIter) {
+            for (let i = 0; i < this.width; i++) {
+                for (let j = 0; j < this.height; j++) {
+                    const tile = entry[1][i][j];
+                    if (tile) {
+                        const position = tile.getComponent("positionalobject");
+                        if (position) {
+                            if (!position.isVisible()) {
+                                const fov = tile.getComponent("fov");
+                                if (fov && fov.explored) {
+                                    position.setVisible();
+                                    this.setTransparency(position, -5, -5, position.z);
+
+                                    if (position.hasObject()) {
+                                        position.shiftColor(.5);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        for (const entity of this.items) {
+            const position = entity.getComponent("positionalobject");
+            const remnant = entity.getComponent("remnant");
+            if (remnant && remnant.isRemnant) {
+                position.setVisible();
+                position.shiftColor(.5);
+            }
+        }
+
+        for (const entity of this.actors) {
+            const position = entity.getComponent("positionalobject");
+            const remnant = entity.getComponent("remnant");
+            if (remnant && remnant.isRemnant) {
+                position.setVisible();
+                position.shiftColor(.5);
+            }
+        }
     }
 
     reveal() {
@@ -262,11 +309,133 @@ export default class GameMap {
                 for (let j = 0; j < this.height; j++) {
                     const tile = entry[1][i][j];
                     if (tile) {
-                        const tileObject = tile.getComponent("positionalobject");
-                        if (tileObject) {
-                            tileObject.setVisible();
+                        const position = tile.getComponent("positionalobject");
+                        if (position) {
+                            if (!position.isVisible()) {
+                                position.setVisible();
+                                this.setTransparency(position, -5, -5, position.z);
+
+                                if (position.hasObject()) {
+                                    position.shiftColor(.5);
+                                }
+
+                                const fov = tile.getComponent("fov");
+                                if (!fov) {
+                                    tile.setComponent(new Fov({components: {fov: {explored: true, visible: false}}}));
+                                }
+                            }
                         }
                     }
+                }
+            }
+        }
+
+        for (const entity of this.items) {
+            const position = entity.getComponent("positionalobject");
+            const remnant = entity.getComponent("remnant");
+            if (remnant && remnant.isRemnant) {
+                position.teardown();
+            }
+        }
+
+        for (const entity of this.actors) {
+            const position = entity.getComponent("positionalobject");
+            const remnant = entity.getComponent("remnant");
+            if (remnant && remnant.isRemnant) {
+                position.teardown();
+            }
+        }
+
+        for (const entity of this.items) {
+            const remnant = entity.getComponent("remnant");
+            if (!remnant || !remnant.isRemnant) {
+                const position = entity.getComponent("positionalobject");
+                if (position && !position.isVisible()) {
+                    const remnant = entity.clone();
+                    remnant.name = "Sighting of " + remnant.name;
+                    remnant.removeComponent("ai");
+                    remnant.removeComponent("blocksMovement");
+                    remnant.removeComponent("blocksFov");
+                    remnant.setComponent(new Remnant({
+                        components: {
+                            remnant: {
+                                isRemnant: true,
+                                x: position.x,
+                                y: position.y,
+                                z: position.z
+                            }
+                        }
+                    }));
+
+                    const remnantPosition = remnant.getComponent("positionalobject");
+                    remnantPosition.setVisible();
+                    remnantPosition.shiftColor(.5);
+                    if (entity instanceof Actor) {
+                        this.actors.push(remnant);
+                    } else {
+                        this.items.push(remnant);
+                    }
+
+                    entity.setComponent(new Remnant({
+                        components: {
+                            remnant: {
+                                isRemnant: false,
+                                x: position.x,
+                                y: position.y,
+                                z: position.z
+                            }
+                        }
+                    }));
+                    position.setVisible(false);
+
+                    entity.callEvent("onCreateRemnant");
+                }
+            }
+        }
+
+        for (const entity of this.actors) {
+            const remnant = entity.getComponent("remnant");
+            if (!remnant || !remnant.isRemnant) {
+                const position = entity.getComponent("positionalobject");
+                if (position && !position.isVisible()) {
+                    const remnant = entity.clone();
+                    remnant.name = "Sighting of " + remnant.name;
+                    remnant.removeComponent("ai");
+                    remnant.removeComponent("blocksMovement");
+                    remnant.removeComponent("blocksFov");
+                    remnant.setComponent(new Remnant({
+                        components: {
+                            remnant: {
+                                isRemnant: true,
+                                x: position.x,
+                                y: position.y,
+                                z: position.z
+                            }
+                        }
+                    }));
+
+                    const remnantPosition = remnant.getComponent("positionalobject");
+                    remnantPosition.setVisible();
+                    remnantPosition.shiftColor(.5);
+                    if (entity instanceof Actor) {
+                        this.actors.push(remnant);
+                    } else {
+                        this.items.push(remnant);
+                    }
+
+                    entity.setComponent(new Remnant({
+                        components: {
+                            remnant: {
+                                isRemnant: false,
+                                x: position.x,
+                                y: position.y,
+                                z: position.z
+                            }
+                        }
+                    }));
+                    position.setVisible(false);
+
+                    entity.callEvent("onCreateRemnant");
                 }
             }
         }
@@ -355,7 +524,7 @@ export default class GameMap {
                                                     itemPosition.teardown();
                                                 }
                                                 newObjectsRemoved.push(item);
-                                                fov.removeVisible(newObject);
+                                                fov.removeVisible(item);
                                             }
                                         }
                                     }

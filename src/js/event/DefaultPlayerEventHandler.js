@@ -62,9 +62,9 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             } else if (controls.testPressed("debug")) {
                 engine.gameMap.reveal();
                 engine.needsMapUpdate = true;
-                engine.setEventHandler(new EditorEventHandler());
-                editorControls.show();
-                editorInfo.show();
+                //engine.setEventHandler(new EditorEventHandler());
+                //editorControls.show();
+                //editorInfo.show();
             } else if (controls.testPressed("debug2")) {
                 engine.gameMap.teardown();
                 engine.gameMap = new TutorialMap();
