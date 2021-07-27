@@ -27,13 +27,13 @@ export default class AdamMilazzoFov extends BaseFov {
             } else {
                 topY = Math.round(((x * 2 - 1) * top.y + top.x) / (top.x * 2));
 
-                if (this.blocksLight(octant, originX, originY, originZ, x, topY, minZ, maxZ)) {
-                    if (top.greaterOrEqual(topY * 2 + 1, x * 2) && !this.blocksLight(octant, originX, originY, originZ, x, topY + 1, minZ, maxZ)) {
+                if (this.blocksLight(octant, originX, originY, originZ, x, topY)) {
+                    if (top.greaterOrEqual(topY * 2 + 1, x * 2) && !this.blocksLight(octant, originX, originY, originZ, x, topY + 1)) {
                         topY ++;
                     }
                 } else {
                     let ax = x * 2;
-                    if (this.blocksLight(octant, originX, originY, originZ, x + 1, topY + 1, minZ, maxZ)) {
+                    if (this.blocksLight(octant, originX, originY, originZ, x + 1, topY + 1)) {
                         ax ++;
                     }
 
@@ -49,14 +49,14 @@ export default class AdamMilazzoFov extends BaseFov {
             } else {
                 bottomY = ((x * 2 - 1) * bottom.y + bottom.x) / (bottom.x * 2);
 
-                if (bottom.greaterOrEqual(bottomY * 2 + 1, x * 2) && this.blocksLight(octant, originX, originY, originZ, x, bottomY, minZ, maxZ) && !this.blocksLight(octant, originX, originY, originZ, x, bottomY + 1, minZ, maxZ)) {
+                if (bottom.greaterOrEqual(bottomY * 2 + 1, x * 2) && this.blocksLight(octant, originX, originY, originZ, x, bottomY) && !this.blocksLight(octant, originX, originY, originZ, x, bottomY + 1)) {
                     bottomY ++;
                 }
             }
 
             let wasOpaque = -1; // 0:false, 1:true, -1:not applicable
             for (let y = topY; y >= bottomY; y--) {
-                const isOpaque = this.blocksLight(octant, originX, originY, originZ, x, y, minZ, maxZ);
+                const isOpaque = this.blocksLight(octant, originX, originY, originZ, x, y);
                 const isVisible = isOpaque || ((y !== topY || top.greaterOrEqual(y, x)) && (y !== bottomY || bottom.lessOrEqual(y, x)));
 
                 if (isVisible) {
@@ -107,7 +107,7 @@ export default class AdamMilazzoFov extends BaseFov {
         }
     }
 
-    blocksLight(octant, originX, originY, originZ, x, y, minZ, maxZ) {
+    blocksLight(octant, originX, originY, originZ, x, y) {
         switch(octant) {
             case 0:
                 originX += x;

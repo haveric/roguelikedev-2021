@@ -130,12 +130,14 @@ export default class _PositionalObject extends _Component {
     }
 
     getObjectPosition() {
-        return new Vector3(this.x * this.width, this.y * this.height, (this.z * this.depth) - ((this.depth - (this.scale * this.depth)) / 2));
+        return new Vector3((this.x + this.xOffset) * this.width, (this.y + this.yOffset) * this.height, (this.z + this.zOffset) * this.depth - ((this.depth - (this.scale * this.depth)) / 2));
     }
 
     updateObjectPosition() {
         if (this.hasObject()) {
-            this.object.position.set(this.x * this.width, this.y * this.height, (this.z * this.depth) - ((this.depth - (this.scale * this.depth)) / 2));
+            this.object.position.set((this.x + this.xOffset) * this.width, (this.y + this.yOffset) * this.height, (this.z + this.zOffset) * this.depth - ((this.depth - (this.scale * this.depth)) / 2));
+
+            this.object.rotation.set(Math.PI * this.xRot, Math.PI * this.yRot, Math.PI * this.zRot);
         }
     }
 

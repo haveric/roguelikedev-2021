@@ -1,7 +1,5 @@
 import GameMap from "./GameMap";
-import engine from "../Engine";
 import entityLoader from "../entity/EntityLoader";
-import sceneState from "../SceneState";
 import MapLayer from "./MapLayer";
 import Shop from "./room/Shop";
 import ArrayUtil from "../util/ArrayUtil";

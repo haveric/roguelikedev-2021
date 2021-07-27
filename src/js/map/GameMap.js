@@ -265,17 +265,12 @@ export default class GameMap {
                     const tile = entry[1][i][j];
                     if (tile) {
                         const position = tile.getComponent("positionalobject");
-                        if (position) {
-                            if (!position.isVisible()) {
-                                const fov = tile.getComponent("fov");
-                                if (fov && fov.explored) {
-                                    position.setVisible();
-                                    this.setTransparency(position, -5, -5, position.z);
-
-                                    if (position.hasObject()) {
-                                        position.shiftColor(.5);
-                                    }
-                                }
+                        if (position && !position.isVisible()) {
+                            const fov = tile.getComponent("fov");
+                            if (fov && fov.explored) {
+                                position.setVisible();
+                                this.setTransparency(position, -5, -5, position.z);
+                                position.shiftColor(.5);
                             }
                         }
                     }
@@ -284,18 +279,18 @@ export default class GameMap {
         }
 
         for (const entity of this.items) {
-            const position = entity.getComponent("positionalobject");
             const remnant = entity.getComponent("remnant");
             if (remnant && remnant.isRemnant) {
+                const position = entity.getComponent("positionalobject");
                 position.setVisible();
                 position.shiftColor(.5);
             }
         }
 
         for (const entity of this.actors) {
-            const position = entity.getComponent("positionalobject");
             const remnant = entity.getComponent("remnant");
             if (remnant && remnant.isRemnant) {
+                const position = entity.getComponent("positionalobject");
                 position.setVisible();
                 position.shiftColor(.5);
             }
@@ -310,19 +305,14 @@ export default class GameMap {
                     const tile = entry[1][i][j];
                     if (tile) {
                         const position = tile.getComponent("positionalobject");
-                        if (position) {
-                            if (!position.isVisible()) {
-                                position.setVisible();
-                                this.setTransparency(position, -5, -5, position.z);
+                        if (position && !position.isVisible()) {
+                            position.setVisible();
+                            this.setTransparency(position, -5, -5, position.z);
+                            position.shiftColor(.5);
 
-                                if (position.hasObject()) {
-                                    position.shiftColor(.5);
-                                }
-
-                                const fov = tile.getComponent("fov");
-                                if (!fov) {
-                                    tile.setComponent(new Fov({components: {fov: {explored: true, visible: false}}}));
-                                }
+                            const fov = tile.getComponent("fov");
+                            if (!fov) {
+                                tile.setComponent(new Fov({components: {fov: {explored: true, visible: false}}}));
                             }
                         }
                     }
@@ -331,18 +321,16 @@ export default class GameMap {
         }
 
         for (const entity of this.items) {
-            const position = entity.getComponent("positionalobject");
             const remnant = entity.getComponent("remnant");
             if (remnant && remnant.isRemnant) {
-                position.teardown();
+                entity.getComponent("positionalobject").teardown();
             }
         }
 
         for (const entity of this.actors) {
-            const position = entity.getComponent("positionalobject");
             const remnant = entity.getComponent("remnant");
             if (remnant && remnant.isRemnant) {
-                position.teardown();
+                entity.getComponent("positionalobject").teardown();
             }
         }
 
@@ -594,7 +582,8 @@ export default class GameMap {
         for (const oldObject of oldObjects) {
             const position = oldObject.getComponent("positionalobject");
             if (position) {
-                if (oldObject instanceof Actor || oldObject instanceof Item) {
+                const isActor = oldObject instanceof Actor;
+                if (isActor || oldObject instanceof Item) {
                     const remnant = oldObject.clone();
                     remnant.name = "Sighting of " + remnant.name;
                     remnant.removeComponent("ai");
@@ -605,7 +594,7 @@ export default class GameMap {
                     const remnantPosition = remnant.getComponent("positionalobject");
                     remnantPosition.setVisible();
                     remnantPosition.shiftColor(.5);
-                    if (oldObject instanceof Actor) {
+                    if (isActor) {
                         this.actors.push(remnant);
                     } else {
                         this.items.push(remnant);
