@@ -1,9 +1,10 @@
+import html from '../../html/Details.html';
 import engine from "../Engine";
+import UIElement from "./UIElement";
 
-class Details {
+class Details extends UIElement {
     constructor() {
-        this.dom = document.createElement("div");
-        this.dom.classList.add("details");
+        super(html);
     }
 
     updatePlayerDetails() {

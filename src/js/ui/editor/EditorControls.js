@@ -1,8 +1,9 @@
-import EditorUIElement from "./_EditorUIElement";
+import html from '../../../html/editor/EditorControls.html';
+import UIElement from "../UIElement";
 
-class EditorControls extends EditorUIElement{
+class EditorControls extends UIElement {
     constructor() {
-        super("editor-controls");
+        super(html);
 
         this.addAction("select", "👆", true);
         this.addAction("paint", "🖌");
@@ -10,7 +11,7 @@ class EditorControls extends EditorUIElement{
 
         this.activeAction = "select";
 
-        this.domElement.addEventListener("click", this);
+        this.dom.addEventListener("click", this);
     }
 
     handleEvent(e) {
@@ -31,14 +32,14 @@ class EditorControls extends EditorUIElement{
         }
         action.innerHTML = char;
 
-        this.domElement.appendChild(action);
+        this.dom.appendChild(action);
     }
 
     setControl(e) {
         const target = e.target;
         if (target.type === "submit") {
             if (!target.classList.contains("active")) {
-                const allActions = target.parentNode.childNodes;
+                const allActions = target.parentNode.children;
                 for (const action of allActions) {
                     action.classList.remove("active");
                 }

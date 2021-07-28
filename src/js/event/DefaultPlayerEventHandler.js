@@ -5,9 +5,9 @@ import BasicDungeon from "../map/BasicDungeon";
 import _Tile from "../entity/_Tile";
 import sceneState from "../SceneState";
 import EventHandler from "./_EventHandler";
-import editorControls from "../ui/EditorControls";
+import editorControls from "../ui/editor/EditorControls";
 import EditorEventHandler from "./EditorEventHandler";
-import editorInfo from "../ui/EditorInfo";
+import editorInfo from "../ui/editor/EditorInfo";
 import BumpAction from "../actions/actionWithDirection/BumpAction";
 import WaitAction from "../actions/WaitAction";
 import PickupAction from "../actions/PickupAction";
@@ -62,9 +62,9 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             } else if (controls.testPressed("debug")) {
                 engine.gameMap.reveal();
                 engine.needsMapUpdate = true;
-                //engine.setEventHandler(new EditorEventHandler());
-                //editorControls.show();
-                //editorInfo.show();
+                engine.setEventHandler(new EditorEventHandler());
+                editorControls.open();
+                editorInfo.open();
             } else if (controls.testPressed("debug2")) {
                 engine.gameMap.teardown();
                 engine.gameMap = new TutorialMap();

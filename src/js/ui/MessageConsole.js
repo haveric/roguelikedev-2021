@@ -1,19 +1,16 @@
+import html from '../../html/MessageConsole.html';
 import SubMessage from "./message/SubMessage";
 import Message from "./message/Message";
+import UIElement from "./UIElement";
 
-class MessageConsole {
+class MessageConsole extends UIElement {
     constructor() {
+        super(html);
         this.messages = [];
         this.builder = [];
 
-        this.consoleDom = document.createElement("div");
-        this.consoleDom.classList.add("console");
-
-        this.consoleIncreaseDom = document.createElement("button");
-        this.consoleIncreaseDom.classList.add("console__increase");
-        this.consoleIncreaseDom.classList.add("console__button");
-        this.consoleIncreaseDom.innerText = "▲";
-        this.consoleIncreaseDom.addEventListener("click", function(e) {
+        const consoleIncreaseDom = this.dom.getElementsByClassName("console__increase")[0];
+        consoleIncreaseDom.addEventListener("click", function(e) {
             const parent = e.target.parentElement;
             if (parent.classList.contains("collapsed")) {
                 parent.classList.remove("collapsed");
@@ -22,11 +19,8 @@ class MessageConsole {
             }
         });
 
-        this.consoleDecreaseDom = document.createElement("button");
-        this.consoleDecreaseDom.classList.add("console__decrease");
-        this.consoleDecreaseDom.classList.add("console__button");
-        this.consoleDecreaseDom.innerText = "▼";
-        this.consoleDecreaseDom.addEventListener("click", function(e) {
+        const consoleDecreaseDom = this.dom.getElementsByClassName("console__decrease")[0];
+        consoleDecreaseDom.addEventListener("click", function(e) {
             const parent = e.target.parentElement;
             if (parent.classList.contains("full")) {
                 parent.classList.remove("full");
@@ -35,19 +29,7 @@ class MessageConsole {
             }
         });
 
-        this.messagesWrapDom = document.createElement("div");
-        this.messagesWrapDom.classList.add("messages__wrap");
-
-        this.messagesDom = document.createElement("div");
-        this.messagesDom.classList.add("messages");
-
-        this.messagesInnerDom = document.createElement("div");
-        this.messagesInnerDom.classList.add("messages__inn");
-        this.messagesDom.appendChild(this.messagesInnerDom);
-        this.messagesWrapDom.appendChild(this.messagesDom);
-        this.consoleDom.appendChild(this.messagesWrapDom);
-        this.consoleDom.appendChild(this.consoleIncreaseDom);
-        this.consoleDom.appendChild(this.consoleDecreaseDom);
+        this.messagesInnerDom = this.dom.getElementsByClassName("messages__inn")[0];
     }
 
     text(text, color, options) {

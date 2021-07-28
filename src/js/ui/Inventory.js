@@ -1,13 +1,11 @@
-class Inventory {
+import html from '../../html/inventory/Inventory.html';
+import UIElement from "./UIElement";
+
+class Inventory extends UIElement {
     constructor() {
-        this.dom = document.createElement("div");
-        this.dom.classList.add("inventory");
+        super(html);
 
-        this.equipmentDom = document.createElement("div");
-        this.equipmentDom.classList.add("inventory__equipment");
-
-        this.storageDom = document.createElement("div");
-        this.storageDom.classList.add("inventory__storage");
+        this.storageDom = this.dom.getElementsByClassName("inventory__storage")[0];
 
         this.slots = [];
         for (let i = 0; i < 40; i++) {
@@ -18,19 +16,7 @@ class Inventory {
             this.storageDom.appendChild(slot);
         }
 
-        this.goldDisplayDom = document.createElement("div");
-        this.goldDisplayDom.classList.add("inventory__golddisplay");
-
-        this.goldCountDom = document.createElement("span");
-        this.goldTextDom = document.createElement("span");
-        this.goldTextDom.innerText = " Gold";
-
-        this.goldDisplayDom.appendChild(this.goldCountDom);
-        this.goldDisplayDom.appendChild(this.goldTextDom);
-
-        this.dom.appendChild(this.equipmentDom);
-        this.dom.appendChild(this.storageDom);
-        this.dom.appendChild(this.goldDisplayDom);
+        this.goldCountDom = this.dom.getElementsByClassName("inventory__gold-count")[0];
 
         this.itemTooltipDom = document.createElement("div");
         this.itemTooltipDom.classList.add("item__tooltip");
@@ -40,18 +26,6 @@ class Inventory {
 
         document.body.appendChild(this.itemTooltipDom);
         document.body.appendChild(this.itemDragDom);
-    }
-
-    isOpen() {
-        return this.dom.classList.contains("active");
-    }
-
-    open() {
-        this.dom.classList.add("active");
-    }
-
-    close() {
-        this.dom.classList.remove("active");
     }
 
     populateInventory(entity) {

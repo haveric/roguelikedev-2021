@@ -2,12 +2,12 @@ import engine from "../Engine";
 import controls from "../controls/Controls";
 import TutorialMap from "../map/TutorialMap";
 import EventHandler from "./_EventHandler";
-import editorControls from "../ui/EditorControls";
+import editorControls from "../ui/editor/EditorControls";
 import DefaultPlayerEventHandler from "./DefaultPlayerEventHandler";
 import _Tile from "../entity/_Tile";
 import Actor from "../entity/Actor";
 import Item from "../entity/Item";
-import editorInfo from "../ui/EditorInfo";
+import editorInfo from "../ui/editor/EditorInfo";
 import BumpAction from "../actions/actionWithDirection/BumpAction";
 
 export default class EditorEventHandler extends EventHandler {
@@ -50,8 +50,8 @@ export default class EditorEventHandler extends EventHandler {
             engine.gameMap.reveal();
             engine.needsMapUpdate = true;
             engine.setEventHandler(new DefaultPlayerEventHandler());
-            editorControls.hide();
-            editorInfo.hide();
+            editorControls.close();
+            editorInfo.close();
         } else if (controls.testPressed("debug2")) {
             engine.gameMap.teardown();
             engine.gameMap = new TutorialMap();

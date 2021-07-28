@@ -6,6 +6,10 @@ import characterHealth from "./ui/CharacterHealth";
 import details from "./ui/Details";
 import characterMana from "./ui/CharacterMana";
 import inventory from "./ui/Inventory";
+import editorControls from "./ui/editor/EditorControls";
+import editorLayer from "./ui/editor/EditorLayer";
+import editorInfo from "./ui/editor/EditorInfo";
+import editorPaint from "./ui/editor/EditorPaint";
 
 class SceneState {
     constructor() {
@@ -28,10 +32,15 @@ class SceneState {
 
         gameDom.appendChild(this.canvasDom);
         gameDom.appendChild(details.dom);
-        gameDom.appendChild(messageConsole.consoleDom);
+        gameDom.appendChild(messageConsole.dom);
         gameDom.appendChild(characterHealth.dom);
         gameDom.appendChild(characterMana.dom);
         gameDom.appendChild(inventory.dom);
+
+        gameDom.appendChild(editorControls.dom);
+        gameDom.appendChild(editorInfo.dom);
+        gameDom.appendChild(editorLayer.dom);
+        gameDom.appendChild(editorPaint.dom);
 
         this.renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
         this.renderer.setClearColor(0xaaaaaa, 1);

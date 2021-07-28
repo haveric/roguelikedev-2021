@@ -18,6 +18,11 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.html$/i,
+                include: path.resolve(__dirname, 'src/html'),
+                type: 'asset/source',
+            },
+            {
                 test: /\.css$/i,
                 include: path.resolve(__dirname, 'src/styles'),
                 use: ['style-loader', 'css-loader'],

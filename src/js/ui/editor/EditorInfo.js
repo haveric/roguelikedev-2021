@@ -1,9 +1,10 @@
-import EditorUIElement from "./_EditorUIElement";
-import engine from "../Engine";
+import html from '../../../html/editor/EditorInfo.html';
+import engine from "../../Engine";
+import UIElement from "../UIElement";
 
-class EditorInfo extends EditorUIElement{
+class EditorInfo extends UIElement {
     constructor() {
-        super("editor-info");
+        super(html);
 
         this.dataMap = new Map();
 
@@ -12,7 +13,7 @@ class EditorInfo extends EditorUIElement{
         entityDom.classList.add("active");
         this.addData("entity", entityDom);
         this.addData("name", entityDom);
-        this.domElement.appendChild(entityDom);
+        this.dom.appendChild(entityDom);
 
         this.positionalObject = document.createElement("div");
         this.positionalObject.classList.add("editor-info__component");
@@ -30,17 +31,17 @@ class EditorInfo extends EditorUIElement{
         this.addData("xOffset", this.positionalObject);
         this.addData("yOffset", this.positionalObject);
         this.addData("zOffset", this.positionalObject);
-        this.domElement.appendChild(this.positionalObject);
+        this.dom.appendChild(this.positionalObject);
 
         this.walkable = document.createElement("div");
         this.walkable.classList.add("editor-info__component");
         this.addData("walkable", this.walkable);
-        this.domElement.appendChild(this.walkable);
+        this.dom.appendChild(this.walkable);
 
         this.blocksMovement = document.createElement("div");
         this.blocksMovement.classList.add("editor-info__component");
         this.addData("blocksMovement", this.blocksMovement);
-        this.domElement.appendChild(this.blocksMovement);
+        this.dom.appendChild(this.blocksMovement);
     }
 
     addDataInput(id, domElement) {
