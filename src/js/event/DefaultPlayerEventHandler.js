@@ -161,6 +161,7 @@ export default class DefaultPlayerEventHandler extends EventHandler {
 
         this.slotDragging.classList.add("dragging");
         inventory.itemDragDom.classList.add("active");
+        this.hideItemTooltip();
     }
 
     updateToolTipSize(e) {
