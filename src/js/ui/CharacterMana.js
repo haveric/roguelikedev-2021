@@ -1,4 +1,4 @@
-import html from '../../html/CharacterMana.html';
+import html from '../../html/ui/CharacterMana.html';
 import UIElement from "./UIElement";
 
 class CharacterMana extends UIElement {

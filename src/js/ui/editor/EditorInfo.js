@@ -1,4 +1,4 @@
-import html from '../../../html/editor/EditorInfo.html';
+import html from '../../../html/ui/editor/EditorInfo.html';
 import engine from "../../Engine";
 import UIElement from "../UIElement";
 
@@ -9,8 +9,7 @@ class EditorInfo extends UIElement {
         this.dataMap = new Map();
 
         const entityDom = document.createElement("div");
-        entityDom.classList.add("editor-info__component");
-        entityDom.classList.add("active");
+        entityDom.classList.add("editor-info__component", "active");
         this.addData("entity", entityDom);
         this.addData("name", entityDom);
         this.dom.appendChild(entityDom);

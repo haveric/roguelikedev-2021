@@ -13,14 +13,18 @@ import BumpAction from "../actions/actionWithDirection/BumpAction";
 export default class EditorEventHandler extends EventHandler {
     constructor() {
         super();
-
         this.selectedEntity = null;
+
+        editorControls.open();
+        editorInfo.open();
     }
 
     teardown() {
         super.teardown();
-
         this.clearSelected();
+
+        editorControls.close();
+        editorInfo.close();
     }
 
     clearSelected() {
@@ -42,10 +46,6 @@ export default class EditorEventHandler extends EventHandler {
             action = new BumpAction(engine.player, -1);
         } else if (controls.testPressed("editor-right")) {
             action = new BumpAction(engine.player, 1);
-        } else if (controls.testPressed("save", 1000)) {
-            engine.gameMap.save("debug1");
-        } else if (controls.testPressed("load", 1000)) {
-            engine.gameMap.load("debug1");
         } else if (controls.testPressed("debug")) {
             engine.gameMap.reveal();
             engine.needsMapUpdate = true;

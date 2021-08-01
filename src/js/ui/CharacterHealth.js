@@ -1,4 +1,4 @@
-import html from '../../html/CharacterHealth.html';
+import html from '../../html/ui/CharacterHealth.html';
 import UIElement from "./UIElement";
 
 class CharacterHealth extends UIElement {

@@ -121,6 +121,7 @@ class Controls {
         self.defaults.set("get", ["g"]);
         self.defaults.set("inventory", ["i"]);
         self.defaults.set("look", ["/"]);
+        self.defaults.set("pause", [Key.ESCAPE, "p"]);
 
         self.defaults.set("confirm", [Key.ENTER, Key.NUMPAD_ENTER, Btn.A]);
         self.defaults.set("cancel", [Key.ESCAPE, Key.BACKSPACE]);

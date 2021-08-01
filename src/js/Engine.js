@@ -1,14 +1,17 @@
 import UnableToPerformAction from "./actions/UnableToPerformAction";
 import sceneState from "./SceneState";
-import DefaultPlayerEventHandler from "./event/DefaultPlayerEventHandler";
 import AdamMilazzoFov from "./map/fov/AdamMilazzoFov";
 import SimpleFov from "./map/fov/SimpleFov";
 import messageConsole from "./ui/MessageConsole";
 import NoAction from "./actions/NoAction";
+import MainMenuEventHandler from "./event/MainMenuEventHandler";
+import Settings from "./settings/Settings";
+import saveManager from "./SaveManager";
 
 class Engine {
     constructor() {
-        this.eventHandler = new DefaultPlayerEventHandler();
+        this.eventHandler = new MainMenuEventHandler();
+        this.settings = new Settings();
         this.player = null;
         this.gameMap = null;
         this.needsMapUpdate = false;
@@ -48,6 +51,7 @@ class Engine {
 
                 this.handleEnemyTurns();
 
+                saveManager.autosave();
                 return true;
             }
         }
@@ -64,6 +68,14 @@ class Engine {
             }
         }
         this.eventHandler.isPlayerTurn = true;
+    }
+
+    save(name) {
+        this.gameMap.save(name);
+    }
+
+    load(name) {
+        this.gameMap.load(name);
     }
 }
 

@@ -297,6 +297,193 @@ export default class GameMap {
         }
     }
 
+    revealFromPosition(x, y, radius, delay = 25) {
+        const self = this;
+        const minX = Math.max(0, x - radius);
+        const maxX = Math.min(engine.gameMap.width, x + radius);
+        const minY = Math.max(0, y - radius);
+        const maxY = Math.min(engine.gameMap.height, y + radius);
+
+        if (delay === 0) {
+            self._revealGradually(minX, maxX, minY, maxY, x, y, 1, radius, delay);
+        } else {
+            setTimeout(function () {
+                self._revealGradually(minX, maxX, minY, maxY, x, y, 1, radius, delay);
+            }, delay);
+        }
+    }
+
+    _revealGradually(minX, maxX, minY, maxY, x, y, radius, maxRadius, delay) {
+        const self = this;
+        const xRadiusMin = x - radius;
+        const xRadiusMax = x + radius;
+        const yRadiusMin = y - radius;
+        const yRadiusMax = y + radius;
+        for (let i = xRadiusMin; i <= xRadiusMax; i++) {
+            const xIsEdge = i === xRadiusMin || i === xRadiusMax;
+            for (let j = yRadiusMin; j <= yRadiusMax; j++) {
+                if (xIsEdge || j === yRadiusMin || j === yRadiusMax) {
+                    this._revealAtPosition(i, j);
+                    engine.needsMapUpdate = true;
+                }
+            }
+        }
+
+        if (xRadiusMin <= minX && xRadiusMax >= maxX && yRadiusMin <= minY && yRadiusMax >= maxY) {
+            return true;
+        }
+
+        if (radius <= maxRadius) {
+            if (delay === 0) {
+                self._revealGradually(minX, maxX, minY, maxY, x, y, radius + 1, maxRadius);
+            } else {
+                setTimeout(function () {
+                    self._revealGradually(minX, maxX, minY, maxY, x, y, radius + 1, maxRadius);
+                }, delay);
+            }
+        }
+
+        return true;
+    }
+
+    _revealAtPosition(x, y) {
+        const tileIter = this.tiles.entries();
+        for (const entry of tileIter) {
+            const tileX = entry[1][x];
+            if (tileX) {
+                const tile = entry[1][x][y];
+                if (tile) {
+                    const position = tile.getComponent("positionalobject");
+                    if (position && !position.isVisible()) {
+                        position.setVisible();
+                        this.setTransparency(position, -5, -5, position.z);
+                        position.shiftColor(.5);
+
+                        const fov = tile.getComponent("fov");
+                        if (!fov) {
+                            tile.setComponent(new Fov({components: {fov: {explored: true, visible: false}}}));
+                        }
+                    }
+                }
+            }
+        }
+
+
+        for (const entity of this.items) {
+            const remnant = entity.getComponent("remnant");
+            if (remnant && remnant.isRemnant) {
+                const position = entity.getComponent("positionalobject");
+                if (position && position.x === x && position.y === y) {
+                    entity.getComponent("positionalobject").teardown();
+                }
+            }
+        }
+
+        for (const entity of this.actors) {
+            const remnant = entity.getComponent("remnant");
+            if (remnant && remnant.isRemnant) {
+                const position = entity.getComponent("positionalobject");
+                if (position && position.x === x && position.y === y) {
+                    entity.getComponent("positionalobject").teardown();
+                }
+            }
+        }
+
+        for (const entity of this.items) {
+            const remnant = entity.getComponent("remnant");
+            if (!remnant || !remnant.isRemnant) {
+                const position = entity.getComponent("positionalobject");
+                if (position && position.x === x && position.y === y && !position.isVisible()) {
+                    const remnant = entity.clone();
+                    remnant.name = "Sighting of " + remnant.name;
+                    remnant.removeComponent("ai");
+                    remnant.removeComponent("blocksMovement");
+                    remnant.removeComponent("blocksFov");
+                    remnant.setComponent(new Remnant({
+                        components: {
+                            remnant: {
+                                isRemnant: true,
+                                x: position.x,
+                                y: position.y,
+                                z: position.z
+                            }
+                        }
+                    }));
+
+                    const remnantPosition = remnant.getComponent("positionalobject");
+                    remnantPosition.setVisible();
+                    remnantPosition.shiftColor(.5);
+                    if (entity instanceof Actor) {
+                        this.actors.push(remnant);
+                    } else {
+                        this.items.push(remnant);
+                    }
+
+                    entity.setComponent(new Remnant({
+                        components: {
+                            remnant: {
+                                isRemnant: false,
+                                x: position.x,
+                                y: position.y,
+                                z: position.z
+                            }
+                        }
+                    }));
+                    position.setVisible(false);
+
+                    entity.callEvent("onCreateRemnant");
+                }
+            }
+        }
+
+        for (const entity of this.actors) {
+            const remnant = entity.getComponent("remnant");
+            if (!remnant || !remnant.isRemnant) {
+                const position = entity.getComponent("positionalobject");
+                if (position && position.x === x && position.y === y && !position.isVisible()) {
+                    const remnant = entity.clone();
+                    remnant.name = "Sighting of " + remnant.name;
+                    remnant.removeComponent("ai");
+                    remnant.removeComponent("blocksMovement");
+                    remnant.removeComponent("blocksFov");
+                    remnant.setComponent(new Remnant({
+                        components: {
+                            remnant: {
+                                isRemnant: true,
+                                x: position.x,
+                                y: position.y,
+                                z: position.z
+                            }
+                        }
+                    }));
+
+                    const remnantPosition = remnant.getComponent("positionalobject");
+                    remnantPosition.setVisible();
+                    remnantPosition.shiftColor(.5);
+                    if (entity instanceof Actor) {
+                        this.actors.push(remnant);
+                    } else {
+                        this.items.push(remnant);
+                    }
+
+                    entity.setComponent(new Remnant({
+                        components: {
+                            remnant: {
+                                isRemnant: false,
+                                x: position.x,
+                                y: position.y,
+                                z: position.z
+                            }
+                        }
+                    }));
+                    position.setVisible(false);
+
+                    entity.callEvent("onCreateRemnant");
+                }
+            }
+        }
+    }
+
     reveal() {
         const tileIter = this.tiles.entries();
         for (const entry of tileIter) {

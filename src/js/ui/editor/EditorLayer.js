@@ -1,4 +1,4 @@
-import html from '../../../html/editor/EditorLayer.html';
+import html from '../../../html/ui/editor/EditorLayer.html';
 import UIElement from "../UIElement";
 
 class EditorLayer extends UIElement{

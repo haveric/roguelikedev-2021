@@ -5,9 +5,7 @@ import BasicDungeon from "../map/BasicDungeon";
 import _Tile from "../entity/_Tile";
 import sceneState from "../SceneState";
 import EventHandler from "./_EventHandler";
-import editorControls from "../ui/editor/EditorControls";
 import EditorEventHandler from "./EditorEventHandler";
-import editorInfo from "../ui/editor/EditorInfo";
 import BumpAction from "../actions/actionWithDirection/BumpAction";
 import WaitAction from "../actions/WaitAction";
 import PickupAction from "../actions/PickupAction";
@@ -15,10 +13,29 @@ import inventory from "../ui/Inventory";
 import DropAction from "../actions/itemAction/DropAction";
 import {Vector2} from "three";
 import LookHandler from "./selectIndexHandler/LookHandler";
+import characterHealth from "../ui/CharacterHealth";
+import characterMana from "../ui/CharacterMana";
+import messageConsole from "../ui/MessageConsole";
+import details from "../ui/Details";
+import PauseMenuEventHandler from "./PauseMenuEventHandler";
 
 export default class DefaultPlayerEventHandler extends EventHandler {
     constructor() {
         super();
+
+        characterHealth.open();
+        characterMana.open();
+        messageConsole.open();
+        details.open();
+    }
+
+    teardown() {
+        super.teardown();
+
+        characterHealth.close();
+        characterMana.close();
+        messageConsole.close();
+        details.close();
     }
 
     handleInput() {
@@ -55,16 +72,16 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                 }
 
                 this.hideItemTooltip();
+            } else if (controls.testPressed("pause")) {
+                engine.setEventHandler(new PauseMenuEventHandler());
             } else if (controls.testPressed("save", 1000)) {
-                engine.gameMap.save("save1");
+                engine.save("quicksave");
             } else if (controls.testPressed("load", 1000)) {
-                engine.gameMap.load("save1");
+                engine.load("quicksave");
             } else if (controls.testPressed("debug")) {
                 engine.gameMap.reveal();
                 engine.needsMapUpdate = true;
                 engine.setEventHandler(new EditorEventHandler());
-                editorControls.open();
-                editorInfo.open();
             } else if (controls.testPressed("debug2")) {
                 engine.gameMap.teardown();
                 engine.gameMap = new TutorialMap();

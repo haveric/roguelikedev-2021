@@ -10,6 +10,14 @@ import editorControls from "./ui/editor/EditorControls";
 import editorLayer from "./ui/editor/EditorLayer";
 import editorInfo from "./ui/editor/EditorInfo";
 import editorPaint from "./ui/editor/EditorPaint";
+import mainMenu from "./ui/menu/MainMenu";
+import controlsMenu from "./ui/menu/ControlsMenu";
+import creditsMenu from "./ui/menu/CreditsMenu";
+import gameOverMenu from "./ui/menu/GameOverMenu";
+import loadGameMenu from "./ui/menu/LoadGameMenu";
+import saveGameMenu from "./ui/menu/SaveGameMenu";
+import settingsMenu from "./ui/menu/SettingsMenu";
+import pauseMenu from "./ui/menu/PauseMenu";
 
 class SceneState {
     constructor() {
@@ -29,7 +37,6 @@ class SceneState {
 
         this.canvasDom = document.createElement("div");
         this.canvasDom.classList.add("view");
-
         gameDom.appendChild(this.canvasDom);
         gameDom.appendChild(details.dom);
         gameDom.appendChild(messageConsole.dom);
@@ -42,6 +49,15 @@ class SceneState {
         gameDom.appendChild(editorLayer.dom);
         gameDom.appendChild(editorPaint.dom);
 
+        gameDom.appendChild(controlsMenu.dom);
+        gameDom.appendChild(creditsMenu.dom);
+        gameDom.appendChild(gameOverMenu.dom);
+        gameDom.appendChild(loadGameMenu.dom);
+        gameDom.appendChild(mainMenu.dom);
+        gameDom.appendChild(pauseMenu.dom);
+        gameDom.appendChild(saveGameMenu.dom);
+        gameDom.appendChild(settingsMenu.dom);
+
         this.renderer = new THREE.WebGLRenderer({antialias: true, alpha: true});
         this.renderer.setClearColor(0xaaaaaa, 1);
         this.canvasDom.appendChild(this.renderer.domElement);
@@ -49,6 +65,7 @@ class SceneState {
 
         this.stats = new Stats();
         this.stats.showPanel(0);
+        this.stats.dom.classList.add("ui");
         document.body.appendChild(this.stats.dom);
     }
 

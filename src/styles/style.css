@@ -13,14 +13,37 @@ body.disable-select * {
     user-select: none;
 }
 
-.editor-ui {
+.ui {
+    display: none;
     opacity: 0;
     pointer-events: none;
 }
 
-.editor-ui.active {
+.ui.active {
+    display: block;
     opacity: 1;
     pointer-events: all;
+}
+
+.menu {
+    position: fixed;
+    left: 5%;
+    top: 5%;
+    background-color: #000;
+    max-width: 30%;
+    text-align: center;
+    padding: 15px;
+    border-radius: 15px 0;
+}
+
+.menu.active {
+    opacity: .7;
+}
+
+.menu__title {
+    font-size: 5vh;
+    color: #fff;
+    margin: 0 0 15px;
 }
 
 #editor-controls {
@@ -105,7 +128,6 @@ body.disable-select * {
 
 .console {
     position: fixed;
-    display: block;
     left: 25%;
     bottom: 0;
     width: 50%;
@@ -113,12 +135,18 @@ body.disable-select * {
     background-color: #eee;
     transition: all 1s ease;
     transform: translate(0, 0);
+}
+
+.console.active {
     opacity: .95;
 }
 
 .console.full {
     height: 80%;
     transform: translate(0, -10%);
+}
+
+.console.active.full {
     opacity: 1;
 }
 
@@ -376,15 +404,15 @@ body.disable-select * {
 }
 
 .item__tooltip {
-    position: fixed;
     display: none;
+    position: fixed;
     z-index: 1000;
-    pointer-events: none;
     background: #ccc;
     padding: 5px 10px;
     border-radius: 5px;
     max-width: 30%;
     font-size: 1.5vh;
+    pointer-events: none;
 }
 
 .item__tooltip.active {
@@ -392,11 +420,11 @@ body.disable-select * {
 }
 
 .item__drag {
-    position: fixed;
     display: none;
+    position: fixed;
     z-index: 1000;
-    pointer-events: none;
     text-align: center;
+    pointer-events: none;
 }
 
 .item__drag.active {
@@ -410,4 +438,27 @@ body.disable-select * {
 
 .item__description {
     font-style: italic;
+}
+
+
+.savegame__overwrite {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: none;
+    pointer-events: none;
+    padding: 15px;
+    border-radius: 15px 0;
+}
+
+.savegame__overwrite.active {
+    display: block;
+    pointer-events: all;
+}
+
+.savegame__overwrite-title {
+    color: #fff;
 }

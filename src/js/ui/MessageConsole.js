@@ -1,4 +1,4 @@
-import html from '../../html/MessageConsole.html';
+import html from '../../html/ui/MessageConsole.html';
 import SubMessage from "./message/SubMessage";
 import Message from "./message/Message";
 import UIElement from "./UIElement";

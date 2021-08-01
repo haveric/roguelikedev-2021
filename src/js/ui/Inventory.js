@@ -1,4 +1,4 @@
-import html from '../../html/inventory/Inventory.html';
+import html from '../../html/ui/inventory/Inventory.html';
 import UIElement from "./UIElement";
 
 class Inventory extends UIElement {
