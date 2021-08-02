@@ -1,19 +1,20 @@
 <div id="savegame" class="ui menu">
     <h2 class="menu__title">Save Game</h2>
     <div class="savegame__oldsaves"></div>
+    <hr/>
     <div class="savegame__newsave">
         <div class="save">
-            <label>Save Name:
-                <input class="savegame__newsave-input" type="text" />
-            </label>
-            <button class="save__confirm">Save</button>
+            <label for="savegame__newsave-input">Create New Save:</label>
+            <input id="savegame__newsave-input" class="savegame__newsave-input" type="text" />
+            <button class="save__confirm menu__action">Save</button>
         </div>
     </div>
     <div class="savegame__overwrite">
         <h3 class="savegame__overwrite-title"></h3>
-        <button class="save__overwrite">Overwrite</button>
-        <button class="save__overwrite-cancel">Cancel</button>
+        <button class="save__overwrite menu__action">Overwrite</button>
+        <button class="save__overwrite-cancel menu__action">Cancel</button>
     </div>
+    <hr/>
     <div class="menu__actions">
         <button class="menu__action menu__back">Back</button>
     </div>

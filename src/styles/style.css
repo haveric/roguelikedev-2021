@@ -14,13 +14,14 @@ body.disable-select * {
 }
 
 .ui {
-    display: none;
+    display: block;
+    z-index: -1000;
     opacity: 0;
     pointer-events: none;
 }
 
 .ui.active {
-    display: block;
+    z-index: 0;
     opacity: 1;
     pointer-events: all;
 }
@@ -30,10 +31,16 @@ body.disable-select * {
     left: 5%;
     top: 5%;
     background-color: #000;
+    min-width: 20%;
     max-width: 30%;
     text-align: center;
-    padding: 15px;
+    padding: 0.5vh 2.5vh 4vh;
     border-radius: 15px 0;
+    color: #eee;
+}
+
+.menu hr {
+    margin: 1.5vh 0;
 }
 
 .menu.active {
@@ -43,7 +50,37 @@ body.disable-select * {
 .menu__title {
     font-size: 5vh;
     color: #fff;
-    margin: 0 0 15px;
+    margin: 0 0 1.5vh;
+    font-family: Georgia, serif;
+}
+
+.menu__action {
+    margin: 0 auto;
+    display: block;
+    width: 75%;
+    font-family: Lucida Console, serif;
+    font-size: 1.8vh;
+    padding: .5vh;
+}
+
+.menu__action--cancel {
+    background-color: #f33;
+}
+
+.menu__action--cancel:hover {
+    background-color: #f11;
+}
+
+.menu-action--confirm {
+    background-color: #3f3;
+}
+
+.menu-action--confirm {
+    background-color: #1f1;
+}
+
+.menu__action + .menu__action {
+    margin-top: 15px;
 }
 
 #editor-controls {
@@ -461,4 +498,82 @@ body.disable-select * {
 
 .savegame__overwrite-title {
     color: #fff;
+    font-size: 3vh;
+}
+
+.savegame__oldsaves,
+.loadgame__oldsaves {
+    margin-bottom: 15px;
+}
+
+.savegame__newsave-input {
+    font-size: 2.2vh;
+    display: inline-block;
+    float: left;
+    margin-right: 1vh;
+}
+
+.save {
+    text-align: left;
+    position: relative;
+    font-size: 2vh;
+    font-weight: bold;
+}
+
+.save label {
+    font-family: Lucida Console, serif;
+    display: block;
+}
+
+.save + .save {
+    margin-top: 1vh;
+}
+
+.save__title,
+.save__delete {
+    font-size: 2vh;
+}
+.save__title {
+    width: 80%;
+}
+
+.save__delete {
+    width: 10%;
+    background-color: #f66;
+    line-height: 2.4vh;
+    font-weight: bold;
+    float: right;
+}
+
+.save__confirm {
+    width: auto;
+    display: inline-block;
+}
+
+.credits {
+    font-size: 5vh;
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: 100%;
+    max-width: 100%;
+    border-radius: 0;
+}
+
+.credits .menu__content {
+    transform: translateY(30%);
+}
+
+.credits.active .menu__content {
+    transform: translateY(-100%);
+    transition: all 30s linear;
+}
+
+.credits__title {
+    font-size: 15vh;
+    margin: 0;
+}
+
+.credits__section {
+    padding: 15vh;
 }
