@@ -5,6 +5,7 @@ export default class Settings {
         this.autosavesEnabled = true;
         this.autosaveAmount = 3;
         this.autosaveTurns = 100;
+        this.displayFPS = false;
 
         this.load();
     }
@@ -25,6 +26,9 @@ export default class Settings {
             if (json.autosaveTurns !== undefined) {
                 this.autosaveTurns = json.autosaveTurns;
             }
+            if (json.displayFPS !== undefined) {
+                this.displayFPS = json.displayFPS;
+            }
         }
     }
 
@@ -33,7 +37,8 @@ export default class Settings {
             messageConsolePosition: this.messageConsolePosition,
             autosavesEnabled: this.autosavesEnabled,
             autosaveAmount: this.autosaveAmount,
-            autosaveTurns: this.autosaveTurns
+            autosaveTurns: this.autosaveTurns,
+            displayFPS: this.displayFPS
         };
 
         localStorage.setItem("settings", JSON.stringify(toSave));

@@ -15,13 +15,13 @@ body.disable-select * {
 
 .ui {
     display: block;
-    z-index: -1000;
+    z-index: -1000 !important;
     opacity: 0;
     pointer-events: none;
 }
 
 .ui.active {
-    z-index: 0;
+    z-index: 0 !important;
     opacity: 1;
     pointer-events: all;
 }
@@ -37,6 +37,12 @@ body.disable-select * {
     padding: 0.5vh 2.5vh 4vh;
     border-radius: 15px 0;
     color: #eee;
+}
+
+.menu--full {
+    left: 10%;
+    right: 10%;
+    max-width: none;
 }
 
 .menu hr {
@@ -75,12 +81,22 @@ body.disable-select * {
     background-color: #3f3;
 }
 
-.menu-action--confirm {
-    background-color: #1f1;
+.menu-action--confirm:hover {
+    background-color: #3c3;
 }
 
 .menu__action + .menu__action {
     margin-top: 15px;
+}
+
+.menu--full .menu__action {
+    width: auto;
+    display: inline-block;
+}
+
+.menu--full .menu__action + .menu__action {
+    margin-top: 0;
+    margin-left: 15px;
 }
 
 #editor-controls {
@@ -576,4 +592,34 @@ body.disable-select * {
 
 .credits__section {
     padding: 15vh;
+}
+
+.settings input[type=checkbox] {
+    width: 2vh;
+    height: 2vh;
+}
+
+.settings input[type=number] {
+    min-width: 55px;
+    width: 4.5vh;
+}
+
+.settings__section {
+    text-align: left;
+    font-size: 2vh;
+}
+
+.settings__section-title {
+    font-size: 3vh;
+    margin-top: 0;
+    text-decoration: underline;
+}
+
+.settings__section + .settings__section {
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.settings__section-inn {
+    padding: 0 15px;
 }

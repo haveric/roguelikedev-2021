@@ -67,6 +67,7 @@ class SceneState {
         this.stats.showPanel(0);
         this.stats.dom.classList.add("ui");
         document.body.appendChild(this.stats.dom);
+        this.updateStatsVisibility(engine.settings);
     }
 
     handleEvent(e) {
@@ -111,6 +112,14 @@ class SceneState {
             this.camera.position.set(200 + position.x, -200 + position.y, 300);
             this.camera.lookAt(position.x, position.y, 0);
             engine.needsMapUpdate = true;
+        }
+    }
+
+    updateStatsVisibility(settings) {
+        if (settings.displayFPS) {
+            this.stats.dom.classList.add("active");
+        } else {
+            this.stats.dom.classList.remove("active");
         }
     }
 }

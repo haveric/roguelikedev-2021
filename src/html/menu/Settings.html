@@ -1,5 +1,51 @@
-<div id="settings" class="ui menu">
+<div id="settings" class="settings ui menu menu--full">
     <h2 class="menu__title">Settings</h2>
+    <div class="menu__content">
+        <!--
+        <div class="settings__section">
+            <h3 class="settings__section-title">Graphics:</h3>
+            <div class="settings__section-inn">
+
+            </div>
+        </div>
+        <div class="settings__section">
+            <h3 class="settings__section-title">User Interface:</h3>
+            <div class="settings__section-inn">
+
+            </div>
+        </div>
+        -->
+        <div class="settings__section">
+            <h3 class="settings__section-title">Miscellaneous:</h3>
+            <div class="settings__section-inn">
+                <div class="setting">
+                    <label>Autosaves Enabled:
+                        <input id="setting-autosavesenabled" type="checkbox">
+                    </label>
+                </div>
+                <div class="setting">
+                    <label>Number of autosaves:
+                        <input id="setting-autosaveamount" type="number" min="1" max="9">
+                    </label>
+                </div>
+                <div class="setting">
+                    <label>Turns between autosaves:
+                        <input id="setting-autosaveturns" type="number" min="10" max="1000">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="settings__section">
+            <h3 class="settings__section-title">Debug:</h3>
+            <div class="settings__section-inn">
+                <div class="setting">
+                    <label>Display FPS:
+                        <input id="setting-displayfps" type="checkbox">
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="menu__actions">
         <button class="menu__action menu__save menu-action--confirm">Save and Exit</button>
         <button class="menu__action menu__cancel">Cancel</button>

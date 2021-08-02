@@ -14,6 +14,7 @@ export default class EventHandler {
         window.addEventListener("mouseup", this);
         window.addEventListener("click", this);
         window.addEventListener("contextmenu", this);
+        window.addEventListener("change", this);
 
         this.isPlayerTurn = true;
         this.highlightedTiles = [];
@@ -25,6 +26,7 @@ export default class EventHandler {
         window.removeEventListener("mouseup", this);
         window.removeEventListener("click", this);
         window.removeEventListener("contextmenu", this);
+        window.removeEventListener("change", this);
 
         this.clearHighlights();
     }
@@ -46,6 +48,9 @@ export default class EventHandler {
             case "contextmenu":
                 this.onRightClick(e);
                 break;
+            case "change":
+                this.onChange(e);
+                break;
         }
     }
 
@@ -64,6 +69,8 @@ export default class EventHandler {
     onLeftClick(e) {}
 
     onRightClick(e) {}
+
+    onChange(e) {}
 
     getMouseIntersectingObjects(e) {
         this.mouse.x = (e.clientX / sceneState.canvasDom.offsetWidth) * 2 - 1;

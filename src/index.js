@@ -4,7 +4,6 @@ import engine from "./js/Engine";
 import Town from "./js/map/Town";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import details from "./js/ui/Details";
-import settingsMenu from "./js/ui/menu/SettingsMenu";
 import MainMenuMap from "./js/map/MainMenuMap";
 
 (function () {
@@ -20,9 +19,7 @@ import MainMenuMap from "./js/map/MainMenuMap";
     }
 
     const animation = function(time) {
-        if (settingsMenu.showStats) {
-            sceneState.stats.begin();
-        }
+        sceneState.stats.begin();
 
         engine.handleEvents();
         if (engine.needsMapUpdate) {
@@ -32,9 +29,7 @@ import MainMenuMap from "./js/map/MainMenuMap";
 
         TWEEN.update();
 
-        if (settingsMenu.showStats) {
-            sceneState.stats.end();
-        }
+        sceneState.stats.end();
     }
 
     const updateRender = function() {
