@@ -34,6 +34,8 @@ export default class SettingsMenuEventHandler extends MenuEventHandler {
         } else if (id === "setting-autosavesenabled") {
             this.tempSettings.autosavesEnabled = target.checked;
             this.applyAutosavesEnabled(this.tempSettings);
+        } else if (id === "setting-debugcontrolsenabled") {
+            this.tempSettings.debugControlsEnabled = target.checked;
         }
     }
 
@@ -90,6 +92,9 @@ export default class SettingsMenuEventHandler extends MenuEventHandler {
     populateSettings() {
         const displayFPSCheckbox = document.getElementById("setting-displayfps");
         displayFPSCheckbox.checked = this.tempSettings.displayFPS;
+
+        const debugControlsEnabledCheckbox = document.getElementById("setting-debugcontrolsenabled");
+        debugControlsEnabledCheckbox.checked = this.tempSettings.debugControlsEnabled;
 
         const autosavesEnabledCheckbox = document.getElementById("setting-autosavesenabled");
         autosavesEnabledCheckbox.checked = this.tempSettings.autosavesEnabled;

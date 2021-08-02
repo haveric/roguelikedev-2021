@@ -78,20 +78,22 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                 engine.save("quicksave");
             } else if (controls.testPressed("load", 1000)) {
                 engine.load("quicksave");
-            } else if (controls.testPressed("debug")) {
-                engine.gameMap.reveal();
-                engine.needsMapUpdate = true;
-                engine.setEventHandler(new EditorEventHandler());
-            } else if (controls.testPressed("debug2")) {
-                engine.gameMap.teardown();
-                engine.gameMap = new TutorialMap();
-                engine.gameMap.create();
-                engine.needsMapUpdate = true;
-            } else if (controls.testPressed("reset")) {
-                engine.gameMap.teardown();
-                engine.gameMap = new BasicDungeon(100, 100);
-                engine.gameMap.create();
-                engine.needsMapUpdate = true;
+            } else if (engine.settings.debugControlsEnabled) {
+                if (controls.testPressed("debug")) {
+                    engine.gameMap.reveal();
+                    engine.needsMapUpdate = true;
+                    engine.setEventHandler(new EditorEventHandler());
+                } else if (controls.testPressed("debug2")) {
+                    engine.gameMap.teardown();
+                    engine.gameMap = new TutorialMap();
+                    engine.gameMap.create();
+                    engine.needsMapUpdate = true;
+                } else if (controls.testPressed("reset")) {
+                    engine.gameMap.teardown();
+                    engine.gameMap = new BasicDungeon(100, 100);
+                    engine.gameMap.create();
+                    engine.needsMapUpdate = true;
+                }
             }
         }
 
