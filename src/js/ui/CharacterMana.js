@@ -11,7 +11,7 @@ class CharacterMana extends UIElement {
 
     update(current, max) {
         const percent = current / max;
-        const height = percent * 76;
+        const height = percent * 76.5;
         this.fgDom.style.height = (100 - height) + "%";
 
         this.textDom.innerText = current + " / " + max;

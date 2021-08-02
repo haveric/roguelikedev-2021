@@ -11,7 +11,7 @@ class CharacterHealth extends UIElement {
 
     update(current, max) {
         const percent = current / max;
-        const height = percent * 80;
+        const height = percent * 80.5;
         this.fgDom.style.height = height + "%";
 
         this.textDom.innerText = current + " / " + max;
