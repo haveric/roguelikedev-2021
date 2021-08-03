@@ -186,12 +186,15 @@ body.disable-select * {
     width: 50%;
     height: 18.75%;
     background-color: #eee;
-    transition: all 1s ease;
     transform: translate(0, 0);
 }
 
 .console.active {
     opacity: .95;
+}
+
+.console.animate {
+    transition: all 1s ease;
 }
 
 .console.full {

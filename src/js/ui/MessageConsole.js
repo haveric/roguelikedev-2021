@@ -12,6 +12,9 @@ class MessageConsole extends UIElement {
         const consoleIncreaseDom = this.dom.getElementsByClassName("console__increase")[0];
         consoleIncreaseDom.addEventListener("click", function(e) {
             const parent = e.target.parentElement;
+            if (!parent.classList.contains("animate")) {
+                parent.classList.add("animate");
+            }
             if (parent.classList.contains("collapsed")) {
                 parent.classList.remove("collapsed");
             } else {
@@ -22,6 +25,9 @@ class MessageConsole extends UIElement {
         const consoleDecreaseDom = this.dom.getElementsByClassName("console__decrease")[0];
         consoleDecreaseDom.addEventListener("click", function(e) {
             const parent = e.target.parentElement;
+            if (!parent.classList.contains("animate")) {
+                parent.classList.add("animate");
+            }
             if (parent.classList.contains("full")) {
                 parent.classList.remove("full");
             } else {
