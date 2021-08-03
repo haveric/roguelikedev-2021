@@ -50,7 +50,7 @@ body.disable-select * {
 }
 
 .menu.active {
-    opacity: .7;
+    background-color: rgba(0, 0, 0, .7);
 }
 
 .menu__title {
