@@ -18,6 +18,7 @@ import characterMana from "../ui/CharacterMana";
 import messageConsole from "../ui/MessageConsole";
 import details from "../ui/Details";
 import PauseMenuEventHandler from "./PauseMenuEventHandler";
+import InteractAction from "../actions/InteractAction";
 
 export default class DefaultPlayerEventHandler extends EventHandler {
     constructor() {
@@ -61,6 +62,8 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                 action = new WaitAction(engine.player);
             } else if (controls.testPressed("get")) {
                 action = new PickupAction(engine.player);
+            } else if (controls.testPressed("interact")) {
+                action = new InteractAction(engine.player);
             } else if (controls.testPressed("look")) {
                 engine.setEventHandler(new LookHandler());
             } else if (controls.testPressed("inventory")) {

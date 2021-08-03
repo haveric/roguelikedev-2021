@@ -19,6 +19,8 @@ export default class GameMap {
         this.width = width;
         this.height = height;
 
+        this.timeout = null;
+
         this.init();
     }
 
@@ -35,6 +37,10 @@ export default class GameMap {
     create() {};
 
     teardown() {
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+        }
+
         engine.fov.teardown();
         engine.airFov.teardown();
 
@@ -288,7 +294,7 @@ export default class GameMap {
         if (delay === 0) {
             self._revealGradually(minX, maxX, minY, maxY, x, y, 1, radius, delay);
         } else {
-            setTimeout(function () {
+            self.timeout = setTimeout(function () {
                 self._revealGradually(minX, maxX, minY, maxY, x, y, 1, radius, delay);
             }, delay);
         }
@@ -296,6 +302,8 @@ export default class GameMap {
 
     _revealGradually(minX, maxX, minY, maxY, x, y, radius, maxRadius, delay) {
         const self = this;
+        self.timeout = null;
+
         const xRadiusMin = x - radius;
         const xRadiusMax = x + radius;
         const yRadiusMin = y - radius;
@@ -318,7 +326,7 @@ export default class GameMap {
             if (delay === 0) {
                 self._revealGradually(minX, maxX, minY, maxY, x, y, radius + 1, maxRadius);
             } else {
-                setTimeout(function () {
+                self.timeout = setTimeout(function () {
                     self._revealGradually(minX, maxX, minY, maxY, x, y, radius + 1, maxRadius);
                 }, delay);
             }
@@ -874,14 +882,16 @@ export default class GameMap {
     }
 
     addPlayer(x, y, z = 1) {
-        const position = {
-            components: {
-                positionalobject: {x: x, y: y, z: z}
-            }
-        };
-        engine.player = entityLoader.createFromTemplate('player', position);
-        engine.gameMap.actors.push(engine.player);
+        if (!engine.player) {
+            engine.player = entityLoader.createFromTemplate('player');
+        }
+
+        this.actors.push(engine.player);
+
         const positionalObject = engine.player.getComponent("positionalobject");
+        positionalObject.x = x;
+        positionalObject.y = y;
+        positionalObject.z = z;
         positionalObject.setVisible();
         sceneState.updateCameraPosition(engine.player);
 

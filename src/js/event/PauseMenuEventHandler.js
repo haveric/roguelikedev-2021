@@ -51,7 +51,7 @@ export default class PauseMenuEventHandler extends EventHandler {
                 this.openCreditsMenu();
                 break;
             case "pausemenu__quit":
-                engine.setEventHandler(new MainMenuEventHandler());
+                this.quit();
                 break;
             default:
                 break;
@@ -80,5 +80,10 @@ export default class PauseMenuEventHandler extends EventHandler {
 
     openCreditsMenu() {
         engine.setEventHandler(new CreditsMenuEventsHandler(this));
+    }
+
+    quit() {
+        engine.player = null;
+        engine.setEventHandler(new MainMenuEventHandler());
     }
 }

@@ -31,7 +31,9 @@ export default class Town extends GameMap {
                 const floorTile = this.tiles.get(MapLayer.Floor)[i][j];
                 if (!floorTile) {
                     this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
-                    if (i >= 23 && i <= 25 && j >= 7 && j <= 10) {
+                    if (i === 7 && j === 6) {
+                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate("stairs_north", {components: {positionalobject: {x: i, y: j, z: 0}, stairsInteractable: {generator: "basic-dungeon"}}});
+                    } else if (i >= 23 && i <= 25 && j >= 7 && j <= 10) {
                         this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('water', {components: {positionalobject: {x: i, y: j, z: 0}}});
                     } else {
                         this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('floor_grass', {components: {positionalobject: {x: i, y: j, z: 0}}});

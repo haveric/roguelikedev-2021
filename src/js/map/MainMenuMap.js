@@ -101,7 +101,7 @@ export default class MainMenuMap extends GameMap {
                         this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('door', {components: {positionalobject: {x: i, y: j, z: 1}}});
                         break;
                     case ">":
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('stairs_up', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('stairs_north', {components: {positionalobject: {x: i, y: j, z: 1}}});
                         break;
                 }
 

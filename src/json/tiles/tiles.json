@@ -83,27 +83,32 @@
         }
     },
     {
-        "id": "stairs_up",
+        "id": "stairs_north",
         "type": "charactertile",
-        "name": "Stairs Up",
+        "name": "Stairs",
         "components": {
             "characterobject": {
-                "letter": ">",
+                "letter": "/",
                 "color": "#ffffff",
-                "scale": ".75"
+                "xRot": 0.5,
+                "yRot": 0.5,
+                "actorZOffset": 0.5
             },
             "blocksMovement": false
         }
     },
     {
-        "id": "stairs_down",
+        "id": "stairs_west",
         "type": "charactertile",
-        "name": "Stairs Down",
+        "name": "Stairs",
         "components": {
             "characterobject": {
-                "letter": "<",
+                "letter": "/",
                 "color": "#ffffff",
-                "scale": ".75"
+                "scale": ".75",
+                "xRot": 0.5,
+                "yRot": 1,
+                "actorZOffset": 0.5
             },
             "blocksMovement": false
         }
@@ -116,7 +121,8 @@
             "characterobject": {
                 "letter": "≈",
                 "color": "#3333cc",
-                "scale": ".7"
+                "scale": ".7",
+                "actorZOffset": 0.2
             },
             "blocksMovement": false,
             "blocksFov": false,
@@ -165,9 +171,11 @@
                 "xRot": 1.5,
                 "yRot": 0.5,
                 "zRot": 0,
-                "zOffset": 0.47
+                "zOffset": 0.47,
+                "actorZOffset": 0.6
             },
-            "walkable": true,
+            "blocksMovement": false,
+            "walkable": false,
             "blocksFov": false
         }
     },

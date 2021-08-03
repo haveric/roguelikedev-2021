@@ -7,8 +7,8 @@ import NoAction from "./actions/NoAction";
 import MainMenuEventHandler from "./event/MainMenuEventHandler";
 import Settings from "./settings/Settings";
 import saveManager from "./SaveManager";
-import entityLoader from "./entity/EntityLoader";
 import GameMap from "./map/GameMap";
+import MapLoader from "./map/MapLoader";
 
 class Engine {
     constructor() {
@@ -17,6 +17,7 @@ class Engine {
         this.player = null;
         this.gameMap = null;
         this.gameMaps = new Map();
+        this.mapLoader = new MapLoader();
         this.needsMapUpdate = false;
         this.fov = new AdamMilazzoFov();
         this.airFov = new SimpleFov();
@@ -73,28 +74,43 @@ class Engine {
         this.eventHandler.isPlayerTurn = true;
     }
 
-    setMap(map) {
+    setMap(map, stairsInteractable) {
         if (this.gameMap === map) {
             return;
         }
 
+        let previousMapName = null;
         if (this.gameMap) {
+            previousMapName = this.gameMap.name;
             this.gameMap.teardown();
+            const playerIndex = this.gameMap.actors.indexOf(this.player);
+            this.gameMap.actors.splice(playerIndex, 1);
         }
-        this.addMap(map);
 
         this.gameMap = map;
-        this.gameMap.create();
+        this.addMap(map, previousMapName, stairsInteractable);
+
+        if (this.gameMap.actors.indexOf(this.player) === -1) {
+            this.gameMap.actors.push(this.player);
+        }
+
+        const positionalObject = this.player.getComponent("positionalobject");
+        positionalObject.setVisible();
+        sceneState.updateCameraPosition(this.player);
+        this.gameMap.revealPreviouslyExplored();
+        this.gameMap.updatePlayerUI();
         this.needsMapUpdate = true;
     }
 
-    addMap(map) {
+    addMap(map, previousMapName, stairsInteractable) {
         if (!this.gameMaps.has(map.name)) {
             this.gameMaps.set(map.name, map);
+            map.create(previousMapName, stairsInteractable);
         }
     }
 
     clearMaps() {
+        this.player = null;
         this.gameMaps = new Map();
     }
 
@@ -124,25 +140,18 @@ class Engine {
                 newMap.load(map);
                 this.addMap(newMap);
 
-                if (map.name === currentMap) {
+                if (newMap.name === currentMap) {
+                    for (const actor of newMap.actors) {
+                        if (actor.name === 'Player') {
+                            this.player = actor;
+                            break;
+                        }
+                    }
+
                     this.setMap(newMap);
                 }
             }
         }
-
-        for (const actor of this.gameMap.actors) {
-            if (actor.name === 'Player') {
-                engine.player = actor;
-                break;
-            }
-        }
-
-        const positionalObject = engine.player.getComponent("positionalobject");
-        positionalObject.setVisible();
-        sceneState.updateCameraPosition(engine.player);
-
-        this.gameMap.revealPreviouslyExplored();
-        this.gameMap.updatePlayerUI();
     }
 }
 

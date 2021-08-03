@@ -33,6 +33,7 @@ class Controls {
         self.defaults.set("inventory", ["i"]);
         self.defaults.set("look", ["/"]);
         self.defaults.set("pause", ["p", Key.ESCAPE]);
+        self.defaults.set("interact", [Key.ENTER, Key.NUMPAD_ENTER]);
 
         self.defaults.set("confirm", [Key.ENTER, Key.NUMPAD_ENTER]);
         self.defaults.set("cancel", [Key.ESCAPE, Key.BACKSPACE]);
@@ -144,9 +145,16 @@ class Controls {
         const self = this;
         let pressed = false;
 
-        const keys = self.controls.get(key);
+        let keys = self.controls.get(key);
         if (!keys) {
-            console.error("Missing keybindings for: ", key, keys);
+            const defaultKeys = self.defaults.get(key);
+            if (defaultKeys) {
+                self.controls.set(key, defaultKeys);
+                self.save();
+                keys = defaultKeys;
+            } else {
+                console.error("Missing keybindings for: ", key, keys);
+            }
         }
         keys.forEach(function(keyToTest) {
             if (keyToTest in self.keysDown) {

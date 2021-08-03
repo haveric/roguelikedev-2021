@@ -30,6 +30,7 @@ export default class _PositionalObject extends _Component {
         this.xOffset = 0;
         this.yOffset = 0;
         this.zOffset = 0;
+        this.actorZOffset = 0;
 
         this.deathAnimation = null;
 
@@ -52,6 +53,7 @@ export default class _PositionalObject extends _Component {
             this.yOffset = this.parseRandFloat(positionalobject.yOffset, 0);
             this.zOffset = this.parseRandFloat(positionalobject.zOffset, 0);
             this.size = this.parseRandFloat(positionalobject.size, 1);
+            this.actorZOffset = this.parseRandFloat(positionalobject.actorZOffset, 0);
         }
 
         this.transparency = 1; // for quick reference on mousemove
@@ -61,9 +63,17 @@ export default class _PositionalObject extends _Component {
         if (this.parentEntity && this.parentEntity instanceof _Tile) {
             return {
                 positionalobject: {
+                    xRot: this.xRot,
+                    yRot: this.yRot,
+                    zRot: this.zRot,
+                    xOffset: this.xOffset,
+                    yOffset: this.yOffset,
+                    zOffset: this.zOffset,
                     color: this.color,
                     opacity: this.opacity,
-                    scale: this.scale
+                    scale: this.scale,
+                    size: this.size,
+                    actorZOffset: this.actorZOffset
                 }
             }
         } else {
@@ -135,8 +145,16 @@ export default class _PositionalObject extends _Component {
 
     updateObjectPosition() {
         if (this.hasObject()) {
-            this.object.position.set((this.x + this.xOffset) * this.width, (this.y + this.yOffset) * this.height, (this.z + this.zOffset) * this.depth - ((this.depth - (this.scale * this.depth)) / 2));
+            let zOffset = this.zOffset;
+            if (this.parentEntity.type === "actor" || this.parentEntity.type === "item") {
+                const tile = engine.gameMap.tiles.get(this.z)[this.x][this.y];
+                if (tile) {
+                    const position = tile.getComponent("positionalobject");
+                    zOffset += position.actorZOffset;
+                }
+            }
 
+            this.object.position.set((this.x + this.xOffset) * this.width, (this.y + this.yOffset) * this.height, (this.z + zOffset) * this.depth - ((this.depth - (this.scale * this.depth)) / 2));
             this.object.rotation.set(Math.PI * this.xRot, Math.PI * this.yRot, Math.PI * this.zRot);
         }
     }

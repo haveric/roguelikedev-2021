@@ -22,6 +22,7 @@ import AIGelatinousCube from "./ai/AIGelatinousCube";
 import AIPlayer from "./ai/AIPlayer";
 import ExplodeOnDeath from "./ExplodeOnDeath";
 import AttachedItems from "./AttachedItems";
+import StairsInteractable from "./interactable/StairsInteractable";
 
 class ComponentLoader {
     constructor() {
@@ -40,6 +41,9 @@ class ComponentLoader {
         this.load(new DamageNearestConsumable());
         this.load(new HealingConsumable());
         this.load(new ManaConsumable());
+
+        // Interactables
+        this.load(new StairsInteractable());
 
         // Positionalobjects
         this.load(new CharacterObject());

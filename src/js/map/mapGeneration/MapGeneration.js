@@ -59,7 +59,10 @@ export default class MapGeneration {
         if (createWall) {
             const wallTile = gameMap.tiles.get(MapLayer.Wall)[i][j];
             if (wallTile) {
-                gameMap.tiles.get(MapLayer.Wall)[i][j] = null;
+                const blocksMovement = wallTile.getComponent("blocksMovement");
+                if (blocksMovement && blocksMovement.blocksMovement) {
+                    gameMap.tiles.get(MapLayer.Wall)[i][j] = null;
+                }
             }
         } else {
             const floorTile = gameMap.tiles.get(MapLayer.Floor)[i][j];

@@ -1,7 +1,6 @@
 import './styles/style.css';
 import sceneState from './js/SceneState.js';
 import engine from "./js/Engine";
-import Town from "./js/map/Town";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import details from "./js/ui/Details";
 import MainMenuMap from "./js/map/MainMenuMap";
@@ -14,7 +13,6 @@ import MainMenuMap from "./js/map/MainMenuMap";
         const playerPosition = engine.player.getComponent("positionalobject");
         engine.gameMap.revealFromPosition(playerPosition.x, playerPosition.y, 100, 0);
         engine.needsMapUpdate = true;
-        //engine.gameMap = new Town(50, 50);
 
         sceneState.renderer.setAnimationLoop(animation);
     }
