@@ -6,7 +6,7 @@ import ArrayUtil from "../util/ArrayUtil";
 
 export default class TutorialMap extends GameMap {
     constructor() {
-        super(35, 15);
+        super("tutorial-map", 35, 15);
 
         this.floor = [
             "###################################",

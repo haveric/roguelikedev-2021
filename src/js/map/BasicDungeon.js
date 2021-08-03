@@ -7,7 +7,8 @@ import {MathUtils} from "three";
 
 export default class BasicDungeon extends GameMap {
     constructor(width, height, args = {}) {
-        super(width, height);
+        const name = "basic-dungeon-" + MathUtils.randInt(100000000, 999999999);
+        super(name, width, height);
 
         this.maxRooms = args.maxRooms || 30;
         this.roomMinSize = args.roomMinSize || 6;

@@ -6,7 +6,7 @@ import ArrayUtil from "../util/ArrayUtil";
 
 export default class Town extends GameMap {
     constructor() {
-        super(40, 40);
+        super("town", 40, 40);
     }
 
     init() {

@@ -8,7 +8,8 @@ import MainMenuMap from "./js/map/MainMenuMap";
 
 (function () {
     const init = function() {
-        engine.gameMap = new MainMenuMap();
+        engine.clearMaps();
+        engine.setMap(new MainMenuMap());
         engine.gameMap.create();
         const playerPosition = engine.player.getComponent("positionalobject");
         engine.gameMap.revealFromPosition(playerPosition.x, playerPosition.y, 100, 0);

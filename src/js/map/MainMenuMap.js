@@ -6,7 +6,7 @@ import ArrayUtil from "../util/ArrayUtil";
 
 export default class MainMenuMap extends GameMap {
     constructor() {
-        super(35, 15);
+        super("main-menu", 35, 15);
 
         this.floor = [
             "###################################",

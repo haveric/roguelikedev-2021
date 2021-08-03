@@ -84,15 +84,11 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                     engine.needsMapUpdate = true;
                     engine.setEventHandler(new EditorEventHandler());
                 } else if (controls.testPressed("debug2")) {
-                    engine.gameMap.teardown();
-                    engine.gameMap = new TutorialMap();
-                    engine.gameMap.create();
-                    engine.needsMapUpdate = true;
+                    engine.clearMaps();
+                    engine.setMap(new TutorialMap());
                 } else if (controls.testPressed("reset")) {
-                    engine.gameMap.teardown();
-                    engine.gameMap = new BasicDungeon(100, 100);
-                    engine.gameMap.create();
-                    engine.needsMapUpdate = true;
+                    engine.clearMaps();
+                    engine.setMap(new BasicDungeon(100, 100));
                 }
             }
         }

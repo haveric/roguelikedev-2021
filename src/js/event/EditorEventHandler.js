@@ -53,10 +53,8 @@ export default class EditorEventHandler extends EventHandler {
             editorControls.close();
             editorInfo.close();
         } else if (controls.testPressed("debug2")) {
-            engine.gameMap.teardown();
-            engine.gameMap = new TutorialMap();
-            engine.gameMap.create();
-            engine.needsMapUpdate = true;
+            engine.clearMaps();
+            engine.setMap(new TutorialMap());
         }
 
         return action;

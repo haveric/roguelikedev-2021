@@ -14,7 +14,8 @@ import {Vector3} from "three";
 import Item from "../entity/Item";
 
 export default class GameMap {
-    constructor(width, height) {
+    constructor(name, width, height) {
+        this.name = name;
         this.width = width;
         this.height = height;
 
@@ -138,8 +139,9 @@ export default class GameMap {
         }
     }
 
-    save(name) {
+    save() {
         let saveData = {
+            name: this.name,
             width: this.width,
             height: this.height
         };
@@ -193,63 +195,42 @@ export default class GameMap {
         }
         saveData["items"] = itemJson;
 
-        localStorage.setItem(name, JSON.stringify(saveData));
+        return saveData;
     }
 
-    load(name) {
-        this.teardown();
+    load(json) {
+        const tiles = json.tiles;
+        const entries = this.tiles.entries();
+        for (const entry of entries) {
+            const tileLayer = entry[1];
+            const tilesToLoad = tiles[entry[0]];
+            if (tilesToLoad) {
+                const key = tilesToLoad.key;
+                const map = tilesToLoad.map;
 
-        const loadData = localStorage.getItem(name);
-        if (loadData) {
-            const json = JSON.parse(loadData);
-            this.width = json.width;
-            this.height = json.height;
-            this.init();
+                for (let i = 0; i < this.width; i++) {
+                    for (let j = 0; j < this.height; j++) {
+                        const index = i*this.height + j;
+                        const tile = map[key[index]];
 
-            const tiles = json.tiles;
-
-            const entries = this.tiles.entries();
-            for (const entry of entries) {
-                const tileLayer = entry[1];
-                const tilesToLoad = tiles[entry[0]];
-                if (tilesToLoad) {
-                    const key = tilesToLoad.key;
-                    const map = tilesToLoad.map;
-
-                    for (let i = 0; i < this.width; i++) {
-                        for (let j = 0; j < this.height; j++) {
-                            const index = i*this.height + j;
-                            const tile = map[key[index]];
-
-                            if (tile) {
-                                tileLayer[i][j] = entityLoader.create(tile, {components: {positionalobject: {x: i, y: j, z: entry[0]}}});
-                            }
+                        if (tile) {
+                            tileLayer[i][j] = entityLoader.create(tile, {components: {positionalobject: {x: i, y: j, z: entry[0]}}});
                         }
                     }
                 }
             }
+        }
 
-            const actors = json.actors;
-            for (const actor of actors) {
-                const createdActor = entityLoader.create(actor);
-                if (createdActor.name === 'Player') {
-                    engine.player = createdActor;
-                }
-                this.actors.push(createdActor);
-            }
-            const items = json.items;
-            for (const item of items) {
-                const createdItem = entityLoader.create(item);
-                this.items.push(createdItem);
-            }
+        const actors = json.actors;
+        for (const actor of actors) {
+            const createdActor = entityLoader.create(actor);
+            this.actors.push(createdActor);
+        }
 
-            const positionalObject = engine.player.getComponent("positionalobject");
-            positionalObject.setVisible();
-            sceneState.updateCameraPosition(engine.player);
-
-            this.revealPreviouslyExplored();
-
-            this.updatePlayerUI();
+        const items = json.items;
+        for (const item of items) {
+            const createdItem = entityLoader.create(item);
+            this.items.push(createdItem);
         }
     }
 

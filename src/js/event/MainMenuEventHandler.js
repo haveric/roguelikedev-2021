@@ -48,12 +48,9 @@ export default class MainMenuEventHandler extends EventHandler {
     }
 
     startNewGame() {
-        engine.gameMap.teardown();
+        engine.clearMaps();
+        engine.setMap(new BasicDungeon(100, 100));
         engine.setEventHandler(new DefaultPlayerEventHandler());
-
-        engine.gameMap = new BasicDungeon(100, 100);
-        engine.gameMap.create();
-        engine.needsMapUpdate = true;
         messageConsole.text("Welcome adventurer!").build();
     }
 
