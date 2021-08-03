@@ -79,6 +79,12 @@ class MessageConsole extends UIElement {
         const lastMessage = this.messages[this.messages.length - 1];
         this.messagesInnerDom.appendChild(lastMessage.getHtml());
     }
+
+    close() {
+        super.close();
+
+        this.dom.classList.remove("animate");
+    }
 }
 
 const messageConsole = new MessageConsole();
