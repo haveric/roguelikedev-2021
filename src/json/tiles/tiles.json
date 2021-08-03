@@ -96,6 +96,19 @@
         }
     },
     {
+        "id": "stairs_down",
+        "type": "charactertile",
+        "name": "Stairs Down",
+        "components": {
+            "characterobject": {
+                "letter": "<",
+                "color": "#ffffff",
+                "scale": ".75"
+            },
+            "blocksMovement": false
+        }
+    },
+    {
         "id": "water",
         "type": "charactertile",
         "name": "Water",
