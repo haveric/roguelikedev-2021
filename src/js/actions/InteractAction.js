@@ -16,7 +16,6 @@ export default class InteractAction extends Action {
 
         const gameMap = engine.gameMap;
         const wallTile = gameMap.tiles.get(position.z)[position.x][position.y];
-        console.log("Wall Tile: ", wallTile);
         if (wallTile) {
             const wallInteractable = wallTile.getComponent("interactable");
             if (wallInteractable) {
@@ -26,7 +25,6 @@ export default class InteractAction extends Action {
         }
 
         const floorTile = gameMap.tiles.get(position.z - 1)[position.x][position.y];
-        console.log("Floor Tile: ", floorTile);
         if (floorTile) {
             const floorInteractable = floorTile.getComponent("interactable");
             if (floorInteractable) {

@@ -29,6 +29,10 @@ export default class LoadGameMenuEventHandler extends MenuEventHandler {
             engine.load(saveManager.getCurrentSaveName());
 
             engine.setEventHandler(new DefaultPlayerEventHandler());
+        } else if (classList.contains("save__delete")) {
+            const saveToDelete = target.parentNode.getElementsByClassName("save__title")[0].innerText;
+            saveManager.delete(saveToDelete);
+            loadGameMenu.loadSaves();
         }
     }
 }
