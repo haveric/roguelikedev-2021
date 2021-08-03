@@ -1,93 +1,4 @@
-// Keyboard
-const Key = {
-    LEFT: "ArrowLeft",
-    RIGHT: "ArrowRight",
-    UP: "ArrowUp",
-    DOWN: "ArrowDown",
-    BACKSPACE: "Backspace",
-    TAB: "Tab",
-    ENTER: "Enter",
-    SHIFT_LEFT: "Left Shift",
-    SHIFT_RIGHT: "Right Shift",
-    CONTROL_LEFT: "Left Control",
-    CONTROL_RIGHT: "Right Control",
-    ALT_LEFT: "Left Alt",
-    ALT_RIGHT: "Right Alt",
-    PAUSE_BREAK: "Pause",
-    CAPS_LOCK: "CapsLock",
-    ESCAPE: "Escape",
-    SPACE: " ",
-    PAGE_UP: "PageUp",
-    PAGE_DOWN: "PageDown",
-    END: "End",
-    HOME: "Home",
-    INSERT: "Insert",
-    DELETE: "Delete",
-    OS_LEFT: "Left OS",
-    OS_RIGHT: "Right OS",
-    CONTEXT_MENU: "ContextMenu",
-    SCROLL_LOCK: "ScrollLock",
-    NUM_LOCK: "NumLock",
-    NUMPAD_DIVIDE: "Numpad /",
-    NUMPAD_MULTIPLY: "Numpad *",
-    NUMPAD_SUBTRACT: "Numpad -",
-    NUMPAD_ADD: "Numpad +",
-    NUMPAD_ENTER: "Numpad Enter",
-
-    NUMPAD_PERIOD: "Numpad .",
-    NUMPAD_0: "Numpad 0",
-    NUMPAD_1: "Numpad 1",
-    NUMPAD_2: "Numpad 2",
-    NUMPAD_3: "Numpad 3",
-    NUMPAD_4: "Numpad 4",
-    NUMPAD_5: "Numpad 5",
-    NUMPAD_6: "Numpad 6",
-    NUMPAD_7: "Numpad 7",
-    NUMPAD_8: "Numpad 8",
-    NUMPAD_9: "Numpad 9",
-
-    NUMPAD_DELETE: "Numpad Delete",
-    NUMPAD_INSERT: "Numpad Insert",
-    NUMPAD_END: "Numpad End",
-    NUMPAD_ARROW_DOWN: "Numpad ArrowDown",
-    NUMPAD_PAGE_DOWN: "Numpad PageDown",
-    NUMPAD_ARROW_LEFT: "Numpad ArrowLeft",
-    NUMPAD_CLEAR: "Numpad Clear",
-    NUMPAD_ARROW_RIGHT: "Numpad ArrowRight",
-    NUMPAD_HOME: "Numpad Home",
-    NUMPAD_ARROW_UP: "Numpad ArrowUp",
-    NUMPAD_PAGE_UP: "Numpad PageUp",
-
-}
-
-// Controllers (Tested with XBOX 360)
-const Btn = {
-    A: "gamepad0",
-    B: "gamepad1",
-    X: "gamepad2",
-    Y: "gamepad3",
-    LB: "gamepad4",
-    RB: "gamepad5",
-    LT: "gamepad6",
-    RT: "gamepad7",
-    BACK: "gamepad8",
-    START: "gamepad9",
-    LEFT_STICK_CLICK: "gamepad10",
-    RIGHT_STICK_CLICK: "gamepad11",
-    UP: "gamepad12",
-    DOWN: "gamepad13",
-    LEFT: "gamepad14",
-    RIGHT: "gamepad15",
-    LEFT_STICK_LEFT: "axis0-left",
-    LEFT_STICK_RIGHT: "axis0-right",
-    LEFT_STICK_UP: "axis1-left",
-    LEFT_STICK_DOWN: "axis1-right",
-    RIGHT_STICK_LEFT: "axis2-left",
-    RIGHT_STICK_RIGHT: "axis2-right",
-    RIGHT_STICK_UP: "axis3-left",
-    RIGHT_STICK_DOWN: "axis3-right"
-}
-
+import Key from "./Key";
 
 class Controls {
     constructor() {
@@ -101,15 +12,15 @@ class Controls {
         self.defaults = new Map();
 
         self.controls = new Map();
-        self.defaults.set("left", [Key.LEFT, Key.NUMPAD_4, Btn.LEFT, Btn.LEFT_STICK_LEFT]);
-        self.defaults.set("right", [Key.RIGHT, Key.NUMPAD_6, Btn.RIGHT, Btn.LEFT_STICK_RIGHT]);
-        self.defaults.set("up", [Key.UP, Key.NUMPAD_8, Btn.UP, Btn.LEFT_STICK_UP]);
-        self.defaults.set("down", [Key.DOWN, Key.NUMPAD_2, Btn.DOWN, Btn.LEFT_STICK_DOWN]);
+        self.defaults.set("left", [Key.NUMPAD_4, Key.LEFT]);
+        self.defaults.set("right", [Key.NUMPAD_6, Key.RIGHT]);
+        self.defaults.set("up", [Key.NUMPAD_8, Key.UP]);
+        self.defaults.set("down", [Key.NUMPAD_2, Key.DOWN]);
 
-        self.defaults.set("editor-left", [Key.LEFT, Btn.LEFT, Btn.LEFT_STICK_LEFT]);
-        self.defaults.set("editor-right", [Key.RIGHT, Btn.RIGHT, Btn.LEFT_STICK_RIGHT]);
-        self.defaults.set("editor-up", [Key.UP, Btn.UP, Btn.LEFT_STICK_UP]);
-        self.defaults.set("editor-down", [Key.DOWN, Btn.DOWN, Btn.LEFT_STICK_DOWN]);
+        self.defaults.set("editor-left", [Key.LEFT]);
+        self.defaults.set("editor-right", [Key.RIGHT]);
+        self.defaults.set("editor-up", [Key.UP]);
+        self.defaults.set("editor-down", [Key.DOWN]);
 
         self.defaults.set("nw", [Key.NUMPAD_7]);
         self.defaults.set("ne", [Key.NUMPAD_9]);
@@ -117,26 +28,26 @@ class Controls {
         self.defaults.set("se", [Key.NUMPAD_3]);
         self.defaults.set("wait", [Key.NUMPAD_5]);
 
-        self.defaults.set("drop", ["d"]);
+        //self.defaults.set("drop", ["d"]);
         self.defaults.set("get", ["g"]);
         self.defaults.set("inventory", ["i"]);
         self.defaults.set("look", ["/"]);
-        self.defaults.set("pause", [Key.ESCAPE, "p"]);
+        self.defaults.set("pause", ["p", Key.ESCAPE]);
 
-        self.defaults.set("confirm", [Key.ENTER, Key.NUMPAD_ENTER, Btn.A]);
+        self.defaults.set("confirm", [Key.ENTER, Key.NUMPAD_ENTER]);
         self.defaults.set("cancel", [Key.ESCAPE, Key.BACKSPACE]);
         self.defaults.set("modifier-speed1", [Key.SHIFT_LEFT, Key.SHIFT_RIGHT]);
         self.defaults.set("modifier-speed2", [Key.CONTROL_LEFT, Key.CONTROL_RIGHT]);
         self.defaults.set("modifier-speed3", [Key.ALT_LEFT, Key.ALT_RIGHT]);
 
-        self.defaults.set("save", ["F8"]);
-        self.defaults.set("load", ["F9"]);
+        self.defaults.set("quicksave", ["F8"]);
+        self.defaults.set("quickload", ["F9"]);
+
         self.defaults.set("debug", ["F2"]);
         self.defaults.set("debug2", ["F4"]);
+        self.defaults.set("reset", ["r"]);
 
-        self.defaults.set("reset", ["r", Btn.START]);
-
-        self.resetToDefault();
+        self.load();
 
         addEventListener("keydown", function (e) {
             // TODO: Evaluate if this should be generalized. I don't want to prevent all keys necessarily.
@@ -203,16 +114,30 @@ class Controls {
         return key;
     }
 
-    resetToDefault() {
-        const self = this;
-
-        self.defaults.forEach(function(value, key) {
-            self.controls.set(key, value);
-        });
+    load() {
+        const controls = localStorage.getItem("controls");
+        if (controls) {
+            this.controls = new Map(JSON.parse(controls));
+        } else {
+            this.resetToDefault();
+        }
     }
 
-    setCustomKeys(name, keys) {
-        this.controls.set(name, keys);
+    save() {
+        localStorage.setItem("controls", JSON.stringify(Array.from(this.controls.entries())));
+    }
+
+    setControls(controlsMap) {
+        this.controls = new Map(controlsMap);
+        this.save();
+    }
+
+    resetToDefault() {
+        this.setControls(this.defaults);
+    }
+
+    clone() {
+        return new Map(this.controls);
     }
 
     isPressed(key) {
@@ -221,7 +146,7 @@ class Controls {
 
         const keys = self.controls.get(key);
         if (!keys) {
-            console.error("Missing keybindings for: ", key);
+            console.error("Missing keybindings for: ", key, keys);
         }
         keys.forEach(function(keyToTest) {
             if (keyToTest in self.keysDown) {
@@ -280,7 +205,7 @@ class Controls {
 
         return succeeded;
     }
-
+/*
     hasControllerSupport() {
         return "getGamepads" in navigator;
     }
@@ -320,21 +245,22 @@ class Controls {
             }
         }
     }
+*/
 }
 
 const controls = new Controls();
 export default controls;
 
 
-window.addEventListener("gamepadconnected", function(e) {
-    const gamepad = navigator.getGamepads()[e.gamepad.index];
-    console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.", gamepad.index, gamepad.id, gamepad.buttons.length, gamepad.axes.length);
-    console.log(gamepad.buttons);
-});
-
-window.addEventListener("gamepaddisconnected", function(e) {
-    /*
-    var gamepad = navigator.getGamepads()[e.gamepad.index];
-    console.log("Gamepad disconnected at index %d: %s. %d buttons, %d axes.", gamepad.index, gamepad.id, gamepad.buttons.length, gamepad.axes.length);
-    */
-});
+// window.addEventListener("gamepadconnected", function(e) {
+//     const gamepad = navigator.getGamepads()[e.gamepad.index];
+//     console.log("Gamepad connected at index %d: %s. %d buttons, %d axes.", gamepad.index, gamepad.id, gamepad.buttons.length, gamepad.axes.length);
+//     console.log(gamepad.buttons);
+// });
+//
+// window.addEventListener("gamepaddisconnected", function(e) {
+//     /*
+//     var gamepad = navigator.getGamepads()[e.gamepad.index];
+//     console.log("Gamepad disconnected at index %d: %s. %d buttons, %d axes.", gamepad.index, gamepad.id, gamepad.buttons.length, gamepad.axes.length);
+//     */
+// });

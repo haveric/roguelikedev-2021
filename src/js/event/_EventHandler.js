@@ -15,6 +15,7 @@ export default class EventHandler {
         window.addEventListener("click", this);
         window.addEventListener("contextmenu", this);
         window.addEventListener("change", this);
+        window.addEventListener("keydown", this);
 
         this.isPlayerTurn = true;
         this.highlightedTiles = [];
@@ -27,6 +28,7 @@ export default class EventHandler {
         window.removeEventListener("click", this);
         window.removeEventListener("contextmenu", this);
         window.removeEventListener("change", this);
+        window.removeEventListener("keydown", this);
 
         this.clearHighlights();
     }
@@ -51,6 +53,9 @@ export default class EventHandler {
             case "change":
                 this.onChange(e);
                 break;
+            case "keydown":
+                this.onKeydown(e);
+                break;
         }
     }
 
@@ -71,6 +76,8 @@ export default class EventHandler {
     onRightClick(e) {}
 
     onChange(e) {}
+
+    onKeydown(e) {}
 
     getMouseIntersectingObjects(e) {
         this.mouse.x = (e.clientX / sceneState.canvasDom.offsetWidth) * 2 - 1;

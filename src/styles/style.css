@@ -77,11 +77,11 @@ body.disable-select * {
     background-color: #f11;
 }
 
-.menu-action--confirm {
+.menu__action--confirm {
     background-color: #3f3;
 }
 
-.menu-action--confirm:hover {
+.menu__action--confirm:hover {
     background-color: #3c3;
 }
 
@@ -604,22 +604,52 @@ body.disable-select * {
     width: 4.5vh;
 }
 
-.settings__section {
+.settings .menu__actions,
+.controls .menu__actions {
+    margin-top: 3vh;
+}
+
+.controls label {
+    text-align: right;
+    padding-right: 25px;
+}
+
+.settings__section,
+.controls__section {
     text-align: left;
     font-size: 2vh;
 }
 
-.settings__section-title {
+.settings__section-title,
+.controls__section-title {
     font-size: 3vh;
     margin-top: 0;
+    margin-bottom: .5vh;
     text-decoration: underline;
 }
 
-.settings__section + .settings__section {
+.settings__section + .settings__section,
+.controls__section + .controls__section {
     padding-top: 15px;
     margin-top: 15px;
 }
 
-.settings__section-inn {
+.settings__section-inn,
+.controls__section-inn{
     padding: 0 15px;
+}
+
+.control {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1fr;
+}
+
+.controls__section {
+    display: inline-block;
+    width: 47%;
+    margin-right: 2%;
+}
+
+.controls__section-inn {
+    display: grid;
 }

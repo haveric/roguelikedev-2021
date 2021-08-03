@@ -74,9 +74,9 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                 this.hideItemTooltip();
             } else if (controls.testPressed("pause")) {
                 engine.setEventHandler(new PauseMenuEventHandler());
-            } else if (controls.testPressed("save", 1000)) {
+            } else if (controls.testPressed("quicksave", 1000)) {
                 engine.save("quicksave");
-            } else if (controls.testPressed("load", 1000)) {
+            } else if (controls.testPressed("quickload", 1000)) {
                 engine.load("quicksave");
             } else if (engine.settings.debugControlsEnabled) {
                 if (controls.testPressed("debug")) {

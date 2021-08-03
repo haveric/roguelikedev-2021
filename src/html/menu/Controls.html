@@ -1,7 +1,145 @@
-<div id="controls" class="ui menu menu--full">
+<div id="controls" class="controls ui menu menu--full">
     <h2 class="menu__title">Controls</h2>
+    <div class="menu__content">
+        <div class="controls__section">
+            <h3 class="controls__section-title">Movement:</h3>
+            <div class="controls__section-inn">
+                <div class="control">
+                    <label for="control-moveup">Move Up/North</label>
+                    <input id="control-moveup" type="text">
+                    <input id="control-moveup-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-movedown">Move Down/South</label>
+                    <input id="control-movedown" type="text">
+                    <input id="control-movedown-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-moveleft">Move Left/West</label>
+                    <input id="control-moveleft" type="text">
+                    <input id="control-moveleft-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-moveright">Move Right/East</label>
+                    <input id="control-moveright" type="text">
+                    <input id="control-moveright-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-movenw">Move Northwest</label>
+                    <input id="control-movenw" type="text">
+                    <input id="control-movenw-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-movene">Move Northeast</label>
+                    <input id="control-movene" type="text">
+                    <input id="control-movene-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-movesw">Move Southwest</label>
+                    <input id="control-movesw" type="text">
+                    <input id="control-movesw-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-movese">Move Southeast</label>
+                    <input id="control-movese" type="text">
+                    <input id="control-movese-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-movewait">Wait</label>
+                    <input id="control-movewait" type="text">
+                    <input id="control-movewait-alt" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="controls__section">
+            <h3 class="controls__section-title">Actions:</h3>
+            <div class="controls__section-inn">
+                <div class="control">
+                    <label for="control-inventory">Open/Close Inventory</label>
+                    <input id="control-inventory" type="text">
+                    <input id="control-inventory-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-get">Get</label>
+                    <input id="control-get" type="text">
+                    <input id="control-get-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-look">Look</label>
+                    <input id="control-look" type="text">
+                    <input id="control-look-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-pause">Pause/Menu</label>
+                    <input id="control-pause" type="text">
+                    <input id="control-pause-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-quicksave">Quicksave</label>
+                    <input id="control-quicksave" type="text">
+                    <input id="control-quicksave-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-quickload">Quickload</label>
+                    <input id="control-quickload" type="text">
+                    <input id="control-quickload-alt" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="controls__section">
+            <h3 class="controls__section-title">Other:</h3>
+            <div class="controls__section-inn">
+                <div class="control">
+                    <label for="control-confirm">Confirm</label>
+                    <input id="control-confirm" type="text">
+                    <input id="control-confirm-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-cancel">Cancel</label>
+                    <input id="control-cancel" type="text">
+                    <input id="control-cancel-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-targetingmodifier1">Targeting Modifier (x5)</label>
+                    <input id="control-targetingmodifier1" type="text">
+                    <input id="control-targetingmodifier1-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-targetingmodifier2">Targeting Modifier (x10)</label>
+                    <input id="control-targetingmodifier2" type="text">
+                    <input id="control-targetingmodifier2-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-targetingmodifier3">Targeting Modifier (x20)</label>
+                    <input id="control-targetingmodifier3" type="text">
+                    <input id="control-targetingmodifier3-alt" type="text">
+                </div>
+            </div>
+        </div>
+        <div class="controls__section">
+            <h3 class="controls__section-title">Debug:</h3>
+            <div class="controls__section-inn">
+                <div class="control">
+                    <label for="control-revealmap">Reveal Map</label>
+                    <input id="control-revealmap" type="text">
+                    <input id="control-revealmap-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-debugroom">Go to Debug Room</label>
+                    <input id="control-debugroom" type="text">
+                    <input id="control-debugroom-alt" type="text">
+                </div>
+                <div class="control">
+                    <label for="control-generatemap">Generate a New Map</label>
+                    <input id="control-generatemap" type="text">
+                    <input id="control-generatemap-alt" type="text">
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="menu__actions">
-        <button class="menu__action menu__save menu-action--confirm">Save and Exit</button>
+        <button class="menu__action menu__save menu__action--confirm">Save and Exit</button>
+        <button class="menu__action menu__reset menu__action--cancel">Reset to Defaults</button>
         <button class="menu__action menu__cancel">Cancel</button>
     </div>
 </div>
