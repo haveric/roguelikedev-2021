@@ -3,6 +3,7 @@ import entityLoader from "../entity/EntityLoader";
 import MapLayer from "./MapLayer";
 import Shop from "./room/Shop";
 import ArrayUtil from "../util/ArrayUtil";
+import {MathUtils} from "three";
 
 export default class Town extends GameMap {
     constructor() {
@@ -56,7 +57,8 @@ export default class Town extends GameMap {
                                 this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('stone', {components: {positionalobject: {x: i, y: j, z: 1}}});
                             } else {
                                 if (Math.random() < .3) {
-                                    this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('grass', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                                    const randomGrass = MathUtils.randInt(1, 4);
+                                    this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('grass' + randomGrass, {components: {positionalobject: {x: i, y: j, z: 1}}});
                                 }
                             }
                         }

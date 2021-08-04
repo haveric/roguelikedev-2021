@@ -20,7 +20,7 @@
         }
     },
     {
-        "id": "grass",
+        "id": "grass1",
         "type": "charactertile",
         "name": "Grass",
         "components": {
@@ -30,6 +30,63 @@
                 "color": "#567d46",
                 "scale": "0.1, 0.75",
                 "size": 0.85
+            },
+            "blocksMovement": false,
+            "blocksFov": false
+        }
+    },
+    {
+        "id": "grass2",
+        "type": "charactertile",
+        "name": "Grass",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "⺌",
+                "color": "#567d46",
+                "scale": 0.1,
+                "size": 0.85,
+                "xRot": 0.5,
+                "zOffset": 0.05,
+                "yRot": "0,2"
+            },
+            "blocksMovement": false,
+            "blocksFov": false
+        }
+    },
+    {
+        "id": "grass3",
+        "type": "charactertile",
+        "name": "Grass",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "⺍",
+                "color": "#567d46",
+                "scale": 0.1,
+                "size": 0.85,
+                "xRot": 0.5,
+                "zOffset": 0.05,
+                "yRot": "0,2"
+            },
+            "blocksMovement": false,
+            "blocksFov": false
+        }
+    },
+    {
+        "id": "grass4",
+        "type": "charactertile",
+        "name": "Grass",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "⺣",
+                "color": "#567d46",
+                "scale": 0.1,
+                "size": 0.85,
+                "xRot": -0.5,
+                "zOffset": 0.05,
+                "yRot": "0,2"
             },
             "blocksMovement": false,
             "blocksFov": false
