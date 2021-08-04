@@ -78,7 +78,7 @@ export default class CharacterObject extends _PositionalObject {
                 font: font,
                 size: newSize,
                 height: newHeight,
-                curveSegments: 24,
+                curveSegments: 12,
                 bevelEnabled: true,
                 bevelThickness: .05,
                 bevelSize: .05,
