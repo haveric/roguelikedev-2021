@@ -129,7 +129,14 @@ class Controls {
     }
 
     setControls(controlsMap) {
-        this.controls = new Map(controlsMap);
+        this.controls = new Map();
+        for (const [key, value] of controlsMap.entries()) {
+            const keys = [];
+            for (const val of value) {
+                keys.push(val);
+            }
+            this.controls.set(key, keys);
+        }
         this.save();
     }
 
@@ -138,7 +145,15 @@ class Controls {
     }
 
     clone() {
-        return new Map(this.controls);
+        const clone = new Map();
+        for (const [key, value] of this.controls.entries()) {
+            const keys = [];
+            for (const val of value) {
+                keys.push(val);
+            }
+            clone.set(key, keys);
+        }
+        return clone;
     }
 
     isPressed(key) {
