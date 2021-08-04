@@ -54,7 +54,7 @@ export default class MovementAction extends ActionWithDirection {
             if (wallTile) {
                 const blocksMovementComponent = wallTile.getComponent("blocksMovement");
                 if (blocksMovementComponent && blocksMovementComponent.blocksMovement) {
-                    return new UnableToPerformAction(this.entity, "There's a wall in the way!");
+                    return new UnableToPerformAction(this.entity, "There's a " + wallTile.name + " in the way!");
                 }
             }
         }

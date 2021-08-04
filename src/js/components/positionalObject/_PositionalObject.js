@@ -30,6 +30,7 @@ export default class _PositionalObject extends _Component {
         this.xOffset = 0;
         this.yOffset = 0;
         this.zOffset = 0;
+        this.size = 1;
         this.actorZOffset = 0;
 
         this.deathAnimation = null;

@@ -9,6 +9,8 @@ export default class RectangularRoom {
         this.y1 = y;
         this.x2 = x + width;
         this.y2 = y + height;
+        this.width = width;
+        this.height = height;
     }
 
     getCenterX() {

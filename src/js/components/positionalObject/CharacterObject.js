@@ -1,8 +1,9 @@
 import _PositionalObject from "./_PositionalObject";
 import * as THREE from "three";
-import helvetikerFont from "../../../fonts/helvetiker_regular.typeface.json";
 import Extend from "../../util/Extend";
+import helvetikerFont from "../../../fonts/helvetiker_regular.typeface.json";
 import mplusCustomFont from "../../../fonts/mplus_custom.json";
+//import mplus from "../../../fonts/Rounded Mplus 1c_Regular.json";
 import pressStartFont from "../../../fonts/Press Start 2P_Regular.json";
 
 const cachedTextGeometries = [];
@@ -58,12 +59,14 @@ export default class CharacterObject extends _PositionalObject {
         super.createObject();
         this.meshes = [];
         const newHeight = this.scale * this.depth;
+        const newSize = 4.1 / 5 * this.depth * this.size;
 
         const font = new THREE.Font(this.font);
         let anyFound = false;
         for (const geometry of cachedTextGeometries) {
             const sameFont = geometry.parameters.options.font.data.familyName === font.data.familyName;
-            if (sameFont && geometry.parameters.options.height === newHeight && geometry.letter === this.letter && geometry.centered === this.centered) {
+            const sameSize = geometry.size === newSize;
+            if (sameFont && sameSize && geometry.parameters.options.height === newHeight && geometry.letter === this.letter && geometry.centered === this.centered) {
                 this.geometry = geometry;
                 anyFound = true;
                 break;
@@ -73,7 +76,7 @@ export default class CharacterObject extends _PositionalObject {
         if (!anyFound) {
             this.geometry = new THREE.TextGeometry(this.letter, {
                 font: font,
-                size: 4.1 / 5 * this.depth * this.size,
+                size: newSize,
                 height: newHeight,
                 curveSegments: 24,
                 bevelEnabled: true,

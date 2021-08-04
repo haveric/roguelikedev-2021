@@ -1,0 +1,120 @@
+[
+    {
+        "id": "grass1",
+        "type": "charactertile",
+        "name": "Grass",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "░",
+                "color": "#567d46",
+                "scale": "0.1, 0.75",
+                "size": 0.85
+            },
+            "blocksMovement": false,
+            "blocksFov": false
+        }
+    },
+    {
+        "id": "grass2",
+        "type": "charactertile",
+        "name": "Grass",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "⺌",
+                "color": "#567d46",
+                "scale": 0.1,
+                "size": 0.85,
+                "xRot": 0.5,
+                "zOffset": 0.05,
+                "yRot": "0,2"
+            },
+            "blocksMovement": false,
+            "blocksFov": false
+        }
+    },
+    {
+        "id": "grass3",
+        "type": "charactertile",
+        "name": "Grass",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "⺍",
+                "color": "#567d46",
+                "scale": 0.1,
+                "size": 0.85,
+                "xRot": 0.5,
+                "zOffset": 0.05,
+                "yRot": "0,2"
+            },
+            "blocksMovement": false,
+            "blocksFov": false
+        }
+    },
+    {
+        "id": "grass4",
+        "type": "charactertile",
+        "name": "Grass",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "⺣",
+                "color": "#567d46",
+                "scale": 0.1,
+                "size": 0.85,
+                "xRot": -0.5,
+                "zOffset": 0.05,
+                "yRot": "0,2"
+            },
+            "blocksMovement": false,
+            "blocksFov": false
+        }
+    },
+    {
+        "id": "tree_trunk",
+        "type": "charactertile",
+        "name": "Tree Trunk",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "⚫",
+                "color": "#964b00",
+                "size": 0.85
+            }
+        }
+    },
+    {
+        "id": "tree_leaves",
+        "type": "charactertile",
+        "name": "Tree Leaves",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "░",
+                "color": "#618a3d",
+                "size": 0.85
+            }
+        }
+    },
+    {
+        "id": "stone",
+        "type": "charactertile",
+        "name": "Stone",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "▪",
+                "scale": 0.05,
+                "size": 0.35,
+                "color": "#666",
+                "xOffset": "-0.25, 0.25",
+                "yOffset": "-0.25, 0.25",
+                "zRot": "0,2"
+            },
+            "blocksFov": false,
+            "blocksMovement": false
+        }
+    }
+]

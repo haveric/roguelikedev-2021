@@ -1,0 +1,181 @@
+[
+    {
+        "id": "bench",
+        "type": "charactertile",
+        "name": "Bench",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "厂",
+                "color": "#964b00",
+                "size": 0.85,
+                "xRot": 1.5,
+                "yRot": 0.5,
+                "zRot": 0,
+                "zOffset": 0.47,
+                "actorZOffset": 0.6
+            },
+            "blocksMovement": false,
+            "walkable": false,
+            "blocksFov": false
+        }
+    },
+    {
+        "id": "bench_stone",
+        "type": "charactertile",
+        "name": "Stone Bench",
+        "components": {
+            "characterobject": {
+                "letter": "п",
+                "color": "#bbb",
+                "xRot": 0.5,
+                "yRot": 0.5
+            },
+            "walkable": true,
+            "blocksFov": false
+        }
+    },
+    {
+        "id": "bench_armrest_right",
+        "type": "charactertile",
+        "name": "Armrest",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "巳",
+                "color": "#964b00",
+                "size": 0.85,
+                "scale": 0.1,
+                "zOffset": 0.5,
+                "xOffset": -0.51,
+                "xRot": 0.5,
+                "yRot": 0.5,
+                "zRot": 0
+            },
+            "blocksFov": false,
+            "blocksMovement": false
+        }
+    },
+    {
+        "id": "bench_armrest_left",
+        "type": "charactertile",
+        "name": "Armrest",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "巳",
+                "color": "#964b00",
+                "size": 0.85,
+                "scale": 0.1,
+                "zOffset": 0.5,
+                "xOffset": 0.51,
+                "xRot": 0.5,
+                "yRot": 0.5,
+                "zRot": 0
+            },
+            "blocksFov": false,
+            "blocksMovement": false
+        }
+    },
+    {
+        "id": "well",
+        "type": "charactertile",
+        "name": "Well",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "○",
+                "color": "#666",
+                "size": 0.75,
+                "scale": 0.62
+            },
+            "blocksFov": false,
+            "blocksMovement": true
+        }
+    },
+    {
+        "id": "well_top",
+        "type": "charactertile",
+        "name": "Well",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "个",
+                "color": "#6c3f20",
+                "size": 0.75,
+                "scale": 0.62,
+                "xRot": 0.5,
+                "yRot": 0.25,
+                "zOffset": -0.6
+            },
+            "blocksFov": false,
+            "blocksMovement": true
+        }
+    },
+    {
+        "id": "barrel",
+        "type": "charactertile",
+        "name": "Barrel",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "○",
+                "color": "#6c3f20",
+                "size": 0.55,
+                "scale": 0.7
+            },
+            "blocksFov": false,
+            "blocksMovement": true
+        }
+    },
+    {
+        "id": "table",
+        "type": "charactertile",
+        "name": "Table",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "letter": "π",
+                "color": "#6c3f20",
+                "size": 1,
+                "scale": 1,
+                "xRot": 0.5
+            },
+            "blocksFov": false,
+            "blocksMovement": true
+        }
+    },
+    {
+        "id": "fence_vertical",
+        "type": "charactertile",
+        "name": "Fence",
+        "components": {
+            "characterobject": {
+                "letter": "#",
+                "color": "#6c3f20",
+                "xRot": 0,
+                "yRot": 0.5,
+                "scale": 0.1,
+                "zOffset": 0.45
+            },
+            "blocksFov": false,
+            "blocksMovement": true
+        }
+    },
+    {
+        "id": "post",
+        "type": "charactertile",
+        "name": "Post",
+        "components": {
+            "characterobject": {
+                "letter": "|",
+                "color": "#6c3f20",
+                "xRot": 0.5,
+                "scale": 0.3,
+                "zOffset": 0.4
+            },
+            "blocksFov": false,
+            "blocksMovement": true
+        }
+    }
+]
