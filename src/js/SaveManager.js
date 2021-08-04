@@ -65,7 +65,7 @@ class SaveManager {
     saveSaves() {
         const save = this.saves[this.saveName];
         if (save === undefined) {
-            this.saves[this.saveName] = {"name": this.getCurrentSaveName(), "lastAutosave": -1};
+            this.saves[this.saveName] = {"name": this.getCurrentSaveName(), "lastAutosave": -1, "date": new Date()};
         }
 
         localStorage.setItem("saves", JSON.stringify(this.saves));

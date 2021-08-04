@@ -16,9 +16,21 @@ class SaveGameMenu extends UIElement {
         this.oldSavesDom.innerHTML = "";
         for (const [key, value] of Object.entries(saveManager.saves)) {
             const saveElement = this.htmlToElement(saveHtml);
-            saveElement.getElementsByClassName("save__title")[0].innerText = key;
+            saveElement.getElementsByClassName("save__text")[0].innerText = key;
+            saveElement.getElementsByClassName("save__date")[0].innerText = this.formatDate(value.date);
+            saveElement.getElementsByClassName("save__time")[0].innerText = this.formatTime(value.date);
             self.oldSavesDom.appendChild(saveElement);
         }
+    }
+
+    formatDate(date) {
+        const formatted = new Date(date);
+        return formatted.getFullYear() + "-" + (formatted.getMonth() + 1) + "-" + formatted.getDate();
+    }
+
+    formatTime(date) {
+        const formatted = new Date(date);
+        return formatted.getHours() + ":" + formatted.getMinutes() + ":" + formatted.getSeconds();
     }
 }
 

@@ -25,12 +25,13 @@ export default class LoadGameMenuEventHandler extends MenuEventHandler {
         if (classList.contains("menu__back")) {
             this.returnToPreviousMenu();
         } else if (classList.contains("save__title")) {
-            saveManager.saveName = target.innerText;
+            const textDom = target.getElementsByClassName("save__text")[0];
+            saveManager.saveName = textDom.innerText;
             engine.load(saveManager.getCurrentSaveName());
 
             engine.setEventHandler(new DefaultPlayerEventHandler());
         } else if (classList.contains("save__delete")) {
-            const saveToDelete = target.parentNode.getElementsByClassName("save__title")[0].innerText;
+            const saveToDelete = target.parentNode.getElementsByClassName("save__text")[0].innerText;
             saveManager.delete(saveToDelete);
             loadGameMenu.loadSaves();
         }

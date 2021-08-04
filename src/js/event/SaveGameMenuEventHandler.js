@@ -49,13 +49,14 @@ export default class SaveGameMenuEventHandler extends MenuEventHandler {
                     saveGameMenu.loadSaves();
                 }
             } else if (classList.contains("save__title")) {
-                const saveName = target.innerText;
+                const textDom = target.getElementsByClassName("save__text")[0];
+                const saveName = textDom.innerText;
                 const overwriteTitleDom = saveGameMenu.overwriteDom.getElementsByClassName("savegame__overwrite-title")[0];
                 overwriteTitleDom.innerText = "Overwrite " + saveName + "?";
                 this.overwriteName = saveName;
                 saveGameMenu.overwriteDom.classList.add("active");
             } else if (classList.contains("save__delete")) {
-                const saveToDelete = target.parentNode.getElementsByClassName("save__title")[0].innerText;
+                const saveToDelete = target.parentNode.getElementsByClassName("save__text")[0].innerText;
                 saveManager.delete(saveToDelete);
                 saveGameMenu.loadSaves();
             }

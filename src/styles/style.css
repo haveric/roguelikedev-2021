@@ -554,12 +554,35 @@ body.disable-select * {
 }
 .save__title {
     width: 80%;
+    display: inline-grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.save__text {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+}
+
+.save__date,
+.save__time {
+    font-size: 1.2vh;
+    grid-column: 2;
+    text-align: right;
+}
+
+.save__date {
+    grid-row: 1;
+}
+
+.save__time {
+    grid-row: 2;
 }
 
 .save__delete {
     width: 10%;
     background-color: #f66;
-    line-height: 2.4vh;
+    font-size: 3.6vh;
+    line-height: 2.9vh;
     font-weight: bold;
     float: right;
 }
