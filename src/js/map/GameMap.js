@@ -304,6 +304,12 @@ export default class GameMap {
         const self = this;
         self.timeout = null;
 
+        if (radius <= maxRadius) {
+            self.timeout = setTimeout(function () {
+                self._revealGradually(minX, maxX, minY, maxY, x, y, radius + 1, maxRadius, delay);
+            }, delay);
+        }
+
         const xRadiusMin = x - radius;
         const xRadiusMax = x + radius;
         const yRadiusMin = y - radius;
@@ -320,16 +326,6 @@ export default class GameMap {
 
         if (xRadiusMin <= minX && xRadiusMax >= maxX && yRadiusMin <= minY && yRadiusMax >= maxY) {
             return true;
-        }
-
-        if (radius <= maxRadius) {
-            if (delay === 0) {
-                self._revealGradually(minX, maxX, minY, maxY, x, y, radius + 1, maxRadius);
-            } else {
-                self.timeout = setTimeout(function () {
-                    self._revealGradually(minX, maxX, minY, maxY, x, y, radius + 1, maxRadius);
-                }, delay);
-            }
         }
 
         return true;

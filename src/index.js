@@ -9,7 +9,6 @@ import MainMenuMap from "./js/map/MainMenuMap";
     const init = function() {
         engine.clearMaps();
         engine.setMap(new MainMenuMap());
-        engine.gameMap.create();
         const playerPosition = engine.player.getComponent("positionalobject");
         engine.gameMap.revealFromPosition(playerPosition.x, playerPosition.y, 100, 0);
         engine.needsMapUpdate = true;
