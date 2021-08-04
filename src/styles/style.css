@@ -561,6 +561,7 @@ body.disable-select * {
 .save__text {
     grid-column: 1;
     grid-row: 1 / span 2;
+    pointer-events: none;
 }
 
 .save__date,
@@ -568,6 +569,7 @@ body.disable-select * {
     font-size: 1.2vh;
     grid-column: 2;
     text-align: right;
+    pointer-events: none;
 }
 
 .save__date {
