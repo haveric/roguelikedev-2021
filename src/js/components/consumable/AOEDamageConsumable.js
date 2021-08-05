@@ -80,11 +80,12 @@ export default class AOEDamageConsumable extends Consumable {
             if (position.horizontalDistance(targetPosition) <= this.radius) {
                 const fighter = actor.getComponent("fighter");
                 if (fighter) {
+                    const actualDamage = this.damage - fighter.getBlockedDamage();
                     if (this.isPlayer()) {
-                        messageConsole.text("The " + actor.name + " is engulfed in a fiery explosion, taking " + this.damage + " damage!").build();
+                        messageConsole.text("The " + actor.name + " is engulfed in a fiery explosion, taking " + actualDamage + " damage!").build();
                     }
 
-                    fighter.takeDamage(this.damage);
+                    fighter.takeDamage(actualDamage);
                     targetsHit = true;
                 }
             }

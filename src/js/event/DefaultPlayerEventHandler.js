@@ -19,11 +19,14 @@ import messageConsole from "../ui/MessageConsole";
 import details from "../ui/Details";
 import PauseMenuEventHandler from "./PauseMenuEventHandler";
 import InteractAction from "../actions/InteractAction";
+import character from "../ui/Character";
+import bottomContainer from "../ui/BottomContainer";
 
 export default class DefaultPlayerEventHandler extends EventHandler {
     constructor() {
         super();
 
+        bottomContainer.open();
         characterHealth.open();
         characterMana.open();
         messageConsole.open();
@@ -33,6 +36,7 @@ export default class DefaultPlayerEventHandler extends EventHandler {
     teardown() {
         super.teardown();
 
+        bottomContainer.close();
         characterHealth.close();
         characterMana.close();
         messageConsole.close();
@@ -67,14 +71,19 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             } else if (controls.testPressed("look")) {
                 engine.setEventHandler(new LookHandler());
             } else if (controls.testPressed("inventory")) {
-                if (inventory.isOpen()) {
-                    inventory.close();
-                } else {
-                    inventory.populateInventory(engine.player);
-                    inventory.open();
-                }
+                inventory.toggle();
 
                 this.hideItemTooltip();
+            } else if (controls.testPressed("character")) {
+                character.toggle();
+            } else if (controls.testPressed("closeall")) {
+                if (inventory.isOpen()) {
+                    inventory.close();
+                }
+
+                if (character.isOpen()) {
+                    character.close();
+                }
             } else if (controls.testPressed("pause")) {
                 engine.setEventHandler(new PauseMenuEventHandler());
             } else if (controls.testPressed("quicksave", 1000)) {
@@ -198,7 +207,8 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             this.isDragging = false;
         } else {
             const target = e.target;
-            if (target.classList.contains("inventory__storage-slot") && target.classList.contains("has-item")) {
+            const classList = target.classList;
+            if (classList.contains("inventory__storage-slot") && classList.contains("has-item")) {
                 const slot = target.getAttribute("data-index");
                 const playerInventory = engine.player.getComponent("inventory");
                 const item = playerInventory.items[slot];
@@ -209,6 +219,37 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                         inventory.populateInventory(engine.player);
                     }
                 }
+            } else if (classList.contains("stat__level")) {
+                const level = engine.player.getComponent("level");
+                if (level.statPointsAvailable > 0) {
+                    const fighter = engine.player.getComponent("fighter");
+                    const parentClasses = target.parentNode.classList;
+                    if (parentClasses.contains("stat--strength")) {
+                        fighter.strength += 1;
+                        fighter.recalculateStats();
+                        level.useStatPoint();
+                    } else if (parentClasses.contains("stat--agility")) {
+                        fighter.agility += 1;
+                        fighter.recalculateStats();
+                        level.useStatPoint();
+                    } else if (parentClasses.contains("stat--constitution")) {
+                        fighter.constitution += 1;
+                        fighter.recalculateStats();
+                        level.useStatPoint();
+                        characterHealth.update(fighter.hp, fighter.maxHp);
+                    } else if (parentClasses.contains("stat--wisdom")) {
+                        fighter.wisdom += 1;
+                        fighter.recalculateStats();
+                        level.useStatPoint();
+                        characterHealth.update(fighter.mana, fighter.maxMana);
+                    }
+                }
+            } else if (classList.contains("hotbar__open-inventory")) {
+                inventory.toggle();
+            } else if (classList.contains("hotbar__open-character")) {
+                character.toggle();
+            } else if (classList.contains("hotbar__open-skill")) {
+                //skills.toggle();
             }
         }
     }

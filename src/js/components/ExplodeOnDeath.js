@@ -46,7 +46,7 @@ export default class ExplodeOnDeath extends _Component {
                     if (position.horizontalDistance(actorPosition) <= this.radius) {
                         const fighter = actor.getComponent("fighter");
                         if (fighter) {
-                            fighter.takeDamage(this.damage);
+                            fighter.takeDamage(this.damage - fighter.getBlockedDamage());
                         }
                     }
                 }

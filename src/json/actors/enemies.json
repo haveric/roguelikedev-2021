@@ -24,9 +24,12 @@
             },
             "aiMeleeChase": {},
             "fighter": {
-                "hp": 10,
-                "defense": 1,
-                "power": 4
+                "baseHp": 10,
+                "baseDefense": 1,
+                "baseDamage": 4
+            },
+            "level": {
+                "xpGiven": 35
             },
             "inventory": {
                 "gold": "1,10"
@@ -48,9 +51,12 @@
             },
             "aiMeleeChase": {},
             "fighter": {
-                "hp": 16,
-                "defense": 1,
-                "power": 4
+                "baseHp": 16,
+                "baseDefense": 1,
+                "baseDamage": 4
+            },
+            "level": {
+                "xpGiven": 100
             },
             "inventory": {
                 "gold": "5,15"
@@ -119,9 +125,11 @@
                 "enemies": "player"
             },
             "fighter": {
-                "hp": 6,
-                "defense": 0,
-                "power": 6
+                "baseHp": 6,
+                "baseDamage": 6
+            },
+            "level": {
+                "xpGiven": 25
             },
             "aiMeleeChase": {}
         }
@@ -145,9 +153,12 @@
                 "enemies": "player"
             },
             "fighter": {
-                "hp": 40,
-                "defense": 2,
-                "power": 3
+                "baseHp": 40,
+                "baseDefense": 2,
+                "baseDamage": 3
+            },
+            "level": {
+                "xpGiven": 175
             },
             "aiGelatinousCube": {},
             "explodeOnDeath": {},
@@ -168,9 +179,11 @@
                 "enemies": "player"
             },
             "fighter": {
-                "hp": 10,
-                "defense": 0,
-                "power": 1
+                "baseHp": 10,
+                "baseDamage": 1
+            },
+            "level": {
+                "xpGiven": 15
             },
             "aiMeleeChase": {},
             "explodeOnDeath": {

@@ -23,6 +23,7 @@ import AIPlayer from "./ai/AIPlayer";
 import ExplodeOnDeath from "./ExplodeOnDeath";
 import AttachedItems from "./AttachedItems";
 import StairsInteractable from "./interactable/StairsInteractable";
+import Level from "./Level";
 
 class ComponentLoader {
     constructor() {
@@ -58,6 +59,7 @@ class ComponentLoader {
         this.load(new Fighter());
         this.load(new Fov());
         this.load(new Inventory());
+        this.load(new Level());
         this.load(new Openable());
         this.load(new Remnant());
         this.load(new VisibilityModifier());

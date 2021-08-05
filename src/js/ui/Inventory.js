@@ -1,5 +1,6 @@
-import html from '../../html/ui/inventory/Inventory.html';
+import html from '../../html/ui/Inventory.html';
 import UIElement from "./UIElement";
+import engine from "../Engine";
 
 class Inventory extends UIElement {
     constructor() {
@@ -71,6 +72,15 @@ class Inventory extends UIElement {
                 }
             }
             this.goldCountDom.innerText = inventory.gold;
+        }
+    }
+
+    toggle() {
+        if (this.isOpen()) {
+            this.close();
+        } else {
+            this.populateInventory(engine.player);
+            this.open();
         }
     }
 }

@@ -99,6 +99,8 @@ export default class ControlsMenuEventHandler extends MenuEventHandler {
 
         // Actions
         this.populateControl("inventory", "control-inventory");
+        this.populateControl("character", "control-character");
+        this.populateControl("closeall", "control-closeall");
         this.populateControl("get", "control-get");
         this.populateControl("look", "control-look");
         this.populateControl("pause", "control-pause");

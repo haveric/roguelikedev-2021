@@ -45,10 +45,12 @@ export default class DamageNearestConsumable extends Consumable {
         let target = this.getClosestActor(consumer);
 
         if (target) {
+            const fighter = target.getComponent("fighter");
+            const actualDamage = this.damage - fighter.getBlockedDamage();
             if (this.isPlayer()) {
-                messageConsole.text(target.name + " is struck for " + this.damage + " damage!").build();
+                messageConsole.text(target.name + " is struck for " + actualDamage + " damage!").build();
             }
-            target.getComponent("fighter").takeDamage(this.damage);
+            fighter.takeDamage(actualDamage);
 
             this.consume();
             return this;

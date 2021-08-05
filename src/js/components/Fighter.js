@@ -16,55 +16,125 @@ export default class Fighter extends _Component {
         super(Extend.extend(args, {baseType: "fighter"}));
         const hasComponent = args.components && args.components.fighter !== undefined;
 
-        this.hp = 30;
-        this.maxHp = 30;
-        this.mana = 20;
-        this.maxMana = 20;
-        this.defense = 0;
-        this.power = 2;
+        this.strength = 0;
+        this.baseDamage = 0;
+
+        this.agility = 0;
+        this.baseDefense = 0;
+
+        this.constitution = 0;
+        this.baseHp = 0;
+        this.hp = null;
+
+        this.wisdom = 0;
+        this.baseMana = 0;
+        this.mana = null;
 
         if (hasComponent) {
             const fighter = args.components.fighter;
-            if (fighter.hp !== undefined) {
-                this.hp = fighter.hp;
-                this.maxHp = this.hp;
+            if (fighter.strength !== undefined) {
+                this.strength = fighter.strength;
             }
 
-            if (fighter.maxHp !== undefined) {
-                this.maxHp = fighter.maxHp;
+            if (fighter.agility !== undefined) {
+                this.agility = fighter.agility;
+            }
+
+            if (fighter.constitution !== undefined) {
+                this.constitution = fighter.constitution;
+            }
+
+            if (fighter.wisdom !== undefined) {
+                this.wisdom = fighter.wisdom;
+            }
+
+            if (fighter.baseDamage !== undefined) {
+                this.baseDamage = fighter.baseDamage;
+            }
+
+            if (fighter.baseDefense !== undefined) {
+                this.baseDefense = fighter.baseDefense;
+            }
+
+            if (fighter.baseHp !== undefined) {
+                this.baseHp = fighter.baseHp;
+            }
+
+            if (fighter.hp !== undefined) {
+                this.hp = fighter.hp;
+            }
+
+            if (fighter.baseMana !== undefined) {
+                this.baseMana = fighter.baseMana;
             }
 
             if (fighter.mana !== undefined) {
                 this.mana = fighter.mana;
             }
-
-            if (fighter.maxMana !== undefined) {
-                this.maxMana = fighter.maxMana;
-            }
-
-            if (fighter.defense !== undefined) {
-                this.defense = fighter.defense;
-            }
-
-            if (fighter.power !== undefined) {
-                this.power = fighter.power;
-            }
         }
+
+        this.recalculateStats();
     }
 
     save() {
-        return {
+        let json = {
             fighter: {
                 hp: this.hp,
-                maxHp: this.maxHp,
-                mana: this.mana,
-                maxMana: this.maxMana,
-                defense: this.defense,
-                power: this.power
+                mana: this.mana
             }
         }
+
+        if (this.strength > 0) {
+            json.fighter.strength = this.strength;
+        }
+        if (this.agility > 0) {
+            json.fighter.agility = this.agility;
+        }
+        if (this.constitution > 0) {
+            json.fighter.constitution = this.constitution;
+        }
+        if (this.wisdom > 0) {
+            json.fighter.wisdom = this.wisdom;
+        }
+        if (this.baseDamage > 0) {
+            json.fighter.baseDamage = this.baseDamage;
+        }
+        if (this.baseDefense > 0) {
+            json.fighter.baseDefense = this.baseDefense;
+        }
+
+        return json;
     }
 
+    recalculateStats() {
+        const newMax = this.getMaxHp();
+        if (this.hp === null || this.hp >= this.maxHp) {
+            this.hp = newMax;
+        }
+        this.maxHp = newMax;
+
+        const newMaxMana = this.getMaxMana();
+        if (this.mana === null || this.mana >= this.maxMana) {
+            this.mana = newMaxMana;
+        }
+        this.maxMana = newMaxMana;
+    }
+
+    getDamage() {
+        return this.baseDamage + this.strength;
+    }
+
+    getBlockedDamage() {
+        return this.baseDefense + this.agility;
+    }
+
+    getMaxHp() {
+        return this.baseHp + this.constitution * 15;
+    }
+
+    getMaxMana() {
+        return this.baseMana + this.wisdom * 10;
+    }
 
     createDamageIndicator(damage, color) {
         const position = this.parentEntity.getComponent("positionalobject");

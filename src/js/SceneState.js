@@ -2,9 +2,7 @@ import * as THREE from "three";
 import Stats from "stats.js";
 import engine from "./Engine";
 import messageConsole from "./ui/MessageConsole";
-import characterHealth from "./ui/CharacterHealth";
 import details from "./ui/Details";
-import characterMana from "./ui/CharacterMana";
 import inventory from "./ui/Inventory";
 import editorControls from "./ui/editor/EditorControls";
 import editorLayer from "./ui/editor/EditorLayer";
@@ -18,6 +16,8 @@ import loadGameMenu from "./ui/menu/LoadGameMenu";
 import saveGameMenu from "./ui/menu/SaveGameMenu";
 import settingsMenu from "./ui/menu/SettingsMenu";
 import pauseMenu from "./ui/menu/PauseMenu";
+import character from "./ui/Character";
+import bottomContainer from "./ui/BottomContainer";
 
 class SceneState {
     constructor() {
@@ -39,10 +39,10 @@ class SceneState {
         this.canvasDom.classList.add("view");
         gameDom.appendChild(this.canvasDom);
         gameDom.appendChild(details.dom);
+        gameDom.appendChild(bottomContainer.dom);
         gameDom.appendChild(messageConsole.dom);
-        gameDom.appendChild(characterHealth.dom);
-        gameDom.appendChild(characterMana.dom);
         gameDom.appendChild(inventory.dom);
+        gameDom.appendChild(character.dom);
 
         gameDom.appendChild(editorControls.dom);
         gameDom.appendChild(editorInfo.dom);

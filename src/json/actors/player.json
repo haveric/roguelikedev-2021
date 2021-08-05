@@ -13,12 +13,16 @@
                 "enemies": "monsters"
             },
             "fighter": {
-                "hp": 30,
-                "defense": 2,
-                "power": 5
+                "strength": 5,
+                "agility": 2,
+                "constitution": 2,
+                "wisdom": 2
             },
             "inventory": {
                 "capacity": 10
+            },
+            "level": {
+                "level": 1
             },
             "aiPlayer": {}
         }

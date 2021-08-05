@@ -31,6 +31,8 @@ class Controls {
         //self.defaults.set("drop", ["d"]);
         self.defaults.set("get", ["g"]);
         self.defaults.set("inventory", ["i"]);
+        self.defaults.set("character", ["c"]);
+        self.defaults.set("closeall", ["`"]);
         self.defaults.set("look", ["/"]);
         self.defaults.set("pause", ["p", Key.ESCAPE]);
         self.defaults.set("interact", [Key.ENTER, Key.NUMPAD_ENTER]);
