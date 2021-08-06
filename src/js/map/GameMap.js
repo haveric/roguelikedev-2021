@@ -165,13 +165,16 @@ export default class GameMap {
                     const tile = entry[1][i][j];
                     if (tile) {
                         const tileJson = JSON.stringify(tile.save());
-                        if (!tileMap.has(tileJson)) {
+                        if (tileMap.has(tileJson)) {
+                            key += String.fromCharCode(tileMap.get(tileJson));
+                        } else {
                             tileMap.set(tileJson, charCode);
-                        }
-                        key += String.fromCharCode(tileMap.get(tileJson));
-                        charCode++;
-                        if (String.fromCharCode(charCode) === ' ') {
+                            key += String.fromCharCode(charCode);
+
                             charCode++;
+                            if (String.fromCharCode(charCode) === ' ') {
+                                charCode++;
+                            }
                         }
                     } else {
                         key += ' ';
