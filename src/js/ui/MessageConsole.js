@@ -48,6 +48,10 @@ class MessageConsole extends UIElement {
         this.builder = [];
     }
 
+    clear() {
+        this.messagesInnerDom.innerHTML = "";
+    }
+
     addMessage(subMessages, stack = true) {
         if (stack && this.messages.length > 0) {
             const lastMessage = this.messages[this.messages.length - 1];
