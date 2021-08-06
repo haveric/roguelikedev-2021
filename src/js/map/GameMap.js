@@ -12,6 +12,7 @@ import Remnant from "../components/Remnant";
 import inventory from "../ui/Inventory";
 import {Vector3} from "three";
 import Item from "../entity/Item";
+import bottomContainer from "../ui/BottomContainer";
 
 export default class GameMap {
     constructor(name, width, height) {
@@ -896,6 +897,7 @@ export default class GameMap {
 
     updatePlayerUI() {
         const playerFighter = engine.player.getComponent("fighter");
+        bottomContainer.updateAll();
         characterHealth.update(playerFighter.hp, playerFighter.maxHp);
         characterMana.update(playerFighter.mana, playerFighter.maxMana);
         details.updatePlayerDetails();

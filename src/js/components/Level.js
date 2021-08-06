@@ -97,22 +97,22 @@ export default class Level extends _Component {
         fighter.heal(fighter.maxHp);
         fighter.recoverMana(fighter.maxMana);
 
-        bottomContainer.updateStatPointsIndicator(this.statPointsAvailable);
-        bottomContainer.updateSkillPointsIndicator(this.skillPointsAvailable);
+        bottomContainer.updateStatPointsIndicator();
+        bottomContainer.updateSkillPointsIndicator();
     }
 
     useStatPoint() {
         this.statPointsAvailable -= 1;
         character.populate(engine.player);
 
-        bottomContainer.updateStatPointsIndicator(this.statPointsAvailable);
+        bottomContainer.updateStatPointsIndicator();
     }
 
     useSkillPoint() {
         this.skillPointsAvailable -= 1;
         //skills.populate(engine.player);
 
-        bottomContainer.updateSkillPointsIndicator(this.skillPointsAvailable);
+        bottomContainer.updateSkillPointsIndicator();
     }
 
     addXp(amount) {

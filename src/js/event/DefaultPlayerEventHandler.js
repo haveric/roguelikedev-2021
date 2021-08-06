@@ -241,7 +241,7 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                         fighter.wisdom += 1;
                         fighter.recalculateStats();
                         level.useStatPoint();
-                        characterHealth.update(fighter.mana, fighter.maxMana);
+                        characterMana.update(fighter.mana, fighter.maxMana);
                     }
                 }
             } else if (classList.contains("hotbar__open-inventory")) {

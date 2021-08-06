@@ -17,12 +17,20 @@ class BottomContainer extends UIElement {
         this.openSkills = this.dom.getElementsByClassName("hotbar__open-skill")[0];
     }
 
+    updateAll() {
+        this.updateXp();
+        this.updateStatPointsIndicator();
+        this.updateSkillPointsIndicator();
+    }
+
     updateXp() {
         const level = engine.player.getComponent("level");
         this.xpFilledDom.style.width = level.getPercentXPTowardsLevel() + "%";
     }
 
-    updateStatPointsIndicator(statPointsAvailable) {
+    updateStatPointsIndicator() {
+        const level = engine.player.getComponent("level");
+        const statPointsAvailable = level.statPointsAvailable;
         if (statPointsAvailable > 0) {
             this.openCharacter.classList.add("has-statpoint");
         } else {
@@ -30,7 +38,9 @@ class BottomContainer extends UIElement {
         }
     }
 
-    updateSkillPointsIndicator(skillPointsAvailable) {
+    updateSkillPointsIndicator() {
+        const level = engine.player.getComponent("level");
+        const skillPointsAvailable = level.skillPointsAvailable;
         if (skillPointsAvailable > 0) {
             this.openSkills.classList.add("has-skillpoint");
         } else {
