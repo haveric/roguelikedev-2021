@@ -19,6 +19,7 @@ export default class Shop extends RectangularRoom {
             for (let j = top; j < bottom; j++) {
                 const previousFloorTile = gameMap.tiles.get(0)[i][j];
                 if (!previousFloorTile) {
+                    gameMap.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
                     gameMap.tiles.get(0)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
                 }
 

@@ -21,6 +21,8 @@ export default class Forge extends RectangularRoom {
                 const isBottomHalf = j < this.y1 + (this.height / 2);
                 const previousFloorTile = gameMap.tiles.get(0)[i][j];
                 if (!previousFloorTile) {
+                    gameMap.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
+
                     if (isRightHalf || isBottomHalf) {
                         gameMap.tiles.get(0)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
                     } else {
