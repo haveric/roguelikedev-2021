@@ -1,7 +1,6 @@
 import GameMap from "./GameMap";
 import RectangularRoom from "./room/RectangularRoom";
 import MapGeneration from "./mapGeneration/MapGeneration";
-import MapLayer from "./MapLayer";
 import entityLoader from "../entity/EntityLoader";
 import {MathUtils} from "three";
 import engine from "../Engine";
@@ -21,12 +20,17 @@ export default class BasicDungeon extends GameMap {
     create(previousMapName, stairsInteractable) {
         super.create();
 
+        const floorEntity = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: 0, y: 0, z: 0}}});
+        const wallEntity = entityLoader.createFromTemplate('wall', {components: {positionalobject: {x: 0, y: 0, z: 0}}});
         // Pre-fill with floor and walls
         for (let j = 0; j < this.height; j++) {
             for (let i = 0; i < this.width; i++) {
-                this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
-                this.tiles.get(0)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
-                this.tiles.get(1)[i][j] = entityLoader.createFromTemplate('wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                const below = floorEntity.clone();
+                below.getComponent("positionalobject").moveTo(i, j, -1, false);
+                const floor = floorEntity.clone();
+                floor.getComponent("positionalobject").moveTo(i, j, 0, false);
+                const wall = wallEntity.clone();
+                wall.getComponent("positionalobject").moveTo(i, j, 1, false);
             }
         }
 

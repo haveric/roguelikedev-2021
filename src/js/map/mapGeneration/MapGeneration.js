@@ -1,10 +1,10 @@
-import MapLayer from "../MapLayer";
 import entityLoader from "../../entity/EntityLoader";
 
 export default class MapGeneration {
-    constructor() {
+    static floorEntity = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: 0, y: 0, z: 0}}});
+    static wallEntity = entityLoader.createFromTemplate('wall', {components: {positionalobject: {x: 0, y: 0, z: 0}}});
 
-    }
+    constructor() {}
 
     static tunnelBetween(gameMap, x1, y1, x2, y2) {
         let cornerX,
@@ -57,20 +57,24 @@ export default class MapGeneration {
 
     static bresenhamCreateTiles(gameMap, createWall, i, j) {
         if (createWall) {
-            const wallTile = gameMap.tiles.get(MapLayer.Wall)[i][j];
+            const wallTile = gameMap.tiles.get(1)[i][j];
             if (wallTile) {
                 const blocksMovement = wallTile.getComponent("blocksMovement");
                 if (blocksMovement && blocksMovement.blocksMovement) {
-                    gameMap.tiles.get(MapLayer.Wall)[i][j] = null;
+                    gameMap.tiles.get(1)[i][j] = null;
                 }
             }
         } else {
-            const floorTile = gameMap.tiles.get(MapLayer.Floor)[i][j];
+            const floorTile = gameMap.tiles.get(0)[i][j];
             if (!floorTile) {
-                gameMap.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                const wall = this.wallEntity.clone();
+                wall.getComponent("positionalobject").moveTo(i, j, 1, false);
+                gameMap.tiles.get(1)[i][j] = wall;
             }
         }
 
-        gameMap.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
+        const floor = this.floorEntity.clone();
+        floor.getComponent("positionalobject").moveTo(i, j, 0, false);
+        gameMap.tiles.get(0)[i][j] = floor;
     }
 }
