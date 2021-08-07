@@ -51,7 +51,7 @@ export default class MainMenuEventHandler extends EventHandler {
     startNewGame() {
         engine.clearMaps();
         engine.setMap(new Town());
-        //engine.gameMap.reveal();
+        engine.gameMap.reveal();
         engine.setEventHandler(new DefaultPlayerEventHandler());
         messageConsole.clear();
         messageConsole.text("Welcome adventurer!").build();
