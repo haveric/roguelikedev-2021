@@ -31,6 +31,9 @@ export default class BasicDungeon extends GameMap {
                 floor.getComponent("positionalobject").moveTo(i, j, 0, false);
                 const wall = wallEntity.clone();
                 wall.getComponent("positionalobject").moveTo(i, j, 1, false);
+                this.tiles.get(-1)[i][j] = below;
+                this.tiles.get(0)[i][j] = floor;
+                this.tiles.get(1)[i][j] = wall;
             }
         }
 

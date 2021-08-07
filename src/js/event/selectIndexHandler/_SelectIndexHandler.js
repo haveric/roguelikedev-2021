@@ -99,16 +99,17 @@ export default class SelectIndexHandler extends EventHandler {
             const tilesX = tiles[this.position.x];
             if (tilesX) {
                 const tile = tilesX[this.position.y];
-
-                const position = tile.getComponent("positionalobject");
-                if (position) {
-                    // Skip invisible/unseen items
-                    if (position.transparency === 1 && position.hasObject()) {
-                        if (!this.isHighlighted(tile)) {
-                            visibleTile = tile;
+                if (tile) {
+                    const position = tile.getComponent("positionalobject");
+                    if (position) {
+                        // Skip invisible/unseen items
+                        if (position.transparency === 1 && position.hasObject()) {
+                            if (!this.isHighlighted(tile)) {
+                                visibleTile = tile;
+                            }
+                        } else {
+                            obscuredTile = tile;
                         }
-                    } else {
-                        obscuredTile = tile;
                     }
                 }
             }
