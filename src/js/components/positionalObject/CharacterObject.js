@@ -7,6 +7,7 @@ import mplusCustomFont from "../../../fonts/mplus_custom.json";
 import pressStartFont from "../../../fonts/Press Start 2P_Regular.json";
 
 const cachedTextGeometries = [];
+const fontCache = new Map();
 export default class CharacterObject extends _PositionalObject {
     constructor(args = {}) {
         const hasComponent = args.components && args.components.characterobject;
@@ -32,14 +33,26 @@ export default class CharacterObject extends _PositionalObject {
 
         switch(this.fontName) {
             case "mplus":
-                this.font = mplusCustomFont;
+                if (!fontCache.has(this.fontName)) {
+                    fontCache.set(this.fontName, new THREE.Font(mplusCustomFont));
+                }
+
+                this.font = fontCache.get(this.fontName);
                 break;
             case "helvetiker":
-                this.font = helvetikerFont;
+                if (!fontCache.has(this.fontName)) {
+                    fontCache.set(this.fontName, new THREE.Font(helvetikerFont));
+                }
+
+                this.font = fontCache.get(this.fontName);
                 break;
             case "pressStart":
             default:
-                this.font = pressStartFont;
+                if (!fontCache.has(this.fontName)) {
+                    fontCache.set(this.fontName, new THREE.Font(pressStartFont));
+                }
+
+                this.font = fontCache.get(this.fontName);
                 break;
         }
     }
@@ -70,10 +83,9 @@ export default class CharacterObject extends _PositionalObject {
         const newHeight = this.scale * this.depth;
         const newSize = 4.1 / 5 * this.depth * this.size;
 
-        const font = new THREE.Font(this.font);
         let anyFound = false;
         for (const geometry of cachedTextGeometries) {
-            const sameFont = geometry.cachedFamilyName === font.data.familyName;
+            const sameFont = geometry.cachedFamilyName === this.font.data.familyName;
             const sameSize = geometry.cachedSize === newSize;
 
             if (sameFont && sameSize && geometry.cachedHeight === newHeight && geometry.cachedLetter === this.letter && geometry.cachedCentered === this.centered) {
@@ -85,7 +97,7 @@ export default class CharacterObject extends _PositionalObject {
 
         if (!anyFound) {
             this.geometry = new THREE.TextGeometry(this.letter, {
-                font: font,
+                font: this.font,
                 size: newSize,
                 height: newHeight,
                 curveSegments: 12,
@@ -95,7 +107,7 @@ export default class CharacterObject extends _PositionalObject {
                 bevelOffset: 0,
                 bevelSegments: 1
             });
-            this.geometry.cachedFamilyName = font.data.familyName;
+            this.geometry.cachedFamilyName = this.font.data.familyName;
             this.geometry.cachedSize = newSize;
             this.geometry.cachedHeight = newHeight;
             this.geometry.cachedLetter = this.letter;
