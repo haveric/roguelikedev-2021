@@ -50,6 +50,7 @@ class MessageConsole extends UIElement {
 
     clear() {
         this.messagesInnerDom.innerHTML = "";
+        this.messages = [];
     }
 
     addMessage(subMessages, stack = true) {
