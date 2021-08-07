@@ -86,7 +86,7 @@ export default class Fighter extends _Component {
                 hp: this.hp,
                 mana: this.mana
             }
-        }
+        };
 
         if (this.strength > 0) {
             saveJson.fighter.strength = this.strength;

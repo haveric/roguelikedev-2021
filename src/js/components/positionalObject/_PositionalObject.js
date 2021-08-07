@@ -67,7 +67,8 @@ export default class _PositionalObject extends _Component {
 
         let saveJson = {
             positionalobject: {}
-        }
+        };
+
         if (this.parentEntity && this.parentEntity instanceof Tile) {
             if (this.actorZOffset !== 0) {
                 saveJson.positionalobject.actorZOffset = this.actorZOffset;

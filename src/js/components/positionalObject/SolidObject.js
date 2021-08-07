@@ -20,7 +20,7 @@ export default class SolidObject extends _PositionalObject {
 
         const saveJson = {
             solidobject: {}
-        }
+        };
 
         this.cachedSave = Extend.deep(super.save(), saveJson);
         return this.cachedSave;

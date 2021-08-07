@@ -64,7 +64,7 @@ export default class CharacterObject extends _PositionalObject {
 
         let saveJson = {
             characterobject: {}
-        }
+        };
 
         if (this.fontName !== "helvetiker") {
             saveJson.characterobject.fontName = this.fontName;

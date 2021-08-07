@@ -46,7 +46,7 @@ export default class StairsInteractable extends Interactable {
 
         let saveJson = {
             "stairsInteractable": {}
-        }
+        };
 
         if (this.map) {
             saveJson.stairsInteractable.map = this.map;

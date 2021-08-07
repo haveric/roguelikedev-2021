@@ -51,7 +51,7 @@ export default class Level extends _Component {
 
         let saveJson = {
             level: {}
-        }
+        };
 
         if (this.level > 1) {
             saveJson.level = this.level;
