@@ -72,7 +72,7 @@ export default class _Entity {
         json.components = {};
         for (const component of this.componentArray) {
             const save = component.save();
-            if (save !== null) {
+            if (save !== null && save !== {}) {
                 Extend.deep(json.components, save);
             }
         }
