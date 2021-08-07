@@ -5,7 +5,7 @@ import controls from "../../controls/Controls";
 import DefaultPlayerEventHandler from "../DefaultPlayerEventHandler";
 import details from "../../ui/Details";
 import sceneState from "../../SceneState";
-import _Tile from "../../entity/_Tile";
+import Tile from "../../entity/Tile";
 
 export default class SelectIndexHandler extends EventHandler {
     constructor() {
@@ -145,7 +145,7 @@ export default class SelectIndexHandler extends EventHandler {
         for (let i = 0; i < intersects.length; i++) {
             const object = intersects[i].object;
             const parentEntity = object.parentEntity;
-            if (parentEntity && parentEntity instanceof _Tile) {
+            if (parentEntity && parentEntity instanceof Tile) {
                 const parentPosition = parentEntity.getComponent("positionalobject");
                 if (parentPosition) {
                     // Skip invisible/unseen items

@@ -1,0 +1,12 @@
+[
+    {
+        "id": "base_item",
+        "type": "item",
+        "components": {
+            "characterobject": {
+                "scale": 0.1,
+                "font": "helvetiker"
+            }
+        }
+    }
+]

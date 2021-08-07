@@ -1,13 +1,14 @@
-import SolidTile from "./SolidTile";
-import CharacterTile from "./CharacterTile";
+import Tile from "./Tile";
 import Actor from "./Actor";
 import Item from "./Item";
+import baseActorsList from "../../json/actors/_base.json";
 import playerList from "../../json/actors/player.json";
 import enemyList from "../../json/actors/enemies.json";
 import npcsList from "../../json/actors/npcs.json";
-import baseList from "../../json/tiles/_base.json";
+import baseTilesList from "../../json/tiles/_base.json";
 import foliageList from "../../json/tiles/foliage.json";
 import furnitureList from "../../json/tiles/furniture.json";
+import baseItemsList from "../../json/items/_base.json";
 import armorList from "../../json/items/armor.json";
 import miscList from "../../json/items/misc.json";
 import potionsList from "../../json/items/potions.json";
@@ -19,8 +20,7 @@ class EntityLoader {
         this.types = new Map();
         this.templates = new Map();
 
-        this.load(new SolidTile());
-        this.load(new CharacterTile());
+        this.load(new Tile());
         this.load(new Actor());
         this.load(new Item());
 
@@ -51,14 +51,16 @@ class EntityLoader {
     }
 
     loadTemplates() {
+        this.loadTemplate(baseActorsList);
         this.loadTemplate(playerList);
         this.loadTemplate(enemyList);
         this.loadTemplate(npcsList);
 
-        this.loadTemplate(baseList);
+        this.loadTemplate(baseTilesList);
         this.loadTemplate(foliageList);
         this.loadTemplate(furnitureList);
 
+        this.loadTemplate(baseItemsList);
         this.loadTemplate(armorList);
         this.loadTemplate(miscList);
         this.loadTemplate(potionsList);

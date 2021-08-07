@@ -1,0 +1,27 @@
+[
+    {
+        "id": "base_actor",
+        "type": "actor",
+        "components": {
+            "characterobject": {
+                "scale": 0.1,
+                "fontName": "helvetiker",
+                "xRot": 0.5,
+                "yRot": 0.25,
+                "zOffset": 0.5
+            },
+            "blocksMovement": true,
+            "fighter": {}
+        }
+    },
+    {
+        "id": "base_mplus_actor",
+        "extends": "base_actor",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus",
+                "zOffset": 0.1
+            }
+        }
+    }
+]

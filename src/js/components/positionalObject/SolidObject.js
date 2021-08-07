@@ -13,6 +13,19 @@ export default class SolidObject extends _PositionalObject {
         super(Extend.extend(args, {type: "solidobject"}));
     }
 
+    save() {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        const saveJson = {
+            solidobject: {}
+        }
+
+        this.cachedSave = Extend.deep(super.save(), saveJson);
+        return this.cachedSave;
+    }
+
     createObject() {
         this.meshes = [];
         const newDepth = this.scale * this.depth;

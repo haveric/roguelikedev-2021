@@ -1,7 +1,7 @@
 [
     {
         "id": "bench",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Bench",
         "components": {
             "characterobject": {
@@ -22,7 +22,7 @@
     },
     {
         "id": "bench_stone",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Stone Bench",
         "components": {
             "characterobject": {
@@ -37,7 +37,7 @@
     },
     {
         "id": "bench_armrest_right",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Armrest",
         "components": {
             "characterobject": {
@@ -58,7 +58,7 @@
     },
     {
         "id": "bench_armrest_left",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Armrest",
         "components": {
             "characterobject": {
@@ -79,7 +79,7 @@
     },
     {
         "id": "well",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Well",
         "components": {
             "characterobject": {
@@ -95,7 +95,7 @@
     },
     {
         "id": "well_top",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Well",
         "components": {
             "characterobject": {
@@ -114,7 +114,7 @@
     },
     {
         "id": "barrel",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Barrel",
         "components": {
             "characterobject": {
@@ -130,7 +130,7 @@
     },
     {
         "id": "table",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Table",
         "components": {
             "characterobject": {
@@ -147,7 +147,7 @@
     },
     {
         "id": "fence_vertical",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Fence",
         "components": {
             "characterobject": {
@@ -164,7 +164,7 @@
     },
     {
         "id": "post",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Post",
         "components": {
             "characterobject": {

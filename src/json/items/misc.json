@@ -1,7 +1,7 @@
 [
     {
         "id": "gold",
-        "type": "item",
+        "extends": "base_item",
         "name": "Gold",
         "description": "Helps to fund your adventures",
         "maxStackSize": -1,
@@ -16,7 +16,7 @@
     },
     {
         "id": "^",
-        "type": "item",
+        "extends": "base_item",
         "name": "^",
         "components": {
             "characterobject": {

@@ -1,17 +1,7 @@
 [
     {
-        "id": "base_mplus_actor",
-        "type": "actor",
-        "components": {
-            "characterobject": {
-                "fontName": "mplus",
-                "zOffset": 0.1
-            }
-        }
-    },
-    {
         "id": "orc",
-        "type": "actor",
+        "extends": "base_actor",
         "name": "Orc",
         "components": {
             "characterobject": {
@@ -38,7 +28,7 @@
     },
     {
         "id": "troll",
-        "type": "actor",
+        "extends": "base_actor",
         "name": "Troll",
         "components": {
             "characterobject": {
@@ -65,7 +55,7 @@
     },
     {
         "id": "ant",
-        "type": "actor",
+        "extends": "base_actor",
         "name": "Ant",
         "components": {
             "characterobject": {
@@ -81,7 +71,7 @@
     },
     {
         "id": "dragon_red",
-        "type": "actor",
+        "extends": "base_actor",
         "name": "Red Dragon",
         "components": {
             "characterobject": {
@@ -97,7 +87,7 @@
     },
     {
         "id": "goblin",
-        "type": "actor",
+        "extends": "base_actor",
         "name": "Goblin",
         "components": {
             "characterobject": {
@@ -167,7 +157,7 @@
     },
     {
         "id": "exploding_sheep",
-        "type": "actor",
+        "extends": "base_actor",
         "name": "Exploding Sheep",
         "components": {
             "characterobject": {

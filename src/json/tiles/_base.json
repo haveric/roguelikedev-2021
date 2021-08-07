@@ -1,7 +1,29 @@
 [
     {
+        "id": "base_solidtile",
+        "type": "tile",
+        "components": {
+            "solidobject": {},
+            "walkable": true,
+            "blocksMovement": true,
+            "blocksFov": true
+        }
+    },
+    {
+        "id": "base_charactertile",
+        "type": "tile",
+        "components": {
+            "characterobject": {
+                "fontName": "pressStart"
+            },
+            "walkable": false,
+            "blocksMovement": true,
+            "blocksFov": true
+        }
+    },
+    {
         "id": "floor",
-        "type": "solidtile",
+        "extends": "base_solidtile",
         "name": "Floor",
         "components": {
             "solidobject": {
@@ -11,7 +33,7 @@
     },
     {
         "id": "floor_grass",
-        "type": "solidtile",
+        "extends": "base_solidtile",
         "name": "Grass Floor",
         "components": {
             "solidobject": {
@@ -21,7 +43,7 @@
     },
     {
         "id": "floor_gravel",
-        "type": "solidtile",
+        "extends": "base_solidtile",
         "name": "Gravel Floor",
         "components": {
             "solidobject": {
@@ -31,7 +53,7 @@
     },
     {
         "id": "wall",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Wall",
         "components": {
             "characterobject": {
@@ -42,7 +64,7 @@
     },
     {
         "id": "door",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Door",
         "components": {
             "characterobject": {
@@ -60,7 +82,7 @@
     },
     {
         "id": "door_open",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Door",
         "components": {
             "characterobject": {
@@ -78,7 +100,7 @@
     },
     {
         "id": "stairs_north",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Stairs",
         "components": {
             "characterobject": {
@@ -93,7 +115,7 @@
     },
     {
         "id": "stairs_west",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Stairs",
         "components": {
             "characterobject": {
@@ -109,7 +131,7 @@
     },
     {
         "id": "water",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Water",
         "components": {
             "characterobject": {
@@ -128,7 +150,7 @@
     },
     {
         "id": "art_backing",
-        "type": "solidtile",
+        "extends": "base_solidtile",
         "name": "Backing",
         "components": {
             "solidobject": {
@@ -139,7 +161,7 @@
     },
     {
         "id": "art",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Art",
         "components": {
             "characterobject": {

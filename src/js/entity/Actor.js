@@ -7,20 +7,7 @@ export default class Actor extends _Entity {
     }
 
     static getDefaultTemplate() {
-        return {
-            type: "actor",
-            components: {
-                "characterobject": {
-                    scale: .1,
-                    fontName: "helvetiker",
-                    xRot: .5,
-                    yRot: .25,
-                    zOffset: .5
-                },
-                "blocksMovement": true,
-                "fighter": {}
-            }
-        }
+        return {type: "actor"};
     }
 
     isAlive() {

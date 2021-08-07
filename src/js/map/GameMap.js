@@ -2,7 +2,7 @@ import ArrayUtil from "../util/ArrayUtil";
 import sceneState from "../SceneState";
 import entityLoader from "../entity/EntityLoader";
 import engine from "../Engine";
-import _Tile from "../entity/_Tile";
+import Tile from "../entity/Tile";
 import Fov from "../components/Fov";
 import characterHealth from "../ui/CharacterHealth";
 import details from "../ui/Details";
@@ -619,7 +619,7 @@ export default class GameMap {
 
         const newObjectsRemoved = [];
         for (const newObject of newObjects) {
-            if (newObject instanceof _Tile) {
+            if (newObject instanceof Tile) {
                 const fovComponent = newObject.getComponent("fov");
                 if (fovComponent) {
                     fovComponent.setExplored(true);
@@ -744,7 +744,7 @@ export default class GameMap {
 
         const visibleObjects = fov.visibleObjects;
         for (const visibleObject of visibleObjects) {
-            if (visibleObject instanceof _Tile) {
+            if (visibleObject instanceof Tile) {
                 const object = visibleObject.getComponent("positionalobject");
 
                 if (object) {

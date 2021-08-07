@@ -1,7 +1,7 @@
 [
     {
         "id": "grass1",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Grass",
         "components": {
             "characterobject": {
@@ -17,7 +17,7 @@
     },
     {
         "id": "grass2",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Grass",
         "components": {
             "characterobject": {
@@ -36,7 +36,7 @@
     },
     {
         "id": "grass3",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Grass",
         "components": {
             "characterobject": {
@@ -55,7 +55,7 @@
     },
     {
         "id": "grass4",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Grass",
         "components": {
             "characterobject": {
@@ -74,7 +74,7 @@
     },
     {
         "id": "tree_trunk",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Tree Trunk",
         "components": {
             "characterobject": {
@@ -87,7 +87,7 @@
     },
     {
         "id": "tree_leaves",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Tree Leaves",
         "components": {
             "characterobject": {
@@ -100,7 +100,7 @@
     },
     {
         "id": "stone",
-        "type": "charactertile",
+        "extends": "base_charactertile",
         "name": "Stone",
         "components": {
             "characterobject": {

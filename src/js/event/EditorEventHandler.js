@@ -4,7 +4,7 @@ import TutorialMap from "../map/TutorialMap";
 import EventHandler from "./_EventHandler";
 import editorControls from "../ui/editor/EditorControls";
 import DefaultPlayerEventHandler from "./DefaultPlayerEventHandler";
-import _Tile from "../entity/_Tile";
+import Tile from "../entity/Tile";
 import Actor from "../entity/Actor";
 import Item from "../entity/Item";
 import editorInfo from "../ui/editor/EditorInfo";
@@ -144,7 +144,7 @@ export default class EditorEventHandler extends EventHandler {
             if (parentEntity) {
                 const parentObject = parentEntity.getComponent("positionalobject");
 
-                if (parentEntity instanceof _Tile) {
+                if (parentEntity instanceof Tile) {
                     engine.gameMap.tiles.get(parentObject.z)[parentObject.x][parentObject.y] = null;
                 } else if (parentEntity instanceof Actor) {
                     engine.gameMap.removeActor(parentEntity);

@@ -1,7 +1,7 @@
 [
     {
         "id": "potion",
-        "type": "item",
+        "extends": "base_item",
         "maxStackSize": 20,
         "components": {
             "characterobject": {

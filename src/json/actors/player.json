@@ -1,7 +1,7 @@
 [
     {
         "id": "player",
-        "type": "actor",
+        "extends": "base_actor",
         "name": "Player",
         "components": {
             "characterobject": {

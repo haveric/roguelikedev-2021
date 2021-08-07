@@ -28,15 +28,7 @@ export default class Item extends _Entity {
     }
 
     static getDefaultTemplate() {
-        return {
-            type: "item",
-            components: {
-                "characterobject": {
-                    scale: .1,
-                    font: "helvetiker"
-                }
-            }
-        }
+        return {type: "item"};
     }
 
     setAmount(amount) {

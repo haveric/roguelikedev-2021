@@ -2,7 +2,7 @@ import engine from "../Engine";
 import controls from "../controls/Controls";
 import TutorialMap from "../map/TutorialMap";
 import BasicDungeon from "../map/BasicDungeon";
-import _Tile from "../entity/_Tile";
+import Tile from "../entity/Tile";
 import sceneState from "../SceneState";
 import EventHandler from "./_EventHandler";
 import EditorEventHandler from "./EditorEventHandler";
@@ -121,7 +121,7 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         for (let i = 0; i < intersects.length; i++) {
             const object = intersects[i].object;
             const parentEntity = object.parentEntity;
-            if (parentEntity && parentEntity instanceof _Tile) {
+            if (parentEntity && parentEntity instanceof Tile) {
                 const parentPosition = parentEntity.getComponent("positionalobject");
                 if (parentPosition) {
                     // Skip invisible/unseen items
