@@ -22,9 +22,16 @@ export default class AIGelatinousCube extends AI {
     }
 
     save() {
-        return {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        const saveJson = {
             "aiGelatinousCube": {}
         };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     perform() {
@@ -180,24 +187,16 @@ export default class AIGelatinousCube extends AI {
                             }
 
                             if (remnant && !remnant.isRemnant) {
-                                itemPosition.xRot = finalPosition.xRot;
-                                itemPosition.yRot = finalPosition.yRot;
-                                itemPosition.zRot = finalPosition.zRot;
-                                itemPosition.xOffset = finalPosition.xOffset;
-                                itemPosition.yOffset = finalPosition.yOffset;
-                                itemPosition.zOffset = finalPosition.zOffset;
+                                itemPosition.updateRotation(finalPosition.xRot, finalPosition.yRot, finalPosition.zRot)
+                                itemPosition.updateOffsets(finalPosition.xOffset, finalPosition.yOffset, finalPosition.zOffset);
                                 itemPosition.updateObjectPosition();
                                 engine.needsMapUpdate = true;
                             } else {
                                 const tween = new TWEEN.Tween(position).to(finalPosition, 200);
                                 tween.start();
                                 tween.onUpdate(function() {
-                                    itemPosition.xRot = position.xRot;
-                                    itemPosition.yRot = position.yRot;
-                                    itemPosition.zRot = position.zRot;
-                                    itemPosition.xOffset = position.xOffset;
-                                    itemPosition.yOffset = position.yOffset;
-                                    itemPosition.zOffset = position.zOffset;
+                                    itemPosition.updateRotation(position.xRot, position.yRot, position.zRot);
+                                    itemPosition.updateOffsets(position.xOffset, position.yOffset, position.zOffset);
                                     itemPosition.updateObjectPosition();
                                     engine.needsMapUpdate = true;
                                 });
@@ -244,11 +243,8 @@ export default class AIGelatinousCube extends AI {
                         const tween = new TWEEN.Tween(position).to(finalPosition, 200);
                         tween.start();
                         tween.onUpdate(function () {
-                            itemPosition.xRot = position.xRot;
-                            itemPosition.yRot = position.yRot;
-                            itemPosition.xOffset = position.xOffset;
-                            itemPosition.yOffset = position.yOffset;
-                            itemPosition.zOffset = position.zOffset;
+                            itemPosition.updateRotation(position.xRot, position.yRot);
+                            itemPosition.updateOffsets(position.xOffset, position.yOffset, position.zOffset);
                             itemPosition.updateObjectPosition();
                             engine.needsMapUpdate = true;
                         });

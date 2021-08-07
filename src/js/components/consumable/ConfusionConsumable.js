@@ -25,11 +25,18 @@ export default class ConfusionConsumable extends Consumable {
     }
 
     save() {
-        return {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        const saveJson = {
             "confusionConsumable": {
                 turns: this.turns
             }
-        }
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     getAction() {
@@ -72,7 +79,7 @@ export default class ConfusionConsumable extends Consumable {
         const ai = target.getComponent("ai");
         if (ai) {
             if (ai instanceof AIConfusedEnemy) {
-                ai.turnsRemaining = this.turns;
+                ai.setTurnsRemaining(this.turns);
             } else {
                 const aiType = ai.type;
                 const aiArgs = {

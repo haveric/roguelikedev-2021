@@ -77,7 +77,11 @@ export default class Fighter extends _Component {
     }
 
     save() {
-        let json = {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        let saveJson = {
             fighter: {
                 hp: this.hp,
                 mana: this.mana
@@ -85,25 +89,26 @@ export default class Fighter extends _Component {
         }
 
         if (this.strength > 0) {
-            json.fighter.strength = this.strength;
+            saveJson.fighter.strength = this.strength;
         }
         if (this.agility > 0) {
-            json.fighter.agility = this.agility;
+            saveJson.fighter.agility = this.agility;
         }
         if (this.constitution > 0) {
-            json.fighter.constitution = this.constitution;
+            saveJson.fighter.constitution = this.constitution;
         }
         if (this.wisdom > 0) {
-            json.fighter.wisdom = this.wisdom;
+            saveJson.fighter.wisdom = this.wisdom;
         }
         if (this.baseDamage > 0) {
-            json.fighter.baseDamage = this.baseDamage;
+            saveJson.fighter.baseDamage = this.baseDamage;
         }
         if (this.baseDefense > 0) {
-            json.fighter.baseDefense = this.baseDefense;
+            saveJson.fighter.baseDefense = this.baseDefense;
         }
 
-        return json;
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     recalculateStats() {
@@ -118,6 +123,8 @@ export default class Fighter extends _Component {
             this.mana = newMaxMana;
         }
         this.maxMana = newMaxMana;
+
+        this.clearSaveCache();
     }
 
     getDamage() {
@@ -192,6 +199,8 @@ export default class Fighter extends _Component {
         if (this.hp <= 0) {
             this.die();
         }
+
+        this.clearSaveCache();
     }
 
     heal(amount) {
@@ -208,6 +217,7 @@ export default class Fighter extends _Component {
         }
 
         this.createDamageIndicator(healedHp, "#090");
+        this.clearSaveCache();
 
         return healedHp;
     }
@@ -222,6 +232,8 @@ export default class Fighter extends _Component {
         if (this.isPlayer()) {
             characterMana.update(this.mana, this.maxMana);
         }
+
+        this.clearSaveCache();
     }
 
     recoverMana(amount) {
@@ -236,6 +248,8 @@ export default class Fighter extends _Component {
         if (this.isPlayer()) {
             characterMana.update(this.mana, this.maxMana);
         }
+
+        this.clearSaveCache();
 
         return recoveredMana;
     }
@@ -266,6 +280,8 @@ export default class Fighter extends _Component {
             const newAI = new AIDead(aiArgs);
             entity.setComponent(newAI);
         }
+
+        this.clearSaveCache();
     }
 
     getDamageDescription() {

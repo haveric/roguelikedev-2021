@@ -7,9 +7,16 @@ export default class AIPlayer extends AI {
     }
 
     save() {
-        return {
-            "aiPlayer": {}
+        if (this.cachedSave) {
+            return this.cachedSave;
         }
+
+        const saveJson = {
+            "aiPlayer": {}
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     perform() {}

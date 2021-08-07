@@ -6,10 +6,20 @@ export default class _Component {
         this.baseType = args.baseType || "component";
         this.type = args.type || this.baseType;
         this.parentEntity = args.parentEntity;
+
+        this.cachedSave = null;
     }
 
     save() {
         return null;
+    }
+
+    clearSaveCache() {
+        this.cachedSave = null;
+
+        if (this.parentEntity) {
+            this.parentEntity.clearSaveCache();
+        }
     }
 
     getDescription() {

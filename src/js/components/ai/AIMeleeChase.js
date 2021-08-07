@@ -19,9 +19,16 @@ export default class AIMeleeChase extends AI {
     }
 
     save() {
-        return {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        const saveJson = {
             "aiMeleeChase": {}
         };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     perform() {

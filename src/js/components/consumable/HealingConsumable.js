@@ -19,11 +19,18 @@ export default class HealingConsumable extends Consumable {
     }
 
     save() {
-        return {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        const saveJson = {
             "healingConsumable": {
                 amount: this.amount
             }
-        }
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     /**

@@ -16,6 +16,8 @@ export default class _Entity {
         if (args.components) {
             this.loadComponents(args, args.components);
         }
+
+        this.cachedSave = null;
     }
 
     loadComponents(args, components) {
@@ -40,6 +42,8 @@ export default class _Entity {
         component.parentEntity = this;
         this.components[component.baseType] = component;
         this.componentArray.push(component);
+
+        this.clearSaveCache();
     }
 
     getComponent(baseType) {
@@ -59,9 +63,19 @@ export default class _Entity {
                 break;
             }
         }
+
+        this.clearSaveCache();
+    }
+
+    clearSaveCache() {
+        this.cachedSave = null;
     }
 
     save() {
+        if (this.cachedSave !== null) {
+            return this.cachedSave;
+        }
+
         let json = {
             id: this.id,
             type: this.type,
@@ -77,6 +91,7 @@ export default class _Entity {
             }
         }
 
+        this.cachedSave = json;
         return json;
     }
 
@@ -119,7 +134,12 @@ export default class _Entity {
         }
     }
 
+    setName(newName) {
+        this.name = newName;
+        this.clearSaveCache();
+    }
+
     onEntityDeath() {
-        this.name = "Remains of " + this.name;
+        this.setName("Remains of " + this.name);
     }
 }

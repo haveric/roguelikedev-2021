@@ -20,12 +20,19 @@ export default class VisibilityModifier extends _Component {
     }
 
     save() {
-        return {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        const saveJson = {
             "visibilityModifier": {
                 "modifier": this.modifier,
                 "amount": this.amount
             }
-        }
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     getVisibility(visibility) {

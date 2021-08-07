@@ -22,24 +22,35 @@ export default class Faction extends _Component {
     }
 
     save() {
-        return {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        const saveJson = {
             "faction": {
                 factions: this.factions.toString(),
                 enemies: this.enemies.toString()
             }
-        }
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     setFactions(factionList) {
         for (const faction of factionList) {
             this.factions.push(faction.trim());
         }
+
+        this.clearSaveCache();
     }
 
     setEnemies(enemyList) {
         for (const enemy of enemyList) {
             this.enemies.push(enemy.trim());
         }
+
+        this.clearSaveCache();
     }
 
     /**

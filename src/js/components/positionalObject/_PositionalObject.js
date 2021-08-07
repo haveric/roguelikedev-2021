@@ -61,60 +61,65 @@ export default class _PositionalObject extends _Component {
     }
 
     save() {
-        let positionalObject = {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        let saveJson = {
             positionalobject: {}
         }
         if (this.parentEntity && this.parentEntity instanceof _Tile) {
             if (this.actorZOffset !== 0) {
-                positionalObject.positionalobject.actorZOffset = this.actorZOffset;
+                saveJson.positionalobject.actorZOffset = this.actorZOffset;
             }
         } else {
-            positionalObject.positionalobject.x = this.x;
-            positionalObject.positionalobject.y = this.y;
-            positionalObject.positionalobject.z = this.z;
+            saveJson.positionalobject.x = this.x;
+            saveJson.positionalobject.y = this.y;
+            saveJson.positionalobject.z = this.z;
         }
 
         if (this.xRot !== 0) {
-            positionalObject.positionalobject.xRot = this.xRot;
+            saveJson.positionalobject.xRot = this.xRot;
         }
 
         if (this.yRot !== 0) {
-            positionalObject.positionalobject.yRot = this.yRot;
+            saveJson.positionalobject.yRot = this.yRot;
         }
 
         if (this.zRot !== 0) {
-            positionalObject.positionalobject.zRot = this.zRot;
+            saveJson.positionalobject.zRot = this.zRot;
         }
 
         if (this.xOffset !== 0) {
-            positionalObject.positionalobject.xOffset = this.xOffset;
+            saveJson.positionalobject.xOffset = this.xOffset;
         }
 
         if (this.yOffset !== 0) {
-            positionalObject.positionalobject.yOffset = this.yOffset;
+            saveJson.positionalobject.yOffset = this.yOffset;
         }
 
         if (this.zOffset !== 0) {
-            positionalObject.positionalobject.zOffset = this.zOffset;
+            saveJson.positionalobject.zOffset = this.zOffset;
         }
 
         if (this.color !== "#ffffff") {
-            positionalObject.positionalobject.color = this.color;
+            saveJson.positionalobject.color = this.color;
         }
 
         if (this.opacity !== 1) {
-            positionalObject.positionalobject.opacity = this.opacity;
+            saveJson.positionalobject.opacity = this.opacity;
         }
 
         if (this.scale !== 1) {
-            positionalObject.positionalobject.scale = this.scale;
+            saveJson.positionalobject.scale = this.scale;
         }
 
         if (this.size !== 1) {
-            positionalObject.positionalobject.size = this.size;
+            saveJson.positionalobject.size = this.size;
         }
 
-        return positionalObject;
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     createObject() {}
@@ -233,9 +238,49 @@ export default class _PositionalObject extends _Component {
         this.y += y;
         this.z += z;
 
+        this.clearSaveCache();
         this.updateObjectPosition();
 
         this.parentEntity.callEvent("onEntityMove");
+    }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @param callEvent Set to false when this is being called from the parent entity to prevent infinite calls
+     */
+    moveTo(x, y = this.y, z = this.z, callEvent = true) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+
+        this.clearSaveCache();
+        this.updateObjectPosition();
+
+        if (callEvent) {
+            this.parentEntity.callEvent("onEntityMove");
+        }
+    }
+
+    updateRotation(xRot, yRot = this.yRot, zRot = this.zRot) {
+        this.xRot = xRot;
+        this.yRot = yRot;
+        this.zRot = zRot;
+        this.clearSaveCache();
+    }
+
+    updateOffsets(xOffset, yOffset = this.yOffset, zOffset = this.zOffset) {
+        this.xOffset = xOffset;
+        this.yOffset = yOffset;
+        this.zOffset = zOffset;
+        this.clearSaveCache();
+    }
+
+    updateZOffset(zOffset) {
+        this.zOffset = zOffset;
+        this.clearSaveCache();
     }
 
     /**
@@ -283,10 +328,8 @@ export default class _PositionalObject extends _Component {
 
         this.deathAnimation = new TWEEN.Tween(rotation).to(finalRotation, 200);
         this.deathAnimation.onUpdate(function () {
-            self.xRot = rotation.xRot;
-            self.yRot = rotation.yRot;
-            self.zRot = rotation.zRot;
-            self.zOffset = rotation.zOffset;
+            self.updateRotation(rotation.xRot, rotation.yRot, rotation.zRot);
+            self.updateZOffset(rotation.zOffset);
             self.updateObjectPosition();
             engine.needsMapUpdate = true;
         });

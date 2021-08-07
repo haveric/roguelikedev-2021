@@ -22,16 +22,26 @@ export default class BlocksMovement extends _Component {
     }
 
     save() {
-        if (this.blocksMovement) {
-            return {
-                blocksMovement: this.blocksMovement
-            }
-        } else {
-            return {};
+        if (this.cachedSave) {
+            return this.cachedSave;
         }
+
+        let saveJson;
+        if (this.blocksMovement) {
+            saveJson = {
+                blocksMovement: this.blocksMovement
+            };
+        } else {
+            saveJson = {};
+        }
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     onEntityDeath() {
         this.blocksMovement = false;
+
+        this.clearSaveCache();
     }
 }

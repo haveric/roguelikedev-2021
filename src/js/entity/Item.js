@@ -38,4 +38,9 @@ export default class Item extends _Entity {
             }
         }
     }
+
+    setAmount(amount) {
+        this.amount = amount;
+        this.clearSaveCache();
+    }
 }

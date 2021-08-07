@@ -33,13 +33,31 @@ export default class Remnant extends _Component {
     }
 
     save() {
-        return {
-            remnant: {
-                isRemnant: this.isRemnant,
-                x: this.x,
-                y: this.y,
-                z: this.z
-            }
+        if (this.cachedSave) {
+            return this.cachedSave;
         }
+
+        let saveJson = {
+            remnant: {}
+        };
+
+        if (this.isRemnant) {
+            saveJson.remnant.isRemnant = this.isRemnant;
+        }
+
+        if (this.x !== -1) {
+            saveJson.remnant.x = this.x;
+        }
+
+        if (this.y !== -1) {
+            saveJson.remnant.y = this.y;
+        }
+
+        if (this.z !== -1) {
+            saveJson.remnant.z = this.z;
+        }
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 }

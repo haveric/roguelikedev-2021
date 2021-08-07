@@ -19,11 +19,18 @@ export default class ManaConsumable extends Consumable {
     }
 
     save() {
-        return {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        const saveJson = {
             "manaConsumable": {
                 amount: this.amount
             }
-        }
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     /**

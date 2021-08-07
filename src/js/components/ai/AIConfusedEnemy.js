@@ -26,11 +26,25 @@ export default class AIConfusedEnemy extends AI {
     }
 
     save() {
-        return {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        const saveJson = {
             "aiConfusedEnemy": {
                 "previousAI": this.previousAI,
                 "turnsRemaining": this.turnsRemaining
             }
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
+    }
+
+    setTurnsRemaining(turns) {
+        if (turns > this.turnsRemaining) {
+            this.turnsRemaining = turns;
+            this.clearSaveCache();
         }
     }
 
@@ -40,7 +54,7 @@ export default class AIConfusedEnemy extends AI {
             const newAI = componentLoader.create(this.parentEntity, this.previousAI);
             this.parentEntity.setComponent(newAI);
         } else {
-            this.turnsRemaining -= 1;
+            this.setTurnsRemaining(this.turnsRemaining - 1);
 
             return new WanderAction(this.parentEntity).perform();
         }

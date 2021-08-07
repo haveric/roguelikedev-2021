@@ -58,9 +58,7 @@ export default class BasicDungeon extends GameMap {
                 const centerY = newRoom.getCenterY();
 
                 if (stairsInteractable) {
-                    stairsInteractable.x = centerX;
-                    stairsInteractable.y = centerY;
-                    stairsInteractable.z = 1;
+                    stairsInteractable.setPosition(centerX, centerY, 1);
                 }
 
                 const playerPosition = engine.player.getComponent("positionalobject");

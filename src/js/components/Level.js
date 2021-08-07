@@ -45,31 +45,36 @@ export default class Level extends _Component {
     }
 
     save() {
-        let json = {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        let saveJson = {
             level: {}
         }
 
         if (this.level > 1) {
-            json.level = this.level;
+            saveJson.level = this.level;
         }
 
         if (this.xp > 0) {
-            json.xp = this.xp;
+            saveJson.xp = this.xp;
         }
 
         if (this.xpGiven > 0) {
-            json.xpGiven = this.xpGiven;
+            saveJson.xpGiven = this.xpGiven;
         }
 
         if (this.statPointsAvailable > 0) {
-            json.statPointsAvailable = this.statPointsAvailable;
+            saveJson.statPointsAvailable = this.statPointsAvailable;
         }
 
         if (this.skillPointsAvailable > 0) {
-            json.skillPointsAvailable = this.skillPointsAvailable;
+            saveJson.skillPointsAvailable = this.skillPointsAvailable;
         }
 
-        return json;
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     xpForLevel(level) {
@@ -99,6 +104,7 @@ export default class Level extends _Component {
 
         bottomContainer.updateStatPointsIndicator();
         bottomContainer.updateSkillPointsIndicator();
+        this.clearSaveCache();
     }
 
     useStatPoint() {
@@ -106,6 +112,7 @@ export default class Level extends _Component {
         character.populate(engine.player);
 
         bottomContainer.updateStatPointsIndicator();
+        this.clearSaveCache();
     }
 
     useSkillPoint() {
@@ -113,6 +120,7 @@ export default class Level extends _Component {
         //skills.populate(engine.player);
 
         bottomContainer.updateSkillPointsIndicator();
+        this.clearSaveCache();
     }
 
     addXp(amount) {
@@ -132,6 +140,7 @@ export default class Level extends _Component {
         }
 
         bottomContainer.updateXp();
+        this.clearSaveCache();
     }
 
     onEntityDeath() {

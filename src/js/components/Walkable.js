@@ -22,8 +22,15 @@ export default class Walkable extends _Component {
     }
 
     save() {
-        return {
-            walkable: this.walkable
+        if (this.cachedSave) {
+            return this.cachedSave;
         }
+
+        const saveJson = {
+            walkable: this.walkable
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 }

@@ -40,29 +40,42 @@ export default class StairsInteractable extends Interactable {
     }
 
     save() {
-        let json = {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        let saveJson = {
             "stairsInteractable": {}
         }
 
         if (this.map) {
-            json.stairsInteractable.map = this.map;
+            saveJson.stairsInteractable.map = this.map;
         }
 
         if (this.x !== null) {
-            json.stairsInteractable.x = this.x;
+            saveJson.stairsInteractable.x = this.x;
         }
         if (this.y !== null) {
-            json.stairsInteractable.y = this.y;
+            saveJson.stairsInteractable.y = this.y;
         }
         if (this.z !== null) {
-            json.stairsInteractable.z = this.z;
+            saveJson.stairsInteractable.z = this.z;
         }
 
         if (this.generator) {
-            json.stairsInteractable.generator = this.generator;
+            saveJson.stairsInteractable.generator = this.generator;
         }
 
-        return json;
+        this.cachedSave = saveJson;
+
+        return saveJson;
+    }
+
+    setPosition(x, y, z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.clearSaveCache();
     }
 
     interact() {

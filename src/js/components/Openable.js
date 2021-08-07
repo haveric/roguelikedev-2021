@@ -21,13 +21,20 @@ export default class Openable extends _Component {
     }
 
     save() {
-        return {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        const saveJson = {
             openable: {
                 isOpen: this.isOpen,
                 openEntity: this.openEntity,
                 closedEntity: this.closedEntity
             }
-        }
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     open() {
@@ -41,6 +48,7 @@ export default class Openable extends _Component {
                 engine.gameMap.tiles.get(MapLayer.Wall)[position.x][position.y] = this.parentEntity;
             }
 
+            this.clearSaveCache();
             return true;
         }
 
@@ -58,6 +66,7 @@ export default class Openable extends _Component {
                 engine.gameMap.tiles.get(MapLayer.Wall)[position.x][position.y] = this.parent;
             }
 
+            this.clearSaveCache();
             return true;
         }
 

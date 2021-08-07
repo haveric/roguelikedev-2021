@@ -22,12 +22,20 @@ export default class BlocksFov extends _Component {
     }
 
     save() {
-        if (this.blocksFov) {
-            return {
-                blocksFov: this.blocksFov
-            }
-        } else {
-            return {};
+        if (this.cachedSave) {
+            return this.cachedSave;
         }
+
+        let saveJson;
+        if (this.blocksFov) {
+            saveJson = {
+                blocksFov: this.blocksFov
+            };
+        } else {
+            saveJson = {};
+        }
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 }

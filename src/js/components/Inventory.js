@@ -33,6 +33,10 @@ export default class Inventory extends _Component {
     }
 
     save() {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
         const itemJson = [];
         for (const item of this.items) {
             if (!item) {
@@ -42,16 +46,21 @@ export default class Inventory extends _Component {
             }
         }
 
-        return {
+        const saveJson = {
             inventory: {
                 capacity: this.capacity,
                 gold: this.gold,
                 items: itemJson
             }
-        }
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     add(item) {
+        this.clearSaveCache();
+
         if (item.id === "gold") {
             this.gold += item.amount;
             return true;
@@ -73,11 +82,11 @@ export default class Inventory extends _Component {
                 if (item.id === inventoryItem.id) {
                     let amountCanAdd = inventoryItem.maxStackSize - inventoryItem.amount;
                     if (amountCanAdd >= amountToAdd) {
-                        inventoryItem.amount += amountToAdd;
+                        inventoryItem.setAmount(inventoryItem.amount + amountToAdd);
                         return true;
                     } else {
-                        inventoryItem.amount += amountCanAdd;
-                        item.amount -= amountCanAdd;
+                        inventoryItem.setAmount(inventoryItem.amount + amountCanAdd);
+                        item.setAmount(item.amount - amountCanAdd);
                         amountToAdd -= amountCanAdd;
                     }
                 }
@@ -101,11 +110,12 @@ export default class Inventory extends _Component {
     }
 
     use(item, amount) {
-        item.amount -= amount;
-
+        item.setAmount(item.amount - amount);
         if (item.amount <= 0) {
             this.remove(item);
         }
+
+        this.clearSaveCache();
     }
 
     remove(item) {
@@ -114,6 +124,7 @@ export default class Inventory extends _Component {
             this.items.splice(index, 1, null);
         }
 
+        this.clearSaveCache();
         engine.needsMapUpdate = true;
     }
 
@@ -123,6 +134,8 @@ export default class Inventory extends _Component {
 
             this.items[fromIndex] = this.items[toIndex];
             this.items[toIndex] = fromItem;
+
+            this.clearSaveCache();
         }
     }
 
@@ -139,6 +152,8 @@ export default class Inventory extends _Component {
             goldItem.amount = gold;
             this.drop(goldItem);
         }
+
+        this.clearSaveCache();
     }
 
     drop(item) {
@@ -151,6 +166,7 @@ export default class Inventory extends _Component {
             }
 
             this.remove(item);
+            this.clearSaveCache();
         }
     }
 

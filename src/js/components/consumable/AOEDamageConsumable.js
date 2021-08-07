@@ -30,12 +30,19 @@ export default class AOEDamageConsumable extends Consumable {
     }
 
     save() {
-        return {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        const saveJson = {
             "aoeDamageConsumable": {
                 damage: this.damage,
                 radius: this.radius
             }
-        }
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     getAction() {

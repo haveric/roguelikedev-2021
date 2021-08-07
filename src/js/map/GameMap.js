@@ -103,19 +103,20 @@ export default class GameMap {
                 const remnant = mapItem.getComponent("remnant");
                 if (position && groundPosition.isSamePosition(position) && (!remnant || !remnant.isRemnant)) {
                     if (mapItem.maxStackSize === -1) {
-                        mapItem.amount += item.amount;
+                        mapItem.setAmount(mapItem.amount + item.amount);
                         itemPosition.teardown();
                         return false;
                     }
 
                     let amountCanAdd = mapItem.maxStackSize - mapItem.amount;
                     if (amountCanAdd >= amountToAdd) {
-                        mapItem.amount += amountToAdd;
+                        mapItem.setAmount(mapItem.amount + amountToAdd);
                         itemPosition.teardown();
                         return false;
                     } else {
-                        mapItem.amount += amountCanAdd;
-                        item.amount -= amountCanAdd;
+                        mapItem.setAmount(mapItem.amount + amountCanAdd);
+                        item.setAmount(item.amount - amountCanAdd);
+
                         amountToAdd -= amountCanAdd;
                     }
                 }
@@ -124,11 +125,9 @@ export default class GameMap {
 
 
         if (amountToAdd > 0) {
-            item.amount = amountToAdd;
+            item.setAmount(amountToAdd);
 
-            itemPosition.x = groundPosition.x;
-            itemPosition.y = groundPosition.y;
-            itemPosition.z = groundPosition.z;
+            itemPosition.moveTo(groundPosition.x, groundPosition.y, groundPosition.z, false);
             item.parent = null;
             this.items.push(item);
             itemPosition.setVisible();
@@ -384,7 +383,7 @@ export default class GameMap {
                 const position = entity.getComponent("positionalobject");
                 if (position && position.x === x && position.y === y && !position.isVisible()) {
                     const remnant = entity.clone();
-                    remnant.name = "Sighting of " + remnant.name;
+                    remnant.setName("Sighting of " + remnant.name);
                     remnant.removeComponent("ai");
                     remnant.removeComponent("blocksMovement");
                     remnant.removeComponent("blocksFov");
@@ -431,7 +430,7 @@ export default class GameMap {
                 const position = entity.getComponent("positionalobject");
                 if (position && position.x === x && position.y === y && !position.isVisible()) {
                     const remnant = entity.clone();
-                    remnant.name = "Sighting of " + remnant.name;
+                    remnant.setName("Sighting of " + remnant.name);
                     remnant.removeComponent("ai");
                     remnant.removeComponent("blocksMovement");
                     remnant.removeComponent("blocksFov");
@@ -516,7 +515,7 @@ export default class GameMap {
                 const position = entity.getComponent("positionalobject");
                 if (position && !position.isVisible()) {
                     const remnant = entity.clone();
-                    remnant.name = "Sighting of " + remnant.name;
+                    remnant.setName("Sighting of " + remnant.name);
                     remnant.removeComponent("ai");
                     remnant.removeComponent("blocksMovement");
                     remnant.removeComponent("blocksFov");
@@ -563,7 +562,7 @@ export default class GameMap {
                 const position = entity.getComponent("positionalobject");
                 if (position && !position.isVisible()) {
                     const remnant = entity.clone();
-                    remnant.name = "Sighting of " + remnant.name;
+                    remnant.setName("Sighting of " + remnant.name);
                     remnant.removeComponent("ai");
                     remnant.removeComponent("blocksMovement");
                     remnant.removeComponent("blocksFov");
@@ -623,8 +622,8 @@ export default class GameMap {
             if (newObject instanceof _Tile) {
                 const fovComponent = newObject.getComponent("fov");
                 if (fovComponent) {
-                    fovComponent.explored = true;
-                    fovComponent.visible = true;
+                    fovComponent.setExplored(true);
+                    fovComponent.setVisible(true);
                 } else {
                     newObject.setComponent(new Fov({components: {fov: {explored: true, visible: true}}}));
                 }
@@ -724,7 +723,7 @@ export default class GameMap {
             if (index === -1) {
                 const fovComponent = object.getComponent("fov");
                 if (fovComponent) {
-                    fovComponent.visible = false;
+                    fovComponent.setVisible(false);
                 }
                 fov.oldObjects.push(object);
             }
@@ -761,7 +760,7 @@ export default class GameMap {
                 const isActor = oldObject instanceof Actor;
                 if (isActor || oldObject instanceof Item) {
                     const remnant = oldObject.clone();
-                    remnant.name = "Sighting of " + remnant.name;
+                    remnant.setName("Sighting of " + remnant.name);
                     remnant.removeComponent("ai");
                     remnant.removeComponent("blocksMovement");
                     remnant.removeComponent("blocksFov");

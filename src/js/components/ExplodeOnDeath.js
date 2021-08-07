@@ -23,12 +23,19 @@ export default class ExplodeOnDeath extends _Component {
     }
 
     save() {
-        return {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        const saveJson = {
             "explodeOnDeath": {
                 damage: this.damage,
                 radius: this.radius
             }
-        }
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     onEntityDeath() {

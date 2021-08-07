@@ -28,12 +28,19 @@ export default class DamageNearestConsumable extends Consumable {
     }
 
     save() {
-        return {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        const saveJson = {
             "damageNearestConsumable": {
                 damage: this.damage,
                 maxRange: this.maxRange
             }
-        }
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     /**

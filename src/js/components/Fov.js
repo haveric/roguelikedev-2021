@@ -16,14 +16,31 @@ export default class Fov extends _Component{
     }
 
     save() {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        let saveJson;
         if (this.explored) {
-            return {
+            saveJson = {
                 fov: {
                     explored: this.explored
                 }
-            }
+            };
         } else {
-            return {};
+            saveJson = {};
         }
+
+        this.cachedSave = saveJson;
+        return saveJson;
+    }
+
+    setExplored(explored) {
+        this.explored = explored;
+        this.clearSaveCache();
+    }
+
+    setVisible(visible) {
+        this.visible = visible;
     }
 }

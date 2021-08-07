@@ -58,23 +58,28 @@ export default class CharacterObject extends _PositionalObject {
     }
 
     save() {
-        let characterObjectJson = {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
+        let saveJson = {
             characterobject: {}
         }
 
         if (this.fontName !== "helvetiker") {
-            characterObjectJson.characterobject.fontName = this.fontName;
+            saveJson.characterobject.fontName = this.fontName;
         }
 
         if (this.letter !== "@") {
-            characterObjectJson.characterobject.letter = this.letter;
+            saveJson.characterobject.letter = this.letter;
         }
 
         if (this.centered !== true) {
-            characterObjectJson.characterobject.centered = this.centered;
+            saveJson.characterobject.centered = this.centered;
         }
 
-        return Extend.deep(super.save(), characterObjectJson);
+        this.cachedSave = Extend.deep(super.save(), saveJson);
+        return this.cachedSave;
     }
 
     createObject() {

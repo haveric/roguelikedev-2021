@@ -28,6 +28,10 @@ export default class AttachedItems extends _Component {
     }
 
     save() {
+        if (this.cachedSave) {
+            return this.cachedSave;
+        }
+
         const itemJson = [];
         for (const item of this.items) {
             if (!item) {
@@ -37,16 +41,20 @@ export default class AttachedItems extends _Component {
             }
         }
 
-        return {
+        const saveJson = {
             attachedItems: {
                 items: itemJson
             }
-        }
+        };
+
+        this.cachedSave = saveJson;
+        return saveJson;
     }
 
     add(item) {
         if (this.items.indexOf(item) === -1) {
             this.items.push(item);
+            this.clearSaveCache();
             return true;
         } else {
             return false;
@@ -55,6 +63,7 @@ export default class AttachedItems extends _Component {
 
     clearItems() {
         this.items = [];
+        this.clearSaveCache();
     }
 
     remove(item) {
@@ -62,6 +71,7 @@ export default class AttachedItems extends _Component {
         if (index > -1) {
             this.items.splice(index, 1);
         }
+        this.clearSaveCache();
     }
 
     onMeleeAttack(blockingActor) {
@@ -125,13 +135,13 @@ export default class AttachedItems extends _Component {
             for (const item of this.items) {
                 const itemPosition = item.getComponent("positionalobject");
                 if (itemPosition) {
-                    itemPosition.x = entityPosition.x;
-                    itemPosition.y = entityPosition.y;
-                    itemPosition.updateObjectPosition();
+                    itemPosition.moveTo(entityPosition.x, entityPosition.y, entityPosition.z, false);
                     engine.needsMapUpdate = true;
                 }
             }
         }
+
+        this.clearSaveCache();
     }
 
     onAddToScene() {
