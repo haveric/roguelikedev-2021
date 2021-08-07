@@ -85,11 +85,12 @@ class Engine {
             this.gameMap.teardown();
             const playerIndex = this.gameMap.actors.indexOf(this.player);
             this.gameMap.actors.splice(playerIndex, 1);
+            this.gameMap.save();
         }
 
         this.gameMap = map;
         this.addMap(map, previousMapName, stairsInteractable);
-
+        map.save();
         if (this.gameMap.actors.indexOf(this.player) === -1) {
             this.gameMap.actors.push(this.player);
         }
@@ -119,12 +120,13 @@ class Engine {
         for (const map of this.gameMaps.values()) {
             maps.push(map.save());
         }
+
         let saveJson = {
             "name": name,
             "date": new Date(),
             "currentMap": this.gameMap.name,
             "maps": maps
-        }
+        };
 
         localStorage.setItem(name, JSON.stringify(saveJson));
     }

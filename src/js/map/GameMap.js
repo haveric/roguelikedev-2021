@@ -21,6 +21,7 @@ export default class GameMap {
         this.height = height;
 
         this.timeout = null;
+        this.saveCache = null;
 
         this.init();
     }
@@ -146,6 +147,10 @@ export default class GameMap {
     }
 
     save() {
+        if (engine.gameMap !== this && this.saveCache) {
+            return this.saveCache;
+        }
+
         let saveData = {
             name: this.name,
             width: this.width,
@@ -204,6 +209,7 @@ export default class GameMap {
         }
         saveData["items"] = itemJson;
 
+        this.saveCache = saveData;
         return saveData;
     }
 
