@@ -16,10 +16,14 @@ export default class Fov extends _Component{
     }
 
     save() {
-        return {
-            fov: {
-                explored: this.explored
+        if (this.explored) {
+            return {
+                fov: {
+                    explored: this.explored
+                }
             }
+        } else {
+            return {};
         }
     }
 }

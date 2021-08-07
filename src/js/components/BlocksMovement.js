@@ -22,8 +22,12 @@ export default class BlocksMovement extends _Component {
     }
 
     save() {
-        return {
-            blocksMovement: this.blocksMovement
+        if (this.blocksMovement) {
+            return {
+                blocksMovement: this.blocksMovement
+            }
+        } else {
+            return {};
         }
     }
 

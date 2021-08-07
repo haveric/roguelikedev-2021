@@ -22,7 +22,7 @@ export default class _PositionalObject extends _Component {
         this.x = 0;
         this.y = 0;
         this.z = 0;
-        this.color = 0xffffff;
+        this.color = "#ffffff";
         this.opacity = 1;
         this.xRot = 0;
         this.yRot = 0;
@@ -40,7 +40,7 @@ export default class _PositionalObject extends _Component {
             this.x = positionalobject.x || 0;
             this.y = positionalobject.y || 0;
             this.z = positionalobject.z || 0;
-            this.color = positionalobject.color || 0xffffff;
+            this.color = positionalobject.color || "#ffffff";
             if (positionalobject.opacity !== undefined) {
                 this.opacity = positionalobject.opacity;
             }
@@ -61,41 +61,60 @@ export default class _PositionalObject extends _Component {
     }
 
     save() {
+        let positionalObject = {
+            positionalobject: {}
+        }
         if (this.parentEntity && this.parentEntity instanceof _Tile) {
-            return {
-                positionalobject: {
-                    xRot: this.xRot,
-                    yRot: this.yRot,
-                    zRot: this.zRot,
-                    xOffset: this.xOffset,
-                    yOffset: this.yOffset,
-                    zOffset: this.zOffset,
-                    color: this.color,
-                    opacity: this.opacity,
-                    scale: this.scale,
-                    size: this.size,
-                    actorZOffset: this.actorZOffset
-                }
+            if (this.actorZOffset !== 0) {
+                positionalObject.positionalobject.actorZOffset = this.actorZOffset;
             }
         } else {
-            return {
-                positionalobject: {
-                    x: this.x,
-                    y: this.y,
-                    z: this.z,
-                    xRot: this.xRot,
-                    yRot: this.yRot,
-                    zRot: this.zRot,
-                    xOffset: this.xOffset,
-                    yOffset: this.yOffset,
-                    zOffset: this.zOffset,
-                    color: this.color,
-                    opacity: this.opacity,
-                    scale: this.scale,
-                    size: this.size
-                }
-            }
+            positionalObject.positionalobject.x = this.x;
+            positionalObject.positionalobject.y = this.y;
+            positionalObject.positionalobject.z = this.z;
         }
+
+        if (this.xRot !== 0) {
+            positionalObject.positionalobject.xRot = this.xRot;
+        }
+
+        if (this.yRot !== 0) {
+            positionalObject.positionalobject.yRot = this.yRot;
+        }
+
+        if (this.zRot !== 0) {
+            positionalObject.positionalobject.zRot = this.zRot;
+        }
+
+        if (this.xOffset !== 0) {
+            positionalObject.positionalobject.xOffset = this.xOffset;
+        }
+
+        if (this.yOffset !== 0) {
+            positionalObject.positionalobject.yOffset = this.yOffset;
+        }
+
+        if (this.zOffset !== 0) {
+            positionalObject.positionalobject.zOffset = this.zOffset;
+        }
+
+        if (this.color !== "#ffffff") {
+            positionalObject.positionalobject.color = this.color;
+        }
+
+        if (this.opacity !== 1) {
+            positionalObject.positionalobject.opacity = this.opacity;
+        }
+
+        if (this.scale !== 1) {
+            positionalObject.positionalobject.scale = this.scale;
+        }
+
+        if (this.size !== 1) {
+            positionalObject.positionalobject.size = this.size;
+        }
+
+        return positionalObject;
     }
 
     createObject() {}

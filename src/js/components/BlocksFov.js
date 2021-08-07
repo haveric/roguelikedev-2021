@@ -22,8 +22,12 @@ export default class BlocksFov extends _Component {
     }
 
     save() {
-        return {
-            blocksFov: this.blocksFov
+        if (this.blocksFov) {
+            return {
+                blocksFov: this.blocksFov
+            }
+        } else {
+            return {};
         }
     }
 }
