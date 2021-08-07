@@ -73,9 +73,10 @@ export default class CharacterObject extends _PositionalObject {
         const font = new THREE.Font(this.font);
         let anyFound = false;
         for (const geometry of cachedTextGeometries) {
-            const sameFont = geometry.parameters.options.font.data.familyName === font.data.familyName;
-            const sameSize = geometry.size === newSize;
-            if (sameFont && sameSize && geometry.parameters.options.height === newHeight && geometry.letter === this.letter && geometry.centered === this.centered) {
+            const sameFont = geometry.cachedFamilyName === font.data.familyName;
+            const sameSize = geometry.cachedSize === newSize;
+
+            if (sameFont && sameSize && geometry.cachedHeight === newHeight && geometry.cachedLetter === this.letter && geometry.cachedCentered === this.centered) {
                 this.geometry = geometry;
                 anyFound = true;
                 break;
@@ -94,8 +95,11 @@ export default class CharacterObject extends _PositionalObject {
                 bevelOffset: 0,
                 bevelSegments: 1
             });
-            this.geometry.letter = this.letter;
-            this.geometry.centered = this.centered;
+            this.geometry.cachedFamilyName = font.data.familyName;
+            this.geometry.cachedSize = newSize;
+            this.geometry.cachedHeight = newHeight;
+            this.geometry.cachedLetter = this.letter;
+            this.geometry.cachedCentered = this.centered;
             if (this.centered) {
                 this.geometry.center();
             }
