@@ -1,6 +1,6 @@
 [
     {
-        "id": "bench",
+        "id": "bench_south",
         "extends": "base_charactertile",
         "name": "Bench",
         "components": {
@@ -21,6 +21,68 @@
         }
     },
     {
+        "id": "bench_south_left",
+        "extends": "base_charactertile",
+        "name": "Bench",
+        "components": {
+            "characterobject": {
+                "characters": [
+                    {
+                        "letter": "厂",
+                        "xRot": 1.5,
+                        "yRot": 0.5,
+                        "zOffset": 0.47
+                    },
+                    {
+                        "letter": "巳",
+                        "scale": 0.1,
+                        "xRot": 0.5,
+                        "yRot": 0.5,
+                        "zOffset": 0.03,
+                        "xOffset": 0.51
+                    }
+                ],
+                "fontName": "mplus",
+                "color": "#964b00",
+                "size": 0.85,
+                "actorZOffset": 0.6
+            },
+            "blocksFov": false,
+            "blocksMovement": false
+        }
+    },
+    {
+        "id": "bench_south_right",
+        "extends": "base_charactertile",
+        "name": "Bench",
+        "components": {
+            "characterobject": {
+                "characters": [
+                    {
+                        "letter": "厂",
+                        "xRot": 1.5,
+                        "yRot": 0.5,
+                        "zOffset": 0.47
+                    },
+                    {
+                        "letter": "巳",
+                        "scale": 0.1,
+                        "xRot": 0.5,
+                        "yRot": 0.5,
+                        "zOffset": 0.03,
+                        "xOffset": -0.51
+                    }
+                ],
+                "fontName": "mplus",
+                "color": "#964b00",
+                "size": 0.85,
+                "actorZOffset": 0.6
+            },
+            "blocksFov": false,
+            "blocksMovement": false
+        }
+    },
+    {
         "id": "bench_stone",
         "extends": "base_charactertile",
         "name": "Stone Bench",
@@ -33,48 +95,6 @@
             },
             "walkable": true,
             "blocksFov": false
-        }
-    },
-    {
-        "id": "bench_armrest_right",
-        "extends": "base_charactertile",
-        "name": "Armrest",
-        "components": {
-            "characterobject": {
-                "fontName": "mplus",
-                "letter": "巳",
-                "color": "#964b00",
-                "size": 0.85,
-                "scale": 0.1,
-                "zOffset": 0.5,
-                "xOffset": -0.51,
-                "xRot": 0.5,
-                "yRot": 0.5,
-                "zRot": 0
-            },
-            "blocksFov": false,
-            "blocksMovement": false
-        }
-    },
-    {
-        "id": "bench_armrest_left",
-        "extends": "base_charactertile",
-        "name": "Armrest",
-        "components": {
-            "characterobject": {
-                "fontName": "mplus",
-                "letter": "巳",
-                "color": "#964b00",
-                "size": 0.85,
-                "scale": 0.1,
-                "zOffset": 0.5,
-                "xOffset": 0.51,
-                "xRot": 0.5,
-                "yRot": 0.5,
-                "zRot": 0
-            },
-            "blocksFov": false,
-            "blocksMovement": false
         }
     },
     {
@@ -143,6 +163,89 @@
             },
             "blocksFov": false,
             "blocksMovement": true
+        }
+    },
+    {
+        "id": "portal",
+        "extends": "base_charactertile",
+        "name": "Portal",
+        "components": {
+            "characterobject": {
+                "characters": [
+                    {
+                        "letter": "◌",
+                        "animateIn": {
+                            "time": 1000,
+                            "zRotation": 0.5,
+                            "start": {
+                                "scale": 0
+                            },
+                            "end": {
+                                "scale": 1
+                            }
+                        },
+                        "animations": [
+                            {
+                                "time": 1000,
+                                "zRotation": 0.5,
+                                "start": {
+                                    "scale": 1
+                                },
+                                "end": {
+                                    "scale": 0.5
+                                }
+                            },
+                            {
+                                "time": 1000,
+                                "zRotation": 0.5,
+                                "start": {
+                                    "scale": 0.5
+                                },
+                                "end": {
+                                    "scale": 1
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "letter": "⁐",
+                        "animateIn": {
+                            "time": 1000,
+                            "zRotation": 2,
+                            "start": {
+                                "scale": 0
+                            },
+                            "end": {
+                                "scale": 1
+                            }
+                        },
+                        "animations": [
+                            {
+                                "time": 1000,
+                                "zRotation": 2,
+                                "end": {
+                                    "scale": 0.9
+                                }
+                            },
+                            {
+                                "time": 1000,
+                                "zRotation": 2,
+                                "end": {
+                                    "scale": 1
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "fontName": "mplus",
+                "color": "#3333ff",
+                "xRot": 0.5,
+                "yRot": 0.25,
+                "scale": 0.05,
+                "zOffset": 0.5
+            },
+            "blocksFov": false,
+            "blocksMovement": false
         }
     },
     {

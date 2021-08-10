@@ -52,5 +52,17 @@
                 "radius": 1
             }
         }
+    },
+    {
+        "id": "scroll_town_portal",
+        "extends": "scroll",
+        "name": "Scroll of Town Portal",
+        "description": "Summons a portal back to town",
+        "components": {
+            "characterobject": {
+                "color": "#0000ff"
+            },
+            "summonPortalConsumable": {}
+        }
     }
 ]

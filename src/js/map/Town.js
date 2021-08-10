@@ -100,12 +100,12 @@ export default class Town extends GameMap {
                         this.tiles.get(2)[i][j] = entityLoader.createFromTemplate('well_top', {components: {positionalobject: {x: i, y: j, z: 2}}});
                     } else if ((i === 36 || i === 37) && j === 47) {
                         this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('barrel', {components: {positionalobject: {x: i, y: j, z: 1}}});
-                    } else if (i > 17 && i < 21 && j === 17) {
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('bench', {components: {positionalobject: {x: i, y: j, z: 1}}});
-                    } else if (i === 21 && j === 17) {
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('bench_armrest_right', {components: {positionalobject: {x: i, y: j, z: 1}}});
-                    } else if (i === 17 && j === 17) {
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('bench_armrest_left', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                    } else if (i === 19 && j === 17) {
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('bench_south', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                    } else if (i === 20 && j === 17) {
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('bench_south_left', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                    } else if (i === 18 && j === 17) {
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('bench_south_right', {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else if (i > 17 && i < 21 && j === 20) {
                         this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('bench_stone', {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else {

@@ -95,12 +95,14 @@ export default class RectangularRoom {
             const chance = Math.random();
             if (chance < .5) {
                 item = entityLoader.createFromTemplate('potion_health', position);
-            } else if (chance < .7) {
+            } else if (chance < .65) {
                 item = entityLoader.createFromTemplate('scroll_lightning', position);
-            } else if (chance < .8) {
+            } else if (chance < .75) {
                 item = entityLoader.createFromTemplate('scroll_fireball', position);
-            } else if (chance < .9) {
+            } else if (chance < .85) {
                 item = entityLoader.createFromTemplate('scroll_confusion', position);
+            } else if (chance < .95) {
+                item = entityLoader.createFromTemplate('scroll_town_portal', position);
             } else {
                 item = entityLoader.createFromTemplate('potion_mana', position);
             }

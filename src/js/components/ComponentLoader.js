@@ -24,6 +24,8 @@ import ExplodeOnDeath from "./ExplodeOnDeath";
 import AttachedItems from "./AttachedItems";
 import StairsInteractable from "./interactable/StairsInteractable";
 import Level from "./Level";
+import SummonPortalConsumable from "./consumable/SummonPortalConsumable";
+import PortalInteractable from "./interactable/PortalInteractable";
 
 class ComponentLoader {
     constructor() {
@@ -42,9 +44,11 @@ class ComponentLoader {
         this.load(new DamageNearestConsumable());
         this.load(new HealingConsumable());
         this.load(new ManaConsumable());
+        this.load(new SummonPortalConsumable());
 
         // Interactables
         this.load(new StairsInteractable());
+        this.load(new PortalInteractable());
 
         // Positionalobjects
         this.load(new CharacterObject());

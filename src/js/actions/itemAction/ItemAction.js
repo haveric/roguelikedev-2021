@@ -19,7 +19,7 @@ export default class ItemAction extends Action {
     perform() {
         const consumable = this.item.getComponent("consumable");
         if (consumable) {
-            return consumable.activate(this);
+            return consumable.activate(this, this.targetPosition);
         }
     }
 
