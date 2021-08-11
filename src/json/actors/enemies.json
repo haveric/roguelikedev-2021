@@ -27,6 +27,58 @@
         }
     },
     {
+        "id": "giant_rat",
+        "extends": "base_actor",
+        "name": "Giant Rat",
+        "components": {
+            "characterobject": {
+                "letter": "r",
+                "color": "#222222"
+            },
+            "faction": {
+                "factions": "monsters",
+                "enemies": "player"
+            },
+            "aiMeleeChase": {
+                "radius": 3,
+                "movementActions": 2
+            },
+            "fighter": {
+                "baseHp": 10,
+                "baseDamage": 2
+            },
+            "level": {
+                "xpGiven": 10
+            }
+        }
+    },
+    {
+        "id": "skeleton",
+        "extends": "base_actor",
+        "name": "Skeleton",
+        "components": {
+            "characterobject": {
+                "letter": "s",
+                "color": "#cccccc"
+            },
+            "faction": {
+                "factions": "monsters",
+                "enemies": "player"
+            },
+            "aiMeleeChase": {
+                "movementActions": 0.8
+            },
+            "fighter": {
+                "baseHp": 20,
+                "baseDefense": 1,
+                "baseDamage": 5
+            },
+            "level": {
+                "xpGiven": 45
+            }
+        }
+    },
+    {
         "id": "troll",
         "extends": "base_actor",
         "name": "Troll",
@@ -39,7 +91,9 @@
                 "factions": "monsters",
                 "enemies": "player"
             },
-            "aiMeleeChase": {},
+            "aiMeleeChase": {
+                "movementActions": 0.75
+            },
             "fighter": {
                 "baseHp": 16,
                 "baseDefense": 1,
@@ -54,51 +108,32 @@
         }
     },
     {
-        "id": "ant",
+        "id": "giant",
         "extends": "base_actor",
-        "name": "Ant",
+        "name": "Giant",
         "components": {
             "characterobject": {
-                "letter": "a",
-                "color": "#000000"
+                "letter": "G",
+                "color": "#cc0000"
             },
             "faction": {
                 "factions": "monsters",
                 "enemies": "player"
             },
-            "aiMeleeChase": {}
-        }
-    },
-    {
-        "id": "dragon_red",
-        "extends": "base_actor",
-        "name": "Red Dragon",
-        "components": {
-            "characterobject": {
-                "letter": "D",
-                "color": "#ff0000"
+            "aiMeleeChase": {
+                "movementActions": 0.6
             },
-            "faction": {
-                "factions": "monsters",
-                "enemies": "player"
+            "fighter": {
+                "baseHp": 75,
+                "baseDefense": 4,
+                "baseDamage": 8
             },
-            "aiMeleeChase": {}
-        }
-    },
-    {
-        "id": "goblin",
-        "extends": "base_actor",
-        "name": "Goblin",
-        "components": {
-            "characterobject": {
-                "letter": "g",
-                "color": "#3f7f3f"
+            "level": {
+                "xpGiven": 500
             },
-            "faction": {
-                "factions": "monsters",
-                "enemies": "player"
-            },
-            "aiMeleeChase": {}
+            "inventory": {
+                "gold": "35,200"
+            }
         }
     },
     {

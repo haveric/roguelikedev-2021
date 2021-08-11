@@ -1,0 +1,36 @@
+[
+    {
+        "id": "scroll",
+        "items": [
+            {
+                "id": "scroll_lightning",
+                "weight": 20
+            },
+            {
+                "id": "scroll_confusion",
+                "weight": 5
+            },
+            {
+                "id": "scroll_fireball",
+                "weight": 10
+            },
+            {
+                "id": "scroll_town_portal",
+                "weight": 20
+            }
+        ]
+    },
+    {
+        "id": "potion",
+        "items": [
+            {
+                "id": "potion_health",
+                "weight": 30
+            },
+            {
+                "id": "potion_mana",
+                "weight": 10
+            }
+        ]
+    }
+]

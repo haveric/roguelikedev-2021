@@ -13,9 +13,29 @@ import BumpAction from "../../actions/actionWithDirection/BumpAction";
 export default class AIMeleeChase extends AI {
     constructor(args = {}) {
         super(Extend.extend(args, {type: "aiMeleeChase"}));
+        const hasComponent = args.components && args.components.aiMeleeChase !== undefined;
 
         this.fov = new AdamMilazzoFov();
         this.chaseLocation = null;
+        this.radius = 5;
+        this.movementActions = 1;
+        this.currentMovement = 0;
+
+        if (hasComponent) {
+            const aiMeleeChase = args.components.aiMeleeChase;
+
+            if (aiMeleeChase.radius !== undefined) {
+                this.radius = aiMeleeChase.radius;
+            }
+
+            if (aiMeleeChase.movementActions !== undefined) {
+                this.movementActions = aiMeleeChase.movementActions;
+            }
+
+            if (aiMeleeChase.currentMovement !== undefined) {
+                this.currentMovement = aiMeleeChase.currentMovement;
+            }
+        }
     }
 
     save() {
@@ -27,6 +47,18 @@ export default class AIMeleeChase extends AI {
             "aiMeleeChase": {}
         };
 
+        if (this.radius !== 5) {
+            saveJson.aiMeleeChase.radius = this.radius;
+        }
+
+        if (this.movementActions !== 1) {
+            saveJson.aiMeleeChase.movementActions = this.movementActions;
+        }
+
+        if (this.currentMovement !== 0) {
+            saveJson.aiMeleeChase.currentMovement = this.currentMovement;
+        }
+
         this.cachedSave = saveJson;
         return saveJson;
     }
@@ -35,7 +67,7 @@ export default class AIMeleeChase extends AI {
         const entity = this.parentEntity;
         const entityPosition = entity.getComponent("positionalobject");
         if (entityPosition) {
-            this.fov.compute(entityPosition.x, entityPosition.y, entityPosition.z, 5, entityPosition.z - 10, entityPosition.z + 10);
+            this.fov.compute(entityPosition.x, entityPosition.y, entityPosition.z, this.radius, entityPosition.z - 10, entityPosition.z + 10);
 
             let closestEnemies = [];
             let closestDistance = null;
@@ -90,57 +122,68 @@ export default class AIMeleeChase extends AI {
                 }
             }
 
-            // Move towards enemy
-            const gameMap = engine.gameMap;
-            const fovWidth = this.fov.right - this.fov.left;
-            const fovHeight = this.fov.bottom - this.fov.top;
-            const cost = Array(fovWidth).fill().map(() => Array(fovHeight).fill(0));
+            this.currentMovement += this.movementActions;
 
-            for (let i = this.fov.left; i < this.fov.right; i++) {
-                for (let j = this.fov.top; j < this.fov.bottom; j++) {
-                    const wallTile = gameMap.tiles.get(entityPosition.z)[i][j];
-                    if (wallTile) {
-                        const blocksMovementComponent = wallTile.getComponent("blocksMovement");
-                        if (blocksMovementComponent && blocksMovementComponent.blocksMovement) {
+            if (this.currentMovement >= 1) {
+                // Move towards enemy
+                const gameMap = engine.gameMap;
+                const fovWidth = this.fov.right - this.fov.left;
+                const fovHeight = this.fov.bottom - this.fov.top;
+                const cost = Array(fovWidth).fill().map(() => Array(fovHeight).fill(0));
+
+                for (let i = this.fov.left; i < this.fov.right; i++) {
+                    for (let j = this.fov.top; j < this.fov.bottom; j++) {
+                        const wallTile = gameMap.tiles.get(entityPosition.z)[i][j];
+                        if (wallTile) {
+                            const blocksMovementComponent = wallTile.getComponent("blocksMovement");
+                            if (blocksMovementComponent && blocksMovementComponent.blocksMovement) {
+                                continue;
+                            }
+                        }
+
+                        if (!gameMap.tiles.has(entityPosition.z - 1)) {
                             continue;
                         }
-                    }
 
-                    if (!gameMap.tiles.has(entityPosition.z - 1)) {
-                        continue;
-                    }
+                        const floorTile = gameMap.tiles.get(entityPosition.z - 1)[i][j];
 
-                    const floorTile = gameMap.tiles.get(entityPosition.z - 1)[i][j];
-
-                    if (floorTile) {
-                        const walkableComponent = floorTile.getComponent("walkable");
-                        if (walkableComponent && walkableComponent.walkable) {
-                            cost[i - this.fov.left][j - this.fov.top] += 10;
+                        if (floorTile) {
+                            const walkableComponent = floorTile.getComponent("walkable");
+                            if (walkableComponent && walkableComponent.walkable) {
+                                cost[i - this.fov.left][j - this.fov.top] += 10;
+                            }
                         }
                     }
                 }
-            }
 
-            for (const actor of this.fov.visibleActors) {
-                if (actor.isAlive()) {
-                    const actorPosition = actor.getComponent("positionalobject");
-                    if (actorPosition) {
-                        cost[actorPosition.x - this.fov.left][actorPosition.y - this.fov.top] += 100;
+                for (const actor of this.fov.visibleActors) {
+                    if (actor.isAlive()) {
+                        const actorPosition = actor.getComponent("positionalobject");
+                        if (actorPosition) {
+                            cost[actorPosition.x - this.fov.left][actorPosition.y - this.fov.top] += 100;
+                        }
                     }
                 }
-            }
 
-            const costGraph = new Graph(cost, { diagonal: true });
+                const costGraph = new Graph(cost, {diagonal: true});
 
-            const start = costGraph.grid[entityPosition.x - this.fov.left][entityPosition.y - this.fov.top];
-            const end = costGraph.grid[this.chaseLocation.x - this.fov.left][this.chaseLocation.y - this.fov.top];
+                const start = costGraph.grid[entityPosition.x - this.fov.left][entityPosition.y - this.fov.top];
+                const end = costGraph.grid[this.chaseLocation.x - this.fov.left][this.chaseLocation.y - this.fov.top];
+                const path = AStar.search(costGraph, start, end);
+                path.length
+                let lastAction;
+                while (this.currentMovement >= 1) {
+                    if (path && path.length > 0) {
+                        const next = path.shift();
+                        if (next) {
+                            lastAction = new BumpAction(entity, next.x + this.fov.left - entityPosition.x, next.y + this.fov.top - entityPosition.y, entityPosition.z).perform();
+                        }
+                    } else {
+                        lastAction = new WaitAction(entity).perform();
+                    }
 
-            const path = AStar.search(costGraph, start, end);
-            if (path && path.length > 0) {
-                const next = path.shift();
-                return new BumpAction(entity, next.x + this.fov.left - entityPosition.x, next.y + this.fov.top - entityPosition.y, entityPosition.z).perform();
-            } else {
-                return new WaitAction(entity).perform();
+                    this.currentMovement -= 1;
+                }
             }
         }
     }

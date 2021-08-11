@@ -4,17 +4,55 @@ import MapGeneration from "./mapGeneration/MapGeneration";
 import entityLoader from "../entity/EntityLoader";
 import {MathUtils} from "three";
 import engine from "../Engine";
+import Extend from "../util/Extend";
 
 export default class BasicDungeon extends GameMap {
     constructor(width, height, args = {}) {
-        const name = "basic-dungeon-" + MathUtils.randInt(100000000, 999999999);
+        const level = args.level || 1;
+        const name = "basic-dungeon-" + level;
         super(name, width, height);
 
         this.maxRooms = args.maxRooms || 30;
         this.roomMinSize = args.roomMinSize || 6;
         this.roomMaxSize = args.roomMaxSize || 10;
-        this.maxMonstersPerRoom = args.maxMonstersPerRoom || 2;
-        this.maxItemsPerRoom = args.maxItemsPerRoom || 2;
+        this.level = level;
+
+        this.maxMonstersByFloor = [
+            {level: 1, amount: 2},
+            {level: 4, amount: 3},
+            {level: 7, amount: 4}
+        ];
+        this.maxItemsByFloor = [
+            {level: 1, amount: 2},
+            {level: 4, amount: 3},
+            {level: 6, amount: 5}
+        ];
+    }
+
+    getFloorAmount(weights) {
+        let amount = 0;
+        for (const weight of weights) {
+            if (weight.level > this.level) {
+                break;
+            }
+
+            amount = weight.amount;
+        }
+
+        return amount;
+    }
+
+    save() {
+        if (engine.gameMap !== this && this.saveCache) {
+            return this.saveCache;
+        }
+
+        let saveJson = {
+            level: this.level
+        };
+
+        this.saveCache = Extend.deep(super.save(), saveJson);
+        return saveJson;
     }
 
     create(previousMapName, stairsInteractable) {
@@ -78,8 +116,8 @@ export default class BasicDungeon extends GameMap {
                 MapGeneration.tunnelBetween(this, lastRoom.getCenterX(), lastRoom.getCenterY(), newRoom.getCenterX(), newRoom.getCenterY());
             }
 
-            newRoom.placeEntities(this.maxMonstersPerRoom);
-            newRoom.placeItems(this.maxItemsPerRoom);
+            newRoom.placeEntities("basic-dungeon", this.level, this.getFloorAmount(this.maxMonstersByFloor));
+            newRoom.placeItems("basic-dungeon", this.level, this.getFloorAmount(this.maxItemsByFloor));
 
             rooms.push(newRoom);
         }

@@ -4,6 +4,7 @@ import Item from "./Item";
 import baseActorsList from "../../json/actors/_base.json";
 import playerList from "../../json/actors/player.json";
 import enemyList from "../../json/actors/enemies.json";
+import placeholderList from "../../json/actors/placeholder.json";
 import npcsList from "../../json/actors/npcs.json";
 import baseTilesList from "../../json/tiles/_base.json";
 import foliageList from "../../json/tiles/foliage.json";
@@ -54,6 +55,7 @@ class EntityLoader {
         this.loadTemplate(baseActorsList);
         this.loadTemplate(playerList);
         this.loadTemplate(enemyList);
+        this.loadTemplate(placeholderList);
         this.loadTemplate(npcsList);
 
         this.loadTemplate(baseTilesList);

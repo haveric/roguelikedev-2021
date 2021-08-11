@@ -2,6 +2,7 @@ import MapLayer from "../MapLayer";
 import {MathUtils} from "three";
 import engine from "../../Engine";
 import entityLoader from "../../entity/EntityLoader";
+import chanceLoader from "../mapGeneration/ChanceLoader";
 
 export default class RectangularRoom {
     constructor(x, y, width, height) {
@@ -56,7 +57,7 @@ export default class RectangularRoom {
         }
     }
 
-    placeEntities(maxMonsters) {
+    placeEntities(name, level, maxMonsters) {
         const numMonsters = MathUtils.randInt(0, maxMonsters);
         for (let i = 0; i < numMonsters; i++) {
             const x = MathUtils.randInt(this.x1 + 1, this.x2 -1);
@@ -65,47 +66,24 @@ export default class RectangularRoom {
             const blockingActor = engine.gameMap.getBlockingActorAtLocation(x, y, 1);
             if (!blockingActor) {
                 const position = {components: {positionalobject: {x: x, y: y, z: 1}}};
-                let actor;
-                const chance = Math.random();
-                if (chance < 0.5) {
-                    actor = entityLoader.createFromTemplate('orc', position);
-                } else if (chance < .7) {
-                    actor = entityLoader.createFromTemplate('troll', position);
-                } else if (chance < 0.8) {
-                    actor = entityLoader.createFromTemplate('snake', position);
-                } else if (chance < 0.9) {
-                    actor = entityLoader.createFromTemplate('gelatinous_cube', position);
-                } else {
-                    actor = entityLoader.createFromTemplate('exploding_sheep', position);
-                }
+
+                const actorId = chanceLoader.getActorForLevel(name, level);
+                const actor = entityLoader.createFromTemplate(actorId, position);
 
                 engine.gameMap.actors.push(actor);
             }
         }
     }
 
-    placeItems(maxItems) {
+    placeItems(name, level, maxItems) {
         const numItems = MathUtils.randInt(0, maxItems);
         for (let i = 0; i < numItems; i++) {
             const x = MathUtils.randInt(this.x1 + 1, this.x2 -1);
             const y = MathUtils.randInt(this.y1 + 1, this.y2 -1);
 
             const position = {components: {positionalobject: {x: x, y: y, z: 1}}};
-            let item;
-            const chance = Math.random();
-            if (chance < .5) {
-                item = entityLoader.createFromTemplate('potion_health', position);
-            } else if (chance < .65) {
-                item = entityLoader.createFromTemplate('scroll_lightning', position);
-            } else if (chance < .75) {
-                item = entityLoader.createFromTemplate('scroll_fireball', position);
-            } else if (chance < .85) {
-                item = entityLoader.createFromTemplate('scroll_confusion', position);
-            } else if (chance < .95) {
-                item = entityLoader.createFromTemplate('scroll_town_portal', position);
-            } else {
-                item = entityLoader.createFromTemplate('potion_mana', position);
-            }
+            const itemId = chanceLoader.getItemForLevel(name, level);
+            const item = entityLoader.createFromTemplate(itemId, position);
 
             engine.gameMap.items.push(item);
         }

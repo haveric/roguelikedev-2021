@@ -1,0 +1,107 @@
+[
+    {
+        "level": 1,
+        "actors": [
+            {"id": "orc", "weight": 35},
+            {"id": "giant_rat", "weight": 50},
+            {"id": "skeleton", "weight": 20},
+            {"id": "snake", "weight": 10}
+        ],
+        "items": [
+            {"group": "potion", "weight": 50},
+            {"group": "scroll", "weight": 10}
+        ]
+    },
+    {
+        "level": 2,
+        "actors": [
+            {"id": "orc", "weight": 50},
+            {"id": "giant_rat", "weight": 25},
+            {"id": "skeleton", "weight": 30},
+            {"id": "snake", "weight": 15}
+        ],
+        "items": [
+            {"group": "potion", "weight": 50},
+            {"group": "scroll", "weight": 25}
+        ]
+    },
+    {
+        "level": 3,
+        "actors": [
+            {"id": "orc", "weight": 50},
+            {"id": "giant_rat", "weight": 10},
+            {"id": "skeleton", "weight": 40},
+            {"id": "snake", "weight": 20},
+            {"id": "exploding_sheep", "weight": 20},
+            {"id": "troll", "weight": 20}
+        ],
+        "items": [
+            {"group": "potion", "weight": 50},
+            {"group": "scroll", "weight": 25}
+        ]
+    },
+    {
+        "level": 4,
+        "actors": [
+            {"id": "orc", "weight": 25},
+            {"id": "giant_rat", "weight": 5},
+            {"id": "skeleton", "weight": 40},
+            {"id": "snake", "weight": 30},
+            {"id": "exploding_sheep", "weight": 30},
+            {"id": "troll", "weight": 50},
+            {"id": "gelatinous_cube", "weight": 5}
+        ],
+        "items": [
+            {"group": "potion", "weight": 50},
+            {"group": "scroll", "weight": 25}
+        ]
+    },
+    {
+        "level": 5,
+        "actors": [
+            {"id": "orc", "weight": 10},
+            {"id": "skeleton", "weight": 20},
+            {"id": "snake", "weight": 30},
+            {"id": "exploding_sheep", "weight": 30},
+            {"id": "troll", "weight": 80},
+            {"id": "gelatinous_cube", "weight": 10},
+            {"id": "giant", "weight": 5}
+        ],
+        "items": [
+            {"group": "potion", "weight": 50},
+            {"group": "scroll", "weight": 25}
+        ]
+    },
+    {
+        "level": 6,
+        "actors": [
+            {"id": "orc", "weight": 10},
+            {"id": "skeleton", "weight": 20},
+            {"id": "snake", "weight": 30},
+            {"id": "exploding_sheep", "weight": 30},
+            {"id": "troll", "weight": 60},
+            {"id": "gelatinous_cube", "weight": 15},
+            {"id": "giant", "weight": 10}
+        ],
+        "items": [
+            {"group": "potion", "weight": 50},
+            {"group": "scroll", "weight": 25}
+        ]
+    },
+    {
+        "level": 7,
+        "actors": [
+            {"id": "orc", "weight": 10},
+            {"id": "skeleton", "weight": 20},
+            {"id": "snake", "weight": 30},
+            {"id": "exploding_sheep", "weight": 30},
+            {"id": "troll", "weight": 60},
+            {"id": "gelatinous_cube", "weight": 30},
+            {"id": "giant", "weight": 20}
+        ],
+        "items": [
+            {"group": "potion", "weight": 50},
+            {"group": "scroll", "weight": 25}
+        ]
+    }
+]

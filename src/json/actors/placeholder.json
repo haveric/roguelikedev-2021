@@ -1,0 +1,50 @@
+[
+    {
+        "id": "ant",
+        "extends": "base_actor",
+        "name": "Ant",
+        "components": {
+            "characterobject": {
+                "letter": "a",
+                "color": "#000000"
+            },
+            "faction": {
+                "factions": "monsters",
+                "enemies": "player"
+            },
+            "aiMeleeChase": {}
+        }
+    },
+    {
+        "id": "dragon_red",
+        "extends": "base_actor",
+        "name": "Red Dragon",
+        "components": {
+            "characterobject": {
+                "letter": "D",
+                "color": "#ff0000"
+            },
+            "faction": {
+                "factions": "monsters",
+                "enemies": "player"
+            },
+            "aiMeleeChase": {}
+        }
+    },
+    {
+        "id": "goblin",
+        "extends": "base_actor",
+        "name": "Goblin",
+        "components": {
+            "characterobject": {
+                "letter": "g",
+                "color": "#3f7f3f"
+            },
+            "faction": {
+                "factions": "monsters",
+                "enemies": "player"
+            },
+            "aiMeleeChase": {}
+        }
+    }
+]
