@@ -95,15 +95,15 @@
                 "movementActions": 0.75
             },
             "fighter": {
-                "baseHp": 16,
-                "baseDefense": 1,
-                "baseDamage": 4
+                "baseHp": 50,
+                "baseDefense": 3,
+                "baseDamage": 6
             },
             "level": {
                 "xpGiven": 100
             },
             "inventory": {
-                "gold": "5,15"
+                "gold": "15,75"
             }
         }
     },
