@@ -18,7 +18,9 @@
         "name": "2-Slot Belt",
         "description": "2-Slot Belt",
         "components": {
-
+            "equippable": {
+                "defense": "1-5"
+            }
         }
     },
     {
@@ -27,7 +29,9 @@
         "name": "3-Slot Belt",
         "description": "3-Slot Belt",
         "components": {
-
+            "equippable": {
+                "defense": "3-10"
+            }
         }
     },
     {
@@ -36,7 +40,9 @@
         "name": "4-Slot Belt",
         "description": "4-Slot Belt",
         "components": {
-
+            "equippable": {
+                "defense": "7-15"
+            }
         }
     },
     {
@@ -47,6 +53,9 @@
         "components": {
             "characterobject": {
                 "letter": "="
+            },
+            "equippable": {
+                "defense": "12-20"
             }
         }
     },
@@ -58,6 +67,9 @@
         "components": {
             "characterobject": {
                 "letter": "="
+            },
+            "equippable": {
+                "defense": "16-25"
             }
         }
     }
