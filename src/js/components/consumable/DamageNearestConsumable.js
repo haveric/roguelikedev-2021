@@ -53,7 +53,7 @@ export default class DamageNearestConsumable extends Consumable {
 
         if (target) {
             const fighter = target.getComponent("fighter");
-            const actualDamage = this.damage - fighter.getBlockedDamage();
+            const actualDamage = Math.max(0, this.damage - fighter.getBlockedDamage());
             if (this.isPlayer()) {
                 messageConsole.text(target.name + " is struck for " + actualDamage + " damage!").build();
             }
