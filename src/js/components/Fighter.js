@@ -201,7 +201,7 @@ export default class Fighter extends _Component {
     }
 
     getBlockedDamage() {
-        return Math.floor(MathUtils.randFloat(this.defense / 4, this.defense) / 10);
+        return Math.floor(MathUtils.randFloat(this.defense / 10, this.defense) / 10);
     }
 
     getMaxHp() {
