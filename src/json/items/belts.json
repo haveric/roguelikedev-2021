@@ -1,0 +1,64 @@
+[
+    {
+        "id": "base_belt",
+        "extends": "base_item",
+        "components": {
+            "characterobject": {
+                "letter": "-",
+                "color": "#4f361b"
+            },
+            "equippable": {
+                "slot": "belt"
+            }
+        }
+    },
+    {
+        "id": "belt_2slot",
+        "extends": "base_belt",
+        "name": "2-Slot Belt",
+        "description": "2-Slot Belt",
+        "components": {
+
+        }
+    },
+    {
+        "id": "belt_3slot",
+        "extends": "base_belt",
+        "name": "3-Slot Belt",
+        "description": "3-Slot Belt",
+        "components": {
+
+        }
+    },
+    {
+        "id": "belt_4slot",
+        "extends": "base_belt",
+        "name": "4-Slot Belt",
+        "description": "4-Slot Belt",
+        "components": {
+
+        }
+    },
+    {
+        "id": "belt_5slot",
+        "extends": "base_belt",
+        "name": "5-Slot Belt",
+        "description": "5-Slot Belt",
+        "components": {
+            "characterobject": {
+                "letter": "="
+            }
+        }
+    },
+    {
+        "id": "belt_6slot",
+        "extends": "base_belt",
+        "name": "6-Slot Belt",
+        "description": "6-Slot Belt",
+        "components": {
+            "characterobject": {
+                "letter": "="
+            }
+        }
+    }
+]

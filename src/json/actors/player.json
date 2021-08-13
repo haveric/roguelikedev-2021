@@ -21,6 +21,22 @@
             "inventory": {
                 "capacity": 10
             },
+            "equipment": {
+                "items": [
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    {"load": "belt_2slot"},
+                    null,
+                    {"load": "pouch_small"},
+                    null,
+                    null
+                ]
+            },
             "level": {
                 "level": 1
             },

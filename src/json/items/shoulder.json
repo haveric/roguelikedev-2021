@@ -1,0 +1,70 @@
+[
+    {
+        "id": "base_shoulder",
+        "extends": "base_item_mplus",
+        "components": {
+            "characterobject": {
+                "letter": "⌈"
+            },
+            "equippable": {
+                "slot": "shoulder"
+            }
+        }
+    },
+    {
+        "id": "cape",
+        "extends": "base_shoulder",
+        "name": "Cape",
+        "description": "Cape",
+        "components": {
+            "characterobject": {
+                "color": "#52307c"
+            },
+            "equippable": {
+                "defense": "2-8"
+            }
+        }
+    },
+    {
+        "id": "shoulder_pads",
+        "extends": "base_shoulder",
+        "name": "Shoulder Pads",
+        "description": "Shoulder Pads",
+        "components": {
+            "characterobject": {
+                "color": "#4f361b"
+            },
+            "equippable": {
+                "defense": "6-15"
+            }
+        }
+    },
+    {
+        "id": "spaulders",
+        "extends": "base_shoulder",
+        "name": "Spaulders",
+        "description": "Spaulders",
+        "components": {
+            "characterobject": {
+                "color": "#ddded8"
+            },
+            "equippable": {
+                "defense": "12-25"
+            }
+        }
+    },
+    {
+        "id": "pauldrons",
+        "extends": "base_shoulder",
+        "name": "Pauldrons",
+        "description": "Pauldrons",
+        "components": {
+            "characterobject": {
+                "color": "#dce5e7"
+            },
+            "equippable": {
+                "defense": "22-35"
+            }
+        }
+    }
+]

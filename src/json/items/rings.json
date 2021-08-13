@@ -1,0 +1,42 @@
+[
+    {
+        "id": "base_ring",
+        "extends": "base_item",
+        "components": {
+            "characterobject": {
+                "letter": "○"
+            },
+            "equippable": {
+                "slot": "ring"
+            }
+        }
+    },
+    {
+        "id": "ring_of_health",
+        "extends": "base_ring",
+        "name": "Ring of Health",
+        "description": "Ring",
+        "components": {
+            "characterobject": {
+                "color": "#990f02"
+            },
+            "equippable": {
+                "health": "5-15"
+            }
+        }
+    },
+    {
+        "id": "ring_of_mana",
+        "extends": "base_ring",
+        "name": "Ring of Mana",
+        "description": "Ring",
+        "components": {
+            "characterobject": {
+                "color": "#020f99"
+            },
+            "equippable": {
+                "mana": "5-15"
+            }
+        }
+    }
+]

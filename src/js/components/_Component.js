@@ -62,4 +62,17 @@ export default class _Component {
 
         return returnValue;
     }
+
+    parseRandIntBetween(value) {
+        if (typeof value === "string") {
+            const split = value.trim().split("-");
+            if (split.length > 1) {
+                return MathUtils.randInt(parseInt(split[0].trim()), parseInt(split[1].trim()));
+            } else {
+                return parseInt(split[0].trim());
+            }
+        } else {
+            return value;
+        }
+    }
 }

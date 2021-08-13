@@ -1,0 +1,92 @@
+[
+    {
+        "id": "base_weapon",
+        "extends": "base_item",
+        "components": {
+            "equippable": {
+                "slot": "mainhand"
+            }
+        }
+    },
+    {
+        "id": "dagger",
+        "extends": "base_weapon",
+        "name": "Dagger",
+        "description": "",
+        "components": {
+            "characterobject": {
+                "letter": "†",
+                "color": "#4f361b",
+                "zRot": 1
+            },
+            "equippable": {
+                "damage": "1-2,3-4"
+            }
+        }
+    },
+    {
+        "id": "short_sword",
+        "extends": "base_weapon",
+        "name": "Short Sword",
+        "description": "",
+        "components": {
+            "characterobject": {
+                "letter": "†",
+                "color": "#cccdce",
+                "zRot": 1
+            },
+            "equippable": {
+                "damage": "2-4,4-6"
+            }
+        }
+    },
+    {
+        "id": "flail",
+        "extends": "base_weapon",
+        "name": "Flail",
+        "description": "",
+        "components": {
+            "characterobject": {
+                "fontName": "jetbrains",
+                "letter": "√",
+                "color": "#333",
+                "zRot": 1
+            },
+            "equippable": {
+                "damage": "2-3,7-9"
+            }
+        }
+    },
+    {
+        "id": "long_sword",
+        "extends": "base_weapon",
+        "name": "Long Sword",
+        "description": "",
+        "components": {
+            "characterobject": {
+                "letter": "†",
+                "color": "#cccdce",
+                "zRot": 1
+            },
+            "equippable": {
+                "damage": "3-6,6-10"
+            }
+        }
+    },
+    {
+        "id": "staff",
+        "extends": "base_weapon",
+        "name": "Staff",
+        "description": "",
+        "components": {
+            "characterobject": {
+                "fontName": "jetbrains",
+                "color": "#4f361b",
+                "letter": "|"
+            },
+            "equippable": {
+                "damage": "1-4,5-9"
+            }
+        }
+    }
+]

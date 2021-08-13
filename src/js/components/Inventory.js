@@ -24,7 +24,11 @@ export default class Inventory extends _Component {
                 for (let i = 0; i < inventory.items.length; i++) {
                     const item = inventory.items[i];
                     if (item !== null) {
-                        this.items[i] = entityLoader.create(item);
+                        if (item.load !== undefined) {
+                            this.items[i].item = entityLoader.createFromTemplate(item.load);
+                        } else {
+                            this.items[i].item = entityLoader.create(item);
+                        }
                         this.items[i].parent = this;
                     }
                 }
@@ -126,6 +130,11 @@ export default class Inventory extends _Component {
 
         this.clearSaveCache();
         engine.needsMapUpdate = true;
+    }
+
+    setItem(index, item) {
+        this.items[index] = item;
+        this.clearSaveCache();
     }
 
     move(fromIndex, toIndex) {

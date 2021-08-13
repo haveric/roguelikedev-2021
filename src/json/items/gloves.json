@@ -1,0 +1,70 @@
+[
+    {
+        "id": "base_gloves",
+        "extends": "base_item",
+        "components": {
+            "characterobject": {
+                "letter": "″"
+            },
+            "equippable": {
+                "slot": "gloves"
+            }
+        }
+    },
+    {
+        "id": "leather_gloves",
+        "extends": "base_gloves",
+        "name": "Leather Gloves",
+        "description": "Leather Gloves",
+        "components": {
+            "characterobject": {
+                "color": "#4f361b"
+            },
+            "equippable": {
+                "defense": "1-10"
+            }
+        }
+    },
+    {
+        "id": "chain_gloves",
+        "extends": "base_gloves",
+        "name": "Chain Gloves",
+        "description": "Chain Gloves",
+        "components": {
+            "characterobject": {
+                "color": "#bab3af"
+            },
+            "equippable": {
+                "defense": "6-22"
+            }
+        }
+    },
+    {
+        "id": "scale_gloves",
+        "extends": "base_gloves",
+        "name": "Scale Gloves",
+        "description": "Scale Gloves",
+        "components": {
+            "characterobject": {
+                "color": "#ddded8"
+            },
+            "equippable": {
+                "defense": "18-40"
+            }
+        }
+    },
+    {
+        "id": "plate_gauntlets",
+        "extends": "base_gloves",
+        "name": "Plate Gauntlets",
+        "description": "Plate Gauntlets",
+        "components": {
+            "characterobject": {
+                "color": "#dce5e7"
+            },
+            "equippable": {
+                "defense": "35-75"
+            }
+        }
+    }
+]

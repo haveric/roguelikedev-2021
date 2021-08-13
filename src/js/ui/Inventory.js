@@ -6,14 +6,23 @@ class Inventory extends UIElement {
     constructor() {
         super(html);
 
-        this.storageDom = this.dom.getElementsByClassName("inventory__storage")[0];
+        this.equipmentDom = this.dom.getElementsByClassName("inventory__equipment")[0];
+        this.equipmentSlots = [];
+        for (let i = 0; i < 12; i++ ) {
+            const slot = document.createElement("div");
+            slot.classList.add("inventory__equipment-slot");
+            slot.setAttribute("data-index", i);
+            this.equipmentSlots.push(slot);
+            this.equipmentDom.appendChild(slot);
+        }
 
-        this.slots = [];
+        this.storageDom = this.dom.getElementsByClassName("inventory__storage")[0];
+        this.inventorySlots = [];
         for (let i = 0; i < 40; i++) {
             const slot = document.createElement("div");
             slot.classList.add("inventory__storage-slot");
             slot.setAttribute("data-index", i);
-            this.slots.push(slot);
+            this.inventorySlots.push(slot);
             this.storageDom.appendChild(slot);
         }
 
@@ -30,40 +39,24 @@ class Inventory extends UIElement {
     }
 
     populateInventory(entity) {
+        const equipment = entity.getComponent("equipment");
+        if (equipment) {
+            for (let i = 0; i < this.equipmentSlots.length; i++) {
+                const slot = this.equipmentSlots[i];
+
+                const equipmentSlot = equipment.items[i];
+                const item = equipmentSlot.item;
+                this.populateSlot(slot, item);
+            }
+        }
+
         const inventory = entity.getComponent("inventory");
         if (inventory) {
-            for (let i = 0; i < this.slots.length; i++) {
-                const slot = this.slots[i];
+            for (let i = 0; i < this.inventorySlots.length; i++) {
+                const slot = this.inventorySlots[i];
 
                 const inventoryItem = inventory.items[i];
-                if (inventoryItem) {
-                    const itemPosition = inventoryItem.getComponent("positionalobject");
-                    if (itemPosition) {
-                        slot.classList.add("has-item");
-                        let html = "<div class='item' style='color:" + itemPosition.color + "'><div class='item__icon'>" + itemPosition.letter + "</div>";
-
-                        if (inventoryItem.amount > 1) {
-                            html += "<span class='item__amount'>" + inventoryItem.amount + "</span>";
-                        }
-
-                        html += "<div class='item__details'>"
-                            + "<span class='item__details-line item__name'>" + inventoryItem.name + "</span>";
-                        if (inventoryItem.description) {
-                            html += "<span class='item__details-line item__description'>" + inventoryItem.description + "</span>"
-                        }
-
-                        html += "<span class='item__details-line'><hr/></span>";
-
-                        html += inventoryItem.getComponentDescriptions();
-
-                        html += "</div></div>";
-
-                        slot.innerHTML = html;
-                    }
-                } else {
-                    slot.classList.remove("has-item");
-                    slot.innerHTML = "";
-                }
+                this.populateSlot(slot, inventoryItem);
 
                 if (i < inventory.capacity) {
                     slot.classList.remove("disabled");
@@ -72,6 +65,41 @@ class Inventory extends UIElement {
                 }
             }
             this.goldCountDom.innerText = inventory.gold;
+        }
+    }
+
+    populateSlot(slot, item) {
+        if (item) {
+            const itemPosition = item.getComponent("positionalobject");
+            if (itemPosition) {
+                let rotation = "";
+                if (itemPosition.zRot !== 0) {
+                    rotation = "transform: rotate(" + (itemPosition.zRot * 180) + "deg);";
+                }
+                slot.classList.add("has-item");
+                let html = "<div class='item' style='color:" + itemPosition.color + ";" + rotation + "'><div class='item__icon'>" + itemPosition.letter + "</div>";
+
+                if (item.amount > 1) {
+                    html += "<span class='item__amount'>" + item.amount + "</span>";
+                }
+
+                html += "<div class='item__details'>"
+                    + "<span class='item__details-line item__name'>" + item.name + "</span>";
+                if (item.description) {
+                    html += "<span class='item__details-line item__description'>" + item.description + "</span>"
+                }
+
+                html += "<span class='item__details-line'><hr/></span>";
+
+                html += item.getComponentDescriptions();
+
+                html += "</div></div>";
+
+                slot.innerHTML = html;
+            }
+        } else {
+            slot.classList.remove("has-item");
+            slot.innerHTML = "";
         }
     }
 

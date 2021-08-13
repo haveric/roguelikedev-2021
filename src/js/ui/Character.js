@@ -11,6 +11,7 @@ class Character extends UIElement {
 
         this.agilityDom = this.dom.getElementsByClassName("stat--agility")[0].getElementsByClassName("stat__text")[0];
         this.defenseDom = this.dom.getElementsByClassName("attribute--defense")[0].getElementsByClassName("attribute__value")[0];
+        this.blockChanceDom = this.dom.getElementsByClassName("attribute--blockchance")[0].getElementsByClassName("attribute__value")[0];
 
         this.constitutionDom = this.dom.getElementsByClassName("stat--constitution")[0].getElementsByClassName("stat__text")[0];
         this.healthDom = this.dom.getElementsByClassName("attribute--health")[0].getElementsByClassName("attribute__value")[0];
@@ -30,10 +31,11 @@ class Character extends UIElement {
     populate(player) {
         const fighter = player.getComponent("fighter");
         this.strengthDom.innerText = fighter.strength;
-        this.damageDom.innerText = fighter.getDamage();
+        this.damageDom.innerText = fighter.getDamageDisplay();
 
         this.agilityDom.innerText = fighter.agility;
-        this.defenseDom.innerText = fighter.getBlockedDamage();
+        this.defenseDom.innerText = fighter.defense;
+        this.blockChanceDom.innerText = fighter.blockChance + "%";
 
         this.constitutionDom.innerText = fighter.constitution;
         this.healthDom.innerText = fighter.hp + " / " + fighter.maxHp;

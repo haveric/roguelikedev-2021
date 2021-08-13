@@ -1,0 +1,33 @@
+[
+    {
+        "id": "base_storage",
+        "extends": "base_item_mplus",
+        "components": {
+            "characterobject": {
+                "letter": "ひ",
+                "color": "#4f361b"
+            },
+            "equippable": {
+                "slot": "storage"
+            }
+        }
+    },
+    {
+        "id": "pouch_small",
+        "extends": "base_storage",
+        "name": "Small Pouch",
+        "description": "Small Pouch",
+        "components": {
+
+        }
+    },
+    {
+        "id": "pouch_large",
+        "extends": "base_storage",
+        "name": "Large Pouch",
+        "description": "Large Pouch",
+        "components": {
+
+        }
+    }
+]

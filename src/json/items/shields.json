@@ -1,0 +1,66 @@
+[
+    {
+        "id": "base_shield",
+        "extends": "base_item_mplus",
+        "components": {
+            "equippable": {
+                "slot": "offhand"
+            }
+        }
+    },
+    {
+        "id": "round_shield",
+        "extends": "base_shield",
+        "name": "Round Shield",
+        "description": "Small round shield. Might block a few hits if used correctly",
+        "components": {
+            "characterobject": {
+                "letter": "●",
+                "color": "#ccc",
+                "size": 0.6
+            },
+            "equippable": {
+                "slot": "offhand",
+                "defense": "0-5",
+                "blockChance": "15-25"
+            }
+        }
+    },
+    {
+        "id": "kite_shield",
+        "extends": "base_shield",
+        "name": "Kite Shield",
+        "description": "Kite Shield",
+        "components": {
+            "characterobject": {
+                "letter": "☗",
+                "color": "#555",
+                "size": 0.6,
+                "zRot": 1
+            },
+            "equippable": {
+                "slot": "offhand",
+                "defense": "0-25",
+                "blockChance": "20-35"
+            }
+        }
+    },
+    {
+        "id": "tower_shield",
+        "extends": "base_shield",
+        "name": "Tower Shield",
+        "description": "Large rectangular shield. The surface is heavily scarred from battle",
+        "components": {
+            "characterobject": {
+                "fontName": "jetbrains",
+                "letter": "█",
+                "color": "#333",
+                "size": 0.7
+            },
+            "equippable": {
+                "defense": "0-50",
+                "blockChance": "30-50"
+            }
+        }
+    }
+]

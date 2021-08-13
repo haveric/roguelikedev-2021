@@ -9,7 +9,9 @@
         ],
         "items": [
             {"group": "potion", "weight": 50},
-            {"group": "scroll", "weight": 10}
+            {"group": "scroll", "weight": 50},
+            {"group": "weapon_tier1", "weight": 25},
+            {"group": "armor_tier1", "weight": 50}
         ]
     },
     {
@@ -22,7 +24,9 @@
         ],
         "items": [
             {"group": "potion", "weight": 50},
-            {"group": "scroll", "weight": 25}
+            {"group": "scroll", "weight": 50},
+            {"group": "weapon_tier1", "weight": 25},
+            {"group": "armor_tier1", "weight": 50}
         ]
     },
     {
@@ -37,7 +41,9 @@
         ],
         "items": [
             {"group": "potion", "weight": 50},
-            {"group": "scroll", "weight": 25}
+            {"group": "scroll", "weight": 50},
+            {"group": "weapon_tier2", "weight": 25},
+            {"group": "armor_tier2", "weight": 50}
         ]
     },
     {
@@ -53,7 +59,9 @@
         ],
         "items": [
             {"group": "potion", "weight": 50},
-            {"group": "scroll", "weight": 25}
+            {"group": "scroll", "weight": 50},
+            {"group": "weapon_tier2", "weight": 25},
+            {"group": "armor_tier2", "weight": 50}
         ]
     },
     {
@@ -69,7 +77,9 @@
         ],
         "items": [
             {"group": "potion", "weight": 50},
-            {"group": "scroll", "weight": 25}
+            {"group": "scroll", "weight": 50},
+            {"group": "weapon_tier3", "weight": 25},
+            {"group": "armor_tier3", "weight": 50}
         ]
     },
     {
@@ -85,7 +95,9 @@
         ],
         "items": [
             {"group": "potion", "weight": 50},
-            {"group": "scroll", "weight": 25}
+            {"group": "scroll", "weight": 50},
+            {"group": "weapon_tier3", "weight": 25},
+            {"group": "armor_tier3", "weight": 50}
         ]
     },
     {
@@ -101,7 +113,9 @@
         ],
         "items": [
             {"group": "potion", "weight": 50},
-            {"group": "scroll", "weight": 25}
+            {"group": "scroll", "weight": 50},
+            {"group": "weapon_tier4", "weight": 25},
+            {"group": "armor_tier4", "weight": 50}
         ]
     }
 ]

@@ -1,13 +1,73 @@
 [
     {
-        "id": "tower_shield",
-        "extends": "base_item",
-        "name": "Tower Shield",
-        "description": "Large rectangular shield. The surface is heavily scarred from battle",
+        "id": "base_armor",
+        "extends": "base_item_mplus",
         "components": {
             "characterobject": {
-                "letter": "]",
-                "color": "#ccc"
+                "letter": "☗"
+            },
+            "equippable": {
+                "slot": "body"
+            }
+        }
+    },
+    {
+        "id": "leather_armor",
+        "extends": "base_armor",
+        "name": "Leather Armor",
+        "description": "Leather Armor",
+        "components": {
+            "characterobject": {
+                "color": "#4f361b",
+                "size": 0.6
+            },
+            "equippable": {
+                "defense": "10-25"
+            }
+        }
+    },
+    {
+        "id": "chainmail",
+        "extends": "base_armor",
+        "name": "Chainmail",
+        "description": "Chainmail",
+        "components": {
+            "characterobject": {
+                "color": "#bab3af",
+                "size": 0.6
+            },
+            "equippable": {
+                "defense": "25-50"
+            }
+        }
+    },
+    {
+        "id": "scalemail",
+        "extends": "base_armor",
+        "name": "Scale Mail",
+        "description": "Scale Mail",
+        "components": {
+            "characterobject": {
+                "color": "#ddded8",
+                "size": 0.6
+            },
+            "equippable": {
+                "defense": "50-90"
+            }
+        }
+    },
+    {
+        "id": "platemail",
+        "extends": "base_armor",
+        "name": "Plate Mail",
+        "description": "Plate Mail",
+        "components": {
+            "characterobject": {
+                "color": "#dce5e7",
+                "size": 0.6
+            },
+            "equippable": {
+                "defense": "90-160"
             }
         }
     }

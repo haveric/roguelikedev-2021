@@ -8,5 +8,14 @@
                 "font": "helvetiker"
             }
         }
+    },
+    {
+        "id": "base_item_mplus",
+        "extends": "base_item",
+        "components": {
+            "characterobject": {
+                "fontName": "mplus"
+            }
+        }
     }
 ]

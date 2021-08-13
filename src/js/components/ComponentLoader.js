@@ -26,6 +26,8 @@ import StairsInteractable from "./interactable/StairsInteractable";
 import Level from "./Level";
 import SummonPortalConsumable from "./consumable/SummonPortalConsumable";
 import PortalInteractable from "./interactable/PortalInteractable";
+import Equipment from "./equipment/Equipment";
+import Equippable from "./equipment/Equippable";
 
 class ComponentLoader {
     constructor() {
@@ -45,6 +47,10 @@ class ComponentLoader {
         this.load(new HealingConsumable());
         this.load(new ManaConsumable());
         this.load(new SummonPortalConsumable());
+
+        // Equipment
+        this.load(new Equipment());
+        this.load(new Equippable());
 
         // Interactables
         this.load(new StairsInteractable());

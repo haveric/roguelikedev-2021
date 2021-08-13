@@ -10,6 +10,7 @@ import {MathUtils, Vector3} from "three";
 import CharacterObject from "./positionalObject/CharacterObject";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import sceneState from "../SceneState";
+import character from "../ui/Character";
 
 export default class Fighter extends _Component {
     constructor(args = {}) {
@@ -73,7 +74,10 @@ export default class Fighter extends _Component {
             }
         }
 
-        this.recalculateStats();
+        this.minDamage = 0;
+        this.maxDamage = 0;
+        this.defense = 0;
+        this.blockChance = 0;
     }
 
     save() {
@@ -124,23 +128,110 @@ export default class Fighter extends _Component {
         }
         this.maxMana = newMaxMana;
 
+        this.calculateDamage();
+        this.calculateDefense();
+        this.calculateBlockChance();
+
+        this.updateUI();
         this.clearSaveCache();
     }
 
+    calculateDamage() {
+        const statDamage = this.baseDamage + this.strength;
+
+        let equipmentMinDamage = 0;
+        let equipmentMaxDamage = 0;
+        const equipment = this.parentEntity.getComponent("equipment");
+        if (equipment) {
+            const equippables = equipment.getEquippables();
+            for (const equippable of equippables) {
+                equipmentMinDamage += equippable.minDamage;
+                equipmentMaxDamage += equippable.maxDamage;
+            }
+        }
+
+        this.minDamage = statDamage + equipmentMinDamage;
+        this.maxDamage = Math.floor(statDamage * 1.5) + equipmentMaxDamage;
+    }
+
+    calculateDefense() {
+        const statDefense = this.baseDefense + (this.agility * 10);
+
+        let equipmentDefense = 0;
+        const equipment = this.parentEntity.getComponent("equipment");
+        if (equipment) {
+            const equippables = equipment.getEquippables();
+            for (const equippable of equippables) {
+                equipmentDefense += equippable.defense;
+            }
+        }
+
+        this.defense = statDefense + equipmentDefense;
+    }
+
+    calculateBlockChance() {
+        const statBlockChance = this.agility * 2;
+
+        let equipmentBlockChance = 0;
+        const equipment = this.parentEntity.getComponent("equipment");
+        if (equipment) {
+            const equippables = equipment.getEquippables();
+            for (const equippable of equippables) {
+                equipmentBlockChance += equippable.blockChance;
+            }
+        }
+
+        this.blockChance = Math.min(statBlockChance + equipmentBlockChance, 90);
+    }
+
     getDamage() {
-        return this.baseDamage + this.strength;
+        if (this.minDamage === this.maxDamage) {
+            return this.minDamage;
+        } else {
+            return MathUtils.randInt(this.minDamage, this.maxDamage);
+        }
+    }
+
+    getDamageDisplay() {
+        if (this.minDamage === this.maxDamage) {
+            return this.minDamage;
+        } else {
+            return this.minDamage + " - " + this.maxDamage;
+        }
     }
 
     getBlockedDamage() {
-        return this.baseDefense + this.agility;
+        return Math.floor(MathUtils.randFloat(this.defense / 4, this.defense) / 10);
     }
 
     getMaxHp() {
-        return this.baseHp + this.constitution * 15;
+        const statHp = this.baseHp + this.constitution * 15;
+
+        let equipmentHp = 0;
+        const equipment = this.parentEntity.getComponent("equipment");
+        if (equipment) {
+            const equippables = equipment.getEquippables();
+            for (const equippable of equippables) {
+                equipmentHp += equippable.health;
+            }
+        }
+
+        return statHp + equipmentHp;
     }
 
     getMaxMana() {
-        return this.baseMana + this.wisdom * 10;
+        const statMana = this.baseMana + this.wisdom * 10;
+
+        let equipmentMana = 0;
+        const equipment = this.parentEntity.getComponent("equipment");
+        if (equipment) {
+            const equippables = equipment.getEquippables();
+            for (const equippable of equippables) {
+                equipmentMana += equippable.mana;
+            }
+        }
+
+        return statMana + equipmentMana;
     }
 
     createDamageIndicator(damage, color) {
@@ -189,8 +280,8 @@ export default class Fighter extends _Component {
     takeDamage(damage) {
         this.hp -= damage;
 
+        this.updateUI();
         if (this.isPlayer()) {
-            characterHealth.update(this.hp, this.maxHp);
             this.createDamageIndicator(damage, "#C00");
         } else {
             this.createDamageIndicator(damage, "#999");
@@ -212,9 +303,7 @@ export default class Fighter extends _Component {
         const healedHp = newHp - this.hp;
         this.hp = newHp;
 
-        if (this.isPlayer()) {
-            characterHealth.update(this.hp, this.maxHp);
-        }
+        this.updateUI();
 
         this.createDamageIndicator(healedHp, "#090");
         this.clearSaveCache();
@@ -229,9 +318,7 @@ export default class Fighter extends _Component {
 
         this.mana -= amount;
 
-        if (this.isPlayer()) {
-            characterMana.update(this.mana, this.maxMana);
-        }
+        this.updateUI();
 
         this.clearSaveCache();
     }
@@ -245,9 +332,7 @@ export default class Fighter extends _Component {
         const recoveredMana = newMana - this.mana;
         this.mana = newMana;
 
-        if (this.isPlayer()) {
-            characterMana.update(this.mana, this.maxMana);
-        }
+        this.updateUI();
 
         this.clearSaveCache();
 
@@ -284,7 +369,7 @@ export default class Fighter extends _Component {
         this.clearSaveCache();
     }
 
-    getDamageDescription() {
+    getHealthDescription() {
         const percent = (this.hp / this.maxHp) * 100;
         let description = "";
 
@@ -303,5 +388,21 @@ export default class Fighter extends _Component {
         }
 
         return description;
+    }
+
+    updateUI() {
+        if (this.isPlayer()) {
+            characterHealth.update(this.hp, this.maxHp);
+            characterMana.update(this.mana, this.maxMana);
+            character.populate(engine.player);
+        }
+    }
+
+    onComponentsLoaded() {
+        this.recalculateStats();
+    }
+
+    onEquipmentChange() {
+        this.recalculateStats();
     }
 }

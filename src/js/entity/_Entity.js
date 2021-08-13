@@ -15,6 +15,7 @@ export default class _Entity {
 
         if (args.components) {
             this.loadComponents(args, args.components);
+            this.callEvent("onComponentsLoaded");
         }
 
         this.cachedSave = null;
@@ -23,7 +24,7 @@ export default class _Entity {
     loadComponents(args, components) {
         const self = this;
         Object.keys(components).forEach(function(key) {
-            const type = componentLoader.types.get(key)
+            const type = componentLoader.types.get(key);
             if (type) {
                 const baseType = type.baseType;
                 const existingComponent = self.getComponent(baseType);

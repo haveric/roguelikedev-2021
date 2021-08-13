@@ -1,6 +1,6 @@
 import ItemAction from "./ItemAction";
 
-export default class DropAction extends ItemAction {
+export default class DropFromInventoryAction extends ItemAction {
     constructor(entity, item, targetPosition) {
         super(entity, item, targetPosition);
     }

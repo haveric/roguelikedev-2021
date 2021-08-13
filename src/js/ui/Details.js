@@ -53,7 +53,7 @@ class Details extends UIElement {
 
                 const fighter = actor.getComponent("fighter");
                 if (fighter) {
-                    text += " " + fighter.getDamageDescription();
+                    text += " " + fighter.getHealthDescription();
                 }
                 text += "</span>";
             }
@@ -100,7 +100,7 @@ class Details extends UIElement {
 
                     const fighter = actor.getComponent("fighter");
                     if (fighter) {
-                        text += " " + fighter.getDamageDescription();
+                        text += " " + fighter.getHealthDescription();
                     }
 
                     text += "</span>";

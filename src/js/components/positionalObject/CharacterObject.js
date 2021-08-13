@@ -2,6 +2,7 @@ import _PositionalObject from "./_PositionalObject";
 import * as THREE from "three";
 import Extend from "../../util/Extend";
 import helvetikerFont from "../../../fonts/helvetiker_regular.typeface.json";
+import jetbrainsFont from "../../../fonts/JetBrains Mono_Regular.json";
 import mplusCustomFont from "../../../fonts/mplus_custom.json";
 //import mplus from "../../../fonts/Rounded Mplus 1c_Regular.json";
 import pressStartFont from "../../../fonts/Press Start 2P_Regular.json";
@@ -49,6 +50,13 @@ export default class CharacterObject extends _PositionalObject {
             case "helvetiker":
                 if (!fontCache.has(this.fontName)) {
                     fontCache.set(this.fontName, new THREE.Font(helvetikerFont));
+                }
+
+                this.font = fontCache.get(this.fontName);
+                break;
+            case "jetbrains":
+                if (!fontCache.has(this.fontName)) {
+                    fontCache.set(this.fontName, new THREE.Font(jetbrainsFont));
                 }
 
                 this.font = fontCache.get(this.fontName);

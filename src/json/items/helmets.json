@@ -1,0 +1,70 @@
+[
+    {
+        "id": "base_helmet",
+        "extends": "base_item",
+        "components": {
+            "characterobject": {
+                "letter": "∩"
+            },
+            "equippable": {
+                "slot": "helmet"
+            }
+        }
+    },
+    {
+        "id": "leather_cap",
+        "extends": "base_helmet",
+        "name": "Leather Cap",
+        "description": "Leather Cap",
+        "components": {
+            "characterobject": {
+                "color": "#4f361b"
+            },
+            "equippable": {
+                "defense": "1-20"
+            }
+        }
+    },
+    {
+        "id": "chainmail_hood",
+        "extends": "base_helmet",
+        "name": "Chainmail Hood",
+        "description": "Chainmail Hood",
+        "components": {
+            "characterobject": {
+                "color": "#bab3af"
+            },
+            "equippable": {
+                "defense": "15-35"
+            }
+        }
+    },
+    {
+        "id": "scale_helm",
+        "extends": "base_helmet",
+        "name": "Scale Helm",
+        "description": "Scale Helm",
+        "components": {
+            "characterobject": {
+                "color": "#ddded8"
+            },
+            "equippable": {
+                "defense": "30-65"
+            }
+        }
+    },
+    {
+        "id": "full_helm",
+        "extends": "base_helmet",
+        "name": "Full Helm",
+        "description": "Full Helm",
+        "components": {
+            "characterobject": {
+                "color": "#dce5e7"
+            },
+            "equippable": {
+                "defense": "50-100"
+            }
+        }
+    }
+]

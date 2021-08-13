@@ -2,6 +2,7 @@ import ActionWithDirection from "./_ActionWithDirection";
 import UnableToPerformAction from "../UnableToPerformAction";
 import engine from "../../Engine";
 import messageConsole from "../../ui/MessageConsole";
+import {MathUtils} from "three";
 
 export default class MeleeAction extends ActionWithDirection {
     constructor(entity, dx, dy, dz) {
@@ -23,8 +24,6 @@ export default class MeleeAction extends ActionWithDirection {
             const entityFighter = this.entity.getComponent("fighter");
             const blockingFighter = blockingActor.getComponent("fighter");
             if (entityFighter && blockingFighter) {
-                const damage = entityFighter.getDamage() - blockingFighter.getBlockedDamage();
-
                 let name;
                 let plural;
                 if (this.isPlayer()) {
@@ -46,11 +45,19 @@ export default class MeleeAction extends ActionWithDirection {
                 }
 
                 let description = name + " attack" + plural + " " + blockingName;
-                if (damage > 0) {
-                    messageConsole.text(description + " for " + damage + " hit points.", attackColor).build();
-                    blockingFighter.takeDamage(damage);
+                const blockRandom = MathUtils.randInt(0, 100);
+                if (entityFighter.blockChance > blockRandom) {
+                    const blockedColor = "#000";
+                    messageConsole.text(description + ", but is blocked.", blockedColor).build();
+                    blockingFighter.takeDamage(0);
                 } else {
-                    messageConsole.text(description + ", but does no damage.", attackColor).build();
+                    const damage = entityFighter.getDamage() - blockingFighter.getBlockedDamage();
+                    if (damage > 0) {
+                        messageConsole.text(description + " for " + damage + " hit points.", attackColor).build();
+                        blockingFighter.takeDamage(damage);
+                    } else {
+                        messageConsole.text(description + ", but does no damage.", attackColor).build();
+                    }
                 }
 
                 this.entity.callEvent("onMeleeAttack", blockingActor);

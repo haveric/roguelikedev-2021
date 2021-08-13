@@ -10,7 +10,7 @@ import BumpAction from "../actions/actionWithDirection/BumpAction";
 import WaitAction from "../actions/WaitAction";
 import PickupAction from "../actions/PickupAction";
 import inventory from "../ui/Inventory";
-import DropAction from "../actions/itemAction/DropAction";
+import DropFromInventoryAction from "../actions/itemAction/DropFromInventoryAction";
 import {Vector2} from "three";
 import LookHandler from "./selectIndexHandler/LookHandler";
 import characterHealth from "../ui/CharacterHealth";
@@ -21,6 +21,7 @@ import PauseMenuEventHandler from "./PauseMenuEventHandler";
 import InteractAction from "../actions/InteractAction";
 import character from "../ui/Character";
 import bottomContainer from "../ui/BottomContainer";
+import DropFromEquipmentAction from "../actions/itemAction/DropFromEquipmentAction";
 
 export default class DefaultPlayerEventHandler extends EventHandler {
     constructor() {
@@ -160,12 +161,12 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         if (this.attemptToDrag || this.isDragging) {
             this.hoveringOver = null;
         } else {
-            if (target.classList.contains("inventory__storage-slot") && target.classList.contains("has-item")) {
+            const isSlot = target.classList.contains("inventory__storage-slot") || target.classList.contains("inventory__equipment-slot");
+            if (isSlot && target.classList.contains("has-item")) {
                 if (target !== this.hoveringOver) {
                     this.hoveringOver = e.target;
                     const details = target.getElementsByClassName("item__details")[0];
                     const clone = details.cloneNode(true);
-
 
                     inventory.itemTooltipDom.innerHTML = "";
                     inventory.itemTooltipDom.appendChild(clone);
@@ -267,7 +268,7 @@ export default class DefaultPlayerEventHandler extends EventHandler {
 
                 this.hideItemTooltip();
 
-                if (engine.processAction(new DropAction(engine.player, playerInventory.items[slot]))) {
+                if (engine.processAction(new DropFromInventoryAction(engine.player, playerInventory.items[slot]))) {
                     inventory.populateInventory(engine.player);
                 }
             }
@@ -276,7 +277,8 @@ export default class DefaultPlayerEventHandler extends EventHandler {
 
     onMouseDown(e) {
         const target = e.target;
-        if (target.classList.contains("inventory__storage-slot") && target.classList.contains("has-item")) {
+        const isSlot = target.classList.contains("inventory__storage-slot") || target.classList.contains("inventory__equipment-slot");
+        if (isSlot && target.classList.contains("has-item")) {
             this.slotDragging = target;
             document.body.classList.add("disable-select");
 
@@ -306,21 +308,68 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             this.slotDragging.classList.remove("dragging");
             inventory.itemDragDom.classList.remove("active");
 
-            const target = e.target;
-            if (target.classList.contains("inventory__storage-slot") && !target.classList.contains("disabled")) {
-                const slot = target.getAttribute("data-index");
-                const slotFrom = this.slotDragging.getAttribute("data-index");
+            const playerInventory = engine.player.getComponent("inventory");
+            const playerEquipment = engine.player.getComponent("equipment");
 
-                if (slot !== slotFrom) {
-                    const playerInventory = engine.player.getComponent("inventory");
-                    playerInventory.move(slotFrom, slot);
-                    inventory.populateInventory(engine.player);
+            const target = e.target;
+            const sourceIsInventorySlot = this.slotDragging.classList.contains("inventory__storage-slot");
+            const sourceIsEquipmentSlot = this.slotDragging.classList.contains("inventory__equipment-slot");
+            const targetIsInventorySlot = target.classList.contains("inventory__storage-slot");
+            const targetIsEquipmentSlot = target.classList.contains("inventory__equipment-slot");
+            if ((targetIsInventorySlot || targetIsEquipmentSlot) && !target.classList.contains("disabled")) {
+                const targetSlot = target.getAttribute("data-index");
+
+                const sourceSlot = this.slotDragging.getAttribute("data-index");
+                if (sourceIsInventorySlot && targetIsInventorySlot) {
+                    if (targetSlot !== sourceSlot) {
+                        playerInventory.move(sourceSlot, targetSlot);
+                        inventory.populateInventory(engine.player);
+                    }
+                } else if (sourceIsEquipmentSlot && targetIsEquipmentSlot) {
+                    if (targetSlot !== sourceSlot) {
+                        if (playerEquipment.items[targetSlot].slot === playerEquipment.items[sourceSlot].slot) {
+                            playerEquipment.move(sourceSlot, targetSlot);
+                            inventory.populateInventory(engine.player);
+                            engine.player.callEvent("onEquipmentChange");
+                        }
+                    }
+                } else if (sourceIsInventorySlot && targetIsEquipmentSlot) {
+                    const sourceItem = playerInventory.items[sourceSlot];
+                    const fromEquippable = sourceItem.getComponent("equippable");
+                    if (fromEquippable) {
+                        if (fromEquippable.slot === playerEquipment.items[targetSlot].slot) {
+                            const targetItem = playerEquipment.getItem(targetSlot);
+                            playerInventory.setItem(sourceSlot, targetItem);
+                            playerEquipment.setItem(targetSlot, sourceItem);
+
+                            inventory.populateInventory(engine.player);
+                            engine.player.callEvent("onEquipmentChange");
+                        }
+                    }
+                } else if (sourceIsEquipmentSlot && targetIsInventorySlot) {
+                    const sourceItem = playerEquipment.getItem(sourceSlot);
+                    const targetItem = playerInventory.items[targetSlot];
+                    if (!targetItem || targetItem.getComponent("equippable") !== undefined) {
+                        if (targetItem) {
+                            const equippable = targetItem.getComponent("equippable");
+
+                            if (playerEquipment.items[sourceSlot].slot !== equippable.slot) {
+                                return;
+                            }
+                        }
+                        playerInventory.setItem(targetSlot, sourceItem);
+                        playerEquipment.setItem(sourceSlot, targetItem);
+                        inventory.populateInventory(engine.player);
+                        engine.player.callEvent("onEquipmentChange");
+                    }
                 }
             } else if (target.tagName === "CANVAS") {
                 const slotFrom = this.slotDragging.getAttribute("data-index");
-                const playerInventory = engine.player.getComponent("inventory");
-
-                engine.processAction(new DropAction(engine.player, playerInventory.items[slotFrom]));
+                if (sourceIsInventorySlot) {
+                    engine.processAction(new DropFromInventoryAction(engine.player, playerInventory.items[slotFrom]));
+                } else if (sourceIsEquipmentSlot) {
+                    engine.processAction(new DropFromEquipmentAction(engine.player, playerEquipment.getItem(slotFrom)));
+                }
                 inventory.populateInventory(engine.player);
             }
         }

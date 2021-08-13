@@ -1,0 +1,14 @@
+[
+    {
+        "id": "base_amulet",
+        "extends": "base_item",
+        "components": {
+            "characterobject": {
+                "letter": "ᴕ"
+            },
+            "equippable": {
+                "slot": "amulet"
+            }
+        }
+    }
+]

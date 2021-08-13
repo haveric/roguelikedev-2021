@@ -2,35 +2,109 @@
     {
         "id": "scroll",
         "items": [
-            {
-                "id": "scroll_lightning",
-                "weight": 20
-            },
-            {
-                "id": "scroll_confusion",
-                "weight": 5
-            },
-            {
-                "id": "scroll_fireball",
-                "weight": 10
-            },
-            {
-                "id": "scroll_town_portal",
-                "weight": 20
-            }
+            {"id": "scroll_lightning", "weight": 20},
+            {"id": "scroll_confusion", "weight": 5},
+            {"id": "scroll_fireball", "weight": 10},
+            {"id": "scroll_town_portal", "weight": 20}
         ]
     },
     {
         "id": "potion",
         "items": [
-            {
-                "id": "potion_health",
-                "weight": 30
-            },
-            {
-                "id": "potion_mana",
-                "weight": 10
-            }
+            {"id": "potion_health", "weight": 30},
+            {"id": "potion_mana", "weight": 10}
+        ]
+    },
+    {
+        "id": "weapon_tier1",
+        "items": [
+            {"id": "dagger", "weight": 30},
+            {"id": "short_sword", "weight": 10}
+        ]
+    },
+    {
+        "id": "weapon_tier2",
+        "items": [
+            {"id": "short_sword", "weight": 30},
+            {"id": "staff", "weight": 10},
+            {"group": "weapon_tier1", "weight": 40}
+        ]
+    },
+    {
+        "id": "weapon_tier3",
+        "items": [
+            {"id": "staff", "weight": 30},
+            {"id": "flail", "weight": 10},
+            {"group": "weapon_tier2", "weight": 40}
+        ]
+    },
+    {
+        "id": "weapon_tier4",
+        "items": [
+            {"id": "flail", "weight": 30},
+            {"id": "long_sword", "weight": 10},
+            {"group": "weapon_tier3", "weight": 40}
+        ]
+    },
+    {
+        "id": "armor_tier1",
+        "items": [
+            {"id": "leather_armor", "weight": 100},
+            {"id": "belt_2slot", "weight": 20},
+            {"id": "belt_3slot", "weight": 10},
+            {"id": "leather_boots", "weight": 40},
+            {"id": "leather_gloves", "weight": 40},
+            {"id": "leather_cap", "weight": 40},
+            {"id": "round_shield", "weight": 50},
+            {"id": "cape", "weight": 30},
+            {"id": "pouch_small", "weight": 30}
+        ]
+    },
+    {
+        "id": "armor_tier2",
+        "items": [
+            {"id": "chainmail", "weight": 80},
+            {"id": "belt_3slot", "weight": 20},
+            {"id": "belt_4slot", "weight": 10},
+            {"id": "chain_boots", "weight": 40},
+            {"id": "chain_gloves", "weight": 40},
+            {"id": "chainmail_hood", "weight": 40},
+            {"id": "kite_shield", "weight": 10},
+            {"id": "round_shield", "weight": 5},
+            {"id": "shoulder_pads", "weight": 30},
+            {"id": "pouch_large", "weight": 30},
+            {"group": "armor_tier1", "weight": 150}
+        ]
+    },
+    {
+        "id": "armor_tier3",
+        "items": [
+            {"id": "scalemail", "weight": 70},
+            {"id": "belt_4slot", "weight": 20},
+            {"id": "belt_5slot", "weight": 10},
+            {"id": "scale_boots", "weight": 40},
+            {"id": "scale_gloves", "weight": 40},
+            {"id": "scale_helm", "weight": 40},
+            {"id": "kite_shield", "weight": 30},
+            {"id": "spaulders", "weight": 30},
+            {"id": "pouch_large", "weight": 30},
+            {"group": "armor_tier2", "weight": 150}
+        ]
+    },
+    {
+        "id": "armor_tier4",
+        "items": [
+            {"id": "platemail", "weight": 60},
+            {"id": "belt_5slot", "weight": 20},
+            {"id": "belt_6slot", "weight": 10},
+            {"id": "plate_greaves", "weight": 40},
+            {"id": "plate_gauntlets", "weight": 40},
+            {"id": "full_helm", "weight": 40},
+            {"id": "tower_shield", "weight": 30},
+            {"id": "round_shield", "weight": 10},
+            {"id": "pauldrons", "weight": 30},
+            {"id": "pouch_large", "weight": 30},
+            {"group": "armor_tier3", "weight": 150}
         ]
     }
 ]

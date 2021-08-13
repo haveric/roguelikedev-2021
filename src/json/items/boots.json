@@ -1,0 +1,71 @@
+[
+    {
+        "id": "base_boots",
+        "extends": "base_item",
+        "components": {
+            "characterobject": {
+                "fontName": "jetbrains",
+                "letter": "◫"
+            },
+            "equippable": {
+                "slot": "boots"
+            }
+        }
+    },
+    {
+        "id": "leather_boots",
+        "extends": "base_boots",
+        "name": "Leather Boots",
+        "description": "Leather Boots",
+        "components": {
+            "characterobject": {
+                "color": "#4f361b"
+            },
+            "equippable": {
+                "defense": "1-12"
+            }
+        }
+    },
+    {
+        "id": "chain_boots",
+        "extends": "base_boots",
+        "name": "Chain Boots",
+        "description": "Chain Boots",
+        "components": {
+            "characterobject": {
+                "color": "#bab3af"
+            },
+            "equippable": {
+                "defense": "8-24"
+            }
+        }
+    },
+    {
+        "id": "scale_boots",
+        "extends": "base_boots",
+        "name": "Scale Boots",
+        "description": "Scale Boots",
+        "components": {
+            "characterobject": {
+                "color": "#ddded8"
+            },
+            "equippable": {
+                "defense": "22-48"
+            }
+        }
+    },
+    {
+        "id": "plate_greaves",
+        "extends": "base_boots",
+        "name": "Plate Greaves",
+        "description": "Plate Greaves",
+        "components": {
+            "characterobject": {
+                "color": "#dce5e7"
+            },
+            "equippable": {
+                "defense": "45-90"
+            }
+        }
+    }
+]
