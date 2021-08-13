@@ -1,7 +1,7 @@
 [
     {
         "id": "base_helmet",
-        "extends": "base_item",
+        "extends": "base_item_mplus",
         "components": {
             "characterobject": {
                 "letter": "∩"

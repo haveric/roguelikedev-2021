@@ -1,7 +1,6 @@
 import _Component from "../_Component";
 import Extend from "../../util/Extend";
 import EquipmentType from "./EquipmentType";
-import {MathUtils} from "three";
 
 export default class Equippable extends _Component {
     constructor(args = {}) {
@@ -18,7 +17,6 @@ export default class Equippable extends _Component {
 
         if (hasComponent) {
             const equippable = args.components.equippable;
-
             if (equippable.slot !== undefined) {
                 this.slot = equippable.slot;
             }

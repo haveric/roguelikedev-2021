@@ -4,6 +4,7 @@
         "extends": "base_item",
         "components": {
             "characterobject": {
+                "fontName": "jetbrains",
                 "letter": "″"
             },
             "equippable": {
