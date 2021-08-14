@@ -46,7 +46,7 @@ export default class MeleeAction extends ActionWithDirection {
 
                 let description = name + " attack" + plural + " " + blockingName;
                 const blockRandom = MathUtils.randInt(0, 100);
-                if (entityFighter.blockChance > blockRandom) {
+                if (blockingFighter.blockChance > blockRandom) {
                     const blockedColor = "#000";
                     messageConsole.text(description + ", but is blocked.", blockedColor).build();
                     blockingFighter.takeDamage(0);
