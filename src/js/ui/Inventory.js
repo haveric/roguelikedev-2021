@@ -114,13 +114,11 @@ class Inventory extends UIElement {
 
     populateItemsAtGround() {
         const position = engine.player.getComponent("positionalobject");
-        if (this.isOpen()) {
-            this.itemsOnGround = [];
-            for (const item of engine.gameMap.items) {
-                const itemPosition = item.getComponent("positionalobject");
-                if (position.x === itemPosition.x && position.y === itemPosition.y && position.z === itemPosition.z) {
-                    this.itemsOnGround.push(item);
-                }
+        this.itemsOnGround = [];
+        for (const item of engine.gameMap.items) {
+            const itemPosition = item.getComponent("positionalobject");
+            if (position.x === itemPosition.x && position.y === itemPosition.y && position.z === itemPosition.z) {
+                this.itemsOnGround.push(item);
             }
         }
     }
