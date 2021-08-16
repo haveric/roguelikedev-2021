@@ -379,28 +379,39 @@ body.disable-select * {
 
 .inventory__equipment {
     width: 100%;
-    height: 65%;
+    height: 55%;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-rows: repeat(4, minmax(0, 1fr));
     background-color: #333;
     grid-gap: 0.2vw;
-    padding: 5vh 7.5vh
+    padding: 1vh 7.5vh
+}
+
+.inventory__storage-wrap {
+    width: 100%;
+    height: 40%;
+    background-color: #333;
+    position: relative;
+    overflow-y: auto;
 }
 
 .inventory__storage {
     width: 100%;
-    height: 30%;
     display: grid;
     grid-template-columns: repeat(10, minmax(0, 1fr));
-    grid-auto-rows: 1fr;
-    background-color: #333;
     grid-gap: 0.2vw;
     padding: 0.2vw;
 }
 
-.inventory__storage-slot,
-.inventory__equipment-slot {
+.inventory__storage-title {
+    grid-column: span 10;
+    padding: 5px;
+    background-color: #ccc;
+    font-size: 1.8vh;
+}
+
+.slot {
     background-color: gray;
     text-align: center;
     border-radius: 5px;
@@ -479,19 +490,20 @@ body.disable-select * {
     content: "″";
 }
 
-.inventory__storage-slot.has-item:hover,
-.inventory__equipment-slot.has-item:hover {
+.inventory__storage-slot {
+    height: 5.3vh;
+}
+
+.slot.has-item:hover {
     cursor: pointer;
     background-color: #999;
 }
 
-.inventory__storage-slot.disabled,
-.inventory__equipment-slot.disabled {
+.slot.disabled {
     background-color: #845b5b;
 }
 
-.inventory__storage-slot.dragging .item,
-.inventory__equipment-slot.dragging .item {
+.slot.dragging .item {
     display: none;
 }
 
@@ -535,6 +547,7 @@ body.disable-select * {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .item__icon {
@@ -1001,4 +1014,8 @@ body.disable-select * {
 .hotbar__open-skill.has-skillpoint {
     background-color: #3a3;
     color: #fff;
+}
+
+.pickup-slot {
+    height: 5.3vh;
 }

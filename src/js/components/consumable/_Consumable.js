@@ -14,9 +14,9 @@ export default class Consumable extends _Component {
 
     consume() {
         const item = this.getItem();
-        const parentInventory = item.parent;
-        if (parentInventory) {
-            parentInventory.use(item, 1);
+        const parentStorage = item.parentEntity;
+        if (parentStorage) {
+            parentStorage.use(item, 1);
         }
     }
 
@@ -39,12 +39,12 @@ export default class Consumable extends _Component {
         return this.parentEntity;
     }
 
-    getInventory() {
-        return this.parentEntity.parent;
-    }
-
     getConsumer() {
-        return this.parentEntity.parent.parentEntity;
+        let parent = this.parentEntity;
+        while (parent.type !== "actor") {
+            parent = parent.parentEntity;
+        }
+        return parent;
     }
 
     isPlayer() {

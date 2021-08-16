@@ -10,7 +10,6 @@ import BumpAction from "../actions/actionWithDirection/BumpAction";
 import WaitAction from "../actions/WaitAction";
 import PickupAction from "../actions/PickupAction";
 import inventory from "../ui/Inventory";
-import DropFromInventoryAction from "../actions/itemAction/DropFromInventoryAction";
 import {Vector2} from "three";
 import LookHandler from "./selectIndexHandler/LookHandler";
 import characterHealth from "../ui/CharacterHealth";
@@ -161,7 +160,7 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         if (this.attemptToDrag || this.isDragging) {
             this.hoveringOver = null;
         } else {
-            const isSlot = target.classList.contains("inventory__storage-slot") || target.classList.contains("inventory__equipment-slot");
+            const isSlot = target.classList.contains("slot");
             if (isSlot && target.classList.contains("has-item")) {
                 if (target !== this.hoveringOver) {
                     this.hoveringOver = e.target;
@@ -209,15 +208,33 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         } else {
             const target = e.target;
             const classList = target.classList;
-            if (classList.contains("inventory__storage-slot") && classList.contains("has-item")) {
-                const slot = target.getAttribute("data-index");
-                const playerInventory = engine.player.getComponent("inventory");
-                const item = playerInventory.items[slot];
-                const consumable = item.getComponent("consumable");
-                if (consumable) {
-                    this.hideItemTooltip();
-                    if (engine.processAction(consumable.getAction())) {
-                        inventory.populateInventory(engine.player);
+            if (classList.contains("has-item")) {
+                const sourceSlot = target.getAttribute("data-index");
+                let sourceItem;
+                if (classList.contains("inventory__storage-slot")) {
+                    const sourceStorage = target.parentNode.getAttribute("data-index");
+                    const sourceStorageItem = inventory.openStorages[sourceStorage];
+                    const sourceStorageEquippable = sourceStorageItem.getComponent("equippable");
+                    sourceItem = sourceStorageEquippable.storage[sourceSlot];
+                } else if (classList.contains("belt-slot")) {
+                    const sourceSlot = target.getAttribute("data-index");
+                    const playerEquipment = engine.player.getComponent("equipment");
+                    if (playerEquipment) {
+                        const beltItem = playerEquipment.getItem(7);
+                        if (beltItem) {
+                            const beltEquippable = beltItem.getComponent("equippable");
+                            sourceItem = beltEquippable.storage[sourceSlot];
+                        }
+                    }
+                }
+
+                if (sourceItem) {
+                    const consumable = sourceItem.getComponent("consumable");
+                    if (consumable) {
+                        this.hideItemTooltip();
+                        if (engine.processAction(consumable.getAction())) {
+                            inventory.populateInventory(engine.player);
+                        }
                     }
                 }
             } else if (classList.contains("stat__level")) {
@@ -255,29 +272,9 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         }
     }
 
-    onRightClick(e) {
-        if (this.isDragging) {
-            this.isDragging = false;
-        } else {
-            const target = e.target;
-            if (target.classList.contains("inventory__storage-slot") && target.classList.contains("has-item")) {
-                e.preventDefault();
-
-                const slot = target.getAttribute("data-index");
-                const playerInventory = engine.player.getComponent("inventory");
-
-                this.hideItemTooltip();
-
-                if (engine.processAction(new DropFromInventoryAction(engine.player, playerInventory.items[slot]))) {
-                    inventory.populateInventory(engine.player);
-                }
-            }
-        }
-    }
-
     onMouseDown(e) {
         const target = e.target;
-        const isSlot = target.classList.contains("inventory__storage-slot") || target.classList.contains("inventory__equipment-slot");
+        const isSlot = target.classList.contains("slot") && !target.classList.contains("belt-slot");
         if (isSlot && target.classList.contains("has-item")) {
             this.slotDragging = target;
             document.body.classList.add("disable-select");
@@ -308,69 +305,153 @@ export default class DefaultPlayerEventHandler extends EventHandler {
             this.slotDragging.classList.remove("dragging");
             inventory.itemDragDom.classList.remove("active");
 
-            const playerInventory = engine.player.getComponent("inventory");
             const playerEquipment = engine.player.getComponent("equipment");
 
             const target = e.target;
+            const sourceIsGround = this.slotDragging.classList.contains("pickup-slot");
             const sourceIsInventorySlot = this.slotDragging.classList.contains("inventory__storage-slot");
             const sourceIsEquipmentSlot = this.slotDragging.classList.contains("inventory__equipment-slot");
+            const targetIsGround = target.classList.contains("pickup-slot");
             const targetIsInventorySlot = target.classList.contains("inventory__storage-slot");
             const targetIsEquipmentSlot = target.classList.contains("inventory__equipment-slot");
-            if ((targetIsInventorySlot || targetIsEquipmentSlot) && !target.classList.contains("disabled")) {
-                const targetSlot = target.getAttribute("data-index");
 
-                const sourceSlot = this.slotDragging.getAttribute("data-index");
-                if (sourceIsInventorySlot && targetIsInventorySlot) {
-                    if (targetSlot !== sourceSlot) {
-                        playerInventory.move(sourceSlot, targetSlot);
+            const sourceSlot = this.slotDragging.getAttribute("data-index");
+            const targetSlot = target.getAttribute("data-index");
+            if ((targetIsGround || targetIsInventorySlot || targetIsEquipmentSlot) && !target.classList.contains("disabled")) {
+                if (sourceIsGround) {
+                    const sourceItem = inventory.itemsOnGround[sourceSlot];
+                    if (targetIsEquipmentSlot) {
+                        const fromEquippable = sourceItem.getComponent("equippable");
+                        if (fromEquippable && fromEquippable.slot === playerEquipment.items[targetSlot].slot) {
+                            const targetItem = playerEquipment.getItem(targetSlot);
+                            if (targetItem) {
+                                engine.processAction(new DropFromEquipmentAction(engine.player, targetItem));
+                            }
+
+                            playerEquipment.setItem(targetSlot, sourceItem);
+                            sourceItem.parentEntity = playerEquipment;
+                            engine.gameMap.removeItem(sourceItem);
+                            sourceItem.getComponent("positionalobject").teardown();
+                            engine.fov.remove(sourceItem);
+                            engine.needsMapUpdate = true;
+
+                            inventory.populateInventory(engine.player);
+                            bottomContainer.updateBeltSlots();
+                            engine.player.callEvent("onEquipmentChange");
+                        }
+                    } else if (targetIsInventorySlot) {
+                        const targetStorage = target.parentNode.getAttribute("data-index");
+                        const storageItem = inventory.openStorages[targetStorage];
+                        const storageEquippable = storageItem.getComponent("equippable");
+                        const targetItem = storageEquippable.storage[targetSlot];
+                        if (targetItem) {
+                            storageEquippable.drop(targetItem);
+                        }
+
+                        storageEquippable.setItem(targetSlot, sourceItem);
+                        sourceItem.parentEntity = storageEquippable;
+                        engine.gameMap.removeItem(sourceItem);
+                        sourceItem.getComponent("positionalobject").teardown();
+                        engine.fov.remove(sourceItem);
+                        engine.needsMapUpdate = true;
+
                         inventory.populateInventory(engine.player);
+                        bottomContainer.updateBeltSlots();
                     }
-                } else if (sourceIsEquipmentSlot && targetIsEquipmentSlot) {
-                    if (targetSlot !== sourceSlot) {
-                        if (playerEquipment.items[targetSlot].slot === playerEquipment.items[sourceSlot].slot) {
+                } else if (sourceIsEquipmentSlot) {
+                    const sourceItem = playerEquipment.getItem(sourceSlot);
+                    if (targetIsEquipmentSlot) {
+                        if (targetSlot !== sourceSlot && playerEquipment.items[targetSlot].slot === playerEquipment.items[sourceSlot].slot) {
                             playerEquipment.move(sourceSlot, targetSlot);
                             inventory.populateInventory(engine.player);
+                            bottomContainer.updateBeltSlots();
                             engine.player.callEvent("onEquipmentChange");
                         }
-                    }
-                } else if (sourceIsInventorySlot && targetIsEquipmentSlot) {
-                    const sourceItem = playerInventory.items[sourceSlot];
-                    const fromEquippable = sourceItem.getComponent("equippable");
-                    if (fromEquippable) {
-                        if (fromEquippable.slot === playerEquipment.items[targetSlot].slot) {
-                            const targetItem = playerEquipment.getItem(targetSlot);
-                            playerInventory.setItem(sourceSlot, targetItem);
-                            playerEquipment.setItem(targetSlot, sourceItem);
+                    } else if (targetIsInventorySlot) {
+                        const targetStorage = target.parentNode.getAttribute("data-index");
+                        const storageItem = inventory.openStorages[targetStorage];
 
-                            inventory.populateInventory(engine.player);
-                            engine.player.callEvent("onEquipmentChange");
+                        if (sourceItem === storageItem) {
+                            messageConsole.text("You can't put " + sourceItem.name + " inside itself!").build();
+                            return;
                         }
-                    }
-                } else if (sourceIsEquipmentSlot && targetIsInventorySlot) {
-                    const sourceItem = playerEquipment.getItem(sourceSlot);
-                    const targetItem = playerInventory.items[targetSlot];
-                    if (!targetItem || targetItem.getComponent("equippable") !== undefined) {
+
+                        const storageEquippable = storageItem.getComponent("equippable");
+                        const targetItem = storageEquippable.storage[targetSlot];
                         if (targetItem) {
-                            const equippable = targetItem.getComponent("equippable");
-
-                            if (playerEquipment.items[sourceSlot].slot !== equippable.slot) {
+                            const fromEquippable = sourceItem.getComponent("equippable");
+                            // Invalid slot
+                            if (fromEquippable && fromEquippable.slot !== playerEquipment.items[targetSlot].slot) {
                                 return;
                             }
                         }
-                        playerInventory.setItem(targetSlot, sourceItem);
+
                         playerEquipment.setItem(sourceSlot, targetItem);
+                        storageEquippable.setItem(targetSlot, sourceItem);
+                        sourceItem.parentEntity = playerEquipment;
+
                         inventory.populateInventory(engine.player);
-                        engine.player.callEvent("onEquipmentChange");
+                        bottomContainer.updateBeltSlots();
+                    } else if (targetIsGround) {
+                        engine.processAction(new DropFromEquipmentAction(engine.player, sourceItem));
+                        bottomContainer.updateBeltSlots();
+                    }
+                } else if (sourceIsInventorySlot) {
+                    const sourceStorage = this.slotDragging.parentNode.getAttribute("data-index");
+                    const sourceStorageItem = inventory.openStorages[sourceStorage];
+                    const sourceStorageEquippable = sourceStorageItem.getComponent("equippable");
+                    const sourceItem = sourceStorageEquippable.storage[sourceSlot];
+
+                    if (targetIsEquipmentSlot) {
+                        const fromEquippable = sourceItem.getComponent("equippable");
+                        if (fromEquippable && fromEquippable.slot === playerEquipment.items[targetSlot].slot) {
+                            const targetItem = playerEquipment.getItem(targetSlot);
+
+                            playerEquipment.setItem(targetSlot, sourceItem);
+                            sourceStorageEquippable.setItem(sourceSlot, targetItem);
+                            sourceItem.parentEntity = playerEquipment;
+
+                            inventory.populateInventory(engine.player);
+                            bottomContainer.updateBeltSlots();
+                            engine.player.callEvent("onEquipmentChange");
+                        }
+                    } else if (targetIsInventorySlot) {
+                        const targetStorage = target.parentNode.getAttribute("data-index");
+                        const targetStorageItem = inventory.openStorages[targetStorage];
+
+                        if (sourceStorageItem === targetStorageItem) {
+                            sourceStorageEquippable.move(sourceSlot, targetSlot);
+                            inventory.populateInventory(engine.player);
+                            bottomContainer.updateBeltSlots();
+                        } else {
+                            const targetStorageEquippable = targetStorageItem.getComponent("equippable");
+                            const targetItem = targetStorageEquippable.storage[targetSlot];
+
+                            sourceStorageEquippable.setItem(sourceSlot, targetItem);
+                            if (targetItem) {
+                                targetItem.parentEntity = sourceStorageEquippable;
+                            }
+                            targetStorageEquippable.setItem(targetSlot, sourceItem);
+                            sourceItem.parentEntity = targetStorageEquippable;
+                            inventory.populateInventory(engine.player);
+                            bottomContainer.updateBeltSlots();
+                        }
+                    } else if (targetIsGround) {
+                        sourceStorageEquippable.drop(sourceItem);
+                        bottomContainer.updateBeltSlots();
                     }
                 }
             } else if (target.tagName === "CANVAS") {
-                const slotFrom = this.slotDragging.getAttribute("data-index");
                 if (sourceIsInventorySlot) {
-                    engine.processAction(new DropFromInventoryAction(engine.player, playerInventory.items[slotFrom]));
+                    const sourceStorage = this.slotDragging.parentNode.getAttribute("data-index");
+                    const sourceStorageItem = inventory.openStorages[sourceStorage];
+                    const sourceStorageEquippable = sourceStorageItem.getComponent("equippable");
+                    const sourceItem = sourceStorageEquippable.storage[sourceSlot];
+
+                    sourceStorageEquippable.drop(sourceItem);
                 } else if (sourceIsEquipmentSlot) {
-                    engine.processAction(new DropFromEquipmentAction(engine.player, playerEquipment.getItem(slotFrom)));
+                    engine.processAction(new DropFromEquipmentAction(engine.player, playerEquipment.getItem(sourceSlot)));
                 }
-                inventory.populateInventory(engine.player);
             }
         }
     }

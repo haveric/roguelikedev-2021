@@ -18,7 +18,9 @@
         "name": "Small Pouch",
         "description": "Small Pouch",
         "components": {
-
+            "equippable": {
+                "maxStorage": 10
+            }
         }
     },
     {
@@ -27,7 +29,7 @@
         "name": "Large Pouch",
         "description": "Large Pouch",
         "components": {
-
+            "maxStorage": 20
         }
     }
 ]

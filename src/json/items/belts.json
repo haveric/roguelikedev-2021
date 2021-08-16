@@ -19,7 +19,8 @@
         "description": "2-Slot Belt",
         "components": {
             "equippable": {
-                "defense": "1-5"
+                "defense": "1-5",
+                "maxStorage": 2
             }
         }
     },
@@ -30,7 +31,8 @@
         "description": "3-Slot Belt",
         "components": {
             "equippable": {
-                "defense": "3-10"
+                "defense": "3-10",
+                "maxStorage": 3
             }
         }
     },
@@ -41,7 +43,8 @@
         "description": "4-Slot Belt",
         "components": {
             "equippable": {
-                "defense": "7-15"
+                "defense": "7-15",
+                "maxStorage": 4
             }
         }
     },
@@ -55,7 +58,8 @@
                 "letter": "="
             },
             "equippable": {
-                "defense": "12-20"
+                "defense": "12-20",
+                "maxStorage": 5
             }
         }
     },
@@ -69,7 +73,8 @@
                 "letter": "="
             },
             "equippable": {
-                "defense": "16-25"
+                "defense": "16-25",
+                "maxStorage": 6
             }
         }
     }

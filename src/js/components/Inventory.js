@@ -3,36 +3,19 @@ import Extend from "../util/Extend";
 import entityLoader from "../entity/EntityLoader";
 import engine from "../Engine";
 import messageConsole from "../ui/MessageConsole";
+import inventory from "../ui/Inventory";
 
 export default class Inventory extends _Component {
     constructor(args = {}) {
         super(Extend.extend(args, {baseType: "inventory"}));
         const hasComponent = args.components && args.components.inventory;
 
-        this.capacity = 10;
-        this.items = [];
         this.gold = 0;
 
         if (hasComponent) {
             const inventory = args.components.inventory;
-            if (inventory.capacity !== undefined) {
-                this.capacity = inventory.capacity;
-            }
 
             this.gold = this.parseRandInt(inventory.gold, 0);
-            if (inventory.items !== undefined) {
-                for (let i = 0; i < inventory.items.length; i++) {
-                    const item = inventory.items[i];
-                    if (item !== null) {
-                        if (item.load !== undefined) {
-                            this.items[i].item = entityLoader.createFromTemplate(item.load);
-                        } else {
-                            this.items[i].item = entityLoader.create(item);
-                        }
-                        this.items[i].parent = this;
-                    }
-                }
-            }
         }
     }
 
@@ -41,20 +24,9 @@ export default class Inventory extends _Component {
             return this.cachedSave;
         }
 
-        const itemJson = [];
-        for (const item of this.items) {
-            if (!item) {
-                itemJson.push(null);
-            } else {
-                itemJson.push(JSON.stringify(item.save()));
-            }
-        }
-
         const saveJson = {
             inventory: {
-                capacity: this.capacity,
-                gold: this.gold,
-                items: itemJson
+                gold: this.gold
             }
         };
 
@@ -70,91 +42,11 @@ export default class Inventory extends _Component {
             return true;
         }
 
-        const originalAmount = item.amount;
-        let amountToAdd = item.amount;
 
-        let partialMax;
-        if (this.capacity === -1) {
-            partialMax = this.items.length;
-        } else {
-            partialMax = this.capacity;
-        }
-        // Add partial stack
-        for (let i = 0; i < partialMax; i++) {
-            const inventoryItem = this.items[i];
-            if (inventoryItem) {
-                if (item.id === inventoryItem.id) {
-                    let amountCanAdd = inventoryItem.maxStackSize - inventoryItem.amount;
-                    if (amountCanAdd >= amountToAdd) {
-                        inventoryItem.setAmount(inventoryItem.amount + amountToAdd);
-                        return true;
-                    } else {
-                        inventoryItem.setAmount(inventoryItem.amount + amountCanAdd);
-                        item.setAmount(item.amount - amountCanAdd);
-                        amountToAdd -= amountCanAdd;
-                    }
-                }
-            }
-        }
-
-
-        // Add full stack
-        if (this.capacity === -1) {
-            this.items[this.items.length] = item;
-        } else {
-            for (let i = 0; i < this.capacity; i++) {
-                if (!this.items[i]) {
-                    this.items[i] = item;
-                    return true;
-                }
-            }
-        }
-
-        return originalAmount !== amountToAdd;
-    }
-
-    use(item, amount) {
-        item.setAmount(item.amount - amount);
-        if (item.amount <= 0) {
-            this.remove(item);
-        }
-
-        this.clearSaveCache();
-    }
-
-    remove(item) {
-        const index = this.items.indexOf(item);
-        if (index > -1) {
-            this.items.splice(index, 1, null);
-        }
-
-        this.clearSaveCache();
-        engine.needsMapUpdate = true;
-    }
-
-    setItem(index, item) {
-        this.items[index] = item;
-        this.clearSaveCache();
-    }
-
-    move(fromIndex, toIndex) {
-        if (fromIndex !== toIndex) {
-            const fromItem = this.items[fromIndex];
-
-            this.items[fromIndex] = this.items[toIndex];
-            this.items[toIndex] = fromItem;
-
-            this.clearSaveCache();
-        }
+        return false;
     }
 
     dropAll() {
-        for (const item of this.items) {
-            if (item) {
-                this.drop(item);
-            }
-        }
-
         const gold = this.gold;
         if (gold > 0) {
             let goldItem = entityLoader.createFromTemplate('gold');
@@ -174,8 +66,10 @@ export default class Inventory extends _Component {
                 messageConsole.text("You dropped the " + item.name).build();
             }
 
-            this.remove(item);
             this.clearSaveCache();
+            if (this.isPlayer()) {
+                inventory.populateInventory(engine.player);
+            }
         }
     }
 

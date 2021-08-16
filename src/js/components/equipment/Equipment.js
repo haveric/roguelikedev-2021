@@ -5,6 +5,7 @@ import EquipmentSlot from "./EquipmentSlot";
 import entityLoader from "../../entity/EntityLoader";
 import engine from "../../Engine";
 import messageConsole from "../../ui/MessageConsole";
+import inventory from "../../ui/Inventory";
 
 export default class Equipment extends _Component {
     constructor(args = {}) {
@@ -36,7 +37,7 @@ export default class Equipment extends _Component {
                         } else {
                             this.items[i].item = entityLoader.create(item);
                         }
-                        this.items[i].item.parent = this;
+                        this.items[i].item.parentEntity = this;
                     }
                 }
             }
@@ -94,6 +95,23 @@ export default class Equipment extends _Component {
         }
     }
 
+    dropAll() {
+        for (const equipmentItem of this.items) {
+            if (equipmentItem.item) {
+                this.drop(equipmentItem.item);
+            }
+        }
+
+        const gold = this.gold;
+        if (gold > 0) {
+            let goldItem = entityLoader.createFromTemplate('gold');
+            goldItem.amount = gold;
+            this.drop(goldItem);
+        }
+
+        this.clearSaveCache();
+    }
+
     drop(item) {
         if (item) {
             const parentPosition = this.parentEntity.getComponent("positionalobject");
@@ -105,6 +123,9 @@ export default class Equipment extends _Component {
 
             this.remove(item);
             this.clearSaveCache();
+            if (this.isPlayer()) {
+                inventory.populateInventory(engine.player);
+            }
         }
     }
 
@@ -120,6 +141,46 @@ export default class Equipment extends _Component {
         }
     }
 
+    addItem(item) {
+        const belt = this.items[7].item;
+        const storage = this.items[9].item;
+
+        let success = false;
+        if (belt) {
+            const beltEquippable = belt.getComponent("equippable");
+            success = beltEquippable.addPartialStacks(item);
+        }
+
+        if (!success && storage) {
+            const storageEquippable = storage.getComponent("equippable");
+            success = storageEquippable.addPartialStacks(item);
+        }
+
+        if (!success) {
+            for (let i = 0; i < this.items.length; i++) {
+                if (i === 7 || i === 9) {
+                    continue;
+                }
+
+                const item = this.items[i].item;
+                if (item) {
+                    const itemEquippable = item.getComponent("equippable");
+                    success = itemEquippable.addPartialStacks(item);
+                    if (success) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!success && storage) {
+            const storageEquippable = storage.getComponent("equippable");
+            success = storageEquippable.addFullStacks(item);
+        }
+
+        return success;
+    }
+
     setItem(index, item) {
         this.items[index].item = item;
         this.clearSaveCache();
@@ -127,5 +188,9 @@ export default class Equipment extends _Component {
 
     getItem(index) {
         return this.items[index].item;
+    }
+
+    onEntityDeath() {
+        this.dropAll();
     }
 }

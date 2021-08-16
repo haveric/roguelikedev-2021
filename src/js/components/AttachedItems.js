@@ -20,7 +20,7 @@ export default class AttachedItems extends _Component {
                     const item = attachedItems.items[i];
                     if (item !== null) {
                         this.items[i] = entityLoader.create(item);
-                        this.items[i].parent = this;
+                        this.items[i].parentEntity = this;
                     }
                 }
             }

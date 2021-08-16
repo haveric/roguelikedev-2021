@@ -10,22 +10,13 @@ class Inventory extends UIElement {
         this.equipmentSlots = [];
         for (let i = 0; i < 12; i++ ) {
             const slot = document.createElement("div");
-            slot.classList.add("inventory__equipment-slot");
+            slot.classList.add("slot", "inventory__equipment-slot");
             slot.setAttribute("data-index", i);
             this.equipmentSlots.push(slot);
             this.equipmentDom.appendChild(slot);
         }
 
-        this.storageDom = this.dom.getElementsByClassName("inventory__storage")[0];
-        this.inventorySlots = [];
-        for (let i = 0; i < 40; i++) {
-            const slot = document.createElement("div");
-            slot.classList.add("inventory__storage-slot");
-            slot.setAttribute("data-index", i);
-            this.inventorySlots.push(slot);
-            this.storageDom.appendChild(slot);
-        }
-
+        this.storageWrapDom = this.dom.getElementsByClassName("inventory__storage-wrap")[0];
         this.goldCountDom = this.dom.getElementsByClassName("inventory__gold-count")[0];
 
         this.itemTooltipDom = document.createElement("div");
@@ -36,11 +27,15 @@ class Inventory extends UIElement {
 
         document.body.appendChild(this.itemTooltipDom);
         document.body.appendChild(this.itemDragDom);
+
+        this.openStorages = [];
+        this.itemsOnGround = [];
     }
 
     populateInventory(entity) {
         const equipment = entity.getComponent("equipment");
         if (equipment) {
+            this.storageWrapDom.innerHTML = "";
             for (let i = 0; i < this.equipmentSlots.length; i++) {
                 const slot = this.equipmentSlots[i];
 
@@ -48,24 +43,110 @@ class Inventory extends UIElement {
                 const item = equipmentSlot.item;
                 this.populateSlot(slot, item);
             }
+
+            this.openStorages = [];
+
+            // Get storage
+            const equipmentStorageItem = equipment.items[9];
+            const storageItem = equipmentStorageItem.item;
+            if (storageItem) {
+                this.openEquipmentStorage(storageItem);
+            }
+
+            // Get belt
+            const equipmentBeltItem = equipment.items[7];
+            const beltItem = equipmentBeltItem.item;
+            if (beltItem) {
+                this.openEquipmentStorage(beltItem);
+            }
+
+            for (let i = 0; i < this.equipmentSlots.length; i++) {
+                if (i === 7 || i === 9) {
+                    continue;
+                }
+
+                const equipmentItem = equipment.items[i];
+                const item = equipmentItem.item;
+                if (item) {
+                    this.openEquipmentStorage(item);
+                }
+            }
         }
+
+        this.openGroundItems();
 
         const inventory = entity.getComponent("inventory");
         if (inventory) {
-            for (let i = 0; i < this.inventorySlots.length; i++) {
-                const slot = this.inventorySlots[i];
-
-                const inventoryItem = inventory.items[i];
-                this.populateSlot(slot, inventoryItem);
-
-                if (i < inventory.capacity) {
-                    slot.classList.remove("disabled");
-                } else {
-                    slot.classList.add("disabled");
-                }
-            }
             this.goldCountDom.innerText = inventory.gold;
         }
+    }
+
+    openEquipmentStorage(item) {
+        this.openStorages.push(item);
+        const equippable = item.getComponent("equippable");
+        if (equippable && equippable.maxStorage !== 0) {
+            let maxItems;
+            if (equippable.maxStorage === -1) {
+                maxItems = equippable.storage.length + 1;
+            } else {
+                maxItems = equippable.maxStorage;
+            }
+            const inventoryStorageDom = document.createElement("div");
+            inventoryStorageDom.classList.add("inventory__storage");
+            inventoryStorageDom.setAttribute("data-index", this.openStorages.length - 1);
+            const inventoryStorageTitleDom = document.createElement("div");
+            inventoryStorageTitleDom.classList.add("inventory__storage-title");
+            inventoryStorageTitleDom.innerText = item.name;
+            inventoryStorageDom.appendChild(inventoryStorageTitleDom);
+            this.inventorySlots = [];
+            for (let i = 0; i < maxItems; i++) {
+                const slot = document.createElement("div");
+                slot.classList.add("slot", "inventory__storage-slot");
+                slot.setAttribute("data-index", i);
+
+                this.populateSlot(slot, equippable.storage[i]);
+                this.inventorySlots.push(slot);
+                inventoryStorageDom.appendChild(slot);
+            }
+            this.storageWrapDom.appendChild(inventoryStorageDom);
+        }
+    }
+
+    populateItemsAtGround() {
+        const position = engine.player.getComponent("positionalobject");
+        if (this.isOpen()) {
+            this.itemsOnGround = [];
+            for (const item of engine.gameMap.items) {
+                const itemPosition = item.getComponent("positionalobject");
+                if (position.x === itemPosition.x && position.y === itemPosition.y && position.z === itemPosition.z) {
+                    this.itemsOnGround.push(item);
+                }
+            }
+        }
+    }
+
+    openGroundItems() {
+        this.populateItemsAtGround();
+
+        let maxItems = Math.ceil((this.itemsOnGround.length + 1) / 10) * 10;
+
+        const inventoryStorageDom = document.createElement("div");
+        inventoryStorageDom.classList.add("inventory__storage");
+        const inventoryStorageTitleDom = document.createElement("div");
+        inventoryStorageTitleDom.classList.add("inventory__storage-title");
+        inventoryStorageTitleDom.innerText = "On Ground";
+        inventoryStorageDom.appendChild(inventoryStorageTitleDom);
+        this.inventorySlots = [];
+        for (let i = 0; i < maxItems; i++) {
+            const slot = document.createElement("div");
+            slot.classList.add("slot", "pickup-slot");
+            slot.setAttribute("data-index", i);
+
+            this.populateSlot(slot, this.itemsOnGround[i]);
+            this.inventorySlots.push(slot);
+            inventoryStorageDom.appendChild(slot);
+        }
+        this.storageWrapDom.appendChild(inventoryStorageDom);
     }
 
     populateSlot(slot, item) {

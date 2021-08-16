@@ -1,6 +1,10 @@
 import _Component from "../_Component";
 import Extend from "../../util/Extend";
 import EquipmentType from "./EquipmentType";
+import entityLoader from "../../entity/EntityLoader";
+import engine from "../../Engine";
+import messageConsole from "../../ui/MessageConsole";
+import inventory from "../../ui/Inventory";
 
 export default class Equippable extends _Component {
     constructor(args = {}) {
@@ -14,6 +18,8 @@ export default class Equippable extends _Component {
         this.health = 0;
         this.mana = 0;
         this.lightRadius = 0;
+        this.maxStorage = 0;
+        this.storage = [];
 
         if (hasComponent) {
             const equippable = args.components.equippable;
@@ -56,6 +62,24 @@ export default class Equippable extends _Component {
 
             if (equippable.lightRadius !== undefined) {
                 this.lightRadius = this.parseRandIntBetween(equippable.lightRadius);
+            }
+
+            if (equippable.maxStorage !== undefined) {
+                this.maxStorage = equippable.maxStorage;
+            }
+
+            if (equippable.storage !== undefined) {
+                for (let i = 0; i < equippable.storage.length; i++) {
+                    const item = equippable.storage[i];
+                    if (item !== null) {
+                        if (item.load !== undefined) {
+                            this.storage[i] = entityLoader.createFromTemplate(item.load);
+                        } else {
+                            this.storage[i] = entityLoader.create(item);
+                        }
+                        this.storage[i].parentEntity = this;
+                    }
+                }
             }
         }
     }
@@ -101,6 +125,23 @@ export default class Equippable extends _Component {
             saveJson.equippable.lightRadius = this.lightRadius;
         }
 
+        if (this.maxStorage !== 0) {
+            saveJson.equippable.maxStorage = this.maxStorage;
+        }
+
+        const storageJson = [];
+        for (const item of this.storage) {
+            if (!item) {
+                storageJson.push(null);
+            } else {
+                storageJson.push(JSON.stringify(item.save()));
+            }
+        }
+
+        if (storageJson.length > 0) {
+            saveJson.equippable.storage = storageJson;
+        }
+
         this.cachedSave = saveJson;
         return saveJson;
     }
@@ -138,6 +179,127 @@ export default class Equippable extends _Component {
             description += "<span class='item__details-line'>Light Radius: <span style='color: #fff;'>+" + this.lightRadius + "</span></span>";
         }
 
+        if (this.maxStorage === -1) {
+            description += "<span class='item__details-line'>Storage: <span style='color: #fff;'>Unlimited</span></span>";
+        } else if (this.maxStorage > 0) {
+            description += "<span class='item__details-line'>Storage: <span style='color: #fff;'>" + this.maxStorage + "</span></span>";
+        }
+
         return description;
+    }
+
+    addFullStacks(item) {
+        this.clearSaveCache();
+
+        // Add full stack
+        if (this.maxStorage === -1) {
+            this.storage[this.storage.length] = item;
+            item.parentEntity = this;
+        } else {
+            for (let i = 0; i < this.maxStorage; i++) {
+                if (!this.storage[i]) {
+                    this.storage[i] = item;
+                    item.parentEntity = this;
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    addPartialStacks(item) {
+        if (item.amount <= 0) {
+            return false;
+        }
+        this.clearSaveCache();
+
+        const originalAmount = item.amount;
+        let amountToAdd = item.amount;
+
+        let partialMax;
+        if (this.maxStorage === -1) {
+            partialMax = this.storage.length;
+        } else {
+            partialMax = this.maxStorage;
+        }
+        // Add partial stack
+        for (let i = 0; i < partialMax; i++) {
+            const inventoryItem = this.storage[i];
+            if (inventoryItem) {
+                if (item.id === inventoryItem.id) {
+                    let amountCanAdd = inventoryItem.maxStackSize - inventoryItem.amount;
+                    if (amountCanAdd >= amountToAdd) {
+                        inventoryItem.setAmount(inventoryItem.amount + amountToAdd);
+                        return true;
+                    } else {
+                        inventoryItem.setAmount(inventoryItem.amount + amountCanAdd);
+                        item.setAmount(item.amount - amountCanAdd);
+                        amountToAdd -= amountCanAdd;
+                    }
+                }
+            }
+        }
+
+        return originalAmount !== amountToAdd;
+    }
+
+    use(item, amount) {
+        item.setAmount(item.amount - amount);
+        if (item.amount <= 0) {
+            this.remove(item);
+        }
+
+        this.clearSaveCache();
+    }
+
+    remove(item) {
+        const index = this.storage.indexOf(item);
+        if (index > -1) {
+            this.storage.splice(index, 1, null);
+        }
+
+        this.clearSaveCache();
+        engine.needsMapUpdate = true;
+    }
+
+    setItem(index, item) {
+        this.storage[index] = item;
+        this.clearSaveCache();
+    }
+
+    move(fromIndex, toIndex) {
+        if (fromIndex !== toIndex) {
+            const fromItem = this.storage[fromIndex];
+
+            this.storage[fromIndex] = this.storage[toIndex];
+            this.storage[toIndex] = fromItem;
+
+            this.clearSaveCache();
+            if (this.isPlayer()) {
+                inventory.populateInventory(engine.player);
+            }
+        }
+    }
+
+    drop(item) {
+        if (item) {
+            let parent = this.parentEntity;
+            while (parent.type !== 'actor') {
+                parent = parent.parentEntity;
+            }
+            const parentPosition = parent.getComponent("positionalobject");
+            engine.gameMap.addItem(item, parentPosition)
+
+            if (parent === engine.player) {
+                messageConsole.text("You dropped the " + item.name).build();
+            }
+
+            this.remove(item);
+            this.clearSaveCache();
+            if (parent === engine.player) {
+                inventory.populateInventory(engine.player);
+            }
+        }
     }
 }
