@@ -78,6 +78,7 @@ export default class Fighter extends _Component {
         this.maxDamage = 0;
         this.defense = 0;
         this.blockChance = 0;
+        this.healingBonus = 0;
         this.strength = 0;
         this.agility = 0;
         this.constitution = 0;
@@ -121,6 +122,8 @@ export default class Fighter extends _Component {
 
     recalculateStats() {
         this.calculateStats();
+        this.healingBonus = Math.floor(this.constitution / 2);
+
         const newMax = this.getMaxHp();
         if (this.hp === null || this.hp >= this.maxHp) {
             this.hp = newMax;

@@ -15,6 +15,7 @@ class Character extends UIElement {
 
         this.constitutionDom = this.dom.getElementsByClassName("stat--constitution")[0].getElementsByClassName("stat__text")[0];
         this.healthDom = this.dom.getElementsByClassName("attribute--health")[0].getElementsByClassName("attribute__value")[0];
+        this.healingBonusDom = this.dom.getElementsByClassName("attribute--healing-bonus")[0].getElementsByClassName("attribute__value")[0];
 
         this.wisomDom = this.dom.getElementsByClassName("stat--wisdom")[0].getElementsByClassName("stat__text")[0];
         this.manaDom = this.dom.getElementsByClassName("attribute--mana")[0].getElementsByClassName("attribute__value")[0];
@@ -39,6 +40,7 @@ class Character extends UIElement {
 
         this.constitutionDom.innerText = fighter.constitution;
         this.healthDom.innerText = fighter.hp + " / " + fighter.maxHp;
+        this.healingBonusDom.innerText = fighter.healingBonus;
 
         this.wisomDom.innerText = fighter.wisdom;
         this.manaDom.innerText = fighter.mana + " / " + fighter.maxMana;

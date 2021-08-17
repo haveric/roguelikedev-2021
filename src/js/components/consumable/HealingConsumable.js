@@ -41,7 +41,7 @@ export default class HealingConsumable extends Consumable {
         const consumer = action.entity;
         const fighter = consumer.getComponent("fighter");
         if (fighter) {
-            const amountHealed = fighter.heal(this.amount);
+            const amountHealed = fighter.heal(this.getModifiedAmount());
 
             if (amountHealed > 0) {
                 this.consume();
@@ -55,7 +55,19 @@ export default class HealingConsumable extends Consumable {
         }
     }
 
+    getModifiedAmount() {
+        let amount = this.amount;
+        let healingBonus = 0;
+        const consumer = this.getConsumer();
+        const fighter = consumer.getComponent("fighter");
+        if (fighter) {
+            healingBonus = fighter.healingBonus;
+        }
+
+        return amount + healingBonus;
+    }
+
     getDescription() {
-        return "<span class='item__details-line'>Recovers <span style='color: #c00;'>" + this.amount + "</span> health</span>";
+        return "<span class='item__details-line'>Recovers <span style='color: #c00;'>" + this.getModifiedAmount() + "</span> health</span>";
     }
 }
