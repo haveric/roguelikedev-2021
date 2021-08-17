@@ -33,7 +33,7 @@ export default class Equipment extends _Component {
                     const item = equipment.items[i];
                     if (item !== null) {
                         if (item.load !== undefined) {
-                            this.items[i].item = entityLoader.createFromTemplate(item.load);
+                            this.items[i].item = entityLoader.createFromTemplate(item.load, item);
                         } else {
                             this.items[i].item = entityLoader.create(item);
                         }

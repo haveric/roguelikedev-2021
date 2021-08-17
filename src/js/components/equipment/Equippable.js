@@ -73,7 +73,7 @@ export default class Equippable extends _Component {
                     const item = equippable.storage[i];
                     if (item !== null) {
                         if (item.load !== undefined) {
-                            this.storage[i] = entityLoader.createFromTemplate(item.load);
+                            this.storage[i] = entityLoader.createFromTemplate(item.load, item);
                         } else {
                             this.storage[i] = entityLoader.create(item);
                         }

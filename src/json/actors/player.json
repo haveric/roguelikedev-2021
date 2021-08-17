@@ -28,7 +28,21 @@
                     null,
                     null,
                     null,
-                    {"load": "belt_2slot"},
+                    {
+                        "load": "belt_2slot",
+                        "components": {
+                            "equippable": {
+                                "defense": 0,
+                                "maxStorage": 2,
+                                "storage": [
+                                    {
+                                        "load": "potion_health",
+                                        "amount": 2
+                                    }
+                                ]
+                            }
+                        }
+                    },
                     null,
                     {"load": "pouch_small"},
                     null,
