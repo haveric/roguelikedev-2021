@@ -17,6 +17,10 @@ export default class Equippable extends _Component {
         this.blockChance = 0;
         this.health = 0;
         this.mana = 0;
+        this.strength = 0;
+        this.agility = 0;
+        this.constitution = 0;
+        this.wisdom = 0;
         this.lightRadius = 0;
         this.maxStorage = 0;
         this.storage = [];
@@ -58,6 +62,22 @@ export default class Equippable extends _Component {
 
             if (equippable.mana !== undefined) {
                 this.mana = this.parseRandIntBetween(equippable.mana);
+            }
+
+            if (equippable.strength !== undefined) {
+                this.strength = this.parseRandIntBetween(equippable.strength);
+            }
+
+            if (equippable.agility !== undefined) {
+                this.agility = this.parseRandIntBetween(equippable.agility);
+            }
+
+            if (equippable.constitution !== undefined) {
+                this.constitution = this.parseRandIntBetween(equippable.constitution);
+            }
+
+            if (equippable.wisdom !== undefined) {
+                this.wisdom = this.parseRandIntBetween(equippable.wisdom);
             }
 
             if (equippable.lightRadius !== undefined) {
@@ -121,6 +141,22 @@ export default class Equippable extends _Component {
             saveJson.equippable.mana = this.mana;
         }
 
+        if (this.strength !== 0) {
+            saveJson.equippable.strength = this.strength;
+        }
+
+        if (this.agility !== 0) {
+            saveJson.equippable.agility = this.agility;
+        }
+
+        if (this.constitution !== 0) {
+            saveJson.equippable.constitution = this.constitution;
+        }
+
+        if (this.wisdom !== 0) {
+            saveJson.equippable.wisdom = this.wisdom;
+        }
+
         if (this.lightRadius !== 0) {
             saveJson.equippable.lightRadius = this.lightRadius;
         }
@@ -173,6 +209,22 @@ export default class Equippable extends _Component {
 
         if (this.mana !== 0) {
             description += "<span class='item__details-line'>Mana: <span style='color: #fff;'>+" + this.mana + "</span></span>";
+        }
+
+        if (this.strength !== 0) {
+            description += "<span class='item__details-line'>Strength: <span style='color: #fff;'>+" + this.strength + "</span></span>";
+        }
+
+        if (this.agility !== 0) {
+            description += "<span class='item__details-line'>Agility: <span style='color: #fff;'>+" + this.agility + "</span></span>";
+        }
+
+        if (this.constitution !== 0) {
+            description += "<span class='item__details-line'>Constitution: <span style='color: #fff;'>+" + this.constitution + "</span></span>";
+        }
+
+        if (this.wisdom !== 0) {
+            description += "<span class='item__details-line'>Wisdom: <span style='color: #fff;'>+" + this.wisdom + "</span></span>";
         }
 
         if (this.lightRadius !== 0) {

@@ -17,36 +17,36 @@ export default class Fighter extends _Component {
         super(Extend.extend(args, {baseType: "fighter"}));
         const hasComponent = args.components && args.components.fighter !== undefined;
 
-        this.strength = 0;
+        this.baseStrength = 0;
         this.baseDamage = 0;
 
-        this.agility = 0;
+        this.baseAgility = 0;
         this.baseDefense = 0;
 
-        this.constitution = 0;
+        this.baseConstitution = 0;
         this.baseHp = 0;
         this.hp = null;
 
-        this.wisdom = 0;
+        this.baseWisdom = 0;
         this.baseMana = 0;
         this.mana = null;
 
         if (hasComponent) {
             const fighter = args.components.fighter;
             if (fighter.strength !== undefined) {
-                this.strength = fighter.strength;
+                this.baseStrength = fighter.strength;
             }
 
             if (fighter.agility !== undefined) {
-                this.agility = fighter.agility;
+                this.baseAgility = fighter.agility;
             }
 
             if (fighter.constitution !== undefined) {
-                this.constitution = fighter.constitution;
+                this.baseConstitution = fighter.constitution;
             }
 
             if (fighter.wisdom !== undefined) {
-                this.wisdom = fighter.wisdom;
+                this.baseWisdom = fighter.wisdom;
             }
 
             if (fighter.baseDamage !== undefined) {
@@ -78,6 +78,10 @@ export default class Fighter extends _Component {
         this.maxDamage = 0;
         this.defense = 0;
         this.blockChance = 0;
+        this.strength = 0;
+        this.agility = 0;
+        this.constitution = 0;
+        this.wisdom = 0;
     }
 
     save() {
@@ -92,17 +96,17 @@ export default class Fighter extends _Component {
             }
         };
 
-        if (this.strength > 0) {
-            saveJson.fighter.strength = this.strength;
+        if (this.baseStrength > 0) {
+            saveJson.fighter.strength = this.baseStrength;
         }
-        if (this.agility > 0) {
-            saveJson.fighter.agility = this.agility;
+        if (this.baseAgility > 0) {
+            saveJson.fighter.agility = this.baseAgility;
         }
-        if (this.constitution > 0) {
-            saveJson.fighter.constitution = this.constitution;
+        if (this.baseConstitution > 0) {
+            saveJson.fighter.constitution = this.baseConstitution;
         }
-        if (this.wisdom > 0) {
-            saveJson.fighter.wisdom = this.wisdom;
+        if (this.baseWisdom > 0) {
+            saveJson.fighter.wisdom = this.baseWisdom;
         }
         if (this.baseDamage > 0) {
             saveJson.fighter.baseDamage = this.baseDamage;
@@ -116,6 +120,7 @@ export default class Fighter extends _Component {
     }
 
     recalculateStats() {
+        this.calculateStats();
         const newMax = this.getMaxHp();
         if (this.hp === null || this.hp >= this.maxHp) {
             this.hp = newMax;
@@ -134,6 +139,28 @@ export default class Fighter extends _Component {
 
         this.updateUI();
         this.clearSaveCache();
+    }
+
+    calculateStats() {
+        let equipmentStrength = 0;
+        let equipmentAgility = 0;
+        let equipmentConstitution = 0;
+        let equipmentWisdom = 0;
+        const equipment = this.parentEntity.getComponent("equipment");
+        if (equipment) {
+            const equippables = equipment.getEquippables();
+            for (const equippable of equippables) {
+                equipmentStrength += equippable.strength;
+                equipmentAgility += equippable.agility;
+                equipmentConstitution += equippable.constitution;
+                equipmentWisdom += equippable.wisdom;
+            }
+        }
+
+        this.strength = this.baseStrength + equipmentStrength;
+        this.agility = this.baseAgility + equipmentAgility;
+        this.constitution = this.baseConstitution + equipmentConstitution;
+        this.wisdom = this.baseWisdom + equipmentWisdom;
     }
 
     calculateDamage() {

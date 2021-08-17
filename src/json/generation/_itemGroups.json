@@ -57,7 +57,10 @@
             {"id": "leather_cap", "weight": 40},
             {"id": "round_shield", "weight": 50},
             {"id": "cape", "weight": 30},
-            {"id": "pouch_small", "weight": 30}
+            {"id": "pouch_small", "weight": 30},
+            {"id": "amulet_of_power_weak", "weight": 5},
+            {"id": "ring_of_health_weak", "weight": 10},
+            {"id": "ring_of_mana_weak", "weight": 10}
         ]
     },
     {
@@ -88,6 +91,9 @@
             {"id": "kite_shield", "weight": 30},
             {"id": "spaulders", "weight": 30},
             {"id": "pouch_large", "weight": 30},
+            {"id": "amulet_of_power", "weight": 10},
+            {"id": "ring_of_health", "weight": 20},
+            {"id": "ring_of_mana", "weight": 20},
             {"group": "armor_tier2", "weight": 150}
         ]
     },

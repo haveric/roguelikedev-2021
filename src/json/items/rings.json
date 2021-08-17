@@ -1,10 +1,11 @@
 [
     {
         "id": "base_ring",
-        "extends": "base_item",
+        "extends": "base_item_mplus",
         "components": {
             "characterobject": {
-                "letter": "○"
+                "letter": "○",
+                "size": 0.4
             },
             "equippable": {
                 "slot": "ring"
@@ -12,16 +13,44 @@
         }
     },
     {
-        "id": "ring_of_health",
+        "id": "ring_of_health_weak",
         "extends": "base_ring",
-        "name": "Ring of Health",
-        "description": "Ring",
+        "name": "Weak Ring of Health",
+        "description": "Weak Ring of Health",
         "components": {
             "characterobject": {
                 "color": "#990f02"
             },
             "equippable": {
-                "health": "5-15"
+                "health": "1-10"
+            }
+        }
+    },
+    {
+        "id": "ring_of_health",
+        "extends": "base_ring",
+        "name": "Ring of Health",
+        "description": "Ring of Health",
+        "components": {
+            "characterobject": {
+                "color": "#990f02"
+            },
+            "equippable": {
+                "health": "5-30"
+            }
+        }
+    },
+    {
+        "id": "ring_of_mana_weak",
+        "extends": "base_ring",
+        "name": "Weak Ring of Mana",
+        "description": "Weak Ring of Mana",
+        "components": {
+            "characterobject": {
+                "color": "#020f99"
+            },
+            "equippable": {
+                "mana": "1-10"
             }
         }
     },
@@ -29,13 +58,13 @@
         "id": "ring_of_mana",
         "extends": "base_ring",
         "name": "Ring of Mana",
-        "description": "Ring",
+        "description": "Ring of Mana",
         "components": {
             "characterobject": {
                 "color": "#020f99"
             },
             "equippable": {
-                "mana": "5-15"
+                "mana": "5-30"
             }
         }
     }

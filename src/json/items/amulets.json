@@ -1,13 +1,47 @@
 [
     {
         "id": "base_amulet",
-        "extends": "base_item",
+        "extends": "base_item_mplus",
         "components": {
             "characterobject": {
                 "letter": "ᴕ"
             },
             "equippable": {
                 "slot": "amulet"
+            }
+        }
+    },
+    {
+        "id": "amulet_of_power_weak",
+        "extends": "base_amulet",
+        "name": "Weak Amulet of Power",
+        "description": "Weak Amulet of Power",
+        "components": {
+            "characterobject": {
+                "color": "#990f02"
+            },
+            "equippable": {
+                "strength": "0-1",
+                "agility": "0-1",
+                "constitution": "0-1",
+                "wisdom": "0-1"
+            }
+        }
+    },
+    {
+        "id": "amulet_of_power",
+        "extends": "base_amulet",
+        "name": "Amulet of Power",
+        "description": "Amulet of Power",
+        "components": {
+            "characterobject": {
+                "color": "#990f02"
+            },
+            "equippable": {
+                "strength": "0-3",
+                "agility": "0-3",
+                "constitution": "0-3",
+                "wisdom": "0-3"
             }
         }
     }

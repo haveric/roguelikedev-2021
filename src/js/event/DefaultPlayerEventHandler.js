@@ -243,20 +243,20 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                     const fighter = engine.player.getComponent("fighter");
                     const parentClasses = target.parentNode.classList;
                     if (parentClasses.contains("stat--strength")) {
-                        fighter.strength += 1;
+                        fighter.baseStrength += 1;
                         fighter.recalculateStats();
                         level.useStatPoint();
                     } else if (parentClasses.contains("stat--agility")) {
-                        fighter.agility += 1;
+                        fighter.baseAgility += 1;
                         fighter.recalculateStats();
                         level.useStatPoint();
                     } else if (parentClasses.contains("stat--constitution")) {
-                        fighter.constitution += 1;
+                        fighter.baseConstitution += 1;
                         fighter.recalculateStats();
                         level.useStatPoint();
                         characterHealth.update(fighter.hp, fighter.maxHp);
                     } else if (parentClasses.contains("stat--wisdom")) {
-                        fighter.wisdom += 1;
+                        fighter.baseWisdom += 1;
                         fighter.recalculateStats();
                         level.useStatPoint();
                         characterMana.update(fighter.mana, fighter.maxMana);
@@ -409,9 +409,11 @@ export default class DefaultPlayerEventHandler extends EventHandler {
 
                         inventory.populateInventory(engine.player);
                         bottomContainer.updateBeltSlots();
+                        engine.player.callEvent("onEquipmentChange");
                     } else if (targetIsGround) {
                         engine.processAction(new DropFromEquipmentAction(engine.player, sourceItem));
                         bottomContainer.updateBeltSlots();
+                        engine.player.callEvent("onEquipmentChange");
                     }
                 } else if (sourceIsInventorySlot) {
                     const sourceStorage = this.slotDragging.parentNode.getAttribute("data-index");
