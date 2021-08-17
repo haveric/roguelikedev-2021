@@ -18,9 +18,7 @@
                 "constitution": 2,
                 "wisdom": 2
             },
-            "inventory": {
-                "capacity": 10
-            },
+            "inventory": {},
             "equipment": {
                 "items": [
                     null,

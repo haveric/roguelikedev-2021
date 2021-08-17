@@ -42,7 +42,6 @@ export default class Inventory extends _Component {
             return true;
         }
 
-
         return false;
     }
 

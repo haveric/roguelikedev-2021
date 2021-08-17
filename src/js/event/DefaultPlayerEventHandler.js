@@ -276,6 +276,23 @@ export default class DefaultPlayerEventHandler extends EventHandler {
         const target = e.target;
         const isSlot = target.classList.contains("slot") && !target.classList.contains("belt-slot");
         if (isSlot && target.classList.contains("has-item")) {
+            // Handle adding gold to inventory
+            if (target.classList.contains("pickup-slot")) {
+                const index = target.getAttribute("data-index");
+                const item = inventory.itemsOnGround[index];
+                if (item) {
+                    const playerInventory = engine.player.getComponent("inventory");
+                    if (playerInventory.add(item)) {
+                        engine.gameMap.removeItem(item);
+                        item.getComponent("positionalobject").teardown();
+                        engine.fov.remove(item);
+                        inventory.populateInventory(engine.player);
+                        engine.needsMapUpdate = true;
+                        return;
+                    }
+                }
+            }
+
             this.slotDragging = target;
             document.body.classList.add("disable-select");
 
