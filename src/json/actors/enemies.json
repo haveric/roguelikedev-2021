@@ -197,22 +197,22 @@
         "components": {
             "characterobject": {
                 "letter": "s",
-                "color": "#ffffff"
+                "color": "#ffa500"
             },
             "faction": {
                 "factions": "monsters",
                 "enemies": "player"
             },
             "fighter": {
-                "baseHp": 10,
-                "baseDamage": 1
+                "baseHp": 30,
+                "baseDamage": 4
             },
             "level": {
                 "xpGiven": 15
             },
             "aiMeleeChase": {},
             "explodeOnDeath": {
-                "damage": 5,
+                "damage": 15,
                 "radius": 1
             }
         }
