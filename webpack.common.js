@@ -11,7 +11,7 @@ module.exports = {
         }),
     ],
     output: {
-        filename: 'bundle.js',
+        filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'docs'),
         clean: true,
     },
@@ -39,4 +39,32 @@ module.exports = {
             },
         ],
     },
+    optimization: {
+        moduleIds: 'deterministic',
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+                fonts: {
+                    test: /[\\/]src[\\/]fonts[\\/]/,
+                    name: 'fonts',
+                    chunks: 'all',
+                },
+                html: {
+                    test: /[\\/]src[\\/]html[\\/]/,
+                    name: 'html',
+                    chunks: 'all',
+                },
+                json: {
+                    test: /[\\/]src[\\/]json[\\/]/,
+                    name: 'json',
+                    chunks: 'all',
+                }
+            }
+        }
+    }
 };
