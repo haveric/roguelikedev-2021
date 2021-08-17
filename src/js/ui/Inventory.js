@@ -124,27 +124,29 @@ class Inventory extends UIElement {
     }
 
     openGroundItems() {
-        this.populateItemsAtGround();
+        if (this.isOpen()) {
+            this.populateItemsAtGround();
 
-        let maxItems = Math.ceil((this.itemsOnGround.length + 1) / 10) * 10;
+            let maxItems = Math.ceil((this.itemsOnGround.length + 1) / 10) * 10;
 
-        const inventoryStorageDom = document.createElement("div");
-        inventoryStorageDom.classList.add("inventory__storage");
-        const inventoryStorageTitleDom = document.createElement("div");
-        inventoryStorageTitleDom.classList.add("inventory__storage-title");
-        inventoryStorageTitleDom.innerText = "On Ground";
-        inventoryStorageDom.appendChild(inventoryStorageTitleDom);
-        this.inventorySlots = [];
-        for (let i = 0; i < maxItems; i++) {
-            const slot = document.createElement("div");
-            slot.classList.add("slot", "pickup-slot");
-            slot.setAttribute("data-index", i);
+            const inventoryStorageDom = document.createElement("div");
+            inventoryStorageDom.classList.add("inventory__storage");
+            const inventoryStorageTitleDom = document.createElement("div");
+            inventoryStorageTitleDom.classList.add("inventory__storage-title");
+            inventoryStorageTitleDom.innerText = "On Ground";
+            inventoryStorageDom.appendChild(inventoryStorageTitleDom);
+            this.inventorySlots = [];
+            for (let i = 0; i < maxItems; i++) {
+                const slot = document.createElement("div");
+                slot.classList.add("slot", "pickup-slot");
+                slot.setAttribute("data-index", i);
 
-            this.populateSlot(slot, this.itemsOnGround[i]);
-            this.inventorySlots.push(slot);
-            inventoryStorageDom.appendChild(slot);
+                this.populateSlot(slot, this.itemsOnGround[i]);
+                this.inventorySlots.push(slot);
+                inventoryStorageDom.appendChild(slot);
+            }
+            this.storageWrapDom.appendChild(inventoryStorageDom);
         }
-        this.storageWrapDom.appendChild(inventoryStorageDom);
     }
 
     populateSlot(slot, item) {
@@ -186,8 +188,8 @@ class Inventory extends UIElement {
         if (this.isOpen()) {
             this.close();
         } else {
-            this.populateInventory(engine.player);
             this.open();
+            this.populateInventory(engine.player);
         }
     }
 }
