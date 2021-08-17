@@ -24,7 +24,7 @@ export default class AI extends _Component {
             entity.stopCombatAnimations();
 
             const blockingPosition = blockingActor.getComponent("positionalobject");
-            if (blockingPosition && blockingPosition.hasObject()) {
+            if (position && position.hasObject() && blockingPosition && blockingPosition.hasObject()) {
                 const originalPosition = new Vector3(position.object.position.x, position.object.position.y, position.object.position.z);
                 const attackPosition = new Vector3((position.object.position.x + blockingPosition.object.position.x) / 2, (position.object.position.y + blockingPosition.object.position.y) / 2, (position.object.position.z + blockingPosition.object.position.z) / 2);
                 const currentPosition = originalPosition.clone();
