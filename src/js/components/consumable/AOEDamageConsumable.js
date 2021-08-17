@@ -83,17 +83,19 @@ export default class AOEDamageConsumable extends Consumable {
     targetActors(targetPosition, actors) {
         let targetsHit = false;
         for (const actor of actors) {
-            const position = actor.getComponent("positionalobject");
-            if (position.horizontalDistance(targetPosition) <= this.radius) {
-                const fighter = actor.getComponent("fighter");
-                if (fighter) {
-                    const actualDamage = Math.max(0, this.damage - fighter.getBlockedDamage());
-                    if (this.isPlayer()) {
-                        messageConsole.text("The " + actor.name + " is engulfed in a fiery explosion, taking " + actualDamage + " damage!").build();
-                    }
+            if (actor.isAlive()) {
+                const position = actor.getComponent("positionalobject");
+                if (position.horizontalDistance(targetPosition) <= this.radius) {
+                    const fighter = actor.getComponent("fighter");
+                    if (fighter) {
+                        const actualDamage = Math.max(0, this.damage - fighter.getBlockedDamage());
+                        if (this.isPlayer()) {
+                            messageConsole.text("The " + actor.name + " is engulfed in a fiery explosion, taking " + actualDamage + " damage!").build();
+                        }
 
-                    fighter.takeDamage(actualDamage);
-                    targetsHit = true;
+                        fighter.takeDamage(actualDamage);
+                        targetsHit = true;
+                    }
                 }
             }
         }
