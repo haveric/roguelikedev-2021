@@ -424,6 +424,14 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                         if (fromEquippable && fromEquippable.slot === playerEquipment.items[targetSlot].slot) {
                             const targetItem = playerEquipment.getItem(targetSlot);
 
+                            let parent = sourceItem.parentEntity;
+                            while(parent) {
+                                if (parent === targetItem) {
+                                    messageConsole.text("You can't equip a container from within its parent. Consider moving it elsewhere first.").build();
+                                    return;
+                                }
+                                parent = parent.parentEntity;
+                            }
                             playerEquipment.setItem(targetSlot, sourceItem);
                             sourceStorageEquippable.setItem(sourceSlot, targetItem);
                             sourceItem.parentEntity = playerEquipment;
