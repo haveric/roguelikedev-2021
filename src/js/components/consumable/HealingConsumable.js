@@ -2,6 +2,7 @@ import Consumable from "./_Consumable";
 import Extend from "../../util/Extend";
 import UnableToPerformAction from "../../actions/UnableToPerformAction";
 import messageConsole from "../../ui/MessageConsole";
+import engine from "../../Engine";
 
 export default class HealingConsumable extends Consumable {
     constructor(args = {}) {
@@ -58,7 +59,11 @@ export default class HealingConsumable extends Consumable {
     getModifiedAmount() {
         let amount = this.amount;
         let healingBonus = 0;
-        const consumer = this.getConsumer();
+        let consumer = this.getConsumer();
+        if (!consumer) {
+            consumer = engine.player;
+        }
+
         const fighter = consumer.getComponent("fighter");
         if (fighter) {
             healingBonus = fighter.healingBonus;

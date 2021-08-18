@@ -41,7 +41,7 @@ export default class Consumable extends _Component {
 
     getConsumer() {
         let parent = this.parentEntity;
-        while (parent.type !== "actor") {
+        while (parent && parent.type !== "actor") {
             parent = parent.parentEntity;
         }
         return parent;
