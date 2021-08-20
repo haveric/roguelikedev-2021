@@ -97,7 +97,6 @@ export default class Town extends GameMap {
                         this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('fence_vertical', {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else if (i === 32 && j === 41) {
                         this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('well', {components: {positionalobject: {x: i, y: j, z: 1}}});
-                        this.tiles.get(2)[i][j] = entityLoader.createFromTemplate('well_top', {components: {positionalobject: {x: i, y: j, z: 2}}});
                     } else if ((i === 36 || i === 37) && j === 47) {
                         this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('barrel', {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else if (i === 19 && j === 17) {

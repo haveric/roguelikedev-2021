@@ -103,30 +103,22 @@
         "name": "Well",
         "components": {
             "characterobject": {
+                "characters": [
+                    {
+                        "letter": "○",
+                        "color": "#666"
+                    },
+                    {
+                        "letter": "个",
+                        "color": "#6c3f20",
+                        "xRot": 0.5,
+                        "yRot": 0.25,
+                        "zOffset": 0.4
+                    }
+                ],
                 "fontName": "mplus",
-                "letter": "○",
-                "color": "#666",
                 "size": 0.75,
                 "scale": 0.62
-            },
-            "blocksFov": false,
-            "blocksMovement": true
-        }
-    },
-    {
-        "id": "well_top",
-        "extends": "base_charactertile",
-        "name": "Well",
-        "components": {
-            "characterobject": {
-                "fontName": "mplus",
-                "letter": "个",
-                "color": "#6c3f20",
-                "size": 0.75,
-                "scale": 0.62,
-                "xRot": 0.5,
-                "yRot": 0.25,
-                "zOffset": -0.6
             },
             "blocksFov": false,
             "blocksMovement": true

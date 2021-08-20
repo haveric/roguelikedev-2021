@@ -221,7 +221,7 @@ export default class _PositionalObject extends _Component {
         if (this.highlighted) {
             if (this.hasObject()) {
                 for (const mesh of this.meshes) {
-                    mesh.material.color.set(this.color);
+                    mesh.material.color.set(mesh.originalColor);
                 }
 
                 const parent = this.parentEntity;
