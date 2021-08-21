@@ -28,7 +28,7 @@ class SceneState {
         this.setupLights();
         this.updateCamera();
 
-        window.addEventListener( 'resize', this);
+        window.addEventListener( "resize", this);
     }
 
     setupGameHtml() {
@@ -95,7 +95,7 @@ class SceneState {
         const aspectRatio = this.canvasDom.offsetWidth / this.canvasDom.offsetHeight;
 
         const viewSize = 80;
-        const left = -aspectRatio * viewSize / 2
+        const left = -aspectRatio * viewSize / 2;
         const right = aspectRatio * viewSize / 2;
         const top = viewSize / 2;
         const bottom = -viewSize / 2;

@@ -1,4 +1,4 @@
-import html from '../../html/ui/Inventory.html';
+import html from "../../html/ui/Inventory.html";
 import UIElement from "./UIElement";
 import engine from "../Engine";
 
@@ -167,7 +167,7 @@ class Inventory extends UIElement {
                 html += "<div class='item__details'>"
                     + "<span class='item__details-line item__name'>" + item.name + "</span>";
                 if (item.description) {
-                    html += "<span class='item__details-line item__description'>" + item.description + "</span>"
+                    html += "<span class='item__details-line item__description'>" + item.description + "</span>";
                 }
 
                 html += "<span class='item__details-line'><hr/></span>";

@@ -1,4 +1,4 @@
-import html from '../../../html/ui/editor/EditorInfo.html';
+import html from "../../../html/ui/editor/EditorInfo.html";
 import engine from "../../Engine";
 import UIElement from "../UIElement";
 
@@ -44,7 +44,7 @@ class EditorInfo extends UIElement {
     }
 
     addDataInput(id, domElement) {
-        this.addData(id, domElement, "input")
+        this.addData(id, domElement, "input");
     }
 
     addData(id, domElement, type = "text") {
@@ -66,10 +66,11 @@ class EditorInfo extends UIElement {
 
             dataDom.onchange = function(e) {
                 self.updateScale(self, e);
-            }
+            };
+
             dataDom.onblur = function(e) {
                 self.updateScale(self, e);
-            }
+            };
         }
         dataDom.classList.add("editor-info__" + type);
         dataDom.id = "editor-info-" + id;

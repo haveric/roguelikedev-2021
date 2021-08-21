@@ -31,7 +31,7 @@ export default class Consumable extends _Component {
         return new ItemAction(consumer, item);
     }
 
-    activate(action) {
+    activate(/*action*/) {
         console.error("Not Implemented");
     }
 

@@ -1,5 +1,5 @@
-import html from '../../../html/menu/SaveGame.html';
-import saveHtml from '../../../html/template/Save.html';
+import html from "../../../html/menu/SaveGame.html";
+import saveHtml from "../../../html/template/Save.html";
 import UIElement from "../UIElement";
 import saveManager from "../../SaveManager";
 

@@ -7,7 +7,7 @@ export default class ControlsMenuEventHandler extends MenuEventHandler {
         super(eventHandler);
 
         this.isEditingKey = false;
-        this.editingDom = null
+        this.editingDom = null;
         this.tempValue = null;
 
         this.tempControls = controls.clone();

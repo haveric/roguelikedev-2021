@@ -19,8 +19,8 @@ export default class Shop extends RectangularRoom {
             for (let j = top; j < bottom; j++) {
                 const previousFloorTile = gameMap.tiles.get(0)[i][j];
                 if (!previousFloorTile) {
-                    gameMap.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
-                    gameMap.tiles.get(0)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
+                    gameMap.tiles.get(-1)[i][j] = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: i, y: j, z: -1}}});
+                    gameMap.tiles.get(0)[i][j] = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: i, y: j, z: 0}}});
                 }
 
                 const isVerticalEdge = (i === this.x1 || i === this.x2) && j >= this.y1 && j <= this.y2;
@@ -28,8 +28,8 @@ export default class Shop extends RectangularRoom {
                 const wallTile = gameMap.tiles.get(1)[i][j];
                 if (isHorizontalEdge || isVerticalEdge) {
                     if (!previousFloorTile && !wallTile) {
-                        gameMap.tiles.get(1)[i][j] = entityLoader.createFromTemplate('wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
-                        gameMap.tiles.get(2)[i][j] = entityLoader.createFromTemplate('wall', {components: {positionalobject: {x: i, y: j, z: 2}}});
+                        gameMap.tiles.get(1)[i][j] = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        gameMap.tiles.get(2)[i][j] = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: i, y: j, z: 2}}});
 
                         let isCorner = isHorizontalEdge && isVerticalEdge;
                         if (!isCorner) {
@@ -48,11 +48,11 @@ export default class Shop extends RectangularRoom {
         const wall = this.walls[randWall];
         const position = wall.getComponent("positionalobject");
 
-        gameMap.tiles.get(1)[position.x][position.y] = entityLoader.createFromTemplate('door', {components: {positionalobject: {x: position.x, y: position.y, z: 1}}});
+        gameMap.tiles.get(1)[position.x][position.y] = entityLoader.createFromTemplate("door", {components: {positionalobject: {x: position.x, y: position.y, z: 1}}});
 
         const x = MathUtils.randInt(this.x1 + 1, this.x2 - 1);
         const y = MathUtils.randInt(this.y1 + 1, this.y2 - 1);
-        const npc = entityLoader.createFromTemplate('shop_owner', {components: {positionalobject: {x: x, y: y, z: 1}}});
+        const npc = entityLoader.createFromTemplate("shop_owner", {components: {positionalobject: {x: x, y: y, z: 1}}});
         engine.gameMap.actors.push(npc);
     }
 }

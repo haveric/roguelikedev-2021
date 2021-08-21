@@ -1,4 +1,4 @@
-import html from '../../../html/menu/PauseMenu.html';
+import html from "../../../html/menu/PauseMenu.html";
 import UIElement from "../UIElement";
 
 class PauseMenu extends UIElement {

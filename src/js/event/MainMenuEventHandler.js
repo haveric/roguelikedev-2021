@@ -1,7 +1,6 @@
 import EventHandler from "./_EventHandler";
 import DefaultPlayerEventHandler from "./DefaultPlayerEventHandler";
 import engine from "../Engine";
-import BasicDungeon from "../map/BasicDungeon";
 import messageConsole from "../ui/MessageConsole";
 import mainMenu from "../ui/menu/MainMenu";
 import LoadGameMenuEventHandler from "./LoadGameMenuEventHandler";

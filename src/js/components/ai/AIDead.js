@@ -28,7 +28,7 @@ export default class AIDead extends AI {
         };
 
         this.cachedSave = saveJson;
-        return saveJson
+        return saveJson;
     }
 
     perform() {}

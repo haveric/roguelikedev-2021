@@ -13,7 +13,7 @@ export default class Extend {
             }
 
             for (const key in arguments[i]) {
-                if (arguments[i].hasOwnProperty(key)) {
+                if (Object.prototype.hasOwnProperty.call(arguments[i], key)) {
                     out[key] = arguments[i][key];
                 }
             }
@@ -33,15 +33,15 @@ export default class Extend {
             }
 
             for (const key in obj) {
-                if (obj.hasOwnProperty(key)) {
-                    if (typeof obj[key] === 'object'){
+                if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                    if (typeof obj[key] === "object") {
                         if (obj[key] instanceof Array) {
                             out[key] = obj[key].slice(0);
                         } else {
                             out[key] = Extend.deep(out[key], obj[key]);
                         }
                     } else {
-                        if (typeof out === 'boolean' && out[key] === undefined) {
+                        if (typeof out === "boolean" && out[key] === undefined) {
                             out = obj[key];
                         } else {
                             out[key] = obj[key];

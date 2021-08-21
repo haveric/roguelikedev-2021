@@ -88,7 +88,7 @@ export default class StairsInteractable extends Interactable {
         } else if (this.generator) {
             let args = {};
             if (engine.gameMap.level) {
-                args.level = engine.gameMap.level + 1
+                args.level = engine.gameMap.level + 1;
             }
             const newMap = engine.mapLoader.loadMap(this.generator, args);
             this.map = newMap.name;

@@ -285,13 +285,13 @@ export default class Fighter extends _Component {
                         size: .5
                     }
                 }
-            }
+            };
 
             const indicator = new CharacterObject(args);
             indicator.parentEntity = this;
             indicator.setVisible();
             const current = new Vector3(position.x, position.y, zRand);
-            const target = new Vector3(position.x, position.y, zRand + 3)
+            const target = new Vector3(position.x, position.y, zRand + 3);
 
             const tween = new TWEEN.Tween(current).to(target, 500);
             tween.easing(TWEEN.Easing.Cubic.In);
@@ -390,7 +390,7 @@ export default class Fighter extends _Component {
                         previousAI: aiType
                     }
                 }
-            }
+            };
             entity.removeComponent("ai");
             const newAI = new AIDead(aiArgs);
             entity.setComponent(newAI);

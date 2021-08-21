@@ -13,7 +13,7 @@ export default class ManaConsumable extends Consumable {
         if (hasComponent) {
             const manaConsumable = args.components.manaConsumable;
             if (manaConsumable && manaConsumable.amount !== undefined) {
-                this.amount = manaConsumable.amount
+                this.amount = manaConsumable.amount;
             }
         }
     }

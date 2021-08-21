@@ -1,5 +1,5 @@
-import './styles/style.css';
-import sceneState from './js/SceneState.js';
+import "./styles/style.css";
+import sceneState from "./js/SceneState.js";
 import engine from "./js/Engine";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import details from "./js/ui/Details";
@@ -14,9 +14,9 @@ import MainMenuMap from "./js/map/MainMenuMap";
         engine.needsMapUpdate = true;
 
         sceneState.renderer.setAnimationLoop(animation);
-    }
+    };
 
-    const animation = function(time) {
+    const animation = function(/*time*/) {
         sceneState.stats.begin();
 
         engine.handleEvents();
@@ -28,7 +28,7 @@ import MainMenuMap from "./js/map/MainMenuMap";
         TWEEN.update();
 
         sceneState.stats.end();
-    }
+    };
 
     const updateRender = function() {
         if (engine.player) {
@@ -55,7 +55,7 @@ import MainMenuMap from "./js/map/MainMenuMap";
 
             sceneState.renderer.render(sceneState.scene, sceneState.camera);
         }
-    }
+    };
 
     init();
 }());

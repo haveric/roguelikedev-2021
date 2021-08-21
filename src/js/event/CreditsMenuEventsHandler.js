@@ -19,7 +19,7 @@ export default class CreditsMenuEventsHandler extends MenuEventHandler {
         creditsMenu.close();
     }
 
-    onLeftClick(e) {
+    onLeftClick(/*e*/) {
         this.returnToPreviousMenu();
     }
 }

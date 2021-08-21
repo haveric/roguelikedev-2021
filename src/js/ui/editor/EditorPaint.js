@@ -1,4 +1,4 @@
-import html from '../../../html/ui/editor/EditorPaint.html';
+import html from "../../../html/ui/editor/EditorPaint.html";
 import UIElement from "../UIElement";
 
 class EditorPaint extends UIElement {

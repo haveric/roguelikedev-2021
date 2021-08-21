@@ -1,14 +1,14 @@
 import entityLoader from "../../entity/EntityLoader";
 
 export default class MapGeneration {
-    static floorEntity = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: 0, y: 0, z: 0}}});
-    static wallEntity = entityLoader.createFromTemplate('wall', {components: {positionalobject: {x: 0, y: 0, z: 0}}});
+    static floorEntity = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: 0, y: 0, z: 0}}});
+    static wallEntity = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: 0, y: 0, z: 0}}});
 
     constructor() {}
 
     static tunnelBetween(gameMap, x1, y1, x2, y2) {
-        let cornerX,
-            cornerY;
+        let cornerX;
+        let cornerY;
         if (Math.random() < 0.5) {
             cornerX = x2;
             cornerY = y1;

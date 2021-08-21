@@ -61,23 +61,23 @@ export default class EventHandler {
 
     handleInput() {}
 
-    onMouseMove(e) {}
+    onMouseMove(/*e*/) {}
 
-    onMouseDown(e) {
+    onMouseDown(/*e*/) {
         this.mouseDown = true;
     }
 
-    onMouseUp(e) {
+    onMouseUp(/*e*/) {
         this.mouseDown = false;
     }
 
-    onLeftClick(e) {}
+    onLeftClick(/*e*/) {}
 
-    onRightClick(e) {}
+    onRightClick(/*e*/) {}
 
-    onChange(e) {}
+    onChange(/*e*/) {}
 
-    onKeydown(e) {}
+    onKeydown(/*e*/) {}
 
     getMouseIntersectingObjects(e) {
         this.mouse.x = (e.clientX / sceneState.canvasDom.offsetWidth) * 2 - 1;

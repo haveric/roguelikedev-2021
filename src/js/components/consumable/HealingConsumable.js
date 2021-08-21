@@ -14,7 +14,7 @@ export default class HealingConsumable extends Consumable {
         if (hasComponent) {
             const healingConsumable = args.components.healingConsumable;
             if (healingConsumable && healingConsumable.amount !== undefined) {
-                this.amount = healingConsumable.amount
+                this.amount = healingConsumable.amount;
             }
         }
     }

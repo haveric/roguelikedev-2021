@@ -1,4 +1,4 @@
-import html from '../../html/ui/Character.html';
+import html from "../../html/ui/Character.html";
 import UIElement from "./UIElement";
 import engine from "../Engine";
 

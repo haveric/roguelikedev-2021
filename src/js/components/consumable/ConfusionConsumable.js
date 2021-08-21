@@ -19,7 +19,7 @@ export default class ConfusionConsumable extends Consumable {
         if (hasComponent) {
             const confusionConsumable = args.components.confusionConsumable;
             if (confusionConsumable && confusionConsumable.turns !== undefined) {
-                this.turns = confusionConsumable.turns
+                this.turns = confusionConsumable.turns;
             }
         }
     }
@@ -89,7 +89,7 @@ export default class ConfusionConsumable extends Consumable {
                             turnsRemaining: this.turns
                         }
                     }
-                }
+                };
                 target.removeComponent("ai");
                 const newAI = componentLoader.create(target, "aiConfusedEnemy", aiArgs);
                 target.setComponent(newAI);

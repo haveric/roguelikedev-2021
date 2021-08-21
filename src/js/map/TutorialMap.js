@@ -82,12 +82,12 @@ export default class TutorialMap extends GameMap {
                 const floorChar = this.floor[this.height - j - 1].charAt(i);
                 switch(floorChar) {
                     case "#":
-                        this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
-                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
+                        this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: i, y: j, z: -1}}});
+                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: i, y: j, z: 0}}});
                         break;
                     case "≈":
-                        this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
-                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('water', {components: {positionalobject: {x: i, y: j, z: 0}}});
+                        this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: i, y: j, z: -1}}});
+                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate("water", {components: {positionalobject: {x: i, y: j, z: 0}}});
                         break;
                 }
 
@@ -95,20 +95,20 @@ export default class TutorialMap extends GameMap {
                 switch(wallChar) {
                     case "#":
                     case "=":
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: i, y: j, z: 1}}});
                         break;
                     case "+":
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('door', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("door", {components: {positionalobject: {x: i, y: j, z: 1}}});
                         break;
                     case ">":
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('stairs_north', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("stairs_north", {components: {positionalobject: {x: i, y: j, z: 1}}});
                         break;
                 }
 
                 let overlayChar = this.overlay[this.height - j - 1].charAt(i);
                 if (overlayChar !== "#") {
                     if (overlayChar !== ".") {
-                        this.tiles.get(MapLayer.DecorativeBG)[i][j] = entityLoader.createFromTemplate('art_backing', {components: {positionalobject: {x: i, y: j, z: 2}}});
+                        this.tiles.get(MapLayer.DecorativeBG)[i][j] = entityLoader.createFromTemplate("art_backing", {components: {positionalobject: {x: i, y: j, z: 2}}});
                     }
 
                     if (overlayChar !== " " && overlayChar !== ".") {
@@ -116,7 +116,7 @@ export default class TutorialMap extends GameMap {
                             overlayChar = ".";
                         }
 
-                        this.tiles.get(MapLayer.Decorative)[i][j] = entityLoader.createFromTemplate('art', {components: {characterobject: {x: i, y: j, z: 2.05, letter: overlayChar, color: overlayColors[overlayColorIndex]}}});
+                        this.tiles.get(MapLayer.Decorative)[i][j] = entityLoader.createFromTemplate("art", {components: {characterobject: {x: i, y: j, z: 2.05, letter: overlayChar, color: overlayColors[overlayColorIndex]}}});
                         overlayColorIndex ++;
                     }
                 }
@@ -134,17 +134,17 @@ export default class TutorialMap extends GameMap {
         engine.gameMap.items.push(entityLoader.createFromTemplate('tower_shield', {components: {positionalobject: {x: 28, y: 1, z: 1}}}));
          */
 
-        engine.gameMap.actors.push(entityLoader.createFromTemplate('gelatinous_cube', {components: {positionalobject: {x: 18, y: 4, z: 1}}}));
+        engine.gameMap.actors.push(entityLoader.createFromTemplate("gelatinous_cube", {components: {positionalobject: {x: 18, y: 4, z: 1}}}));
         for (let i = 0; i < 2; i++) {
-            engine.gameMap.items.push(entityLoader.createFromTemplate('scroll_confusion', {components: {positionalobject: {x: 21, y: 3, z: 1}}}));
+            engine.gameMap.items.push(entityLoader.createFromTemplate("scroll_confusion", {components: {positionalobject: {x: 21, y: 3, z: 1}}}));
         }
-        engine.gameMap.items.push(entityLoader.createFromTemplate('potion_health', {components: {positionalobject: {x: 19, y: 4, z: 1}}}));
-        engine.gameMap.items.push(entityLoader.createFromTemplate('tower_shield', {components: {positionalobject: {x: 19, y: 4, z: 1}}}));
+        engine.gameMap.items.push(entityLoader.createFromTemplate("potion_health", {components: {positionalobject: {x: 19, y: 4, z: 1}}}));
+        engine.gameMap.items.push(entityLoader.createFromTemplate("tower_shield", {components: {positionalobject: {x: 19, y: 4, z: 1}}}));
 
 
         for (let i = 18; i <= 22; i++) {
             for (let j = 2; j <= 4; j++) {
-                engine.gameMap.items.push(entityLoader.createFromTemplate('gold', {amount: 5, components: {positionalobject: {x: i, y: j, z: 1}}}));
+                engine.gameMap.items.push(entityLoader.createFromTemplate("gold", {amount: 5, components: {positionalobject: {x: i, y: j, z: 1}}}));
             }
         }
     }

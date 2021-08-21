@@ -15,21 +15,21 @@ export default class CharacterObject extends _PositionalObject {
     constructor(args = {}) {
         const hasComponent = args.components && args.components.characterobject;
         if (hasComponent) {
-             args.components.positionalobject = args.components.positionalobject || {};
-             args.components.positionalobject = Extend.extend(args.components.characterobject, args.components.positionalobject);
+            args.components.positionalobject = args.components.positionalobject || {};
+            args.components.positionalobject = Extend.extend(args.components.characterobject, args.components.positionalobject);
         }
 
         super(Extend.extend(args, {type: "characterobject"}));
 
         this.fontName = "helvetiker";
-        this.letter = '@';
+        this.letter = "@";
         this.centered = true;
         this.characters = [];
 
         if (hasComponent) {
             const characterobject = args.components.characterobject;
             this.fontName = characterobject.fontName || "helvetiker";
-            this.letter = characterobject.letter || '@';
+            this.letter = characterobject.letter || "@";
             if (characterobject.centered !== undefined) {
                 this.centered = characterobject.centered;
             }
@@ -281,7 +281,7 @@ export default class CharacterObject extends _PositionalObject {
             x: options.end.scale,
             y: options.end.scale,
             z: options.end.scale
-        }
+        };
 
         const tween = new TWEEN.Tween(mesh.scale).to(end, time);
         tween.onUpdate(function() {

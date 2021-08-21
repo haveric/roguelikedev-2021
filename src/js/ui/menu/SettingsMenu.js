@@ -1,4 +1,4 @@
-import html from '../../../html/menu/Settings.html';
+import html from "../../../html/menu/Settings.html";
 import UIElement from "../UIElement";
 
 class SettingsMenu extends UIElement {
@@ -7,8 +7,6 @@ class SettingsMenu extends UIElement {
 
         this.showStats = true;
     }
-
-
 }
 
 const settingsMenu = new SettingsMenu();

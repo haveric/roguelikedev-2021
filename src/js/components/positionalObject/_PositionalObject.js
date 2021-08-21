@@ -321,7 +321,7 @@ export default class _PositionalObject extends _Component {
             yRot: this.yRot,
             zRot: this.zRot,
             zOffset: this.zOffset
-        }
+        };
         const finalRotation = {
             xRot: 0,
             yRot: 0,

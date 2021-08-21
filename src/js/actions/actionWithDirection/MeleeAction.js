@@ -31,7 +31,7 @@ export default class MeleeAction extends ActionWithDirection {
                     plural = "";
                 } else {
                     name = this.entity.name;
-                    plural = "s"
+                    plural = "s";
                 }
 
                 let blockingName;

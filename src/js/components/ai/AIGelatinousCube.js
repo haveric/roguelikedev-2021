@@ -175,7 +175,7 @@ export default class AIGelatinousCube extends AI {
                                 xRot: itemPosition.xRot,
                                 yRot: itemPosition.yRot,
                                 zRot: itemPosition.zRot
-                            }
+                            };
 
                             const finalPosition = {
                                 xOffset: position.xOffset + MathUtils.randFloat(0, .1),
@@ -184,10 +184,10 @@ export default class AIGelatinousCube extends AI {
                                 xRot: MathUtils.randFloat(0, 2),
                                 yRot: MathUtils.randFloat(0, 2),
                                 zRot: MathUtils.randFloat(0, 2)
-                            }
+                            };
 
                             if (remnant && !remnant.isRemnant) {
-                                itemPosition.updateRotation(finalPosition.xRot, finalPosition.yRot, finalPosition.zRot)
+                                itemPosition.updateRotation(finalPosition.xRot, finalPosition.yRot, finalPosition.zRot);
                                 itemPosition.updateOffsets(finalPosition.xOffset, finalPosition.yOffset, finalPosition.zOffset);
                                 itemPosition.updateObjectPosition();
                                 engine.needsMapUpdate = true;
@@ -230,7 +230,7 @@ export default class AIGelatinousCube extends AI {
                             zOffset: itemPosition.zOffset,
                             xRot: itemPosition.xRot,
                             yRot: itemPosition.yRot
-                        }
+                        };
 
                         const finalPosition = {
                             xOffset: templatePosition.xOffset,
@@ -238,7 +238,7 @@ export default class AIGelatinousCube extends AI {
                             zOffset: templatePosition.zOffset,
                             xRot: templatePosition.xRot,
                             yRot: templatePosition.yRot
-                        }
+                        };
 
                         const tween = new TWEEN.Tween(position).to(finalPosition, 200);
                         tween.start();

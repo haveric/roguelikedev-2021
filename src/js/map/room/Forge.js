@@ -21,12 +21,12 @@ export default class Forge extends RectangularRoom {
                 const isBottomHalf = j < this.y1 + (this.height / 2);
                 const previousFloorTile = gameMap.tiles.get(0)[i][j];
                 if (!previousFloorTile) {
-                    gameMap.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
+                    gameMap.tiles.get(-1)[i][j] = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: i, y: j, z: -1}}});
 
                     if (isRightHalf || isBottomHalf) {
-                        gameMap.tiles.get(0)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
+                        gameMap.tiles.get(0)[i][j] = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: i, y: j, z: 0}}});
                     } else {
-                        gameMap.tiles.get(0)[i][j] = entityLoader.createFromTemplate('floor_gravel', {components: {positionalobject: {x: i, y: j, z: 0}}});
+                        gameMap.tiles.get(0)[i][j] = entityLoader.createFromTemplate("floor_gravel", {components: {positionalobject: {x: i, y: j, z: 0}}});
                     }
                 }
 
@@ -36,8 +36,8 @@ export default class Forge extends RectangularRoom {
                 if (isHorizontalEdge || isVerticalEdge) {
                     if (!previousFloorTile && !wallTile) {
                         if (isRightHalf || isBottomHalf) {
-                            gameMap.tiles.get(1)[i][j] = entityLoader.createFromTemplate('wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
-                            gameMap.tiles.get(2)[i][j] = entityLoader.createFromTemplate('wall', {components: {positionalobject: {x: i, y: j, z: 2}}});
+                            gameMap.tiles.get(1)[i][j] = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: i, y: j, z: 1}}});
+                            gameMap.tiles.get(2)[i][j] = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: i, y: j, z: 2}}});
 
                             let isCorner = isHorizontalEdge && isVerticalEdge;
                             if (!isCorner) {
@@ -55,7 +55,7 @@ export default class Forge extends RectangularRoom {
 
         const x = MathUtils.randInt(this.x1 + 1, this.x2 - 1);
         const y = MathUtils.randInt(this.y1 + 1, this.y2 - 1);
-        const npc = entityLoader.createFromTemplate('shop_owner', {components: {positionalobject: {x: x, y: y, z: 1}}});
+        const npc = entityLoader.createFromTemplate("shop_owner", {components: {positionalobject: {x: x, y: y, z: 1}}});
         engine.gameMap.actors.push(npc);
     }
 }

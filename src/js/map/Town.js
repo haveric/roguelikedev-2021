@@ -66,8 +66,8 @@ export default class Town extends GameMap {
             }
 
             for (let j = jStart; j <= jEnd; j++) {
-                this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
-                this.tiles.get(0)[i][j] = entityLoader.createFromTemplate('water', {components: {positionalobject: {x: i, y: j, z: 0}}});
+                this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: i, y: j, z: -1}}});
+                this.tiles.get(0)[i][j] = entityLoader.createFromTemplate("water", {components: {positionalobject: {x: i, y: j, z: 0}}});
             }
         }
 
@@ -75,49 +75,49 @@ export default class Town extends GameMap {
         for (let j = 5; j < this.height - 5; j++) {
             for (let i = 5; i < this.width - 5; i++) {
                 if (i === 44 && j >= 33 && j <= 35) {
-                    this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('table', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                    this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("table", {components: {positionalobject: {x: i, y: j, z: 1}}});
                 }
 
                 if ((i === 37 && j === 36) || ((i === 42 && j === 31))) {
-                    this.tiles.get(1)[i][j] = entityLoader.createFromTemplate('post', {components: {positionalobject: {x: i, y: j, z: 1}}});
-                    this.tiles.get(2)[i][j] = entityLoader.createFromTemplate('post', {components: {positionalobject: {x: i, y: j, z: 2}}});
+                    this.tiles.get(1)[i][j] = entityLoader.createFromTemplate("post", {components: {positionalobject: {x: i, y: j, z: 1}}});
+                    this.tiles.get(2)[i][j] = entityLoader.createFromTemplate("post", {components: {positionalobject: {x: i, y: j, z: 2}}});
                 }
 
                 const floorTile = this.tiles.get(MapLayer.Floor)[i][j];
                 if (!floorTile) {
-                    this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: -1}}});
+                    this.tiles.get(-1)[i][j] = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: i, y: j, z: -1}}});
 
                     if (i === 31 && j === 31) {
                         this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate("stairs_north", {components: {positionalobject: {x: i, y: j, z: 0}, stairsInteractable: {generator: "basic-dungeon"}}});
                     } else {
-                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('floor_grass', {components: {positionalobject: {x: i, y: j, z: 0}}});
+                        this.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate("floor_grass", {components: {positionalobject: {x: i, y: j, z: 0}}});
                     }
 
                     if (i === 29 && j >= 35 && j <= 39) {
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('fence_vertical', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("fence_vertical", {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else if (i === 32 && j === 41) {
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('well', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("well", {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else if ((i === 36 || i === 37) && j === 47) {
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('barrel', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("barrel", {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else if (i === 19 && j === 17) {
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('bench_south', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("bench_south", {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else if (i === 20 && j === 17) {
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('bench_south_left', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("bench_south_left", {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else if (i === 18 && j === 17) {
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('bench_south_right', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("bench_south_right", {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else if (i > 17 && i < 21 && j === 20) {
-                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('bench_stone', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("bench_stone", {components: {positionalobject: {x: i, y: j, z: 1}}});
                     } else {
                         const floor = this.tiles.get(MapLayer.Floor)[i][j];
                         if (floor.components.walkable && floor.components.walkable.walkable) {
                             if (Math.random() < .01) {
                                 this.createTree(i, j);
                             } else if (Math.random() < .05) {
-                                this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('stone', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                                this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("stone", {components: {positionalobject: {x: i, y: j, z: 1}}});
                             } else {
                                 if (Math.random() < .3) {
                                     const randomGrass = MathUtils.randInt(1, 4);
-                                    this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('grass' + randomGrass, {components: {positionalobject: {x: i, y: j, z: 1}}});
+                                    this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("grass" + randomGrass, {components: {positionalobject: {x: i, y: j, z: 1}}});
                                 }
                             }
                         }
@@ -131,7 +131,7 @@ export default class Town extends GameMap {
 
     createTree(x, y) {
         for (let z = 1; z <= 8; z++) {
-            this.tiles.get(z)[x][y] = entityLoader.createFromTemplate('tree_trunk', {components: {positionalobject: {x: x, y: y, z: z}}});
+            this.tiles.get(z)[x][y] = entityLoader.createFromTemplate("tree_trunk", {components: {positionalobject: {x: x, y: y, z: z}}});
         }
 
         for (let z = 5; z < 10; z++) {
@@ -158,13 +158,13 @@ export default class Town extends GameMap {
                         }
 
                         if (this.tiles.get(z)[x+i]) {
-                            this.tiles.get(z)[x+i][y+j] = entityLoader.createFromTemplate('tree_leaves', {components: {positionalobject: {x: x+i, y: y+j, z: z}}});
+                            this.tiles.get(z)[x+i][y+j] = entityLoader.createFromTemplate("tree_leaves", {components: {positionalobject: {x: x+i, y: y+j, z: z}}});
                         }
                     }
                 }
             }
         }
 
-        this.tiles.get(9)[x][y] = entityLoader.createFromTemplate('tree_leaves', {components: {positionalobject: {x: x, y: y, z: 9}}});
+        this.tiles.get(9)[x][y] = entityLoader.createFromTemplate("tree_leaves", {components: {positionalobject: {x: x, y: y, z: 9}}});
     }
 }

@@ -63,7 +63,7 @@ export default class EditorEventHandler extends EventHandler {
     onLeftClick(e) {
         const target = e.target;
         if (target.tagName === "CANVAS") {
-            if (editorControls.activeAction === 'select') {
+            if (editorControls.activeAction === "select") {
                 const intersects = this.getMouseIntersectingObjects(e);
                 let anyFound = false;
                 for (let i = 0; i < intersects.length; i++) {
@@ -91,7 +91,7 @@ export default class EditorEventHandler extends EventHandler {
                 if (!anyFound) {
                     this.clearSelected();
                 }
-            } else if (editorControls.activeAction === 'delete') {
+            } else if (editorControls.activeAction === "delete") {
                 this.removeEntityFromMouseEvent(e);
             }
         }
@@ -128,7 +128,7 @@ export default class EditorEventHandler extends EventHandler {
             this.clearHighlights(true);
         }
 
-        if (this.mouseDown && editorControls.activeAction === 'delete') {
+        if (this.mouseDown && editorControls.activeAction === "delete") {
             this.removeEntityFromMouseEvent(e);
         }
 
@@ -149,7 +149,7 @@ export default class EditorEventHandler extends EventHandler {
                 } else if (parentEntity instanceof Actor) {
                     engine.gameMap.removeActor(parentEntity);
                 } else if (parentEntity instanceof Item) {
-                    engine.gameMap.removeItem(parentEntity)
+                    engine.gameMap.removeItem(parentEntity);
                 }
                 parentObject.teardown();
 

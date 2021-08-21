@@ -1,4 +1,4 @@
-import html from '../../../html/menu/Credits.html';
+import html from "../../../html/menu/Credits.html";
 import UIElement from "../UIElement";
 
 class CreditsMenu extends UIElement {

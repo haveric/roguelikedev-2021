@@ -74,9 +74,9 @@ export default class PortalInteractable extends Interactable {
         if (this.map) {
             const playerPosition = engine.player.getComponent("positionalobject");
 
-            if (this.map.name !== 'town') {
+            if (this.map.name !== "town") {
                 const town = engine.gameMaps.get("town");
-                town.tiles.get(1)[34][36] = entityLoader.createFromTemplate('portal', {components: {positionalobject: {x: 34, y: 36, z: 1}, portalInteractable: {map: engine.gameMap.name, x: playerPosition.x, y: playerPosition.y, z: playerPosition.z}}});
+                town.tiles.get(1)[34][36] = entityLoader.createFromTemplate("portal", {components: {positionalobject: {x: 34, y: 36, z: 1}, portalInteractable: {map: engine.gameMap.name, x: playerPosition.x, y: playerPosition.y, z: playerPosition.z}}});
             }
             this.parentEntity.getComponent("positionalobject").teardown();
             engine.gameMap.tiles.get(playerPosition.z)[playerPosition.x][playerPosition.y] = null;

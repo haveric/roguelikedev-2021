@@ -38,7 +38,7 @@ export default class RectangularRoom {
             for (let j = top; j < bottom; j++) {
                 const previousFloorTile = gameMap.tiles.get(MapLayer.Floor)[i][j];
                 if (!previousFloorTile) {
-                    gameMap.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: i, y: j, z: 0}}});
+                    gameMap.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: i, y: j, z: 0}}});
                 }
 
                 const isVerticalEdge = (i === this.x1 || i === this.x2) && j >= this.y1 && j <= this.y2;
@@ -46,7 +46,7 @@ export default class RectangularRoom {
                 const wallTile = gameMap.tiles.get(MapLayer.Wall)[i][j];
                 if (isHorizontalEdge || isVerticalEdge) {
                     if (!previousFloorTile && !wallTile) {
-                        gameMap.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate('wall', {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        gameMap.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: i, y: j, z: 1}}});
                     }
                 } else {
                     if (wallTile) {
@@ -94,7 +94,7 @@ export default class RectangularRoom {
             const y = MathUtils.randInt(this.y1 + 1, this.y2 -1);
             const amount = MathUtils.randInt(1, 25);
             const position = {amount: amount, components: {positionalobject: {x: x, y: y, z: 1}}};
-            let item = entityLoader.createFromTemplate('gold', position);
+            let item = entityLoader.createFromTemplate("gold", position);
 
             engine.gameMap.items.push(item);
         }

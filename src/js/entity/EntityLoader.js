@@ -44,7 +44,7 @@ class EntityLoader {
 
     create(json, args = {}) {
         let parsedJson;
-        if (typeof json === 'object') {
+        if (typeof json === "object") {
             parsedJson = json;
         } else {
             parsedJson = JSON.parse(json);

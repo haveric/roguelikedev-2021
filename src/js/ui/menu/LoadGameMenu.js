@@ -1,4 +1,4 @@
-import html from '../../../html/menu/LoadGame.html';
+import html from "../../../html/menu/LoadGame.html";
 import UIElement from "../UIElement";
 import saveManager from "../../SaveManager";
 import saveHtml from "../../../html/template/Save.html";

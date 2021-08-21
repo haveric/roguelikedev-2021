@@ -10,7 +10,7 @@ import characterMana from "../ui/CharacterMana";
 import Actor from "../entity/Actor";
 import Remnant from "../components/Remnant";
 import inventory from "../ui/Inventory";
-import {Vector3} from "three";
+import {Vector3} from "three"; // eslint-disable-line no-unused-vars
 import Item from "../entity/Item";
 import bottomContainer from "../ui/BottomContainer";
 
@@ -36,7 +36,7 @@ export default class GameMap {
         this.items = [];
     }
 
-    create() {};
+    create() {}
 
     teardown() {
         if (this.timeout) {
@@ -176,12 +176,12 @@ export default class GameMap {
                             key += String.fromCharCode(charCode);
 
                             charCode++;
-                            if (String.fromCharCode(charCode) === ' ') {
+                            if (String.fromCharCode(charCode) === " ") {
                                 charCode++;
                             }
                         }
                     } else {
-                        key += ' ';
+                        key += " ";
                     }
                 }
             }
@@ -888,7 +888,7 @@ export default class GameMap {
 
     addPlayer(x, y, z = 1) {
         if (!engine.player) {
-            engine.player = entityLoader.createFromTemplate('player');
+            engine.player = entityLoader.createFromTemplate("player");
         }
 
         this.actors.push(engine.player);

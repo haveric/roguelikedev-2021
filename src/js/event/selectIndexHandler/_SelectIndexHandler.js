@@ -168,7 +168,7 @@ export default class SelectIndexHandler extends EventHandler {
         }
     }
 
-    onLeftClick(e) {
+    onLeftClick(/*e*/) {
         this.confirmIndex();
     }
 }

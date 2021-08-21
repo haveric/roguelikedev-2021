@@ -80,7 +80,8 @@ export default class BinaryHeap {
         const element = this.content[n];
         const elemScore = this.scoreFunction(element);
 
-        while (true) {
+        let isDone = false;
+        while (!isDone) {
             // Compute the indices of the child elements.
             const child2N = (n + 1) << 1;
             const child1N = child2N - 1;
@@ -113,11 +114,10 @@ export default class BinaryHeap {
                 this.content[n] = this.content[swap];
                 this.content[swap] = element;
                 n = swap;
-            }
-            // Otherwise, we are done.
-            else {
+            } else { // Otherwise, we are done.
+                isDone = true;
                 break;
             }
         }
     }
-};
+}

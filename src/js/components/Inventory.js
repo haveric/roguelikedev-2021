@@ -48,7 +48,7 @@ export default class Inventory extends _Component {
     dropAll() {
         const gold = this.gold;
         if (gold > 0) {
-            let goldItem = entityLoader.createFromTemplate('gold');
+            let goldItem = entityLoader.createFromTemplate("gold");
             goldItem.amount = gold;
             this.drop(goldItem);
         }
@@ -59,7 +59,7 @@ export default class Inventory extends _Component {
     drop(item) {
         if (item) {
             const parentPosition = this.parentEntity.getComponent("positionalobject");
-            engine.gameMap.addItem(item, parentPosition)
+            engine.gameMap.addItem(item, parentPosition);
 
             if (this.isPlayer()) {
                 messageConsole.text("You dropped the " + item.name).build();

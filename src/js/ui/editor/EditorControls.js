@@ -1,4 +1,4 @@
-import html from '../../../html/ui/editor/EditorControls.html';
+import html from "../../../html/ui/editor/EditorControls.html";
 import UIElement from "../UIElement";
 
 class EditorControls extends UIElement {

@@ -337,11 +337,11 @@ export default class Equippable extends _Component {
     drop(item) {
         if (item) {
             let parent = this.parentEntity;
-            while (parent.type !== 'actor') {
+            while (parent.type !== "actor") {
                 parent = parent.parentEntity;
             }
             const parentPosition = parent.getComponent("positionalobject");
-            engine.gameMap.addItem(item, parentPosition)
+            engine.gameMap.addItem(item, parentPosition);
 
             if (parent === engine.player) {
                 messageConsole.text("You dropped the " + item.name).build();

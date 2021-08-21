@@ -11,11 +11,11 @@ export default class FovSlope {
     greaterOrEqual(y, x) {
         return this.y * x >= this.x * y;
     }
-/*
+    /*
     less(y, x) {
         return this.y * x < this.x * y;
     }
-*/
+    */
     lessOrEqual(y, x) {
         return this.y * x <= this.x * y;
     }

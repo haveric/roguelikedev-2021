@@ -7,7 +7,7 @@ export default class GridNode {
 
     toString() {
         return "[" + this.x + " " + this.y + "]";
-    };
+    }
 
     getCost(fromNeighbor) {
         // Take diagonal weight into consideration.

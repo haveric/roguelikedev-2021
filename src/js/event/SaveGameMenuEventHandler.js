@@ -27,9 +27,9 @@ export default class SaveGameMenuEventHandler extends MenuEventHandler {
                 saveManager.save();
 
                 saveGameMenu.loadSaves();
-                saveGameMenu.overwriteDom.classList.remove("active")
+                saveGameMenu.overwriteDom.classList.remove("active");
             } else if (classList.contains("save__overwrite-cancel")) {
-                saveGameMenu.overwriteDom.classList.remove("active")
+                saveGameMenu.overwriteDom.classList.remove("active");
             }
         } else {
             if (classList.contains("menu__back")) {

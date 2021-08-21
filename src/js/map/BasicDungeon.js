@@ -58,8 +58,8 @@ export default class BasicDungeon extends GameMap {
     create(previousMapName, stairsInteractable) {
         super.create();
 
-        const floorEntity = entityLoader.createFromTemplate('floor', {components: {positionalobject: {x: 0, y: 0, z: 0}}});
-        const wallEntity = entityLoader.createFromTemplate('wall', {components: {positionalobject: {x: 0, y: 0, z: 0}}});
+        const floorEntity = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: 0, y: 0, z: 0}}});
+        const wallEntity = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: 0, y: 0, z: 0}}});
         // Pre-fill with floor and walls
         for (let j = 0; j < this.height; j++) {
             for (let i = 0; i < this.width; i++) {
@@ -108,7 +108,7 @@ export default class BasicDungeon extends GameMap {
 
                 const playerPosition = engine.player.getComponent("positionalobject");
                 if (playerPosition) {
-                    this.tiles.get(1)[centerX][centerY] = entityLoader.createFromTemplate('stairs_north', {components: {positionalobject: {x: centerX, y: centerY, z: 1}, stairsInteractable: {map: previousMapName, x: playerPosition.x, y: playerPosition.y, z: playerPosition.z}}});
+                    this.tiles.get(1)[centerX][centerY] = entityLoader.createFromTemplate("stairs_north", {components: {positionalobject: {x: centerX, y: centerY, z: 1}, stairsInteractable: {map: previousMapName, x: playerPosition.x, y: playerPosition.y, z: playerPosition.z}}});
                 }
                 this.addPlayer(centerX, centerY);
             } else {
@@ -125,6 +125,6 @@ export default class BasicDungeon extends GameMap {
         const lastRoom = rooms[rooms.length - 1];
         const lastRoomCenterX = lastRoom.getCenterX();
         const lastRoomCenterY = lastRoom.getCenterY();
-        this.tiles.get(0)[lastRoomCenterX][lastRoomCenterY] = entityLoader.createFromTemplate('stairs_north', {components: {positionalobject: {x: lastRoomCenterX, y: lastRoomCenterY, z: 0}, stairsInteractable: {generator: "basic-dungeon"}}});
+        this.tiles.get(0)[lastRoomCenterX][lastRoomCenterY] = entityLoader.createFromTemplate("stairs_north", {components: {positionalobject: {x: lastRoomCenterX, y: lastRoomCenterY, z: 0}, stairsInteractable: {generator: "basic-dungeon"}}});
     }
 }

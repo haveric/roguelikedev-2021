@@ -41,7 +41,7 @@ export default class Graph {
 
     markDirty(node) {
         this.dirtyNodes.push(node);
-    };
+    }
 
     neighbors(node) {
         const ret = [];

@@ -1,4 +1,4 @@
-import html from '../../html/ui/Details.html';
+import html from "../../html/ui/Details.html";
 import engine from "../Engine";
 import UIElement from "./UIElement";
 
@@ -95,7 +95,7 @@ class Details extends UIElement {
             for (const actor of nearby) {
                 const position = actor.getComponent("positionalobject");
                 if (position) {
-                    text += "<span class='details__line'>"
+                    text += "<span class='details__line'>";
                     text += "<span style='color:" + position.color + "'>" + position.letter + "</span>: " + actor.name;
 
                     const fighter = actor.getComponent("fighter");

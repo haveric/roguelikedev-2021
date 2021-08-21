@@ -1,4 +1,4 @@
-import html from '../../html/ui/BottomContainer.html';
+import html from "../../html/ui/BottomContainer.html";
 import UIElement from "./UIElement";
 import characterHealth from "./CharacterHealth";
 import characterMana from "./CharacterMana";
@@ -96,7 +96,7 @@ class BottomContainer extends UIElement {
                 html += "<div class='item__details'>"
                     + "<span class='item__details-line item__name'>" + item.name + "</span>";
                 if (item.description) {
-                    html += "<span class='item__details-line item__description'>" + item.description + "</span>"
+                    html += "<span class='item__details-line item__description'>" + item.description + "</span>";
                 }
 
                 html += "<span class='item__details-line'><hr/></span>";

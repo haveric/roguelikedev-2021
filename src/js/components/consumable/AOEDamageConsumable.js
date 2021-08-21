@@ -19,11 +19,11 @@ export default class AOEDamageConsumable extends Consumable {
             const aoeDamageConsumable = args.components.aoeDamageConsumable;
             if (aoeDamageConsumable) {
                 if (aoeDamageConsumable.damage !== undefined) {
-                    this.damage = aoeDamageConsumable.damage
+                    this.damage = aoeDamageConsumable.damage;
                 }
 
                 if (aoeDamageConsumable.radius !== undefined) {
-                    this.radius = aoeDamageConsumable.radius
+                    this.radius = aoeDamageConsumable.radius;
                 }
             }
         }

@@ -20,7 +20,7 @@ export default class SummonPortalConsumable extends Consumable {
 
         const saveJson = {
             "summonPortalConsumable": {}
-        }
+        };
 
         this.cachedSave = saveJson;
         return saveJson;
@@ -93,9 +93,9 @@ export default class SummonPortalConsumable extends Consumable {
             return new UnableToPerformAction(this.parentEntity, target.name + " is in the way.");
         }
 
-        engine.gameMap.tiles.get(targetPosition.z + 1)[targetPosition.x][targetPosition.y] = entityLoader.createFromTemplate('portal', {components: {positionalobject: {x: targetPosition.x, y: targetPosition.y, z: targetPosition.z + 1}, portalInteractable: {map: "town", x: 34, y:36, z:1}}});
+        engine.gameMap.tiles.get(targetPosition.z + 1)[targetPosition.x][targetPosition.y] = entityLoader.createFromTemplate("portal", {components: {positionalobject: {x: targetPosition.x, y: targetPosition.y, z: targetPosition.z + 1}, portalInteractable: {map: "town", x: 34, y:36, z:1}}});
         const town = engine.gameMaps.get("town");
-        town.tiles.get(1)[34][36] = entityLoader.createFromTemplate('portal', {components: {positionalobject: {x: 34, y: 36, z: 1}, portalInteractable: {map: engine.gameMap.name, x: targetPosition.x, y: targetPosition.y, z: targetPosition.z + 1}}});
+        town.tiles.get(1)[34][36] = entityLoader.createFromTemplate("portal", {components: {positionalobject: {x: 34, y: 36, z: 1}, portalInteractable: {map: engine.gameMap.name, x: targetPosition.x, y: targetPosition.y, z: targetPosition.z + 1}}});
 
         this.consume();
     }

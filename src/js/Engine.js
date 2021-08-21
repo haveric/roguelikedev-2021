@@ -144,7 +144,7 @@ class Engine {
 
                 if (newMap.name === currentMap) {
                     for (const actor of newMap.actors) {
-                        if (actor.name === 'Player') {
+                        if (actor.name === "Player") {
                             this.player = actor;
                             break;
                         }

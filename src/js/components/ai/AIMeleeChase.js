@@ -170,7 +170,6 @@ export default class AIMeleeChase extends AI {
                 const start = costGraph.grid[entityPosition.x - this.fov.left][entityPosition.y - this.fov.top];
                 const end = costGraph.grid[this.chaseLocation.x - this.fov.left][this.chaseLocation.y - this.fov.top];
                 const path = AStar.search(costGraph, start, end);
-                path.length
                 let lastAction;
                 while (this.currentMovement >= 1) {
                     if (path && path.length > 0) {
@@ -184,6 +183,8 @@ export default class AIMeleeChase extends AI {
 
                     this.currentMovement -= 1;
                 }
+
+                return lastAction;
             }
         }
     }

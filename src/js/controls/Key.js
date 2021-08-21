@@ -56,6 +56,6 @@ const Key = {
     NUMPAD_HOME: "Numpad Home",
     NUMPAD_ARROW_UP: "Numpad ArrowUp",
     NUMPAD_PAGE_UP: "Numpad PageUp",
-}
+};
 
 export default Key;
