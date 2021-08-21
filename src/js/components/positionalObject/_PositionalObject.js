@@ -186,7 +186,7 @@ export default class _PositionalObject extends _Component {
     }
 
     hasObject() {
-        return this.object !== null;
+        return this.object !== null && this.object !== undefined;
     }
 
     setVisible(visible = true) {

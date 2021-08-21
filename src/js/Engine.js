@@ -36,7 +36,7 @@ class Engine {
     }
 
     processAction(action) {
-        if (action !== null && this.eventHandler.isPlayerTurn) {
+        if (action && this.eventHandler.isPlayerTurn) {
             const performedAction = action.perform();
             if (performedAction instanceof NoAction) {
                 return false;
