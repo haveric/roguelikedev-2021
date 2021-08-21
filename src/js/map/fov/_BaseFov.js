@@ -107,7 +107,7 @@ export default class BaseFov {
         }
 
         if (!tilesOnly) {
-            for (let actor of engine.gameMap.actors) {
+            for (const actor of engine.gameMap.actors) {
                 const positionalObject = actor.getComponent("positionalobject");
                 if (positionalObject) {
                     if (positionalObject.x === x && positionalObject.y === y) {
@@ -117,7 +117,7 @@ export default class BaseFov {
                 }
             }
 
-            for (let item of engine.gameMap.items) {
+            for (const item of engine.gameMap.items) {
                 const positionalObject = item.getComponent("positionalobject");
                 if (positionalObject) {
                     if (positionalObject.x === x && positionalObject.y === y) {

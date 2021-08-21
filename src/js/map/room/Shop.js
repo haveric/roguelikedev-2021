@@ -31,7 +31,7 @@ export default class Shop extends RectangularRoom {
                         gameMap.tiles.get(1)[i][j] = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: i, y: j, z: 1}}});
                         gameMap.tiles.get(2)[i][j] = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: i, y: j, z: 2}}});
 
-                        let isCorner = isHorizontalEdge && isVerticalEdge;
+                        const isCorner = isHorizontalEdge && isVerticalEdge;
                         if (!isCorner) {
                             this.walls.push(gameMap.tiles.get(1)[i][j]);
                         }
@@ -44,7 +44,7 @@ export default class Shop extends RectangularRoom {
             }
         }
 
-        let randWall = MathUtils.randInt(0, this.walls.length - 1);
+        const randWall = MathUtils.randInt(0, this.walls.length - 1);
         const wall = this.walls[randWall];
         const position = wall.getComponent("positionalobject");
 

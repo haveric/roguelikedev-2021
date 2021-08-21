@@ -77,7 +77,7 @@ export default class CharacterObject extends _PositionalObject {
             return this.cachedSave;
         }
 
-        let saveJson = {
+        const saveJson = {
             characterobject: {}
         };
 

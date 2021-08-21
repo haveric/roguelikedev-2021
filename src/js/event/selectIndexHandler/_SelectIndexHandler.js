@@ -81,8 +81,8 @@ export default class SelectIndexHandler extends EventHandler {
             }
 
             if (dx !== 0 || dy !== 0) {
-                let x = this.position.x + (dx * modifier);
-                let y = this.position.y + (dy * modifier);
+                const x = this.position.x + (dx * modifier);
+                const y = this.position.y + (dy * modifier);
 
                 this.position.x = Math.max(0, Math.min(x, engine.gameMap.width - 1));
                 this.position.y = Math.max(0, Math.min(y, engine.gameMap.height - 1));

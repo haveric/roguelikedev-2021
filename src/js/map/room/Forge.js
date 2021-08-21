@@ -39,7 +39,7 @@ export default class Forge extends RectangularRoom {
                             gameMap.tiles.get(1)[i][j] = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: i, y: j, z: 1}}});
                             gameMap.tiles.get(2)[i][j] = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: i, y: j, z: 2}}});
 
-                            let isCorner = isHorizontalEdge && isVerticalEdge;
+                            const isCorner = isHorizontalEdge && isVerticalEdge;
                             if (!isCorner) {
                                 this.walls.push(gameMap.tiles.get(1)[i][j]);
                             }

@@ -47,7 +47,7 @@ export default class BasicDungeon extends GameMap {
             return this.saveCache;
         }
 
-        let saveJson = {
+        const saveJson = {
             level: this.level
         };
 

@@ -40,7 +40,7 @@ export default class PortalInteractable extends Interactable {
             return this.cachedSave;
         }
 
-        let saveJson = {
+        const saveJson = {
             "portalInteractable": {}
         };
 

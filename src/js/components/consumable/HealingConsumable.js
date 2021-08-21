@@ -57,7 +57,6 @@ export default class HealingConsumable extends Consumable {
     }
 
     getModifiedAmount() {
-        let amount = this.amount;
         let healingBonus = 0;
         let consumer = this.getConsumer();
         if (!consumer) {
@@ -69,7 +68,7 @@ export default class HealingConsumable extends Consumable {
             healingBonus = fighter.healingBonus;
         }
 
-        return amount + healingBonus;
+        return this.amount + healingBonus;
     }
 
     getDescription() {

@@ -77,7 +77,7 @@ class Details extends UIElement {
         }
 
 
-        let nearby = [];
+        const nearby = [];
         for (const actor of engine.fov.visibleActors) {
             if (actor === engine.player || !actor.isAlive()) {
                 continue;

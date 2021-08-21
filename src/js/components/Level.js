@@ -49,7 +49,7 @@ export default class Level extends _Component {
             return this.cachedSave;
         }
 
-        let saveJson = {
+        const saveJson = {
             level: {}
         };
 

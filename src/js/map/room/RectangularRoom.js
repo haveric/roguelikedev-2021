@@ -94,7 +94,7 @@ export default class RectangularRoom {
             const y = MathUtils.randInt(this.y1 + 1, this.y2 -1);
             const amount = MathUtils.randInt(1, 25);
             const position = {amount: amount, components: {positionalobject: {x: x, y: y, z: 1}}};
-            let item = entityLoader.createFromTemplate("gold", position);
+            const item = entityLoader.createFromTemplate("gold", position);
 
             engine.gameMap.items.push(item);
         }

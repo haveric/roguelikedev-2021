@@ -49,7 +49,7 @@ export default class DamageNearestConsumable extends Consumable {
      */
     activate(action) {
         const consumer = action.entity;
-        let target = this.getClosestActor(consumer);
+        const target = this.getClosestActor(consumer);
 
         if (target) {
             const fighter = target.getComponent("fighter");
@@ -81,7 +81,7 @@ export default class DamageNearestConsumable extends Consumable {
                     if (consumerFaction.isEnemyOf(actor.getComponent("faction"))) {
                         const position = actor.getComponent("positionalobject");
                         if (position) {
-                            let distance = consumerPosition.distance(position);
+                            const distance = consumerPosition.distance(position);
                             if (closestDistance === null || distance < closestDistance) {
                                 closestEnemies = [];
                                 closestEnemies.push(actor);
@@ -99,7 +99,7 @@ export default class DamageNearestConsumable extends Consumable {
                     if (consumerFaction.isEnemyOf(actor.getComponent("faction"))) {
                         const position = actor.getComponent("positionalobject");
                         if (position) {
-                            let distance = consumerPosition.distance(position);
+                            const distance = consumerPosition.distance(position);
                             if (closestDistance === null || distance < closestDistance) {
                                 closestEnemies = [];
                                 closestEnemies.push(actor);

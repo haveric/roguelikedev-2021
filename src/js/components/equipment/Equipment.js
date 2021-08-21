@@ -104,7 +104,7 @@ export default class Equipment extends _Component {
 
         const gold = this.gold;
         if (gold > 0) {
-            let goldItem = entityLoader.createFromTemplate("gold");
+            const goldItem = entityLoader.createFromTemplate("gold");
             goldItem.amount = gold;
             this.drop(goldItem);
         }

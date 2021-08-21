@@ -14,7 +14,7 @@ export default class AreaRangedAttackHandler extends SelectIndexHandler {
     selectIndex(moveCamera = true) {
         let centerIsObscured = true;
         let centerTile = null;
-        let visibleTiles = [];
+        const visibleTiles = [];
         const tiles = engine.gameMap.tiles.get(this.position.z);
         if (tiles) {
             const left = Math.max(0, this.position.x - this.radius);

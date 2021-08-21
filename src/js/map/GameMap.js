@@ -109,7 +109,7 @@ export default class GameMap {
                         return false;
                     }
 
-                    let amountCanAdd = mapItem.maxStackSize - mapItem.amount;
+                    const amountCanAdd = mapItem.maxStackSize - mapItem.amount;
                     if (amountCanAdd >= amountToAdd) {
                         mapItem.setAmount(mapItem.amount + amountToAdd);
                         itemPosition.teardown();
@@ -151,7 +151,7 @@ export default class GameMap {
             return this.saveCache;
         }
 
-        let saveData = {
+        const saveData = {
             name: this.name,
             width: this.width,
             height: this.height
@@ -197,13 +197,13 @@ export default class GameMap {
             }
         }
 
-        let actorJson = [];
+        const actorJson = [];
         for (const actor of this.actors) {
             actorJson.push(JSON.stringify(actor.save()));
         }
         saveData["actors"] = actorJson;
 
-        let itemJson = [];
+        const itemJson = [];
         for (const item of this.items) {
             itemJson.push(JSON.stringify(item.save()));
         }
@@ -717,7 +717,7 @@ export default class GameMap {
             }
         }
 
-        for (let newObject of newObjectsRemoved) {
+        for (const newObject of newObjectsRemoved) {
             const newIndex = newObjects.indexOf(newObject);
             if (newIndex > -1) {
                 newObjects.splice(newIndex, 1);

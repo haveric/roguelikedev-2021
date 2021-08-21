@@ -127,7 +127,7 @@ class Inventory extends UIElement {
         if (this.isOpen()) {
             this.populateItemsAtGround();
 
-            let maxItems = Math.ceil((this.itemsOnGround.length + 1) / 10) * 10;
+            const maxItems = Math.ceil((this.itemsOnGround.length + 1) / 10) * 10;
 
             const inventoryStorageDom = document.createElement("div");
             inventoryStorageDom.classList.add("inventory__storage");

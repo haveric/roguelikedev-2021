@@ -90,7 +90,7 @@ export default class Fighter extends _Component {
             return this.cachedSave;
         }
 
-        let saveJson = {
+        const saveJson = {
             fighter: {
                 hp: this.hp,
                 mana: this.mana

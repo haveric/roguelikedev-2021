@@ -72,7 +72,7 @@ class SaveManager {
     }
 
     getLastAutosave() {
-        let save = this.saves[this.saveName];
+        const save = this.saves[this.saveName];
         if (save === undefined) {
             return -1;
         } else {

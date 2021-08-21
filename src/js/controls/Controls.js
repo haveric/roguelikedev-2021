@@ -69,14 +69,14 @@ class Controls {
                 }
             }
 
-            let key = self.getKey(e.key, e.code);
+            const key = self.getKey(e.key, e.code);
             //console.log("Key Down: ", key);
             self.keysDown[key] = true;
         }, false);
 
 
         addEventListener("keyup", function (e) {
-            let key = self.getKey(e.key, e.code);
+            const key = self.getKey(e.key, e.code);
             if (key === Key.SHIFT_LEFT || key === Key.SHIFT_RIGHT) {
                 self.lastShiftUp = key;
             }

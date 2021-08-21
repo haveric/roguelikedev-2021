@@ -48,7 +48,7 @@ export default class Inventory extends _Component {
     dropAll() {
         const gold = this.gold;
         if (gold > 0) {
-            let goldItem = entityLoader.createFromTemplate("gold");
+            const goldItem = entityLoader.createFromTemplate("gold");
             goldItem.amount = gold;
             this.drop(goldItem);
         }

@@ -65,8 +65,7 @@ export default class AStar {
             const neighbors = graph.neighbors(currentNode);
 
             for (let i = 0, il = neighbors.length; i < il; ++i) {
-                let neighbor = neighbors[i];
-
+                const neighbor = neighbors[i];
                 if (neighbor.closed || neighbor.isWall()) {
                     // Not a valid node to process, skip to next neighbor.
                     continue;

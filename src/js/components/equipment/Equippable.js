@@ -280,7 +280,7 @@ export default class Equippable extends _Component {
             const inventoryItem = this.storage[i];
             if (inventoryItem) {
                 if (item.id === inventoryItem.id) {
-                    let amountCanAdd = inventoryItem.maxStackSize - inventoryItem.amount;
+                    const amountCanAdd = inventoryItem.maxStackSize - inventoryItem.amount;
                     if (amountCanAdd >= amountToAdd) {
                         inventoryItem.setAmount(inventoryItem.amount + amountToAdd);
                         return true;

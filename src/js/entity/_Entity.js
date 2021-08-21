@@ -77,7 +77,7 @@ export default class _Entity {
             return this.cachedSave;
         }
 
-        let json = {
+        const json = {
             id: this.id,
             type: this.type,
             name: this.name,

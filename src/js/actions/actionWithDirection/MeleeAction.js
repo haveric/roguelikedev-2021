@@ -44,7 +44,7 @@ export default class MeleeAction extends ActionWithDirection {
                     attackColor = "#999";
                 }
 
-                let description = name + " attack" + plural + " " + blockingName;
+                const description = name + " attack" + plural + " " + blockingName;
                 const blockRandom = MathUtils.randInt(0, 100);
                 if (blockingFighter.blockChance > blockRandom) {
                     const blockedColor = "#000";

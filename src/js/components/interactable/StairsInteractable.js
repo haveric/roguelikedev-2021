@@ -44,7 +44,7 @@ export default class StairsInteractable extends Interactable {
             return this.cachedSave;
         }
 
-        let saveJson = {
+        const saveJson = {
             "stairsInteractable": {}
         };
 
@@ -86,7 +86,7 @@ export default class StairsInteractable extends Interactable {
             playerPosition.z = this.z;
             engine.setMap(engine.gameMaps.get(this.map), this);
         } else if (this.generator) {
-            let args = {};
+            const args = {};
             if (engine.gameMap.level) {
                 args.level = engine.gameMap.level + 1;
             }

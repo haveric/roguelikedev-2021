@@ -36,7 +36,7 @@ class Engine {
     }
 
     processAction(action) {
-        if (action != null && this.eventHandler.isPlayerTurn) {
+        if (action !== null && this.eventHandler.isPlayerTurn) {
             const performedAction = action.perform();
             if (performedAction instanceof NoAction) {
                 return false;
@@ -121,7 +121,7 @@ class Engine {
             maps.push(map.save());
         }
 
-        let saveJson = {
+        const saveJson = {
             "name": name,
             "date": new Date(),
             "currentMap": this.gameMap.name,

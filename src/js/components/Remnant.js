@@ -37,7 +37,7 @@ export default class Remnant extends _Component {
             return this.cachedSave;
         }
 
-        let saveJson = {
+        const saveJson = {
             remnant: {}
         };
 

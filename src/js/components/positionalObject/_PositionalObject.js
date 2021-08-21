@@ -65,7 +65,7 @@ export default class _PositionalObject extends _Component {
             return this.cachedSave;
         }
 
-        let saveJson = {
+        const saveJson = {
             positionalobject: {}
         };
 
@@ -186,7 +186,7 @@ export default class _PositionalObject extends _Component {
     }
 
     hasObject() {
-        return this.object != null;
+        return this.object !== null;
     }
 
     setVisible(visible = true) {
