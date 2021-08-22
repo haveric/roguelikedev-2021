@@ -3,9 +3,11 @@ import {MathUtils} from "three";
 import engine from "../../Engine";
 import entityLoader from "../../entity/EntityLoader";
 import chanceLoader from "../mapGeneration/ChanceLoader";
+import Room from "./_Room";
 
-export default class RectangularRoom {
+export default class RectangularRoom extends Room {
     constructor(x, y, width, height) {
+        super();
         this.x1 = x;
         this.y1 = y;
         this.x2 = x + width;
