@@ -1,5 +1,4 @@
 import _Entity from "./_Entity";
-import Extend from "../util/Extend";
 
 export default class Item extends _Entity {
     constructor(args = {}) {
@@ -17,10 +16,16 @@ export default class Item extends _Entity {
     }
 
     save() {
-        return Extend.deep(super.save(), {
-            amount: this.amount,
-            maxStackSize: this.maxStackSize
-        });
+        const saveJson = super.save();
+
+        if (this.amount !== 1) {
+            saveJson.amount = this.amount;
+        }
+        if (this.maxStackSize !== 1) {
+            saveJson.maxStackSize = this.maxStackSize;
+        }
+
+        return saveJson;
     }
 
     clone() {

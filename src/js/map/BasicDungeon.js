@@ -4,7 +4,6 @@ import MapGeneration from "./mapGeneration/MapGeneration";
 import entityLoader from "../entity/EntityLoader";
 import {MathUtils} from "three";
 import engine from "../Engine";
-import Extend from "../util/Extend";
 
 export default class BasicDungeon extends GameMap {
     constructor(width, height, args = {}) {
@@ -47,11 +46,12 @@ export default class BasicDungeon extends GameMap {
             return this.saveCache;
         }
 
-        const saveJson = {
-            level: this.level
-        };
+        const saveJson = super.save();
+        if (this.level !== 1) {
+            saveJson.level = this.level;
+        }
 
-        this.saveCache = Extend.deep(super.save(), saveJson);
+        this.saveCache = saveJson;
         return saveJson;
     }
 
