@@ -3,7 +3,10 @@ import componentLoader from "../components/ComponentLoader";
 import Extend from "../util/Extend";
 
 export default class _Entity {
-    constructor(args) {
+    constructor(args, type) {
+        if (type) {
+            args.type = type;
+        }
         this.type = args.type || "entity";
         this.id = args.id;
         this.name = args.name || "";

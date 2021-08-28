@@ -1,10 +1,9 @@
 import Interactable from "./_Interactable";
-import Extend from "../../util/Extend";
 import engine from "../../Engine";
 
 export default class StairsInteractable extends Interactable {
     constructor(args = {}) {
-        super(Extend.extend(args, {type: "stairsInteractable"}));
+        super(args, "stairsInteractable");
         const hasComponent = args.components && args.components.stairsInteractable !== undefined;
 
         this.map = null;

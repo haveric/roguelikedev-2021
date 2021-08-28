@@ -1,5 +1,4 @@
 import Consumable from "./_Consumable";
-import Extend from "../../util/Extend";
 import engine from "../../Engine";
 import UnableToPerformAction from "../../actions/UnableToPerformAction";
 import messageConsole from "../../ui/MessageConsole";
@@ -11,7 +10,7 @@ import AIConfusedEnemy from "../ai/AIConfusedEnemy";
 
 export default class ConfusionConsumable extends Consumable {
     constructor(args = {}) {
-        super(Extend.extend(args, {type: "confusionConsumable"}));
+        super(args, "confusionConsumable");
         const hasComponent = args.components && args.components.confusionConsumable !== undefined;
 
         this.turns = 0;

@@ -1,5 +1,4 @@
 import _Component from "../_Component";
-import Extend from "../../util/Extend";
 import EquipmentType from "./EquipmentType";
 import entityLoader from "../../entity/EntityLoader";
 import engine from "../../Engine";
@@ -8,7 +7,7 @@ import inventory from "../../ui/Inventory";
 
 export default class Equippable extends _Component {
     constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "equippable"}));
+        super(args, "equippable");
         const hasComponent = args.components && args.components.equippable !== undefined;
         this.slot = EquipmentType.MAIN_HAND;
         this.minDamage = 0;

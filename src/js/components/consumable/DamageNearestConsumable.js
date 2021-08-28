@@ -1,5 +1,4 @@
 import Consumable from "./_Consumable";
-import Extend from "../../util/Extend";
 import engine from "../../Engine";
 import {MathUtils} from "three";
 import messageConsole from "../../ui/MessageConsole";
@@ -7,7 +6,7 @@ import UnableToPerformAction from "../../actions/UnableToPerformAction";
 
 export default class DamageNearestConsumable extends Consumable {
     constructor(args = {}) {
-        super(Extend.extend(args, {type: "damageNearestConsumable"}));
+        super(args, "damageNearestConsumable");
         const hasComponent = args.components && args.components.damageNearestConsumable !== undefined;
 
         this.damage = 20;

@@ -1,13 +1,8 @@
 import _Entity from "./_Entity";
-import Extend from "../util/Extend";
 
 export default class Actor extends _Entity {
     constructor(args = {}) {
-        super(Extend.deep(Actor.getDefaultTemplate(), args));
-    }
-
-    static getDefaultTemplate() {
-        return {type: "actor"};
+        super(args, "actor");
     }
 
     isAlive() {

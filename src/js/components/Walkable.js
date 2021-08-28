@@ -1,9 +1,8 @@
 import _Component from "./_Component";
-import Extend from "../util/Extend";
 
 export default class Walkable extends _Component {
     constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "walkable"}));
+        super(args, "walkable");
         const hasComponent = args.components && args.components.walkable !== undefined;
 
         // Can walk on top of

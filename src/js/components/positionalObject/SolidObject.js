@@ -10,7 +10,7 @@ export default class SolidObject extends _PositionalObject {
             args.components.positionalobject = args.components.positionalobject || {};
             args.components.positionalobject = Extend.extend(args.components.positionalobject, args.components.solidobject);
         }
-        super(Extend.extend(args, {type: "solidobject"}));
+        super(args, "solidobject");
     }
 
     save() {

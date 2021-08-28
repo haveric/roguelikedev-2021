@@ -1,9 +1,8 @@
 import _Component from "./_Component";
-import Extend from "../util/Extend";
 
 export default class Remnant extends _Component {
     constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "remnant"}));
+        super(args, "remnant");
 
         const hasComponent = args.components && args.components.remnant !== undefined;
 

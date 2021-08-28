@@ -1,11 +1,10 @@
 import _Component from "../_Component";
-import Extend from "../../util/Extend";
 import engine from "../../Engine";
 import ItemAction from "../../actions/itemAction/ItemAction";
 
 export default class Consumable extends _Component {
-    constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "consumable"}));
+    constructor(args = {}, type) {
+        super(args, "consumable", type);
     }
 
     save() {

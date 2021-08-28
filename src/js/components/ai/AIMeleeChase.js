@@ -1,5 +1,4 @@
 import AI from "./_AI";
-import Extend from "../../util/Extend";
 import AdamMilazzoFov from "../../map/fov/AdamMilazzoFov";
 import {MathUtils, Vector3} from "three";
 import WanderAction from "../../actions/WanderAction";
@@ -12,7 +11,7 @@ import BumpAction from "../../actions/actionWithDirection/BumpAction";
 
 export default class AIMeleeChase extends AI {
     constructor(args = {}) {
-        super(Extend.extend(args, {type: "aiMeleeChase"}));
+        super(args, "aiMeleeChase");
         const hasComponent = args.components && args.components.aiMeleeChase !== undefined;
 
         this.fov = new AdamMilazzoFov();

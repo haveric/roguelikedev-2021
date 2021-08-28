@@ -19,7 +19,7 @@ export default class CharacterObject extends _PositionalObject {
             args.components.positionalobject = Extend.extend(args.components.characterobject, args.components.positionalobject);
         }
 
-        super(Extend.extend(args, {type: "characterobject"}));
+        super(args, "characterobject");
 
         this.fontName = "helvetiker";
         this.letter = "@";

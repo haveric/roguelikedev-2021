@@ -1,11 +1,10 @@
 import AI from "./_AI";
-import Extend from "../../util/Extend";
 import WanderAction from "../../actions/WanderAction";
 import componentLoader from "../ComponentLoader";
 
 export default class AIConfusedEnemy extends AI {
     constructor(args = {}) {
-        super(Extend.extend(args, {type: "aiConfusedEnemy"}));
+        super(args, "aiConfusedEnemy");
         const hasComponent = args.components && args.components.aiConfusedEnemy !== undefined;
 
         this.previousAI = "";

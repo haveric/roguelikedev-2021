@@ -1,9 +1,8 @@
 import _Component from "./_Component";
-import Extend from "../util/Extend";
 
 export default class Faction extends _Component {
     constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "faction"}));
+        super(args, "faction");
         const hasComponent = args.components && args.components.faction !== undefined;
 
         this.factions = [];

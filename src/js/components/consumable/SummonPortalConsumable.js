@@ -1,5 +1,4 @@
 import Consumable from "./_Consumable";
-import Extend from "../../util/Extend";
 import messageConsole from "../../ui/MessageConsole";
 import engine from "../../Engine";
 import ItemAction from "../../actions/itemAction/ItemAction";
@@ -10,7 +9,7 @@ import entityLoader from "../../entity/EntityLoader";
 
 export default class SummonPortalConsumable extends Consumable {
     constructor(args = {}) {
-        super(Extend.extend(args, {type: "summonPortalConsumable"}));
+        super(args, "summonPortalConsumable");
     }
 
     save() {

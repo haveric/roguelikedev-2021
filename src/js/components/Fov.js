@@ -1,9 +1,8 @@
 import _Component from "./_Component";
-import Extend from "../util/Extend";
 
 export default class Fov extends _Component {
     constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "fov"}));
+        super(args, "fov");
         const hasComponent = args.components && args.components.fov;
 
         this.explored = false;

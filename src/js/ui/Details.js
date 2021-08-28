@@ -22,7 +22,10 @@ class Details extends UIElement {
         this.dom.innerHTML = this.getPosition(entity);
     }
 
-    updatePositionDetails(entity, skipPlayer = false, ) {
+    updatePositionDetails(entity, skipPlayer = false) {
+        if (!entity) {
+            return;
+        }
         const position = entity.getComponent("positionalobject");
         const x = position.x;
         const y = position.y;

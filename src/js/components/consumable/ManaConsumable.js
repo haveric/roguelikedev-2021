@@ -1,11 +1,10 @@
 import Consumable from "./_Consumable";
-import Extend from "../../util/Extend";
 import UnableToPerformAction from "../../actions/UnableToPerformAction";
 import messageConsole from "../../ui/MessageConsole";
 
 export default class ManaConsumable extends Consumable {
     constructor(args = {}) {
-        super(Extend.extend(args, {type: "manaConsumable"}));
+        super(args, "manaConsumable");
         const hasComponent = args.components && args.components.manaConsumable !== undefined;
 
         this.amount = 0;

@@ -2,9 +2,9 @@ import engine from "../Engine";
 import {MathUtils} from "three";
 
 export default class _Component {
-    constructor(args = {}) {
-        this.baseType = args.baseType || "component";
-        this.type = args.type || this.baseType;
+    constructor(args = {}, baseType, type) {
+        this.baseType = baseType || "component";
+        this.type = type || this.baseType;
         this.parentEntity = args.parentEntity;
 
         this.cachedSave = null;

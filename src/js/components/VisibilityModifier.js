@@ -1,9 +1,8 @@
 import _Component from "./_Component";
-import Extend from "../util/Extend";
 
 export default class VisibilityModifier extends _Component {
     constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "visibilityModifier"}));
+        super(args, "visibilityModifier");
         const hasComponent = args.components && args.components.visibilityModifier !== undefined;
 
         this.modifier = "+";

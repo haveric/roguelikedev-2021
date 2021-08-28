@@ -1,12 +1,11 @@
 import _Component from "../_Component";
-import Extend from "../../util/Extend";
 import {Vector3} from "three";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import engine from "../../Engine";
 
 export default class AI extends _Component {
-    constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "ai"}));
+    constructor(args = {}, type) {
+        super(args, "ai", type);
     }
 
     save() {

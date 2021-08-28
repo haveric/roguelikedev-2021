@@ -1,10 +1,9 @@
 import _Component from "./_Component";
-import Extend from "../util/Extend";
 import engine from "../Engine";
 
 export default class ExplodeOnDeath extends _Component {
     constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "explodeOnDeath"}));
+        super(args, "explodeOnDeath");
         const hasComponent = args.components && args.components.explodeOnDeath !== undefined;
 
         this.damage = 0;

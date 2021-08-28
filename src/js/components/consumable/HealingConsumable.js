@@ -1,12 +1,11 @@
 import Consumable from "./_Consumable";
-import Extend from "../../util/Extend";
 import UnableToPerformAction from "../../actions/UnableToPerformAction";
 import messageConsole from "../../ui/MessageConsole";
 import engine from "../../Engine";
 
 export default class HealingConsumable extends Consumable {
     constructor(args = {}) {
-        super(Extend.extend(args, {type: "healingConsumable"}));
+        super(args, "healingConsumable");
         const hasComponent = args.components && args.components.healingConsumable !== undefined;
 
         this.amount = 0;

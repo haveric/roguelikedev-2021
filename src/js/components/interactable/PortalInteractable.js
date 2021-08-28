@@ -1,11 +1,10 @@
 import Interactable from "./_Interactable";
-import Extend from "../../util/Extend";
 import engine from "../../Engine";
 import entityLoader from "../../entity/EntityLoader";
 
 export default class PortalInteractable extends Interactable {
     constructor(args = {}) {
-        super(Extend.extend(args, {type: "portalInteractable"}));
+        super(args, "portalInteractable");
         const hasComponent = args.components && args.components.portalInteractable !== undefined;
 
         this.map = null;

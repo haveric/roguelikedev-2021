@@ -1,5 +1,4 @@
 import _Component from "./_Component";
-import Extend from "../util/Extend";
 import {Vector3} from "three";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import engine from "../Engine";
@@ -8,7 +7,7 @@ import Remnant from "./Remnant";
 
 export default class AttachedItems extends _Component {
     constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "attachedItems"}));
+        super(args, "attachedItems");
 
         this.items = [];
         const hasComponent = args.components && args.components.attachedItems !== undefined;

@@ -1,14 +1,13 @@
 import _Component from "../_Component";
 import sceneState from "../../SceneState";
 import Tile from "../../entity/Tile";
-import Extend from "../../util/Extend";
 import {Vector3} from "three";
 import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
 import engine from "../../Engine";
 
 export default class _PositionalObject extends _Component {
-    constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "positionalobject"}));
+    constructor(args = {}, type) {
+        super(args, "positionalobject", type);
         const hasComponent = args.components && args.components.positionalobject;
 
         this.object = null;

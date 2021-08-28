@@ -1,5 +1,4 @@
 import _Component from "./_Component";
-import Extend from "../util/Extend";
 import entityLoader from "../entity/EntityLoader";
 import engine from "../Engine";
 import messageConsole from "../ui/MessageConsole";
@@ -7,7 +6,7 @@ import inventory from "../ui/Inventory";
 
 export default class Inventory extends _Component {
     constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "inventory"}));
+        super(args, "inventory");
         const hasComponent = args.components && args.components.inventory;
 
         this.gold = 0;

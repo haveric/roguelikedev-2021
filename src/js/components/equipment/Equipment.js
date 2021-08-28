@@ -1,5 +1,4 @@
 import _Component from "../_Component";
-import Extend from "../../util/Extend";
 import EquipmentType from "./EquipmentType";
 import EquipmentSlot from "./EquipmentSlot";
 import entityLoader from "../../entity/EntityLoader";
@@ -9,7 +8,7 @@ import inventory from "../../ui/Inventory";
 
 export default class Equipment extends _Component {
     constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "equipment"}));
+        super(args, "equipment");
         const hasComponent = args.components && args.components.equipment !== undefined;
 
         this.items = [];

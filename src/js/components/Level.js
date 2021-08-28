@@ -1,5 +1,4 @@
 import _Component from "./_Component";
-import Extend from "../util/Extend";
 import messageConsole from "../ui/MessageConsole";
 import engine from "../Engine";
 import character from "../ui/Character";
@@ -7,8 +6,7 @@ import bottomContainer from "../ui/BottomContainer";
 
 export default class Level extends _Component {
     constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "level"}));
-
+        super(args, "level");
         const hasComponent = args.components && args.components.level !== undefined;
 
         this.level = 1;

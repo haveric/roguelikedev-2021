@@ -1,5 +1,3 @@
-import Extend from "../../util/Extend";
-
 import engine from "../../Engine";
 import AdamMilazzoFov from "../../map/fov/AdamMilazzoFov";
 import {MathUtils, Vector3} from "three";
@@ -15,7 +13,7 @@ import entityLoader from "../../entity/EntityLoader";
 
 export default class AIGelatinousCube extends AI {
     constructor(args = {}) {
-        super(Extend.extend(args, {type: "aiGelatinousCube"}));
+        super(args, "aiGelatinousCube");
 
         this.fov = new AdamMilazzoFov();
         this.chaseLocation = null;

@@ -1,9 +1,8 @@
 import _Component from "./_Component";
-import Extend from "../util/Extend";
 
 export default class BlocksMovement extends _Component {
     constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "blocksMovement"}));
+        super(args, "blocksMovement");
         const hasComponent = args.components && args.components.blocksMovement !== undefined;
 
         // Whether the tile can moved into

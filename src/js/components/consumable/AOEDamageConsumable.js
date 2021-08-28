@@ -3,13 +3,12 @@ import messageConsole from "../../ui/MessageConsole";
 import engine from "../../Engine";
 import ItemAction from "../../actions/itemAction/ItemAction";
 import NoAction from "../../actions/NoAction";
-import Extend from "../../util/Extend";
 import AreaRangedAttackHandler from "../../event/selectIndexHandler/AreaRangedAttackHandler";
 import UnableToPerformAction from "../../actions/UnableToPerformAction";
 
 export default class AOEDamageConsumable extends Consumable {
     constructor(args = {}) {
-        super(Extend.extend(args, {type: "aoeDamageConsumable"}));
+        super(args, "aoeDamageConsumable");
         const hasComponent = args.components && args.components.aoeDamageConsumable !== undefined;
 
         this.damage = 12;

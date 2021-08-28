@@ -1,5 +1,4 @@
 import _Component from "./_Component";
-import Extend from "../util/Extend";
 import engine from "../Engine";
 import AIDead from "./ai/AIDead";
 import GameOverEventHandler from "../event/GameOverEventHandler";
@@ -14,7 +13,7 @@ import character from "../ui/Character";
 
 export default class Fighter extends _Component {
     constructor(args = {}) {
-        super(Extend.extend(args, {baseType: "fighter"}));
+        super(args, "fighter");
         const hasComponent = args.components && args.components.fighter !== undefined;
 
         this.baseStrength = 0;

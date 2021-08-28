@@ -3,7 +3,7 @@ import Extend from "../util/Extend";
 
 export default class Item extends _Entity {
     constructor(args = {}) {
-        super(Extend.deep(Item.getDefaultTemplate(), args));
+        super(args, "item");
 
         this.amount = 1;
         this.maxStackSize = 1;
@@ -25,10 +25,6 @@ export default class Item extends _Entity {
 
     clone() {
         return new Item(this.save());
-    }
-
-    static getDefaultTemplate() {
-        return {type: "item"};
     }
 
     setAmount(amount) {
