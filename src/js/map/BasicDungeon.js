@@ -106,12 +106,16 @@ export default class BasicDungeon extends GameMap {
                     stairsInteractable.setPosition(centerX, centerY, 1);
                 }
 
-                this.addPlayer(centerX, centerY);
-
-                const playerPosition = engine.player.getComponent("positionalobject");
-                if (playerPosition) {
-                    this.tiles.get(1)[centerX][centerY] = entityLoader.createFromTemplate("stairs_north", {components: {positionalobject: {x: centerX, y: centerY, z: 1}, stairsInteractable: {map: previousMapName, x: playerPosition.x, y: playerPosition.y, z: playerPosition.z}}});
+                if (engine.player) {
+                    const playerPosition = engine.player.getComponent("positionalobject");
+                    if (playerPosition) {
+                        this.tiles.get(1)[centerX][centerY] = entityLoader.createFromTemplate("stairs_north", {components: {positionalobject: {x: centerX, y: centerY, z: 1}, stairsInteractable: {map: previousMapName, x: playerPosition.x, y: playerPosition.y, z: playerPosition.z}}});
+                    }
+                } else {
+                    this.tiles.get(1)[centerX][centerY] = entityLoader.createFromTemplate("stairs_north", {components: {positionalobject: {x: centerX, y: centerY, z: 1}, stairsInteractable: {map: "town", x: 31, y: 31, z: 0}}});
                 }
+
+                this.addPlayer(centerX, centerY);
             } else {
                 const lastRoom = rooms[rooms.length - 1];
                 MapGeneration.tunnelBetween(this, lastRoom.getCenterX(), lastRoom.getCenterY(), newRoom.getCenterX(), newRoom.getCenterY());

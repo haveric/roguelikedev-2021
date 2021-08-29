@@ -99,8 +99,10 @@ export default class DefaultPlayerEventHandler extends EventHandler {
                     engine.clearMaps();
                     engine.setMap(new TutorialMap());
                 } else if (controls.testPressed("reset")) {
-                    engine.clearMaps();
-                    engine.setMap(new BasicDungeon(100, 100));
+                    if (engine.gameMap.name !== "town") {
+                        engine.clearAllButTownMaps();
+                        engine.setMap(new BasicDungeon(100, 100));
+                    }
                 }
             }
         }

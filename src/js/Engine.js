@@ -115,6 +115,13 @@ class Engine {
         this.gameMaps = new Map();
     }
 
+    clearAllButTownMaps() {
+        this.player = null;
+        const town = this.gameMaps.get("town");
+        this.gameMaps = new Map();
+        this.gameMaps.set("town", town);
+    }
+
     save(name) {
         const maps = [];
         for (const map of this.gameMaps.values()) {
