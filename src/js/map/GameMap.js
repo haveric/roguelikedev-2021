@@ -160,7 +160,8 @@ export default class GameMap {
         saveData["tiles"] = {};
         const entries = this.tiles.entries();
         for (const entry of entries) {
-            const tileMap = new Map();
+            const tileArray = [];
+            const letterArray = [];
             let key = "";
             let charCode = 65;
 
@@ -168,11 +169,14 @@ export default class GameMap {
                 for (let j = 0; j < this.height; j++) {
                     const tile = entry[1][i][j];
                     if (tile) {
-                        const tileJson = JSON.stringify(tile.save());
-                        if (tileMap.has(tileJson)) {
-                            key += String.fromCharCode(tileMap.get(tileJson));
+                        const save = tile.save();
+                        const tileJson = JSON.stringify(save);
+                        const index = tileArray.indexOf(tileJson);
+                        if (index > -1) {
+                            key += String.fromCharCode(letterArray[index]);
                         } else {
-                            tileMap.set(tileJson, charCode);
+                            tileArray[tileArray.length] = tileJson;
+                            letterArray[letterArray.length] = charCode;
                             key += String.fromCharCode(charCode);
 
                             charCode++;
@@ -191,9 +195,8 @@ export default class GameMap {
             saveData["tiles"][mapKey]["key"] = key;
             saveData["tiles"][mapKey]["map"] = {};
 
-            const tileMapIter = tileMap.entries();
-            for (const tileMapEntry of tileMapIter) {
-                saveData["tiles"][mapKey]["map"][String.fromCharCode(tileMapEntry[1])] = tileMapEntry[0];
+            for (let i = 0; i < tileArray.length; i++) {
+                saveData["tiles"][mapKey]["map"][String.fromCharCode(letterArray[i])] = tileArray[i];
             }
         }
 
