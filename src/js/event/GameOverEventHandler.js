@@ -7,7 +7,6 @@ export default class GameOverEventHandler extends EventHandler {
     constructor() {
         super();
 
-        engine.player = null;
         gameOverMenu.open();
     }
 
