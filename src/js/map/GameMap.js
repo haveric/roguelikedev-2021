@@ -169,8 +169,7 @@ export default class GameMap {
                 for (let j = 0; j < this.height; j++) {
                     const tile = entry[1][i][j];
                     if (tile) {
-                        const save = tile.save();
-                        const tileJson = JSON.stringify(save);
+                        const tileJson = JSON.stringify(tile.save());
                         const index = tileArray.indexOf(tileJson);
                         if (index > -1) {
                             key += String.fromCharCode(letterArray[index]);
