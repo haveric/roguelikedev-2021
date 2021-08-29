@@ -174,8 +174,8 @@ export default class GameMap {
                         if (index > -1) {
                             key += String.fromCharCode(letterArray[index]);
                         } else {
-                            tileArray[tileArray.length] = tileJson;
-                            letterArray[letterArray.length] = charCode;
+                            tileArray.push(tileJson);
+                            letterArray.push(charCode);
                             key += String.fromCharCode(charCode);
 
                             charCode++;

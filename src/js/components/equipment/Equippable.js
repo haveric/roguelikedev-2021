@@ -244,7 +244,7 @@ export default class Equippable extends _Component {
 
         // Add full stack
         if (this.maxStorage === -1) {
-            this.storage[this.storage.length] = item;
+            this.storage.push(item);
             item.parentEntity = this;
         } else {
             for (let i = 0; i < this.maxStorage; i++) {
