@@ -1,4 +1,3 @@
-import _Component from "../components/_Component";
 import componentLoader from "../components/ComponentLoader";
 import Extend from "../util/Extend";
 
@@ -39,10 +38,6 @@ export default class _Entity {
     }
 
     setComponent(component) {
-        if (!(component instanceof _Component)) {
-            console.error("Invalid component: ", component);
-        }
-
         component.parentEntity = this;
         this.components[component.baseType] = component;
         this.componentArray.push(component);
@@ -108,14 +103,10 @@ export default class _Entity {
 
     callEvent(event, args) {
         for (const component of this.componentArray) {
-            if (component[event]) {
-                component[event](args);
-            }
+            component[event]?.(args);
         }
 
-        if (this[event]) {
-            this[event](args);
-        }
+        this[event]?.(args);
     }
 
     getComponentDescriptions() {
