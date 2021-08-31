@@ -111,7 +111,12 @@ export default class Town extends GameMap {
                         const floor = this.tiles.get(MapLayer.Floor)[i][j];
                         if (floor.components.walkable && floor.components.walkable.walkable) {
                             if (Math.random() < .01) {
-                                this.createTree(i, j);
+                                // Prevent overlapping with the player and stairs
+                                const overlapsWithPlayer = i === 33 && j === 36;
+                                const overlapsWithStairs = i === 31 && j === 31;
+                                if (!overlapsWithPlayer && !overlapsWithStairs) {
+                                    this.createTree(i, j);
+                                }
                             } else if (Math.random() < .05) {
                                 this.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("stone", {components: {positionalobject: {x: i, y: j, z: 1}}});
                             } else {
