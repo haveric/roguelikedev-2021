@@ -10,6 +10,7 @@ export default class Fov extends _Component {
 
         if (hasComponent) {
             this.explored = args.components.fov.explored || false;
+            this.visible = args.components.fov.visible || false;
         }
     }
 
