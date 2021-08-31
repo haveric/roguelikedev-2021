@@ -75,20 +75,23 @@ class Engine {
     }
 
     setMap(map, stairsInteractable) {
-        if (this.gameMap === map) {
+        const previousMap = this.gameMap;
+        if (previousMap === map) {
             return;
         }
 
         let previousMapName = null;
-        if (this.gameMap) {
-            previousMapName = this.gameMap.name;
-            this.gameMap.teardown();
-            this.gameMap.removeActor(this.player);
-            this.gameMap.save();
+        if (previousMap) {
+            previousMapName = previousMap.name;
+            previousMap.teardown();
+            previousMap.removeActor(this.player);
         }
 
         this.gameMap = map;
         this.addMap(map, previousMapName, stairsInteractable);
+        if (previousMap) {
+            previousMap.save();
+        }
         map.save();
         if (this.gameMap.actors.indexOf(this.player) === -1) {
             this.gameMap.actors.push(this.player);

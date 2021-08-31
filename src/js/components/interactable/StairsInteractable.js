@@ -77,6 +77,16 @@ export default class StairsInteractable extends Interactable {
         this.clearSaveCache();
     }
 
+    setMap(map) {
+        this.map = map;
+        this.clearSaveCache();
+    }
+
+    setGenerator(generator) {
+        this.generator = generator;
+        this.clearSaveCache();
+    }
+
     interact() {
         if (this.map) {
             const playerPosition = engine.player.getComponent("positionalobject");
@@ -90,8 +100,8 @@ export default class StairsInteractable extends Interactable {
                 args.level = engine.gameMap.level + 1;
             }
             const newMap = engine.mapLoader.loadMap(this.generator, args);
-            this.map = newMap.name;
-            this.generator = null;
+            this.setMap(newMap.name);
+            this.setGenerator(null);
             engine.setMap(newMap, this);
         }
     }
