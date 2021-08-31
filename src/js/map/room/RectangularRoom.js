@@ -89,7 +89,14 @@ export default class RectangularRoom extends Room {
             const x = MathUtils.randInt(this.x1 + 1, this.x2 - 1);
             const y = MathUtils.randInt(this.y1 + 1, this.y2 - 1);
 
-            const position = {components: {positionalobject: {x: x, y: y, z: 1}}};
+            let z = 1;
+            const floor = engine.gameMap.tiles.get(0)[x][y];
+            const walkable = floor.getComponent("walkable");
+            if (!walkable || !walkable.walkable) {
+                z = 0;
+            }
+
+            const position = {components: {positionalobject: {x: x, y: y, z: z}}};
             const itemId = chanceLoader.getItemForLevel(name, level);
             const item = entityLoader.createFromTemplate(itemId, position);
 
@@ -101,7 +108,15 @@ export default class RectangularRoom extends Room {
             const x = MathUtils.randInt(this.x1 + 1, this.x2 -1);
             const y = MathUtils.randInt(this.y1 + 1, this.y2 -1);
             const amount = MathUtils.randInt(1, 25);
-            const position = {amount: amount, components: {positionalobject: {x: x, y: y, z: 1}}};
+
+            let z = 1;
+            const floor = engine.gameMap.tiles.get(0)[x][y];
+            const walkable = floor.getComponent("walkable");
+            if (!walkable || !walkable.walkable) {
+                z = 0;
+            }
+
+            const position = {amount: amount, components: {positionalobject: {x: x, y: y, z: z}}};
             const item = entityLoader.createFromTemplate("gold", position);
 
             engine.gameMap.items.push(item);

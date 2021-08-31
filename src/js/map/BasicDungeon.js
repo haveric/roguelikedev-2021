@@ -121,9 +121,6 @@ export default class BasicDungeon extends GameMap {
                 MapGeneration.tunnelBetween(this, lastRoom.getCenterX(), lastRoom.getCenterY(), newRoom.getCenterX(), newRoom.getCenterY());
             }
 
-            newRoom.placeEntities("basic-dungeon", this.level, this.getFloorAmount(this.maxMonstersByFloor));
-            newRoom.placeItems("basic-dungeon", this.level, this.getFloorAmount(this.maxItemsByFloor));
-
             rooms.push(newRoom);
         }
 
@@ -131,5 +128,10 @@ export default class BasicDungeon extends GameMap {
         const lastRoomCenterX = lastRoom.getCenterX();
         const lastRoomCenterY = lastRoom.getCenterY();
         this.tiles.get(0)[lastRoomCenterX][lastRoomCenterY] = entityLoader.createFromTemplate("stairs_north", {components: {positionalobject: {x: lastRoomCenterX, y: lastRoomCenterY, z: 0}, stairsInteractable: {generator: "basic-dungeon"}}});
+
+        for (const room of rooms) {
+            room.placeEntities("basic-dungeon", this.level, this.getFloorAmount(this.maxMonstersByFloor));
+            room.placeItems("basic-dungeon", this.level, this.getFloorAmount(this.maxItemsByFloor));
+        }
     }
 }
