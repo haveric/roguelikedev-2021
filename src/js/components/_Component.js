@@ -16,10 +16,7 @@ export default class _Component {
 
     clearSaveCache() {
         this.cachedSave = null;
-
-        if (this.parentEntity) {
-            this.parentEntity.clearSaveCache();
-        }
+        this.parentEntity?.clearSaveCache();
     }
 
     getDescription() {

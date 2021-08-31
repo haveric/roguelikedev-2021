@@ -119,7 +119,7 @@ export default class Fighter extends _Component {
         return saveJson;
     }
 
-    recalculateStats() {
+    recalculateStats(clear = true) {
         this.calculateStats();
         this.healingBonus = Math.floor(this.constitution / 2);
 
@@ -140,7 +140,10 @@ export default class Fighter extends _Component {
         this.calculateBlockChance();
 
         this.updateUI();
-        this.clearSaveCache();
+
+        if (clear) {
+            this.clearSaveCache();
+        }
     }
 
     calculateStats() {
@@ -428,7 +431,7 @@ export default class Fighter extends _Component {
     }
 
     onComponentsLoaded() {
-        this.recalculateStats();
+        this.recalculateStats(false);
     }
 
     onEquipmentChange() {

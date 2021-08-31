@@ -1,4 +1,3 @@
-import MapLayer from "../MapLayer";
 import {MathUtils} from "three";
 import engine from "../../Engine";
 import entityLoader from "../../entity/EntityLoader";
@@ -36,23 +35,30 @@ export default class RectangularRoom extends Room {
         const right = Math.min(gameMap.width, this.x2 + 1);
         const top = Math.max(0, this.y1);
         const bottom = Math.min(gameMap.height, this.y2 + 1);
+
+        const floorEntity = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: 0, y: 0, z: 0}}});
+        const wallEntity = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: 0, y: 0, z: 0}}});
         for (let i = left; i < right; i++) {
             for (let j = top; j < bottom; j++) {
-                const previousFloorTile = gameMap.tiles.get(MapLayer.Floor)[i][j];
+                const previousFloorTile = gameMap.tiles.get(0)[i][j];
                 if (!previousFloorTile) {
-                    gameMap.tiles.get(MapLayer.Floor)[i][j] = entityLoader.createFromTemplate("floor", {components: {positionalobject: {x: i, y: j, z: 0}}});
+                    const floor = floorEntity.clone();
+                    floor.getComponent("positionalobject").moveTo(i, j, 0);
+                    gameMap.tiles.get(0)[i][j] = floor;
                 }
 
                 const isVerticalEdge = (i === this.x1 || i === this.x2) && j >= this.y1 && j <= this.y2;
                 const isHorizontalEdge = (j === this.y1 || j === this.y2) && i >= this.x1 && i <= this.x2;
-                const wallTile = gameMap.tiles.get(MapLayer.Wall)[i][j];
+                const wallTile = gameMap.tiles.get(1)[i][j];
                 if (isHorizontalEdge || isVerticalEdge) {
                     if (!previousFloorTile && !wallTile) {
-                        gameMap.tiles.get(MapLayer.Wall)[i][j] = entityLoader.createFromTemplate("wall", {components: {positionalobject: {x: i, y: j, z: 1}}});
+                        const wall = wallEntity.clone();
+                        wall.getComponent("positionalobject").moveTo(i, j, 1);
+                        gameMap.tiles.get(1)[i][j] = wall;
                     }
                 } else {
                     if (wallTile) {
-                        gameMap.tiles.get(MapLayer.Wall)[i][j] = null;
+                        gameMap.tiles.get(1)[i][j] = null;
                     }
                 }
             }
@@ -62,8 +68,8 @@ export default class RectangularRoom extends Room {
     placeEntities(name, level, maxMonsters) {
         const numMonsters = MathUtils.randInt(0, maxMonsters);
         for (let i = 0; i < numMonsters; i++) {
-            const x = MathUtils.randInt(this.x1 + 1, this.x2 -1);
-            const y = MathUtils.randInt(this.y1 + 1, this.y2 -1);
+            const x = MathUtils.randInt(this.x1 + 1, this.x2 - 1);
+            const y = MathUtils.randInt(this.y1 + 1, this.y2 - 1);
 
             const blockingActor = engine.gameMap.getBlockingActorAtLocation(x, y, 1);
             if (!blockingActor) {
@@ -80,8 +86,8 @@ export default class RectangularRoom extends Room {
     placeItems(name, level, maxItems) {
         const numItems = MathUtils.randInt(0, maxItems);
         for (let i = 0; i < numItems; i++) {
-            const x = MathUtils.randInt(this.x1 + 1, this.x2 -1);
-            const y = MathUtils.randInt(this.y1 + 1, this.y2 -1);
+            const x = MathUtils.randInt(this.x1 + 1, this.x2 - 1);
+            const y = MathUtils.randInt(this.y1 + 1, this.y2 - 1);
 
             const position = {components: {positionalobject: {x: x, y: y, z: 1}}};
             const itemId = chanceLoader.getItemForLevel(name, level);

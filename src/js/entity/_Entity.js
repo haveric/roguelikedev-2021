@@ -31,18 +31,20 @@ export default class _Entity {
                 const baseType = type.baseType;
                 const existingComponent = self.getComponent(baseType);
                 if (!existingComponent) {
-                    self.setComponent(componentLoader.create(this, key, args));
+                    self.setComponent(componentLoader.create(this, key, args), false);
                 }
             }
         });
     }
 
-    setComponent(component) {
+    setComponent(component, clear = true) {
         component.parentEntity = this;
         this.components[component.baseType] = component;
         this.componentArray.push(component);
 
-        this.clearSaveCache();
+        if (clear) {
+            this.clearSaveCache();
+        }
     }
 
     getComponent(baseType) {

@@ -74,7 +74,6 @@ export default class GameMap {
         } else if (entity instanceof Item) {
             this.removeItem(entity);
         }
-
     }
 
     removeItem(item) {
@@ -124,7 +123,6 @@ export default class GameMap {
             }
         }
 
-
         if (amountToAdd > 0) {
             item.setAmount(amountToAdd);
 
@@ -172,16 +170,13 @@ export default class GameMap {
                         const tileJson = JSON.stringify(tile.save());
                         const index = tileArray.indexOf(tileJson);
                         if (index > -1) {
-                            key += String.fromCharCode(letterArray[index]);
+                            key += letterArray[index];
                         } else {
                             tileArray.push(tileJson);
-                            letterArray.push(charCode);
+                            letterArray.push(String.fromCharCode(charCode));
                             key += String.fromCharCode(charCode);
 
                             charCode++;
-                            if (String.fromCharCode(charCode) === " ") {
-                                charCode++;
-                            }
                         }
                     } else {
                         key += " ";
@@ -195,7 +190,7 @@ export default class GameMap {
             saveData["tiles"][mapKey]["map"] = {};
 
             for (let i = 0; i < tileArray.length; i++) {
-                saveData["tiles"][mapKey]["map"][String.fromCharCode(letterArray[i])] = tileArray[i];
+                saveData["tiles"][mapKey]["map"][letterArray[i]] = tileArray[i];
             }
         }
 

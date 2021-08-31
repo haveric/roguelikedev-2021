@@ -83,8 +83,7 @@ class Engine {
         if (this.gameMap) {
             previousMapName = this.gameMap.name;
             this.gameMap.teardown();
-            const playerIndex = this.gameMap.actors.indexOf(this.player);
-            this.gameMap.actors.splice(playerIndex, 1);
+            this.gameMap.removeActor(this.player);
             this.gameMap.save();
         }
 

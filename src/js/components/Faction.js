@@ -11,11 +11,11 @@ export default class Faction extends _Component {
         if (hasComponent) {
             const faction = args.components.faction;
             if (faction.factions) {
-                this.setFactions(faction.factions.split(","));
+                this.setFactions(faction.factions.split(","), false);
             }
 
             if (faction.enemies) {
-                this.setEnemies(faction.enemies.split(","));
+                this.setEnemies(faction.enemies.split(","), false);
             }
         }
     }
@@ -36,20 +36,24 @@ export default class Faction extends _Component {
         return saveJson;
     }
 
-    setFactions(factionList) {
+    setFactions(factionList, clear = true) {
         for (const faction of factionList) {
             this.factions.push(faction.trim());
         }
 
-        this.clearSaveCache();
+        if (clear) {
+            this.clearSaveCache();
+        }
     }
 
-    setEnemies(enemyList) {
+    setEnemies(enemyList, clear = true) {
         for (const enemy of enemyList) {
             this.enemies.push(enemy.trim());
         }
 
-        this.clearSaveCache();
+        if (clear) {
+            this.clearSaveCache();
+        }
     }
 
     /**
